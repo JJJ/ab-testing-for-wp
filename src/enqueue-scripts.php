@@ -3,7 +3,7 @@
 function ab_testing_for_wp_gutenberg_blocks() {
   wp_register_script(
       'ab-testing-for-wp-gutenberg-block',
-      plugins_url( 'scripts/block.js', __FILE__ ),
+      plugins_url( '../dist/block.js', __FILE__ ),
       [ 'wp-blocks', 'wp-element' ]
   );
 
