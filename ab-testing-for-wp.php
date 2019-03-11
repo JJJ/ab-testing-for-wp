@@ -26,4 +26,4 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-require 'src/enqueue-scripts.php';
+require __DIR__ . '/src/enqueue-scripts.php';
