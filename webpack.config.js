@@ -5,8 +5,10 @@ const mode = process.env.NODE_ENV || 'development';
 module.exports = {
   mode,
   entry: {
-    block: './src/scripts/block.js',
+    'ab-test': './blocks/ab-test.js',
+    'ab-test-child': './blocks/ab-test-child.js',
   },
+  context: path.resolve(__dirname, 'src/scripts'),
   output: {
     filename: '[name].js',
     path: path.resolve(__dirname, 'dist'),
