@@ -3,6 +3,7 @@ const {
   blocks,
   editor,
   components,
+  apiFetch,
 } = wp;
 
 export {
@@ -10,4 +11,5 @@ export {
   blocks,
   editor,
   components,
+  apiFetch,
 };

@@ -11,6 +11,7 @@ import {
 import TestSelector from '../components/TestSelector/TestSelector';
 import BoxShadow from '../components/BoxShadow/BoxShadow';
 import DistributionSettings from '../components/DistributionSettings/DistributionSettings';
+import PageSelector from '../components/PageSelector/PageSelector';
 
 const { __ } = i18n;
 const { registerBlockType } = blocks;
@@ -18,7 +19,8 @@ const { InnerBlocks, InspectorControls } = editor;
 
 type ABTestBlockProps = {
   attributes: {
-    tests: ABTest[],
+    tests: ABTest[];
+    pageGoal: number;
   };
 } & GutenbergProps;
 
@@ -51,11 +53,15 @@ registerBlockType('ab-testing-for-wp/ab-test-block', {
       type: 'array',
       default: defaultTests,
     },
+    pageGoal: {
+      type: 'number',
+      default: 0,
+    },
   },
   edit(props: ABTestBlockProps) {
     const { attributes, setAttributes } = props;
 
-    const { tests } = attributes;
+    const { tests, pageGoal } = attributes;
 
     const onSelectTest = (id: string) => {
       setAttributes({
@@ -64,6 +70,8 @@ registerBlockType('ab-testing-for-wp/ab-test-block', {
     };
 
     const onUpdateTests = (newTests: ABTest[]) => setAttributes({ tests: newTests });
+
+    const onPageGoalChange = (page: number) => setAttributes({ pageGoal: page });
 
     const selectedTest = tests.find(test => !!test.selected);
 
@@ -84,6 +92,10 @@ registerBlockType('ab-testing-for-wp/ab-test-block', {
           <DistributionSettings
             tests={tests}
             onUpdateTests={onUpdateTests}
+          />
+          <PageSelector
+            value={pageGoal}
+            onChange={onPageGoalChange}
           />
         </InspectorControls>
         <InnerBlocks

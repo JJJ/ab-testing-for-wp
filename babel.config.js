@@ -11,5 +11,6 @@ module.exports = {
         pragmaFrag: 'wp.element.Fragment',
       },
     ],
+    '@babel/plugin-proposal-class-properties',
   ],
 };
