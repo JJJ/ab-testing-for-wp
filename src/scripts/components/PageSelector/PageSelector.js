@@ -47,7 +47,7 @@ class PageSelector extends Component<PageSelectorProps, PageSelectorState> {
                 { label: __('No goal selected'), value: 0 },
                 ...pages.map(page => ({ label: page.title.rendered, value: page.id })),
               ]}
-              onChange={onChange}
+              onChange={newValue => onChange(parseInt(newValue, 10))}
             />
             <p>
               {__('Select the goal page for this test. If the visitor lands on this page it will add a point to the tested variant.')}
