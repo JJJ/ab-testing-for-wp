@@ -1,0 +1,17 @@
+.ab-test-for-wp__TestSelector {
+  position: absolute;
+  z-index: 900;
+  left: calc(100% + 22px);
+  top: -16px;
+}
+
+.ab-test-for-wp__TestSelector .components-button {
+  width: 36px;
+  justify-content: center;
+}
+
+.ab-test-for-wp__TestSelector .components-button.is-toggled:not(:disabled):not([aria-disabled="true"]):not(.is-default) {
+  border-color: #007abd;
+  background-color: #007abd;
+  color: #fff;
+}

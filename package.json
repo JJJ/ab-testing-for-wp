@@ -28,6 +28,7 @@
     "@wordpress/babel-preset-default": "4.0.0",
     "babel-eslint": "^10.0.1",
     "babel-loader": "^8.0.5",
+    "css-loader": "^2.1.1",
     "eslint": "^5.15.1",
     "eslint-config-airbnb": "^17.1.0",
     "eslint-plugin-flowtype": "^3.4.2",
@@ -36,8 +37,12 @@
     "eslint-plugin-react": "^7.12.4",
     "flow-bin": "^0.94.0",
     "redux-multi": "^0.1.12",
+    "style-loader": "^0.23.1",
     "webpack": "^4.29.6",
     "webpack-cli": "^3.2.3"
   },
-  "dependencies": {}
+  "dependencies": {
+    "classnames": "^2.2.6",
+    "unique-string": "^1.0.0"
+  }
 }

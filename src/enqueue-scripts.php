@@ -4,7 +4,7 @@ function registerGutenbergScript($name, $file) {
     wp_register_script(
         $name,
         plugins_url( '../dist/' . $file, __FILE__ ),
-        ['wp-blocks', 'wp-element', 'wp-editor', 'wp-i18n']
+        ['wp-blocks', 'wp-element', 'wp-editor', 'wp-i18n', 'wp-components']
     );
 }
 
