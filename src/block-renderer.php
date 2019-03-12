@@ -41,11 +41,9 @@ class BlockRenderer {
         }
 
         return $doc->saveXML($nodes[0]);
-    } 
+    }
 
     public function renderTest($attributes, $content) {
-        var_dump(htmlentities($content));
-
         $tests = $attributes['tests'];
 
         $test = $this->pickTestAt($tests, $this->randomTestDistributionPosition($tests));

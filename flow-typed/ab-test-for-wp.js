@@ -1,3 +1,5 @@
+declare var wp: any;
+
 declare type ABTest = {
   id: string;
   name: string;

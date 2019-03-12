@@ -1,4 +1,4 @@
-// @flow
+// @flow @jsx wp.element.createElement
 
 import { i18n, blocks, editor } from '../gutenberg';
 
