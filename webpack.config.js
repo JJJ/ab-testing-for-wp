@@ -5,6 +5,7 @@ const mode = process.env.NODE_ENV || 'development';
 module.exports = {
   mode,
   entry: {
+    cookies: './cookies.js',
     'ab-test': './blocks/ab-test.js',
     'ab-test-child': './blocks/ab-test-child.js',
   },
