@@ -1,3 +1,13 @@
-const { i18n, blocks, editor } = wp;
+const {
+  i18n,
+  blocks,
+  editor,
+  components,
+} = wp;
 
-export { i18n, blocks, editor };
+export {
+  i18n,
+  blocks,
+  editor,
+  components,
+};
