@@ -1,6 +1,6 @@
 // @flow @jsx wp.element.createElement
 
-import { i18n, components } from '../../gutenberg';
+import { i18n, components } from '../../WP';
 
 const { __, sprintf } = i18n;
 const { PanelBody, RangeControl } = components;

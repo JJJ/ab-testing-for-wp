@@ -6,7 +6,7 @@ import {
   i18n,
   blocks,
   editor,
-} from '../gutenberg';
+} from '../WP';
 
 import TestSelector from '../components/TestSelector/TestSelector';
 import BoxShadow from '../components/BoxShadow/BoxShadow';

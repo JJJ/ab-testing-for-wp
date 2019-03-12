@@ -1,6 +1,6 @@
 // @flow @jsx wp.element.createElement
 
-import { i18n, blocks, editor } from '../gutenberg';
+import { i18n, blocks, editor } from '../WP';
 
 const { registerBlockType } = blocks;
 const { __, sprintf } = i18n;
