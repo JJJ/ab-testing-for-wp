@@ -1,6 +1,6 @@
-// @flow
+// @flow @jsx wp.element.createElement
 
-import { Component, ReactNode } from 'react';
+import React, { Component } from 'react';
 
 import { i18n, components, apiFetch } from '../../gutenberg';
 
@@ -33,7 +33,7 @@ class PageSelector extends Component<PageSelectorProps, PageSelectorState> {
       });
   }
 
-  render(): ReactNode {
+  render() {
     const { loading, pages } = this.state;
     const { onChange, value } = this.props;
 

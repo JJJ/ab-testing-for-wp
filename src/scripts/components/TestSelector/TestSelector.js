@@ -1,4 +1,4 @@
-// @flow
+// @flow @jsx wp.element.createElement
 
 import { components } from '../../gutenberg';
 

@@ -1,4 +1,4 @@
-// @flow
+// @flow @jsx wp.element.createElement
 
 import uniqueString from 'unique-string';
 
@@ -19,6 +19,7 @@ const { InnerBlocks, InspectorControls } = editor;
 
 type ABTestBlockProps = {
   attributes: {
+    id: string;
     tests: ABTest[];
     pageGoal: number;
   };
@@ -49,9 +50,13 @@ registerBlockType('ab-testing-for-wp/ab-test-block', {
   icon: 'admin-settings',
   category: 'widgets',
   attributes: {
+    id: {
+      type: 'string',
+      default: '',
+    },
     tests: {
       type: 'array',
-      default: defaultTests,
+      default: [],
     },
     pageGoal: {
       type: 'number',
@@ -61,11 +66,19 @@ registerBlockType('ab-testing-for-wp/ab-test-block', {
   edit(props: ABTestBlockProps) {
     const { attributes, setAttributes } = props;
 
-    const { tests, pageGoal } = attributes;
+    const { id, tests, pageGoal } = attributes;
 
-    const onSelectTest = (id: string) => {
+    // initialize attributes
+    if (!id) {
       setAttributes({
-        tests: tests.map(test => ({ ...test, selected: test.id === id })),
+        id: uniqueString(),
+        tests: defaultTests,
+      });
+    }
+
+    const onSelectTest = (testId: string) => {
+      setAttributes({
+        tests: tests.map(test => ({ ...test, selected: test.id === testId })),
       });
     };
 
@@ -80,7 +93,7 @@ registerBlockType('ab-testing-for-wp/ab-test-block', {
         display: none;
       }
       
-      .ABTestChild--${selectedTest.id} { 
+      .ABTestChild--${selectedTest && selectedTest.id ? selectedTest.id : ''} { 
         display: block!important; 
       }
     `;
