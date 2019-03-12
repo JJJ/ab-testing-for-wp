@@ -1,13 +1,15 @@
 .ab-test-for-wp__TestSelector {
   position: absolute;
   z-index: 900;
-  left: calc(100% + 22px);
-  top: -16px;
+  left: calc(100% + 14px);
+  top: -15px;
 }
 
 .ab-test-for-wp__TestSelector .components-button {
   width: 36px;
   justify-content: center;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
 }
 
 .ab-test-for-wp__TestSelector .components-button.is-toggled:not(:disabled):not([aria-disabled="true"]):not(.is-default) {

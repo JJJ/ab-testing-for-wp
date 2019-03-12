@@ -5,6 +5,7 @@ import uniqueString from 'unique-string';
 import { i18n, blocks, editor } from '../gutenberg';
 
 import TestSelector from '../components/TestSelector/TestSelector';
+import BoxShadow from '../components/BoxShadow/BoxShadow';
 
 const { __ } = i18n;
 const { registerBlockType } = blocks;
@@ -13,9 +14,8 @@ const { InnerBlocks } = editor;
 type ABTestBlockProps = {
   attributes: {
     tests: ABTest[],
-  },
-  setAttributes: (newState: any) => void;
-};
+  };
+} & GutenbergProps;
 
 const ALLOWED_BLOCKS = ['ab-testing-for-wp/ab-test-block-child'];
 
@@ -28,7 +28,7 @@ const makeTemplate = test => ['ab-testing-for-wp/ab-test-block-child', test];
 
 registerBlockType('ab-testing-for-wp/ab-test-block', {
   title: __('A/B test'),
-  description: __('Creates an A/B test container.'),
+  description: __('A/B test container which contains the possible tests.'),
   icon: 'admin-settings',
   category: 'widgets',
   attributes: {
@@ -61,7 +61,7 @@ registerBlockType('ab-testing-for-wp/ab-test-block', {
     `;
 
     return (
-      <>
+      <div>
         <style>{css}</style>
         <InnerBlocks
           templateLock="all"
@@ -72,10 +72,11 @@ registerBlockType('ab-testing-for-wp/ab-test-block', {
           tests={tests}
           onSelectTest={onSelectTest}
         />
-      </>
+        <BoxShadow />
+      </div>
     );
   },
   save() {
-    return <InnerBlocks.Content />;
+    return <div><InnerBlocks.Content /></div>;
   },
 });

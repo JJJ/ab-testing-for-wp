@@ -1,0 +1,9 @@
+.ab-test-for-wp__BoxShadow {
+  position: absolute;
+  top: -15px;
+  left: -15px;
+  width: calc(100% + 30px);
+  height: calc(100% + 30px);
+  border: 1px solid #e3e5e9;
+  pointer-events: none;
+}

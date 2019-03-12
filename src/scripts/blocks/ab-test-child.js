@@ -8,7 +8,7 @@ const { InnerBlocks } = editor;
 
 type ABTestBlockChildProps = {
   attributes: ABTest;
-};
+} & GutenbergProps;
 
 const disallowedBlocks = [
   'ab-testing-for-wp/ab-test-block',
@@ -16,7 +16,7 @@ const disallowedBlocks = [
 ];
 
 registerBlockType('ab-testing-for-wp/ab-test-block-child', {
-  title: __('A/B test child'),
+  title: __('A/B test variant'),
   icon: 'admin-settings',
   category: 'widgets',
   parent: ['ab-testing-for-wp/ab-test-block'],
@@ -46,7 +46,7 @@ registerBlockType('ab-testing-for-wp/ab-test-block-child', {
 
     const template = [
       ['core/heading', {
-        content: sprintf(__('Change or remove heading for "%s"'), name),
+        content: sprintf(__('A/B Test variant "%s"'), name),
         level: 4,
       }],
       ['core/button', {

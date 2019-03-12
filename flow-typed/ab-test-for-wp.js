@@ -3,3 +3,7 @@ declare type ABTest = {
   name: string;
   selected: boolean;
 };
+
+declare type GutenbergProps = {
+  setAttributes: (newState: any) => void;
+};
