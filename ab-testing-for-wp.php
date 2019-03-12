@@ -1,4 +1,8 @@
 <?php
+/**
+ * @package ABTestingForWP
+ * @version 1.0
+ */
 /*
     Plugin Name: A/B Testing for WordPress
     Plugin URI: https://theclevernode.com
@@ -20,10 +24,19 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
+
+namespace ABTestingForWP;
+
 if ( ! defined( 'ABSPATH' ) ) {
 	header( 'Status: 403 Forbidden' );
 	header( 'HTTP/1.1 403 Forbidden' );
 	exit;
 }
 
-require __DIR__ . '/src/enqueue-scripts.php';
+require __DIR__ . '/src/register-gutenberg-blocks.php';
+
+function bootstrap() {
+    new RegisterGutenbergBlocks();
+}
+
+add_action('init', 'ABTestingForWP\\bootstrap');
