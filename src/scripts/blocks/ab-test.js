@@ -2,14 +2,19 @@
 
 import uniqueString from 'unique-string';
 
-import { i18n, blocks, editor } from '../gutenberg';
+import {
+  i18n,
+  blocks,
+  editor,
+} from '../gutenberg';
 
 import TestSelector from '../components/TestSelector/TestSelector';
 import BoxShadow from '../components/BoxShadow/BoxShadow';
+import DistributionSettings from '../components/DistributionSettings/DistributionSettings';
 
 const { __ } = i18n;
 const { registerBlockType } = blocks;
-const { InnerBlocks } = editor;
+const { InnerBlocks, InspectorControls } = editor;
 
 type ABTestBlockProps = {
   attributes: {
@@ -20,8 +25,18 @@ type ABTestBlockProps = {
 const ALLOWED_BLOCKS = ['ab-testing-for-wp/ab-test-block-child'];
 
 const defaultTests: ABTest[] = [
-  { id: uniqueString(), name: 'A', selected: true },
-  { id: uniqueString(), name: 'B', selected: false },
+  {
+    id: uniqueString(),
+    name: 'A',
+    selected: true,
+    distribution: 50,
+  },
+  {
+    id: uniqueString(),
+    name: 'B',
+    selected: false,
+    distribution: 50,
+  },
 ];
 
 const makeTemplate = test => ['ab-testing-for-wp/ab-test-block-child', test];
@@ -48,6 +63,8 @@ registerBlockType('ab-testing-for-wp/ab-test-block', {
       });
     };
 
+    const onUpdateTests = (newTests: ABTest[]) => setAttributes({ tests: newTests });
+
     const selectedTest = tests.find(test => !!test.selected);
 
     const css = `
@@ -63,6 +80,12 @@ registerBlockType('ab-testing-for-wp/ab-test-block', {
     return (
       <div>
         <style>{css}</style>
+        <InspectorControls>
+          <DistributionSettings
+            tests={tests}
+            onUpdateTests={onUpdateTests}
+          />
+        </InspectorControls>
         <InnerBlocks
           templateLock="all"
           template={tests.map(makeTemplate)}
