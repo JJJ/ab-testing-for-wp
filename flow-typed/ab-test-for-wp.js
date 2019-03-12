@@ -2,6 +2,7 @@ declare type ABTest = {
   id: string;
   name: string;
   selected: boolean;
+  distribution: number;
 };
 
 declare type GutenbergProps = {
