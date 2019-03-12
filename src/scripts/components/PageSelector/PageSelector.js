@@ -2,7 +2,7 @@
 
 import React, { Component } from 'react';
 
-import { i18n, components, apiFetch } from '../../gutenberg';
+import { i18n, components, apiFetch } from '../../WP';
 
 const { __ } = i18n;
 const { PanelBody, SelectControl } = components;

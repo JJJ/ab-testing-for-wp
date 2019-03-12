@@ -1,6 +1,6 @@
 // @flow @jsx wp.element.createElement
 
-import { components } from '../../gutenberg';
+import { components } from '../../WP';
 
 import './TestSelector.css';
 
