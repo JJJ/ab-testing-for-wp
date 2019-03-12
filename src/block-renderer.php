@@ -43,16 +43,37 @@ class BlockRenderer {
         return $doc->saveXML($nodes[0]);
     }
 
+    private function getTest($tests, $parentId) {
+        if (isset($_COOKIE['ab-testing-for-wp'])) {
+            $cookieData = get_object_vars(json_decode(stripslashes($_COOKIE['ab-testing-for-wp'])));
+
+            if (isset($cookieData[$parentId])) {
+                for ($i = 0; $i < sizeof($tests); $i++) {
+                    if ($tests[$i]['id'] === $cookieData[$parentId]) {
+                        return $tests[$i];
+                    }
+                }
+            }
+        }
+
+        return $this->pickTestAt($tests, $this->randomTestDistributionPosition($tests));
+    }
+
+    private function wrapData($parentId, $variantId, $content) {
+        return '<div class="ABTestWrapper" data-test="' . $parentId . '" data-variant="' . $variantId . '">' . $content . '</div>';
+    }
+
     public function renderTest($attributes, $content) {
         $tests = $attributes['tests'];
+        $parentId = $attributes['id'];
 
-        $test = $this->pickTestAt($tests, $this->randomTestDistributionPosition($tests));
+        $variant = $this->getTest($tests, $parentId);
 
-        if (!isset($test)) {
+        if (!isset($variant)) {
             return '';
         }
 
-        return $this->getVariantContent($content, $test['id']);
+        return $this->wrapData($parentId, $variant['id'], $this->getVariantContent($content, $variant['id']));
     }
 
 }

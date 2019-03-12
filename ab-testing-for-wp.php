@@ -34,8 +34,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 require __DIR__ . '/src/register-gutenberg-blocks.php';
+require __DIR__ . '/src/register-render-scripts.php';
 
 function bootstrap() {
+    if(!is_admin()) {
+        new RegisterRenderScripts();
+    }
+
     new RegisterGutenbergBlocks();
 }
 
