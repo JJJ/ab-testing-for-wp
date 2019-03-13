@@ -7,6 +7,14 @@ declare type ABTestVariant = {
   distribution: number;
 };
 
+declare type ABTestAttributes = {
+  id: string;
+  variants: ABTestVariant[];
+  control: string;
+  isEnabled: boolean;
+  pageGoal: number;
+};
+
 declare type GutenbergProps = {
   setAttributes: (newState: any) => void;
 };

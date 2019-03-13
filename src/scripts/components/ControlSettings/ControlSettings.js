@@ -5,13 +5,13 @@ import { i18n, components } from '../../WP';
 const { __ } = i18n;
 const { PanelBody, SelectControl } = components;
 
-type ControlSelectorProps = {
+type ControlSettingsProps = {
   value: string;
   variants: ABTestVariant[];
   onChange: (variantId: string) => void;
 };
 
-function ControlSelector({ value, variants, onChange }: ControlSelectorProps) {
+function ControlSettings({ value, variants, onChange }: ControlSettingsProps) {
   return (
     <PanelBody title={__('Control variant')}>
       <SelectControl
@@ -24,4 +24,4 @@ function ControlSelector({ value, variants, onChange }: ControlSelectorProps) {
   );
 }
 
-export default ControlSelector;
+export default ControlSettings;

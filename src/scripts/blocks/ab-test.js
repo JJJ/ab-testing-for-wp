@@ -12,19 +12,15 @@ import VariantSelector from '../components/VariantSelector/VariantSelector';
 import BoxShadow from '../components/BoxShadow/BoxShadow';
 import DistributionSettings from '../components/DistributionSettings/DistributionSettings';
 import PageSelector from '../components/PageSelector/PageSelector';
-import ControlSelector from '../components/ControlSelector/ControlSelector';
+import ControlSettings from '../components/ControlSettings/ControlSettings';
+import EnabledSettings from '../components/EnabledSettings/EnabledSettings';
 
 const { __ } = i18n;
 const { registerBlockType } = blocks;
 const { InnerBlocks, InspectorControls } = editor;
 
 type ABTestBlockProps = {
-  attributes: {
-    id: string;
-    variants: ABTestVariant[];
-    control: string;
-    pageGoal: number;
-  };
+  attributes: ABTestAttributes;
 } & GutenbergProps;
 
 const ALLOWED_BLOCKS = ['ab-testing-for-wp/ab-test-block-variant'];
@@ -49,6 +45,10 @@ registerBlockType('ab-testing-for-wp/ab-test-block', {
       type: 'string',
       default: '',
     },
+    isEnabled: {
+      type: 'boolean',
+      default: false,
+    },
     pageGoal: {
       type: 'number',
       default: 0,
@@ -57,7 +57,13 @@ registerBlockType('ab-testing-for-wp/ab-test-block', {
   edit(props: ABTestBlockProps) {
     const { attributes, setAttributes } = props;
 
-    const { id, variants, pageGoal, control } = attributes;
+    const {
+      id,
+      variants,
+      pageGoal,
+      control,
+      isEnabled,
+    } = attributes;
 
     // initialize attributes
     if (!id) {
@@ -81,6 +87,7 @@ registerBlockType('ab-testing-for-wp/ab-test-block', {
         variants: defaultVariants,
         pageGoal: 0,
         control: defaultVariants[0].id,
+        isEnabled: false,
       });
     }
 
@@ -94,6 +101,7 @@ registerBlockType('ab-testing-for-wp/ab-test-block', {
     });
     const onPageGoalChange = (page: number) => setAttributes({ pageGoal: page });
     const onControlChange = (variantId: string) => setAttributes({ control: variantId });
+    const onEnabledChange = (enabled: boolean) => setAttributes({ isEnabled: enabled });
 
     const selectedVariant = variants.find(test => !!test.selected);
 
@@ -111,6 +119,10 @@ registerBlockType('ab-testing-for-wp/ab-test-block', {
       <div className={`ABTest--${id}`}>
         <style>{css}</style>
         <InspectorControls>
+          <EnabledSettings
+            value={isEnabled}
+            onChange={onEnabledChange}
+          />
           <DistributionSettings
             variants={variants}
             onUpdateVariants={onUpdateVariants}
@@ -119,7 +131,7 @@ registerBlockType('ab-testing-for-wp/ab-test-block', {
             value={pageGoal}
             onChange={onPageGoalChange}
           />
-          <ControlSelector
+          <ControlSettings
             value={control}
             variants={variants}
             onChange={onControlChange}
