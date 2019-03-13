@@ -1,4 +1,7 @@
 declare var wp: any;
+declare var ABTestingForWP: {
+  postId?: string;
+};
 
 declare type ABTestVariant = {
   id: string;

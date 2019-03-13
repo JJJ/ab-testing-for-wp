@@ -17,13 +17,13 @@ class ABTestContentParser {
     }
 
     public static function findTestInContent($content, $testId) {
-      $testData = ABTestContentParser::testDataFromContent($content);
+        $testData = ABTestContentParser::testDataFromContent($content);
 
-      foreach ($testData as $data) {
-          if ($data['id'] === $testId) {
-              return $data;
-          }
-      }
+        foreach ($testData as $data) {
+            if ($data['id'] === $testId) {
+                return $data;
+            }
+        }
 
       return false;
   }
