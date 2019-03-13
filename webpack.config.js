@@ -7,7 +7,7 @@ module.exports = {
   entry: {
     cookies: './cookies.js',
     'ab-test': './blocks/ab-test.js',
-    'ab-test-child': './blocks/ab-test-child.js',
+    'ab-test-variant': './blocks/ab-test-variant.js',
   },
   context: path.resolve(__dirname, 'src/scripts'),
   output: {
