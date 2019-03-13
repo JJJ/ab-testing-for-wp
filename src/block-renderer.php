@@ -82,7 +82,7 @@ class BlockRenderer {
 
     public function resolveVariant($request) {
         if (!$request->get_param('test') || !$request->get_param('post')) {
-            return new WP_Error('rest_invalid_request', 'Missing test or post parameter.', ['status' => 400]);
+            return new \WP_Error('rest_invalid_request', 'Missing test or post parameter.', ['status' => 400]);
         }
 
         $testId = $request->get_param('test');
@@ -96,7 +96,7 @@ class BlockRenderer {
         $testData = ABTestContentParser::findTestInContent($content, $testId);
         
         if (!$testData) {
-            return new WP_Error('rest_invalid_request', 'Could not find test data on post.', ['status' => 400]);
+            return new \WP_Error('rest_invalid_request', 'Could not find test data on post.', ['status' => 400]);
         }
 
         // extract data

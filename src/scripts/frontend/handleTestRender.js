@@ -4,7 +4,7 @@ import Cookies from 'js-cookie';
 
 const { apiFetch } = window.wp;
 
-function handleCookieData() {
+function handleTestRender() {
   const cookieKey = 'ab-testing-for-wp';
   const cookieData = JSON.parse(Cookies.get(cookieKey) || '{}');
 
@@ -31,4 +31,4 @@ function handleCookieData() {
   }
 }
 
-document.addEventListener('DOMContentLoaded', handleCookieData);
+export default handleTestRender;

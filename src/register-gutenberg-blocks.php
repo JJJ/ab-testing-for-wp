@@ -3,8 +3,11 @@
 namespace ABTestingForWP;
 
 class RegisterGutenbergBlocks {
+    private $fileRoot;
 
-    public function __construct() {
+    public function __construct($fileRoot) {
+        $this->fileRoot = $fileRoot;
+
         $renderer = new BlockRenderer();
 
         // register scripts
@@ -44,7 +47,7 @@ class RegisterGutenbergBlocks {
     public function registerGutenbergScript($name, $file) {
         wp_register_script(
             $name,
-            plugins_url( '../dist/' . $file, __FILE__ ),
+            plugins_url('/dist/' . $file, $this->fileRoot),
             ['wp-blocks', 'wp-element', 'wp-editor', 'wp-i18n', 'wp-components', 'wp-api-fetch']
         );
     }

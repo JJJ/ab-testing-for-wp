@@ -5,7 +5,7 @@ const mode = process.env.NODE_ENV || 'development';
 module.exports = {
   mode,
   entry: {
-    cookies: './cookies.js',
+    'ab-testing-for-wp': './ab-testing-for-wp.js',
     'ab-test': './blocks/ab-test.js',
     'ab-test-variant': './blocks/ab-test-variant.js',
   },
