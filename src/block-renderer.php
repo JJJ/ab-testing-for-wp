@@ -80,20 +80,6 @@ class BlockRenderer {
             . '</div>';
     }
 
-    private function findTestInContent($content, $testId) {
-        preg_match_all('/<!-- wp:ab-testing-for-wp\/ab-test-block (.+) -->/', $content, $matches);
-
-        foreach ($matches[1] as $data) {
-            $testData = json_decode($data, true);
-            
-            if ($testData['id'] === $testId) {
-                return $testData;
-            }
-        }
-
-        return false;
-    }
-
     public function resolveVariant($request) {
         if (!$request->get_param('test') || !$request->get_param('post')) {
             return new WP_Error('rest_invalid_request', 'Missing test or post parameter.', ['status' => 400]);
@@ -107,14 +93,14 @@ class BlockRenderer {
         $content = $content_post->post_content;
 
         // find the json data of the test in the post
-        $testData = $this->findTestInContent($content, $testId);
+        $testData = ABTestContentParser::findTestInContent($content, $testId);
         
         if (!$testData) {
             return new WP_Error('rest_invalid_request', 'Could not find test data on post.', ['status' => 400]);
         }
 
         // extract data
-        $isEnabled = $testData['isEnabled'];
+        $isEnabled = isset($testData['isEnabled']) && $testData['isEnabled'];
         $variants = $testData['variants'];
         $control = $testData['control'];
 
