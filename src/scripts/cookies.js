@@ -19,11 +19,16 @@ function handleCookieData() {
 
     // get variant from server
     apiFetch({ path: `/ab-testing-for-wp/v1/ab-test?test=${testId}&post=${postId}` })
-      .then(console.log)
-      .catch(console.error);
-  }
+      .then((variant) => {
+        if (variant.html) {
+          test.innerHTML = variant.html;
+        }
 
-  Cookies.set(cookieKey, Object.assign({}, cookieData, newData), { expires: 30 });
+        newData[testId] = variant.id;
+
+        Cookies.set(cookieKey, Object.assign({}, cookieData, newData), { expires: 30 });
+      });
+  }
 }
 
 document.addEventListener('DOMContentLoaded', handleCookieData);
