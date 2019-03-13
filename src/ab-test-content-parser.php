@@ -4,7 +4,7 @@ namespace ABTestingForWP;
 
 class ABTestContentParser {
 
-    private static function testDataFromContent($content) {
+    public static function testDataFromContent($content) {
         preg_match_all('/<!-- wp:ab-testing-for-wp\/ab-test-block (.+) -->/', $content, $matches);
 
         $testData = [];
