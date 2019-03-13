@@ -4,11 +4,11 @@ namespace ABTestingForWP;
 
 class BlockRenderer {
   
-    private function randomTestDistributionPosition($tests) {
+    private function randomTestDistributionPosition($variants) {
         $max = array_reduce(
-            $tests, 
-            function ($acc, $test) { 
-                return $acc + $test['distribution']; 
+            $variants, 
+            function ($acc, $variant) { 
+                return $acc + $variant['distribution']; 
             }, 
             0
         );
@@ -16,15 +16,15 @@ class BlockRenderer {
         return rand(1, $max);
     }
 
-    private function pickTestAt($tests, $number) {
+    private function pickVariantAt($variants, $number) {
         $total = 0;
 
-        for ($i = 0; $i < sizeof($tests); $i++) {
-            $test = $tests[$i];
-            $total = $total + $test['distribution'];
+        for ($i = 0; $i < sizeof($variants); $i++) {
+            $variant = $variants[$i];
+            $total = $total + $variant['distribution'];
 
             if ($number <= $total) {
-                return $test;
+                return $variant;
             }
         }
     }
@@ -43,37 +43,37 @@ class BlockRenderer {
         return $doc->saveXML($nodes[0]);
     }
 
-    private function getTest($tests, $parentId) {
+    private function getVariant($variants, $testId) {
         if (isset($_COOKIE['ab-testing-for-wp'])) {
             $cookieData = get_object_vars(json_decode(stripslashes($_COOKIE['ab-testing-for-wp'])));
 
-            if (isset($cookieData[$parentId])) {
-                for ($i = 0; $i < sizeof($tests); $i++) {
-                    if ($tests[$i]['id'] === $cookieData[$parentId]) {
-                        return $tests[$i];
+            if (isset($cookieData[$testId])) {
+                for ($i = 0; $i < sizeof($variants); $i++) {
+                    if ($variants[$i]['id'] === $cookieData[$testId]) {
+                        return $variants[$i];
                     }
                 }
             }
         }
 
-        return $this->pickTestAt($tests, $this->randomTestDistributionPosition($tests));
+        return $this->pickVariantAt($variants, $this->randomTestDistributionPosition($variants));
     }
 
-    private function wrapData($parentId, $variantId, $content) {
-        return '<div class="ABTestWrapper" data-test="' . $parentId . '" data-variant="' . $variantId . '">' . $content . '</div>';
+    private function wrapData($testId, $variantId, $content) {
+        return '<div class="ABTestWrapper" data-test="' . $testId . '" data-variant="' . $variantId . '">' . $content . '</div>';
     }
 
     public function renderTest($attributes, $content) {
-        $tests = $attributes['tests'];
-        $parentId = $attributes['id'];
+        $variants = $attributes['variants'];
+        $testId = $attributes['id'];
 
-        $variant = $this->getTest($tests, $parentId);
+        $variant = $this->getVariant($variants, $testId);
 
         if (!isset($variant)) {
             return '';
         }
 
-        return $this->wrapData($parentId, $variant['id'], $this->getVariantContent($content, $variant['id']));
+        return $this->wrapData($testId, $variant['id'], $this->getVariantContent($content, $variant['id']));
     }
 
 }

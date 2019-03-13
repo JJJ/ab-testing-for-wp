@@ -1,6 +1,6 @@
 declare var wp: any;
 
-declare type ABTest = {
+declare type ABTestVariant = {
   id: string;
   name: string;
   selected: boolean;

@@ -7,15 +7,15 @@ const { __, sprintf } = i18n;
 const { InnerBlocks } = editor;
 
 type ABTestBlockChildProps = {
-  attributes: ABTest;
+  attributes: ABTestVariant;
 } & GutenbergProps;
 
 const disallowedBlocks = [
   'ab-testing-for-wp/ab-test-block',
-  'ab-testing-for-wp/ab-test-block-child',
+  'ab-testing-for-wp/ab-test-block-variant',
 ];
 
-registerBlockType('ab-testing-for-wp/ab-test-block-child', {
+registerBlockType('ab-testing-for-wp/ab-test-block-variant', {
   title: __('A/B test variant'),
   icon: 'admin-settings',
   category: 'widgets',
@@ -46,13 +46,13 @@ registerBlockType('ab-testing-for-wp/ab-test-block-child', {
 
     const template = [
       ['core/heading', {
-        content: sprintf(__('A/B Test variant "%s"'), name),
+        content: sprintf(__('A/B Test Variant "%s"'), name),
         level: 4,
       }],
       ['core/button', {
-        text: sprintf(__('Button for test "%s"'), name),
+        text: sprintf(__('Button for Test Variant "%s"'), name),
       }],
-      ['core/paragraph', { placeholder: sprintf(__('Enter content for test variant "%s"'), name) }],
+      ['core/paragraph', { placeholder: sprintf(__('Enter content or add blocks for test variant "%s"'), name) }],
     ];
 
     const allowedBlocks = wp.blocks.getBlockTypes()
@@ -60,7 +60,7 @@ registerBlockType('ab-testing-for-wp/ab-test-block-child', {
       .filter(typeName => disallowedBlocks.indexOf(typeName) === -1);
 
     return (
-      <div className={`ABTestChild ABTestChild--${id}`}>
+      <div className={`ABTestVariant ABTestVariant--${id}`}>
         <InnerBlocks
           template={template}
           templateLock={false}

@@ -6,40 +6,40 @@ const { __, sprintf } = i18n;
 const { PanelBody, RangeControl } = components;
 
 type DistributionSettingsProps = {
-  tests: ABTest[];
-  onUpdateTests: (tests: ABTest[]) => void;
+  variants: ABTestVariant[];
+  onUpdateVariants: (variants: ABTestVariant[]) => void;
 };
 
-function DistributionSettings({ tests, onUpdateTests }: DistributionSettingsProps) {
+function DistributionSettings({ variants, onUpdateVariants }: DistributionSettingsProps) {
   const onUpdateDistribution = (id: string, newDistribution: number) => {
-    const otherTests = tests.filter(test => test.id !== id);
-    const combinedLeft = otherTests.reduce((a, b) => a + (b.distribution || 0), 0);
+    const otherVariants = variants.filter(test => test.id !== id);
+    const combinedLeft = otherVariants.reduce((a, b) => a + (b.distribution || 0), 0);
     const rate = combinedLeft !== 0 ? (100 - newDistribution) / combinedLeft : 0;
 
-    onUpdateTests(tests.map((test) => {
-      if (test.id === id) {
+    onUpdateVariants(variants.map((variant) => {
+      if (variant.id === id) {
         return {
-          ...test,
+          ...variant,
           distribution: newDistribution,
         };
       }
 
       return {
-        ...test,
+        ...variant,
         distribution: Math.round(combinedLeft === 0
-          ? (100 - newDistribution) / otherTests.length
-          : test.distribution * rate),
+          ? (100 - newDistribution) / otherVariants.length
+          : variant.distribution * rate),
       };
     }));
   };
 
   return (
     <PanelBody title={__('Variation distribution')}>
-      {tests.map(test => (
+      {variants.map(variant => (
         <RangeControl
-          label={sprintf(__('Variation %s'), test.name)}
-          value={test.distribution}
-          onChange={nextDistribution => onUpdateDistribution(test.id, nextDistribution)}
+          label={sprintf(__('Variation %s'), variant.name)}
+          value={variant.distribution}
+          onChange={nextDistribution => onUpdateDistribution(variant.id, nextDistribution)}
           min={0}
           max={100}
         />

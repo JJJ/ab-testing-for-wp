@@ -8,7 +8,7 @@ import {
   editor,
 } from '../WP';
 
-import TestSelector from '../components/TestSelector/TestSelector';
+import VariantSelector from '../components/VariantSelector/VariantSelector';
 import BoxShadow from '../components/BoxShadow/BoxShadow';
 import DistributionSettings from '../components/DistributionSettings/DistributionSettings';
 import PageSelector from '../components/PageSelector/PageSelector';
@@ -20,14 +20,15 @@ const { InnerBlocks, InspectorControls } = editor;
 type ABTestBlockProps = {
   attributes: {
     id: string;
-    tests: ABTest[];
+    variants: ABTestVariant[];
+    control: string;
     pageGoal: number;
   };
 } & GutenbergProps;
 
-const ALLOWED_BLOCKS = ['ab-testing-for-wp/ab-test-block-child'];
+const ALLOWED_BLOCKS = ['ab-testing-for-wp/ab-test-block-variant'];
 
-const defaultTests: ABTest[] = [
+const defaultVariants: ABTestVariant[] = [
   {
     id: uniqueString(),
     name: 'A',
@@ -42,11 +43,11 @@ const defaultTests: ABTest[] = [
   },
 ];
 
-const makeTemplate = test => ['ab-testing-for-wp/ab-test-block-child', test];
+const makeTemplate = variant => ['ab-testing-for-wp/ab-test-block-variant', variant];
 
 registerBlockType('ab-testing-for-wp/ab-test-block', {
   title: __('A/B test'),
-  description: __('A/B test container which contains the possible tests.'),
+  description: __('A/B test container which contains the possible variants.'),
   icon: 'admin-settings',
   category: 'widgets',
   attributes: {
@@ -54,9 +55,13 @@ registerBlockType('ab-testing-for-wp/ab-test-block', {
       type: 'string',
       default: '',
     },
-    tests: {
+    variants: {
       type: 'array',
       default: [],
+    },
+    control: {
+      type: 'string',
+      default: '',
     },
     pageGoal: {
       type: 'number',
@@ -66,34 +71,36 @@ registerBlockType('ab-testing-for-wp/ab-test-block', {
   edit(props: ABTestBlockProps) {
     const { attributes, setAttributes } = props;
 
-    const { id, tests, pageGoal } = attributes;
+    const { id, variants, pageGoal } = attributes;
 
     // initialize attributes
     if (!id) {
       setAttributes({
         id: uniqueString(),
-        tests: defaultTests,
+        variants: defaultVariants,
       });
     }
 
-    const onSelectTest = (testId: string) => {
+    const onSelectVariant = (variantId: string) => {
       setAttributes({
-        tests: tests.map(test => ({ ...test, selected: test.id === testId })),
+        variants: variants.map(variant => ({ ...variant, selected: variant.id === variantId })),
       });
     };
 
-    const onUpdateTests = (newTests: ABTest[]) => setAttributes({ tests: newTests });
+    const onUpdateVariants = (newVariants: ABTestVariant[]) => setAttributes({
+      variants: newVariants,
+    });
 
     const onPageGoalChange = (page: number) => setAttributes({ pageGoal: page });
 
-    const selectedTest = tests.find(test => !!test.selected);
+    const selectedVariant = variants.find(test => !!test.selected);
 
     const css = `
-      .ABTestChild { 
+      .ABTestVariant { 
         display: none;
       }
       
-      .ABTestChild--${selectedTest && selectedTest.id ? selectedTest.id : ''} { 
+      .ABTestVariant--${selectedVariant && selectedVariant.id ? selectedVariant.id : ''} { 
         display: block!important; 
       }
     `;
@@ -103,8 +110,8 @@ registerBlockType('ab-testing-for-wp/ab-test-block', {
         <style>{css}</style>
         <InspectorControls>
           <DistributionSettings
-            tests={tests}
-            onUpdateTests={onUpdateTests}
+            variants={variants}
+            onUpdateVariants={onUpdateVariants}
           />
           <PageSelector
             value={pageGoal}
@@ -113,12 +120,12 @@ registerBlockType('ab-testing-for-wp/ab-test-block', {
         </InspectorControls>
         <InnerBlocks
           templateLock="all"
-          template={tests.map(makeTemplate)}
+          template={variants.map(makeTemplate)}
           allowedBlocks={ALLOWED_BLOCKS}
         />
-        <TestSelector
-          tests={tests}
-          onSelectTest={onSelectTest}
+        <VariantSelector
+          variants={variants}
+          onSelectVariant={onSelectVariant}
         />
         <BoxShadow />
       </div>
