@@ -2,8 +2,6 @@
 
 namespace ABTestingForWP;
 
-require __DIR__ . '/block-renderer.php';
-
 class RegisterGutenbergBlocks {
 
     public function __construct() {

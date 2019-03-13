@@ -46,7 +46,7 @@ class BlockRenderer {
 
     private function pickVariant($variants, $testId) {
         if (isset($_COOKIE['ab-testing-for-wp'])) {
-            $cookieData = get_object_vars(json_decode(stripslashes($_COOKIE['ab-testing-for-wp'])));
+            $cookieData = json_decode(stripslashes($_COOKIE['ab-testing-for-wp']), true);
 
             if (isset($cookieData[$testId])) {
                 // make sure variant is still in varients
@@ -73,25 +73,71 @@ class BlockRenderer {
         return $variants[0];
     }
 
-    private function encodeURIComponent($str) {
-        $revert = array('%21'=>'!', '%2A'=>'*', '%27'=>"'", '%28'=>'(', '%29'=>')');
-        return strtr(rawurlencode($str), $revert);
-    }
-
-    private function variantScriptHTML($controlVariantId, $variantId, $variantContent) {
-        if ($controlVariantId === $variantId) {
-            return '';
-        }
-
-        return '<script>window.abTestForWP=window.abTestForWP||{};window.abTestForWP["' . $variantId . '"]="' . $this->encodeURIComponent($variantContent) . '"</script>';
-    }
-
-    private function wrapData($testId, $controlVariantId, $variantId, $controlContent, $variantContent) {
+    private function wrapData($testId, $postId, $controlContent) {
         return 
-            '<div class="ABTestWrapper" data-test="' . $testId . '" data-variant="' . $variantId . '" data-control-id="' . $controlVariantId . '">'
-                . $this->variantScriptHTML($controlVariantId, $variantId, $variantContent)
+            '<div class="ABTestWrapper" data-test="' . $testId . '" data-post="' . $postId . '">'
                 . $controlContent
             . '</div>';
+    }
+
+    private function findTestInContent($content, $testId) {
+        preg_match_all('/<!-- wp:ab-testing-for-wp\/ab-test-block (.+) -->/', $content, $matches);
+
+        foreach ($matches[1] as $data) {
+            $testData = json_decode($data, true);
+            
+            if ($testData['id'] === $testId) {
+                return $testData;
+            }
+        }
+
+        return false;
+    }
+
+    public function resolveVariant($request) {
+        if (!$request->get_param('test') || !$request->get_param('post')) {
+            return new WP_Error('rest_invalid_request', 'Missing test or post parameter.', ['status' => 400]);
+        }
+
+        $testId = $request->get_param('test');
+        $postId = $request->get_param('post');
+
+        // get contents of the post to extract gutenberg block
+        $content_post = get_post($postId);
+        $content = $content_post->post_content;
+
+        // find the json data of the test in the post
+        $testData = $this->findTestInContent($content, $testId);
+        
+        if (!$testData) {
+            return new WP_Error('rest_invalid_request', 'Could not find test data on post.', ['status' => 400]);
+        }
+
+        // extract data
+        $isEnabled = $testData['isEnabled'];
+        $variants = $testData['variants'];
+        $control = $testData['control'];
+
+        // get control variant of the test
+        $controlVariant = $this->getControlVariant($variants, $testId, $control);
+
+        // pick a variant of the test
+        $pickedVariant = $isEnabled ? $this->pickVariant($variants, $testId) : $controlVariant;
+
+        $variantId = $pickedVariant['id'];
+
+        // skip parsing HTML if control
+        if ($variantId === $control) {
+            return rest_ensure_response([ 'id' => $variantId ]);
+        }
+
+        // parse HTML of the test and send
+        $variantContent = apply_filters('the_content', $this->getVariantContent($content, $variantId));
+
+        return rest_ensure_response([
+            'id' => $variantId,
+            'html' => $variantContent,
+        ]);
     }
 
     public function renderTest($attributes, $content) {
@@ -106,14 +152,10 @@ class BlockRenderer {
             return '';
         }
 
-        $pickedVariant = $isEnabled ? $this->pickVariant($variants, $testId) : $controlVariant;
-
         return $this->wrapData(
-            $testId, 
-            $controlVariant['id'],
-            $pickedVariant['id'],
-            $this->getVariantContent($content, $controlVariant['id']),
-            $this->getVariantContent($content, $pickedVariant['id'])
+            $testId,
+            get_the_ID(),
+            $this->getVariantContent($content, $controlVariant['id'])
         );
     }
 
