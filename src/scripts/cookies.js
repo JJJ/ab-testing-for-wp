@@ -5,6 +5,7 @@ import Cookies from 'js-cookie';
 function handleCookieData() {
   const cookieKey = 'ab-testing-for-wp';
   const cookieData = JSON.parse(Cookies.get(cookieKey) || '{}');
+  const variantContents = window.abTestForWP || {};
 
   const testsOnPage = document.getElementsByClassName('ABTestWrapper');
 
@@ -23,11 +24,11 @@ function handleCookieData() {
 
     // if variant id is not control, switch content
     if (variantId !== controlId) {
-      const content = window.abTestForWP[variantId];
+      const content = variantContents[variantId];
 
-      if (!content) return;
-
-      test.innerHTML = decodeURIComponent(window.abTestForWP[variantId]);
+      if (content) {
+        test.innerHTML = decodeURIComponent(variantContents[variantId]);
+      }
     }
   }
 
