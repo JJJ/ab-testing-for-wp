@@ -2,10 +2,11 @@
 
 import Cookies from 'js-cookie';
 
+const { apiFetch } = window.wp;
+
 function handleCookieData() {
   const cookieKey = 'ab-testing-for-wp';
   const cookieData = JSON.parse(Cookies.get(cookieKey) || '{}');
-  const variantContents = window.abTestForWP || {};
 
   const testsOnPage = document.getElementsByClassName('ABTestWrapper');
 
@@ -13,23 +14,13 @@ function handleCookieData() {
 
   for (let i = 0; i < testsOnPage.length; i += 1) {
     const test = testsOnPage[i];
-    const testId = test.getAttribute('data-test');
-    const variantId = test.getAttribute('data-variant');
-    const controlId = test.getAttribute('data-control');
+    const testId = (test.getAttribute('data-test')) || '';
+    const postId = (test.getAttribute('data-post')) || '';
 
-    // save variant id to cookie
-    if (testId && !cookieData[testId]) {
-      newData[testId] = variantId;
-    }
-
-    // if variant id is not control, switch content
-    if (variantId !== controlId) {
-      const content = variantContents[variantId];
-
-      if (content) {
-        test.innerHTML = decodeURIComponent(variantContents[variantId]);
-      }
-    }
+    // get variant from server
+    apiFetch({ path: `/ab-testing-for-wp/v1/ab-test?test=${testId}&post=${postId}` })
+      .then(console.log)
+      .catch(console.error);
   }
 
   Cookies.set(cookieKey, Object.assign({}, cookieData, newData), { expires: 30 });
