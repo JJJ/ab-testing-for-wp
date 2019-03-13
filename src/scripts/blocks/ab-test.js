@@ -12,6 +12,7 @@ import VariantSelector from '../components/VariantSelector/VariantSelector';
 import BoxShadow from '../components/BoxShadow/BoxShadow';
 import DistributionSettings from '../components/DistributionSettings/DistributionSettings';
 import PageSelector from '../components/PageSelector/PageSelector';
+import ControlSelector from '../components/ControlSelector/ControlSelector';
 
 const { __ } = i18n;
 const { registerBlockType } = blocks;
@@ -56,7 +57,7 @@ registerBlockType('ab-testing-for-wp/ab-test-block', {
   edit(props: ABTestBlockProps) {
     const { attributes, setAttributes } = props;
 
-    const { id, variants, pageGoal } = attributes;
+    const { id, variants, pageGoal, control } = attributes;
 
     // initialize attributes
     if (!id) {
@@ -78,6 +79,8 @@ registerBlockType('ab-testing-for-wp/ab-test-block', {
       setAttributes({
         id: uniqueString(),
         variants: defaultVariants,
+        pageGoal: 0,
+        control: defaultVariants[0].id,
       });
     }
 
@@ -86,12 +89,11 @@ registerBlockType('ab-testing-for-wp/ab-test-block', {
         variants: variants.map(variant => ({ ...variant, selected: variant.id === variantId })),
       });
     };
-
     const onUpdateVariants = (newVariants: ABTestVariant[]) => setAttributes({
       variants: newVariants,
     });
-
     const onPageGoalChange = (page: number) => setAttributes({ pageGoal: page });
+    const onControlChange = (variantId: string) => setAttributes({ control: variantId });
 
     const selectedVariant = variants.find(test => !!test.selected);
 
@@ -116,6 +118,11 @@ registerBlockType('ab-testing-for-wp/ab-test-block', {
           <PageSelector
             value={pageGoal}
             onChange={onPageGoalChange}
+          />
+          <ControlSelector
+            value={control}
+            variants={variants}
+            onChange={onControlChange}
           />
         </InspectorControls>
         <InnerBlocks
