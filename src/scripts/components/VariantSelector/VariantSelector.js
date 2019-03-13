@@ -26,7 +26,7 @@ function VariantSelector({ variants, onSelectVariant }: VariantSelectorProps) {
             {variant.name}
           </IconButton>
         ))}
-        <IconButton icon="ellipsis" />
+        <IconButton icon="admin-generic" />
       </ButtonGroup>
     </div>
   );

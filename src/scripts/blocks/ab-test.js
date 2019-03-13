@@ -28,21 +28,6 @@ type ABTestBlockProps = {
 
 const ALLOWED_BLOCKS = ['ab-testing-for-wp/ab-test-block-variant'];
 
-const defaultVariants: ABTestVariant[] = [
-  {
-    id: uniqueString(),
-    name: 'A',
-    selected: true,
-    distribution: 50,
-  },
-  {
-    id: uniqueString(),
-    name: 'B',
-    selected: false,
-    distribution: 50,
-  },
-];
-
 const makeTemplate = variant => ['ab-testing-for-wp/ab-test-block-variant', variant];
 
 registerBlockType('ab-testing-for-wp/ab-test-block', {
@@ -75,6 +60,21 @@ registerBlockType('ab-testing-for-wp/ab-test-block', {
 
     // initialize attributes
     if (!id) {
+      const defaultVariants: ABTestVariant[] = [
+        {
+          id: uniqueString(),
+          name: 'A',
+          selected: true,
+          distribution: 50,
+        },
+        {
+          id: uniqueString(),
+          name: 'B',
+          selected: false,
+          distribution: 50,
+        },
+      ];
+
       setAttributes({
         id: uniqueString(),
         variants: defaultVariants,
@@ -96,17 +96,17 @@ registerBlockType('ab-testing-for-wp/ab-test-block', {
     const selectedVariant = variants.find(test => !!test.selected);
 
     const css = `
-      .ABTestVariant { 
+      .ABTest--${id} .ABTestVariant { 
         display: none;
       }
       
-      .ABTestVariant--${selectedVariant && selectedVariant.id ? selectedVariant.id : ''} { 
+      .ABTest--${id} .ABTestVariant--${selectedVariant && selectedVariant.id ? selectedVariant.id : ''} { 
         display: block!important; 
       }
     `;
 
     return (
-      <div>
+      <div className={`ABTest--${id}`}>
         <style>{css}</style>
         <InspectorControls>
           <DistributionSettings
