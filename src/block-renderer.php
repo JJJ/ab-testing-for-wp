@@ -26,6 +26,8 @@ class BlockRenderer {
                 return $variant;
             }
         }
+
+        return $variants[0];
     }
 
     private function getVariantContent($content, $id) {
@@ -42,11 +44,12 @@ class BlockRenderer {
         return $doc->saveXML($nodes[0]);
     }
 
-    private function getVariant($variants, $testId, $control, $isEnabled) {
-        if ($isEnabled && isset($_COOKIE['ab-testing-for-wp'])) {
+    private function pickVariant($variants, $testId) {
+        if (isset($_COOKIE['ab-testing-for-wp'])) {
             $cookieData = get_object_vars(json_decode(stripslashes($_COOKIE['ab-testing-for-wp'])));
 
             if (isset($cookieData[$testId])) {
+                // make sure variant is still in varients
                 foreach ($variants as $variant) {
                     if ($variant['id'] === $cookieData[$testId]) {
                         return $variant;
@@ -55,6 +58,10 @@ class BlockRenderer {
             }
         }
 
+        return $this->pickVariantAt($variants, $this->randomTestDistributionPosition($variants));
+    }
+
+    private function getControlVariant($variants, $testId, $control) {
         // get control variant version
         foreach ($variants as $variant) {
             if ($variant['id'] === $control) {
@@ -66,8 +73,25 @@ class BlockRenderer {
         return $variants[0];
     }
 
-    private function wrapData($testId, $variantId, $content) {
-        return '<div class="ABTestWrapper" data-test="' . $testId . '" data-variant="' . $variantId . '">' . $content . '</div>';
+    private function encodeURIComponent($str) {
+        $revert = array('%21'=>'!', '%2A'=>'*', '%27'=>"'", '%28'=>'(', '%29'=>')');
+        return strtr(rawurlencode($str), $revert);
+    }
+
+    private function variantScriptHTML($controlVariantId, $variantId, $variantContent) {
+        if ($controlVariantId === $variantId) {
+            return '';
+        }
+
+        return '<script>window.abTestForWP=window.abTestForWP||{};window.abTestForWP["' . $variantId . '"]="' . $this->encodeURIComponent($variantContent) . '"</script>';
+    }
+
+    private function wrapData($testId, $controlVariantId, $variantId, $controlContent, $variantContent) {
+        return 
+            '<div class="ABTestWrapper" data-test="' . $testId . '" data-variant="' . $variantId . '" data-control-id="' . $controlVariantId . '">'
+                . $this->variantScriptHTML($controlVariantId, $variantId, $variantContent)
+                . $controlContent
+            . '</div>';
     }
 
     public function renderTest($attributes, $content) {
@@ -76,13 +100,21 @@ class BlockRenderer {
         $control = $attributes['control'];
         $isEnabled = isset($attributes['isEnabled']) ? $attributes['isEnabled'] : false;
 
-        $variant = $this->getVariant($variants, $testId, $control, $isEnabled);
+        $controlVariant = $this->getControlVariant($variants, $testId, $control);
 
-        if (!isset($variant)) {
+        if (!isset($controlVariant)) {
             return '';
         }
 
-        return $this->wrapData($testId, $variant['id'], $this->getVariantContent($content, $variant['id']));
+        $pickedVariant = $isEnabled ? $this->pickVariant($variants, $testId) : $controlVariant;
+
+        return $this->wrapData(
+            $testId, 
+            $controlVariant['id'],
+            $pickedVariant['id'],
+            $this->getVariantContent($content, $controlVariant['id']),
+            $this->getVariantContent($content, $pickedVariant['id'])
+        );
     }
 
 }
