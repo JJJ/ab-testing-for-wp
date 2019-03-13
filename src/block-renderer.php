@@ -42,8 +42,8 @@ class BlockRenderer {
         return $doc->saveXML($nodes[0]);
     }
 
-    private function getVariant($variants, $testId, $control) {
-        if (isset($_COOKIE['ab-testing-for-wp'])) {
+    private function getVariant($variants, $testId, $control, $isEnabled) {
+        if ($isEnabled && isset($_COOKIE['ab-testing-for-wp'])) {
             $cookieData = get_object_vars(json_decode(stripslashes($_COOKIE['ab-testing-for-wp'])));
 
             if (isset($cookieData[$testId])) {
@@ -74,8 +74,9 @@ class BlockRenderer {
         $variants = $attributes['variants'];
         $testId = $attributes['id'];
         $control = $attributes['control'];
+        $isEnabled = isset($attributes['isEnabled']) ? $attributes['isEnabled'] : false;
 
-        $variant = $this->getVariant($variants, $testId, $control);
+        $variant = $this->getVariant($variants, $testId, $control, $isEnabled);
 
         if (!isset($variant)) {
             return '';
