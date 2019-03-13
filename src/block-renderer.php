@@ -19,8 +19,7 @@ class BlockRenderer {
     private function pickVariantAt($variants, $number) {
         $total = 0;
 
-        for ($i = 0; $i < sizeof($variants); $i++) {
-            $variant = $variants[$i];
+        foreach ($variants as $variant) {
             $total = $total + $variant['distribution'];
 
             if ($number <= $total) {
@@ -43,20 +42,28 @@ class BlockRenderer {
         return $doc->saveXML($nodes[0]);
     }
 
-    private function getVariant($variants, $testId) {
+    private function getVariant($variants, $testId, $control) {
         if (isset($_COOKIE['ab-testing-for-wp'])) {
             $cookieData = get_object_vars(json_decode(stripslashes($_COOKIE['ab-testing-for-wp'])));
 
             if (isset($cookieData[$testId])) {
-                for ($i = 0; $i < sizeof($variants); $i++) {
-                    if ($variants[$i]['id'] === $cookieData[$testId]) {
-                        return $variants[$i];
+                foreach ($variants as $variant) {
+                    if ($variant['id'] === $cookieData[$testId]) {
+                        return $variant;
                     }
                 }
             }
         }
 
-        return $this->pickVariantAt($variants, $this->randomTestDistributionPosition($variants));
+        // get control variant version
+        foreach ($variants as $variant) {
+            if ($variant['id'] === $control) {
+                return $variant;
+            }
+        }
+
+        // when all else fails... return the first variant
+        return $variants[0];
     }
 
     private function wrapData($testId, $variantId, $content) {
@@ -66,8 +73,9 @@ class BlockRenderer {
     public function renderTest($attributes, $content) {
         $variants = $attributes['variants'];
         $testId = $attributes['id'];
+        $control = $attributes['control'];
 
-        $variant = $this->getVariant($variants, $testId);
+        $variant = $this->getVariant($variants, $testId, $control);
 
         if (!isset($variant)) {
             return '';
