@@ -23,12 +23,22 @@ class RegisterGutenbergBlocks {
         ]);
 
         // register meta field
-        register_meta('post', 'ab-testing-for-wp/ab-test-block', [
+        register_meta('post', 'ab-testing-for-wp_test-data', [
             'show_in_rest' => true,
             'single' => true,
         ]);
 
-        add_action('save_post', 'my_project_updated_send_email');
+        // update test data meta on saving posts
+        add_action('save_post', [$this, 'updateTestDataMeta']);
+    }
+
+    public function updateTestDataMeta($postId) {
+        $content_post = get_post($postId);
+        $content = $content_post->post_content;
+
+        $testData = ABTestContentParser::testDataFromContent($content);
+
+        update_post_meta($postId, 'ab-testing-for-wp_test-data', json_encode($testData));
     }
 
     public function registerGutenbergScript($name, $file) {
