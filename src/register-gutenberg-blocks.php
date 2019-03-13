@@ -21,6 +21,14 @@ class RegisterGutenbergBlocks {
         register_block_type('ab-testing-for-wp/ab-test-block-variant', [
             'editor_script' => 'ab-testing-for-wp_ab-test-block-variant',
         ]);
+
+        // register meta field
+        register_meta('post', 'ab-testing-for-wp/ab-test-block', [
+            'show_in_rest' => true,
+            'single' => true,
+        ]);
+
+        add_action('save_post', 'my_project_updated_send_email');
     }
 
     public function registerGutenbergScript($name, $file) {

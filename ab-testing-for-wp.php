@@ -25,31 +25,10 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-namespace ABTestingForWP;
-
 if ( ! defined( 'ABSPATH' ) ) {
 	header( 'Status: 403 Forbidden' );
 	header( 'HTTP/1.1 403 Forbidden' );
 	exit;
 }
 
-require __DIR__ . '/src/block-renderer.php';
-require __DIR__ . '/src/register-gutenberg-blocks.php';
-require __DIR__ . '/src/register-render-scripts.php';
-require __DIR__ . '/src/register-rest.php';
-
-function bootstrap() {
-    if(!is_admin()) {
-        new RegisterRenderScripts();
-    }
-
-    new RegisterGutenbergBlocks();
-}
-
-function bootstrapREST() {
-    new RegisterREST();
-}
-
-// register WordPress hooks
-add_action('init', 'ABTestingForWP\\bootstrap');
-add_action('rest_api_init', 'ABTestingForWP\\bootstrapREST');
+require __DIR__ . '/src/main.php';
