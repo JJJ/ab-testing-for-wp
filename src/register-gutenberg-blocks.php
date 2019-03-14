@@ -9,6 +9,7 @@ class RegisterGutenbergBlocks {
         $this->fileRoot = $fileRoot;
 
         $renderer = new BlockRenderer();
+        $testManager = new ABTestManager();
 
         // register scripts
         $this->registerGutenbergScript('ab-testing-for-wp_ab-test-block', 'ab-test.js');
@@ -25,23 +26,8 @@ class RegisterGutenbergBlocks {
             'editor_script' => 'ab-testing-for-wp_ab-test-block-variant',
         ]);
 
-        // register meta field
-        register_meta('post', 'ab-testing-for-wp_test-data', [
-            'show_in_rest' => true,
-            'single' => true,
-        ]);
-
         // update test data meta on saving posts
-        add_action('save_post', [$this, 'updateTestDataMeta']);
-    }
-
-    public function updateTestDataMeta($postId) {
-        $content_post = get_post($postId);
-        $content = $content_post->post_content;
-
-        $testData = ABTestContentParser::testDataFromContent($content);
-
-        update_post_meta($postId, 'ab-testing-for-wp_test-data', json_encode($testData));
+        add_action('save_post', [$testManager, 'updateBlockData']);
     }
 
     public function registerGutenbergScript($name, $file) {
