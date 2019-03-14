@@ -36,6 +36,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 require __DIR__ . '/src/ab-test-content-parser.php';
 require __DIR__ . '/src/ab-test-tracking.php';
 require __DIR__ . '/src/block-renderer.php';
+require __DIR__ . '/src/installer.php';
 require __DIR__ . '/src/register-gutenberg-blocks.php';
 require __DIR__ . '/src/register-render-scripts.php';
 require __DIR__ . '/src/register-rest.php';
@@ -53,5 +54,6 @@ function bootstrapREST() {
 }
 
 // register WordPress hooks
+new Installer(__FILE__);
 add_action('init', 'ABTestingForWP\\bootstrap');
 add_action('rest_api_init', 'ABTestingForWP\\bootstrapREST');
