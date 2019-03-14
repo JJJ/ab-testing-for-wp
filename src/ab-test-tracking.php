@@ -18,9 +18,26 @@ class ABTestTracking {
             $cookieData = json_decode(stripslashes($_COOKIE['ab-testing-for-wp']), true);
         }
 
-        
+        $abTestManager = new ABTestManager();
+        $variants = $abTestManager->getVariantsByGoal($postId);
 
-        return rest_ensure_response(true);
+        $tracked = [];
+
+        foreach ($variants as $variant) {
+            if (!$variant['isEnabled']) continue;
+
+            if (
+                isset($cookieData[$variant['testId']]) 
+                && $cookieData[$variant['testId']] === $variant['variantId']
+            ) {
+                array_push($tracked, $variant['variantId']);
+                $abTestManager->addTracking($variant['variantId'], 'C');
+            }
+        }
+
+        return rest_ensure_response($tracked);
     }
+
+
 
 }

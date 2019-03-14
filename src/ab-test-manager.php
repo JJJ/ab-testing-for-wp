@@ -6,6 +6,7 @@ class ABTestManager {
     private $wpdb;
     private $variantTable;
     private $abTestTable;
+    private $logTable;
 
     public function __construct() {
         global $wpdb;
@@ -15,6 +16,7 @@ class ABTestManager {
 
         $this->variantTable = $table_prefix . 'ab_testing_for_wp_variant';
         $this->abTestTable = $table_prefix . 'ab_testing_for_wp_ab_test';
+        $this->logTable = $table_prefix . 'ab_testing_for_wp_log';
     }
 
     public function updateBlockData($postId) {
@@ -38,29 +40,50 @@ class ABTestManager {
     public function getStatsByVariation($variantId) {
         $participants = $this->wpdb->get_var("
         SELECT COUNT(variantId)
-        FROM `wp_ab_testing_for_wp_log` 
+        FROM `{$this->logTable}` 
         WHERE variantId = '{$variantId}' AND track = 'P';
         ");
 
         $conversions = $this->wpdb->get_var("
         SELECT COUNT(variantId)
-        FROM `wp_ab_testing_for_wp_log` 
+        FROM `{$this->logTable}` 
         WHERE variantId = '{$variantId}' AND track = 'C';
         ");
 
         return [$participants, $conversions];
     }
 
-    public function getTestsByGoal($postId) {
-        
+    public function getVariantsByGoal($postId) {
+        $variants = $this->wpdb->get_results("
+        SELECT t.id as testId, v.id as variantId, t.isEnabled
+        FROM `{$this->abTestTable}` AS t
+        INNER JOIN `{$this->variantTable}` AS v ON v.testid = t.id       
+        WHERE t.postGoal = {$postId}
+        ");
+
+        return array_map(
+            function ($variant) {
+                $variant = (array) $variant;
+                $variant['isEnabled'] = (bool) $variant['isEnabled'];
+
+                return $variant;
+            },
+            $variants
+        );
+    }
+
+    public function addTracking($variantId, $type) {
+        $this->wpdb->query("
+        INSERT INTO `{$this->logTable}` (variantId, track) VALUES ('{$variantId}', '{$type}');
+        ");
     }
 
     private function wipeTestDataFromPost($postId) {
         $query = "
-        DELETE {$this->variantTable}, {$this->abTestTable}
-        FROM {$this->variantTable}
-        INNER JOIN {$this->abTestTable} ON {$this->variantTable}.testId = {$this->abTestTable}.id
-        WHERE {$this->abTestTable}.postId = {$postId};
+        DELETE `{$this->variantTable}`, `{$this->abTestTable}`
+        FROM `{$this->variantTable}`
+        INNER JOIN `{$this->abTestTable}` ON `{$this->variantTable}`.testId = `{$this->abTestTable}`.id
+        WHERE `{$this->abTestTable}`.postId = {$postId};
         ";
 
         $this->wpdb->query($query);
@@ -70,7 +93,7 @@ class ABTestManager {
         $isEnabled = isset($testData['isEnabled']) && (bool) $testData['isEnabled'] ? 1 : 0;
 
         $query = "
-        REPLACE INTO {$this->abTestTable} (id, postId, isEnabled, started, control, postGoal)
+        REPLACE INTO `{$this->abTestTable}` (id, postId, isEnabled, started, control, postGoal)
         VALUES ('{$testData['id']}', '{$postId}', {$isEnabled}, '', '{$testData['control']}', '{$testData['postGoal']}');
         ";
 
@@ -81,7 +104,7 @@ class ABTestManager {
         list($participants, $conversions) = $this->getStatsByVariation($variant['id']);
 
         $query = "
-        REPLACE INTO {$this->variantTable} (id, testId, name, participants, conversions)
+        REPLACE INTO `{$this->variantTable}` (id, testId, name, participants, conversions)
         VALUES ('{$variant['id']}', '{$testId}', '{$variant['name']}', {$participants}, {$conversions});
         ";
 

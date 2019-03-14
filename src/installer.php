@@ -63,10 +63,11 @@ class Installer {
         // // Variant log table
         $tables_sql[] = "
 		CREATE TABLE IF NOT EXISTS `{$table_prefix}ab_testing_for_wp_log` (
+            `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
             `variantId` varchar(32) NOT NULL DEFAULT '',
             `track` varchar(1) NOT NULL DEFAULT 'P',
-            `date` datetime NOT NULL,
-            PRIMARY KEY (`variantId`,`track`,`date`)
+            `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+            PRIMARY KEY (`id`)
         ) ENGINE = InnoDB {$collate};";
         
         foreach($tables_sql as $sql) {
