@@ -49,7 +49,7 @@ registerBlockType('ab-testing-for-wp/ab-test-block', {
       type: 'boolean',
       default: false,
     },
-    pageGoal: {
+    postGoal: {
       type: 'number',
       default: 0,
     },
@@ -60,7 +60,7 @@ registerBlockType('ab-testing-for-wp/ab-test-block', {
     const {
       id,
       variants,
-      pageGoal,
+      postGoal,
       control,
       isEnabled,
     } = attributes;
@@ -85,7 +85,7 @@ registerBlockType('ab-testing-for-wp/ab-test-block', {
       setAttributes({
         id: uniqueString(),
         variants: defaultVariants,
-        pageGoal: 0,
+        postGoal: 0,
         control: defaultVariants[0].id,
         isEnabled: false,
       });
@@ -99,7 +99,7 @@ registerBlockType('ab-testing-for-wp/ab-test-block', {
     const onUpdateVariants = (newVariants: ABTestVariant[]) => setAttributes({
       variants: newVariants,
     });
-    const onPageGoalChange = (page: number) => setAttributes({ pageGoal: page });
+    const onPostGoalChange = (postId: number) => setAttributes({ postGoal: postId });
     const onControlChange = (variantId: string) => setAttributes({ control: variantId });
     const onEnabledChange = (enabled: boolean) => setAttributes({ isEnabled: enabled });
 
@@ -128,8 +128,8 @@ registerBlockType('ab-testing-for-wp/ab-test-block', {
             onUpdateVariants={onUpdateVariants}
           />
           <PageSelector
-            value={pageGoal}
-            onChange={onPageGoalChange}
+            value={postGoal}
+            onChange={onPostGoalChange}
           />
           <ControlSettings
             value={control}
