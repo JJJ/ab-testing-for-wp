@@ -15,7 +15,7 @@ declare type ABTestAttributes = {
   variants: ABTestVariant[];
   control: string;
   isEnabled: boolean;
-  pageGoal: number;
+  postGoal: number;
 };
 
 declare type GutenbergProps = {
