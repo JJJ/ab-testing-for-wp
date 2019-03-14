@@ -64,8 +64,9 @@ class Installer {
         $tables_sql[] = "
 		CREATE TABLE IF NOT EXISTS `{$table_prefix}ab_testing_for_wp_log` (
             `variantId` varchar(32) NOT NULL DEFAULT '',
+            `track` varchar(1) NOT NULL DEFAULT 'P',
             `date` datetime NOT NULL,
-            PRIMARY KEY (`variantId`,`date`)
+            PRIMARY KEY (`variantId`,`track`,`date`)
         ) ENGINE = InnoDB {$collate};";
         
         foreach($tables_sql as $sql) {
