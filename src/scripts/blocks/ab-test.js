@@ -14,6 +14,7 @@ import DistributionSettings from '../components/DistributionSettings/Distributio
 import PageSelector from '../components/PageSelector/PageSelector';
 import ControlSettings from '../components/ControlSettings/ControlSettings';
 import EnabledSettings from '../components/EnabledSettings/EnabledSettings';
+import TestResults from '../components/TestResults/TestResults';
 
 const { __ } = i18n;
 const { registerBlockType } = blocks;
@@ -123,6 +124,7 @@ registerBlockType('ab-testing-for-wp/ab-test-block', {
             value={isEnabled}
             onChange={onEnabledChange}
           />
+          <TestResults testId={id} />
           <DistributionSettings
             variants={variants}
             onUpdateVariants={onUpdateVariants}
