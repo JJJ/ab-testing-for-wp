@@ -35,6 +35,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 require __DIR__ . '/src/ab-test-content-parser.php';
 require __DIR__ . '/src/ab-test-manager.php';
+require __DIR__ . '/src/ab-test-stats.php';
 require __DIR__ . '/src/ab-test-tracking.php';
 require __DIR__ . '/src/block-renderer.php';
 require __DIR__ . '/src/installer.php';

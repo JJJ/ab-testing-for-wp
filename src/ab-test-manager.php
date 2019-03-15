@@ -42,6 +42,14 @@ class ABTestManager {
         $this->wipeTestDataFromPost($postId);
     }
 
+    public function getStatsByTest($testId) {
+        return $this->wpdb->get_results($this->wpdb->prepare("
+        SELECT id, name, participants, conversions
+        FROM `{$this->variantTable}` 
+        WHERE testId = %s;
+        ", $testId));
+    }
+
     public function getStatsByVariation($variantId) {
         $participants = $this->wpdb->get_var($this->wpdb->prepare("
         SELECT COUNT(variantId)
