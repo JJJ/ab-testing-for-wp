@@ -35,7 +35,15 @@ class RegisterGutenbergBlocks {
         wp_register_script(
             $name,
             plugins_url('/dist/' . $file, $this->fileRoot),
-            ['wp-blocks', 'wp-element', 'wp-editor', 'wp-i18n', 'wp-components', 'wp-api-fetch']
+            [
+                'wp-blocks',
+                'wp-element',
+                'wp-editor',
+                'wp-i18n',
+                'wp-components',
+                'wp-api-fetch',
+                'wp-data',
+            ]
         );
     }
 
