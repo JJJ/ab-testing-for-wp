@@ -11,6 +11,7 @@ class ABTestManager {
     public function __construct() {
         global $wpdb;
         $this->wpdb = $wpdb;
+        $this->wpdb->show_errors();
 
         $table_prefix = $wpdb->prefix;
 
@@ -42,7 +43,7 @@ class ABTestManager {
         SELECT COUNT(variantId)
         FROM `{$this->logTable}` 
         WHERE variantId = %s AND track = 'P';
-        "), $variantId);
+        ", $variantId));
 
         $conversions = $this->wpdb->get_var($this->wpdb->prepare("
         SELECT COUNT(variantId)
