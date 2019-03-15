@@ -124,7 +124,7 @@ registerBlockType('ab-testing-for-wp/ab-test-block', {
             value={isEnabled}
             onChange={onEnabledChange}
           />
-          <TestResults testId={id} />
+          <TestResults isEnabled={isEnabled} testId={id} />
           <DistributionSettings
             variants={variants}
             onUpdateVariants={onUpdateVariants}

@@ -1,14 +1,18 @@
 // @flow @jsx wp.element.createElement
 
 import { Component } from 'react';
+import classNames from 'classnames';
 
 import { apiFetch, components, i18n } from '../../WP';
 
-const { __, sprintf } = i18n;
+import './TestResults.css';
+
+const { __ } = i18n;
 const { PanelBody } = components;
 
 type TestResultsProps = {
   testId: string;
+  isEnabled: boolean;
 };
 
 type TestResultsState = {
@@ -44,25 +48,65 @@ class TestResults extends Component<TestResultsProps, TestResultsState> {
   }
 
   render() {
+    const { isEnabled } = this.props;
     const { results, loading } = this.state;
+
+    if (loading || (!isEnabled && results.reduce((acc, b) => acc + b.participants, 0) === 0)) {
+      return null;
+    }
+
+    const enrichedResults = results
+      .map(result => ({
+        ...result,
+        rate: result.participants === 0
+          ? 0
+          : Math.round((100 / result.participants) * result.conversions),
+        winner: !results
+          .every(variant => result.participants / result.conversions
+            >= variant.participants / variant.conversions),
+      }));
 
     return (
       <PanelBody title={__('Results so far')}>
-        {!loading && (
-          results.map(result => (
-            <div>
-              <div>{sprintf(__('Variation %s'), result.name)}</div>
-              <p>
-                {sprintf(
-                  __('%d%% conversion (%d/%d)'),
-                  Math.round((100 / result.participants) * result.conversions),
-                  result.conversions,
-                  result.participants,
-                )}
-              </p>
-            </div>
-          ))
-        )}
+        <table className="TestResults">
+          <tbody>
+            <tr>
+              <td className="TestResultName">{__('Variation')}</td>
+              {enrichedResults.map(result => (
+                <td
+                  className={classNames(result.winner ? 'TestResultWinner' : 'TestResultLoser', 'TestResultValue')}
+                  key={result.id}
+                >
+                  {result.name}
+                </td>
+              ))}
+            </tr>
+            <tr>
+              <td className="TestResultName">{__('Conversion rate')}</td>
+              {enrichedResults.map(result => (
+                <td
+                  className={classNames(result.winner ? 'TestResultWinner' : 'TestResultLoser', 'TestResultValue')}
+                  key={result.id}
+                >
+                  {result.rate}
+                  %
+                </td>
+              ))}
+            </tr>
+            <tr>
+              <td className="TestResultName">{__('Converts')}</td>
+              {enrichedResults.map(result => (
+                <td className="TestResultValue" key={result.id}>{result.conversions}</td>
+              ))}
+            </tr>
+            <tr>
+              <td className="TestResultName">{__('Participants')}</td>
+              {enrichedResults.map(result => (
+                <td className="TestResultValue" key={result.id}>{result.participants}</td>
+              ))}
+            </tr>
+          </tbody>
+        </table>
       </PanelBody>
     );
   }
