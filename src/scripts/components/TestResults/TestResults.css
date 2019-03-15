@@ -1,0 +1,28 @@
+.TestResults {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.TestResultName {
+  border-right: 1px solid #e2e4e7;
+}
+
+.TestResults td {
+  vertical-align: middle;
+}
+
+.TestResults td.TestResultWinner {
+  color: #46B450;
+}
+
+.TestResults td.TestResultLoser {
+  color: #dc3232;
+}
+
+.TestResultValue {
+  text-align: center;
+  line-height: 1.8em;
+  padding-left: 14px;
+  white-space: nowrap;
+  width: 1px;
+}
