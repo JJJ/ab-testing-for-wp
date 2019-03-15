@@ -3,6 +3,11 @@
 namespace ABTestingForWP;
 
 class ABTestTracking {
+    private $abTestManager;
+
+    public function __construct() {
+        $this->abTestManager = new ABTestManager();
+    }
 
     public function trackPage($request) {
         if (!$request->get_param('post')) {
@@ -18,8 +23,7 @@ class ABTestTracking {
             $cookieData = json_decode(stripslashes($_COOKIE['ab-testing-for-wp']), true);
         }
 
-        $abTestManager = new ABTestManager();
-        $variants = $abTestManager->getEnabledVariantsByGoal($postId);
+        $variants = $this->abTestManager->getEnabledVariantsByGoal($postId);
 
         $tracked = [];
 
@@ -31,13 +35,15 @@ class ABTestTracking {
                 && $cookieData[$variant['testId']] === $variant['variantId']
             ) {
                 array_push($tracked, $variant['variantId']);
-                $abTestManager->addTracking($variant['variantId'], 'C');
+                $this->abTestManager->addTracking($variant['variantId'], 'C');
             }
         }
 
         return rest_ensure_response($tracked);
     }
 
-
+    public function addParticipation($variantId) {
+        $this->abTestManager->addTracking($variantId, 'P');
+    }
 
 }
