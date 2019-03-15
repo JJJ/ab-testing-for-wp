@@ -58,7 +58,12 @@ class BlockRenderer {
             }
         }
 
-        return $this->pickVariantAt($variants, $this->randomTestDistributionPosition($variants));
+        $pickedVariant = $this->pickVariantAt($variants, $this->randomTestDistributionPosition($variants));
+
+        $abTestTracking = new ABTestTracking();
+        $abTestTracking->addParticipation($pickedVariant['id']);
+
+        return $pickedVariant;
     }
 
     private function getControlVariant($variants, $testId, $control) {
