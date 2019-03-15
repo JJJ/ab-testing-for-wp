@@ -12,17 +12,20 @@ class Installer {
         $this->createTables();
     }
 
-    private function get_db_collate() {
+    private function getDBCollate() {
 		global $wpdb;
 		$collate = '';
-		if ( $wpdb->has_cap( 'collation' ) ) {
-			if ( ! empty( $wpdb->charset ) ) {
+
+        if ($wpdb->has_cap('collation')) {
+			if (!empty($wpdb->charset)) {
 				$collate .= "DEFAULT CHARACTER SET $wpdb->charset";
-			}
-			if ( ! empty( $wpdb->collate ) ) {
+            }
+
+			if (!empty($wpdb->collate)) {
 				$collate .= " COLLATE $wpdb->collate";
 			}
-		}
+        }
+
 		return $collate;
 	}
 
@@ -31,15 +34,15 @@ class Installer {
 
         $wpdb->hide_errors();
         
-        $collate = $this->get_db_collate();
+        $collate = $this->getDBCollate();
         
-		$table_prefix = $wpdb->prefix;
+		$tablePrefix = $wpdb->prefix;
 
-        $tables_sql = [];
+        $tablesSql = [];
 
         // AB Test table
-        $tables_sql[] = "
-		CREATE TABLE IF NOT EXISTS `{$table_prefix}ab_testing_for_wp_ab_test` (
+        $tablesSql[] = "
+		CREATE TABLE IF NOT EXISTS `{$tablePrefix}ab_testing_for_wp_ab_test` (
             `id` varchar(32) NOT NULL DEFAULT '',
             `postId` bigint(20) DEFAULT NULL,
             `isEnabled` tinyint(11) DEFAULT NULL,
@@ -50,8 +53,8 @@ class Installer {
         ) ENGINE = InnoDB {$collate};";
 
         // AB Test Variant table
-        $tables_sql[] = "
-		CREATE TABLE IF NOT EXISTS `{$table_prefix}ab_testing_for_wp_variant` (
+        $tablesSql[] = "
+		CREATE TABLE IF NOT EXISTS `{$tablePrefix}ab_testing_for_wp_variant` (
             `id` varchar(32) NOT NULL DEFAULT '',
             `testId` varchar(32) DEFAULT NULL,
             `name` varchar(255) DEFAULT NULL,
@@ -61,8 +64,8 @@ class Installer {
         ) ENGINE = InnoDB {$collate};";
 
         // // Variant log table
-        $tables_sql[] = "
-		CREATE TABLE IF NOT EXISTS `{$table_prefix}ab_testing_for_wp_log` (
+        $tablesSql[] = "
+		CREATE TABLE IF NOT EXISTS `{$tablePrefix}ab_testing_for_wp_log` (
             `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
             `variantId` varchar(32) NOT NULL DEFAULT '',
             `track` varchar(1) NOT NULL DEFAULT 'P',
@@ -70,7 +73,7 @@ class Installer {
             PRIMARY KEY (`id`)
         ) ENGINE = InnoDB {$collate};";
         
-        foreach($tables_sql as $sql) {
+        foreach($tablesSql as $sql) {
 			$wpdb->query($sql);
         }
     }
