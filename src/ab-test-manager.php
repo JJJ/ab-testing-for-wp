@@ -38,6 +38,10 @@ class ABTestManager {
         }
     }
 
+    public function deleteBlockData($postId) {
+        $this->wipeTestDataFromPost($postId);
+    }
+
     public function getStatsByVariation($variantId) {
         $participants = $this->wpdb->get_var($this->wpdb->prepare("
         SELECT COUNT(variantId)
