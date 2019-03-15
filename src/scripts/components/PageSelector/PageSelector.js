@@ -24,7 +24,9 @@ class PageSelector extends Component<PageSelectorProps, PageSelectorState> {
   };
 
   componentDidMount() {
-    apiFetch({ path: '/wp/v2/pages?per_page=100' })
+    const pageId = wp.data.select('core/editor').getCurrentPostId();
+
+    apiFetch({ path: `/wp/v2/pages?per_page=100&exclude=${pageId}` })
       .then((pages) => {
         this.setState({
           pages,
