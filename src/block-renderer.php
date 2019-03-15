@@ -63,6 +63,15 @@ class BlockRenderer {
         $abTestTracking = new ABTestTracking();
         $abTestTracking->addParticipation($pickedVariant['id']);
 
+        $cookieData = [];
+        if (isset($_COOKIE['ab-testing-for-wp'])) {
+            $cookieData = json_decode(stripslashes($_COOKIE['ab-testing-for-wp']), true);
+        }
+
+        $cookieData[$testId] = $pickedVariant['id'];
+
+        setcookie('ab-testing-for-wp', json_encode($cookieData), time() + (60*60*24*30), '/');
+
         return $pickedVariant;
     }
 
