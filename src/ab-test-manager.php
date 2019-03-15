@@ -77,6 +77,19 @@ class ABTestManager {
         $this->wpdb->query($this->wpdb->prepare("
         INSERT INTO `{$this->logTable}` (variantId, track) VALUES (%s, %s);
         ", $variantId, $type));
+
+        $this->updateVariationStats($variantId);
+    }
+
+    private function updateVariationStats($variantId) {
+        list($participants, $conversions) = $this->getStatsByVariation($variantId);
+
+        $query = $this->wpdb->prepare("
+        UPDATE `{$this->variantTable}` SET participants = %d, conversions = %d
+        WHERE id = %s;
+        ", $participants, $conversions, $variantId);
+
+        $this->wpdb->query($query);
     }
 
     private function wipeTestDataFromPost($postId) {
