@@ -19,7 +19,7 @@ class ABTestTracking {
         }
 
         $abTestManager = new ABTestManager();
-        $variants = $abTestManager->getVariantsByGoal($postId);
+        $variants = $abTestManager->getEnabledVariantsByGoal($postId);
 
         $tracked = [];
 
