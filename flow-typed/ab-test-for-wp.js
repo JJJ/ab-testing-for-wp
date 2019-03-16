@@ -16,6 +16,7 @@ declare type ABTestAttributes = {
   control: string;
   isEnabled: boolean;
   postGoal: number;
+  startedAt: Date | string;
 };
 
 declare type GutenbergProps = {

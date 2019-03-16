@@ -46,7 +46,7 @@ class Installer {
             `id` varchar(32) NOT NULL DEFAULT '',
             `postId` bigint(20) DEFAULT NULL,
             `isEnabled` tinyint(11) DEFAULT NULL,
-            `started` datetime DEFAULT NULL,
+            `startedAt` datetime DEFAULT NULL,
             `control` varchar(32) DEFAULT NULL,
             `postGoal` bigint(20) DEFAULT NULL,
             PRIMARY KEY (`id`)

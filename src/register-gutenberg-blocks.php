@@ -43,6 +43,7 @@ class RegisterGutenbergBlocks {
                 'wp-components',
                 'wp-api-fetch',
                 'wp-data',
+                'wp-date',
             ]
         );
     }
