@@ -119,7 +119,7 @@ class ABTestManager {
         $isEnabled = isset($testData['isEnabled']) && (bool) $testData['isEnabled'] ? 1 : 0;
 
         $query = "
-        REPLACE INTO `{$this->abTestTable}` (id, postId, isEnabled, started, control, postGoal)
+        REPLACE INTO `{$this->abTestTable}` (id, postId, isEnabled, startedAt, control, postGoal)
         VALUES (%s, %s, %d, %s, %s, %s);
         ";
 
@@ -128,7 +128,7 @@ class ABTestManager {
             $testData['id'], 
             $postId, 
             $isEnabled, 
-            '', 
+            $testData['startedAt'], 
             $testData['control'], 
             $testData['postGoal']
         ));

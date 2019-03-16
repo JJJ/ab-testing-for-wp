@@ -2,7 +2,12 @@
 
 import { Component } from 'react';
 
-import { i18n, components, apiFetch } from '../../WP';
+import {
+  i18n,
+  components,
+  apiFetch,
+  data,
+} from '../../WP';
 
 const { __ } = i18n;
 const { PanelBody, SelectControl } = components;
@@ -24,7 +29,7 @@ class PageSelector extends Component<PageSelectorProps, PageSelectorState> {
   };
 
   componentDidMount() {
-    const pageId = wp.data.select('core/editor').getCurrentPostId();
+    const pageId = data.select('core/editor').getCurrentPostId();
 
     apiFetch({ path: `/wp/v2/pages?per_page=100&exclude=${pageId}` })
       .then((pages) => {

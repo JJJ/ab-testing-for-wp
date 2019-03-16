@@ -1,16 +1,19 @@
 // @flow @jsx wp.element.createElement
 
+import distanceInWordsToNow from 'date-fns/distance_in_words_to_now';
+
 import { i18n, components } from '../../WP';
 
-const { __ } = i18n;
+const { __, sprintf } = i18n;
 const { PanelBody, ToggleControl } = components;
 
 type EnabledSettingsProps = {
   value: boolean;
+  startedAt: Date | string;
   onChange: (enabled: boolean) => void;
 };
 
-function EnabledSettings({ value, onChange }: EnabledSettingsProps) {
+function EnabledSettings({ value, startedAt, onChange }: EnabledSettingsProps) {
   return (
     <PanelBody title={__('Enable test')}>
       <ToggleControl
@@ -19,6 +22,7 @@ function EnabledSettings({ value, onChange }: EnabledSettingsProps) {
         checked={value}
         onChange={onChange}
       />
+      {startedAt && <p>{sprintf(__('Started: %s ago'), distanceInWordsToNow(startedAt))}</p>}
     </PanelBody>
   );
 }

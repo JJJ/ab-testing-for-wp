@@ -54,6 +54,10 @@ registerBlockType('ab-testing-for-wp/ab-test-block', {
       type: 'number',
       default: 0,
     },
+    startedAt: {
+      type: 'string',
+      default: '',
+    },
   },
   edit(props: ABTestBlockProps) {
     const { attributes, setAttributes } = props;
@@ -64,6 +68,7 @@ registerBlockType('ab-testing-for-wp/ab-test-block', {
       postGoal,
       control,
       isEnabled,
+      startedAt,
     } = attributes;
 
     // initialize attributes
@@ -102,7 +107,11 @@ registerBlockType('ab-testing-for-wp/ab-test-block', {
     });
     const onPostGoalChange = (postId: number) => setAttributes({ postGoal: postId });
     const onControlChange = (variantId: string) => setAttributes({ control: variantId });
-    const onEnabledChange = (enabled: boolean) => setAttributes({ isEnabled: enabled });
+    const onEnabledChange = (enabled: boolean) => setAttributes({
+      isEnabled: enabled,
+      // set start time if no start time is known
+      startedAt: enabled && !startedAt ? new Date() : startedAt,
+    });
 
     const selectedVariant = variants.find(test => !!test.selected);
 
@@ -123,6 +132,7 @@ registerBlockType('ab-testing-for-wp/ab-test-block', {
           <EnabledSettings
             value={isEnabled}
             onChange={onEnabledChange}
+            startedAt={startedAt}
           />
           <TestResults isEnabled={isEnabled} testId={id} />
           <DistributionSettings
