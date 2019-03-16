@@ -39,7 +39,7 @@ class ABTestManager {
     }
 
     public function deleteBlockData($postId) {
-        $this->wipeTestDataFromPost($postId);
+        $this->archiveTestDataFromPost($postId);
     }
 
     public function getStatsByTest($testId) {
@@ -115,12 +115,19 @@ class ABTestManager {
         $this->wpdb->query($this->wpdb->prepare($query, $postId));
     }
 
+    private function archiveTestDataFromPost($postId) {
+        $query = "UPDATE `{$this->abTestTable}` SET isArchived = 1 WHERE postId = %d";
+        $this->wpdb->query($this->wpdb->prepare($query, $postId));
+    }
+
     private function insertTest($postId, $testData) {
         $isEnabled = isset($testData['isEnabled']) && (bool) $testData['isEnabled'] ? 1 : 0;
+        $startedAt = isset($testData['startedAt']) ? $testData['startedAt'] : '';
+        $postGoal = isset($testData['postGoal']) ? $testData['postGoal'] : 0;
 
         $query = "
-        REPLACE INTO `{$this->abTestTable}` (id, postId, isEnabled, startedAt, control, postGoal)
-        VALUES (%s, %s, %d, %s, %s, %s);
+        REPLACE INTO `{$this->abTestTable}` (id, postId, isEnabled, startedAt, control, postGoal, isArchived)
+        VALUES (%s, %s, %d, %s, %s, %s, %d);
         ";
 
         $this->wpdb->query($this->wpdb->prepare(
@@ -128,9 +135,10 @@ class ABTestManager {
             $testData['id'], 
             $postId, 
             $isEnabled, 
-            $testData['startedAt'], 
-            $testData['control'], 
-            $testData['postGoal']
+            $startedAt, 
+            $testData['control'],
+            $postGoal,
+            0
         ));
     }
 
