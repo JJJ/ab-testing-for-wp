@@ -45,10 +45,11 @@ class Installer {
 		CREATE TABLE IF NOT EXISTS `{$tablePrefix}ab_testing_for_wp_ab_test` (
             `id` varchar(32) NOT NULL DEFAULT '',
             `postId` bigint(20) DEFAULT NULL,
-            `isEnabled` tinyint(11) DEFAULT NULL,
+            `isEnabled` tinyint(1) DEFAULT 0,
             `startedAt` datetime DEFAULT NULL,
             `control` varchar(32) DEFAULT NULL,
             `postGoal` bigint(20) DEFAULT NULL,
+            `isArchived` tinyint(1) DEFAULT 0,
             PRIMARY KEY (`id`)
         ) ENGINE = InnoDB {$collate};";
 
