@@ -16,6 +16,8 @@ import ControlSettings from '../components/ControlSettings/ControlSettings';
 import EnabledSettings from '../components/EnabledSettings/EnabledSettings';
 import TestResults from '../components/TestResults/TestResults';
 
+import SVGIcon from './ab-test-logo';
+
 const { __ } = i18n;
 const { registerBlockType } = blocks;
 const { InnerBlocks, InspectorControls } = editor;
@@ -31,7 +33,7 @@ const makeTemplate = variant => ['ab-testing-for-wp/ab-test-block-variant', vari
 registerBlockType('ab-testing-for-wp/ab-test-block', {
   title: __('A/B test'),
   description: __('A/B test container which contains the possible variants.'),
-  icon: 'admin-settings',
+  icon: SVGIcon,
   category: 'widgets',
   attributes: {
     id: {
