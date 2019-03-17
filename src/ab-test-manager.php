@@ -7,6 +7,7 @@ class ABTestManager {
     private $variantTable;
     private $abTestTable;
     private $logTable;
+    private $postsTable;
 
     public function __construct() {
         global $wpdb;
@@ -18,6 +19,7 @@ class ABTestManager {
         $this->variantTable = $table_prefix . 'ab_testing_for_wp_variant';
         $this->abTestTable = $table_prefix . 'ab_testing_for_wp_ab_test';
         $this->logTable = $table_prefix . 'ab_testing_for_wp_log';
+        $this->postsTable = $table_prefix . 'posts';
     }
 
     public function updateBlockData($postId) {
@@ -48,6 +50,32 @@ class ABTestManager {
         FROM `{$this->variantTable}` 
         WHERE testId = %s;
         ", $testId));
+    }
+
+    public function getAllTests() {
+        $data = $this->wpdb->get_results("
+        SELECT t.id, t.isEnabled, t.startedAt, t.control, t.postId, t.postGoal,
+        p1.post_title AS postName, p2.post_title AS goalName, t.isArchived,
+        (
+            SELECT SUM(participants)
+            FROM wp_ab_testing_for_wp_variant AS v
+            WHERE v.testId = t.id
+        ) as totalParticipants
+        FROM `{$this->abTestTable}` AS t
+        INNER JOIN `{$this->postsTable}` AS p1 ON t.postId = p1.id
+        INNER JOIN `{$this->postsTable}` AS p2 ON t.postGoal = p2.id
+        WHERE t.isArchived = 0
+        ");
+
+        return array_map(
+            function ($test) {
+                $test = (array) $test;
+                $test['isEnabled'] = (bool) $test['isEnabled'];
+
+                return $test;
+            },
+            $data
+        );
     }
 
     public function getStatsByVariation($variantId) {

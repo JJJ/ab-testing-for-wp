@@ -33,21 +33,22 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-require __DIR__ . '/src/ab-test-content-parser.php';
-require __DIR__ . '/src/ab-test-manager.php';
-require __DIR__ . '/src/ab-test-stats.php';
-require __DIR__ . '/src/ab-test-tracking.php';
-require __DIR__ . '/src/block-renderer.php';
-require __DIR__ . '/src/installer.php';
-require __DIR__ . '/src/register-gutenberg-blocks.php';
-require __DIR__ . '/src/register-render-scripts.php';
-require __DIR__ . '/src/register-rest.php';
+require __DIR__ . '/vendor/autoload.php';
 
 function bootstrap() {
+    // only on admin
+    if(is_admin()) {
+        if(!defined('DOING_AJAX') || !DOING_AJAX) {
+            new AdminPage(__FILE__);
+        }
+    }
+    
+    // only on frontend
     if(!is_admin()) {
         new RegisterRenderScripts(__FILE__);
     }
 
+    // on every request
     new RegisterGutenbergBlocks(__FILE__);
 }
 
