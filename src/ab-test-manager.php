@@ -72,6 +72,40 @@ class ABTestManager {
                 $test = (array) $test;
                 $test['isEnabled'] = (bool) $test['isEnabled'];
 
+                $test['variants'] = $this->wpdb->get_results($this->wpdb->prepare("
+                SELECT name, participants, conversions
+                FROM `{$this->variantTable}`
+                WHERE testId = %d
+                ", $test['id']));
+
+                $test['variants'] = array_map(
+                    function ($variant) {
+                        $variant = (array) $variant;
+
+                        $variant['rate'] = $variant['participants'] > 0
+                            ? round(($variant['conversions'] / $variant['participants']) * 100)
+                            : 0;
+
+                        return $variant;
+                    },
+                    $test['variants']
+                );
+
+                $test['variants'] = array_map(
+                    function ($variant) use ($test) {
+                        $variant['leading'] = true;
+
+                        foreach ($test['variants'] as $check) {
+                            if ($check['rate'] > $variant['rate']) {
+                                $variant['leading'] = false;
+                            }
+                        }
+
+                        return $variant;
+                    },
+                    $test['variants']
+                );
+
                 return $test;
             },
             $data

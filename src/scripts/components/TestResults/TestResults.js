@@ -82,7 +82,7 @@ class TestResults extends Component<TestResultsProps, TestResultsState> {
               ))}
             </tr>
             <tr>
-              <td className="TestResultName">{__('Conversion rate')}</td>
+              <td className="TestResultName">{__('Conversion Rate')}</td>
               {enrichedResults.map(result => (
                 <td
                   className={classNames(result.winner ? 'TestResultWinner' : 'TestResultLoser', 'TestResultValue')}
@@ -94,7 +94,7 @@ class TestResults extends Component<TestResultsProps, TestResultsState> {
               ))}
             </tr>
             <tr>
-              <td className="TestResultName">{__('Converts')}</td>
+              <td className="TestResultName">{__('Conversions')}</td>
               {enrichedResults.map(result => (
                 <td className="TestResultValue" key={result.id}>{result.conversions}</td>
               ))}
