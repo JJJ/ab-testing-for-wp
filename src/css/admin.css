@@ -1,0 +1,35 @@
+.ABTestVariationsTable {
+  width: 100%;
+}
+
+.ABTestWinning td {
+  color: #46B450!important;
+}
+
+.ABTestLosing td {
+  color: #dc3232!important;
+}
+
+table.running-tests {
+  margin-top: 2em;
+}
+
+.running-tests .indicator.indicator--on {
+  background-color: #46B450;
+}
+
+.running-tests .indicator {
+  background-color: #d4d4d4;
+  width: 14px;
+  height: 14px;
+  border-radius: 100%;
+  margin: 4px 0 0 0;
+}
+
+.ABTestToggle {
+  cursor: pointer;
+}
+
+.check-column.check-column-normal {
+  padding: 8px 10px;
+}
