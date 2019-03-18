@@ -1,6 +1,6 @@
 // @flow @jsx wp.element.createElement
 
-import uniqueString from 'unique-string';
+import shortid from 'shortid';
 
 import {
   i18n,
@@ -77,13 +77,13 @@ registerBlockType('ab-testing-for-wp/ab-test-block', {
     if (!id) {
       const defaultVariants: ABTestVariant[] = [
         {
-          id: uniqueString(),
+          id: shortid.generate(),
           name: 'A',
           selected: true,
           distribution: 50,
         },
         {
-          id: uniqueString(),
+          id: shortid.generate(),
           name: 'B',
           selected: false,
           distribution: 50,
@@ -91,7 +91,7 @@ registerBlockType('ab-testing-for-wp/ab-test-block', {
       ];
 
       setAttributes({
-        id: uniqueString(),
+        id: shortid.generate(),
         variants: defaultVariants,
         postGoal: 0,
         control: defaultVariants[0].id,
