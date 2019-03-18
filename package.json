@@ -7,7 +7,11 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "eslint ./",
     "flow": "flow",
-    "dev": "webpack --watch"
+    "build": "NODE_ENV=production webpack",
+    "dev": "webpack --watch",
+    "archive": "zip -r ab-testing-for-wp.zip ./ -x 'node_modules/*' -x '.git/*' -x '.idea/*'",
+    "release": "npm run build",
+    "analyze": "webpack --json > stats.json"
   },
   "repository": {
     "type": "git",
@@ -47,6 +51,7 @@
   "dependencies": {
     "classnames": "^2.2.6",
     "date-fns": "^1.30.1",
+    "shortid": "^2.2.14",
     "unique-string": "^1.0.0"
   }
 }

@@ -1,8 +1,6 @@
 <?php defined('ABSPATH') or exit; ?>
 <div class="wrap">
   <h1><?php echo __('How to Use A/B Testing'); ?></h1>
-
-  
   <div class="welcome-panel how-to">
     <div class="how-to-panel-content">
       <img style="width: 33%; max-width: 250px; float: right; margin-left: 30px;" src="<?php echo $assets; ?>how-to-1.png" />
