@@ -33,3 +33,21 @@ table.running-tests {
 .check-column.check-column-normal {
   padding: 8px 10px;
 }
+
+.how-to .how-to-panel-content > *:first-child {
+  margin-top: 0;
+}
+
+.how-to .how-to-panel-content > *:last-child {
+  margin-bottom: 0;
+}
+
+.how-to {
+  padding: 23px 10px;
+  max-width: 800px;
+}
+
+.how-to-panel-content {
+  margin: 0 13px;
+  max-width: 800px;
+}

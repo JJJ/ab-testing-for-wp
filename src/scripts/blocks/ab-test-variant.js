@@ -16,7 +16,7 @@ const disallowedBlocks = [
 ];
 
 registerBlockType('ab-testing-for-wp/ab-test-block-variant', {
-  title: __('A/B test variant'),
+  title: __('A/B Test Variant'),
   icon: 'admin-settings',
   category: 'widgets',
   parent: ['ab-testing-for-wp/ab-test-block'],
