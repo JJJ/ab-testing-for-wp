@@ -8,7 +8,14 @@ class AdminPage {
     public function __construct($fileRoot) {
         $this->abTestManager = new ABTestManager();
 
-        add_action('admin_menu', [$this, 'menu']);   
+        $this->loadStyles($fileRoot);
+
+        add_action('admin_menu', [$this, 'menu']);
+    }
+
+    public function loadStyles($fileRoot) {
+        wp_register_style('ab_testing_for_wp_admin_style', plugins_url('/src/css/admin.css', $fileRoot), []);
+        wp_enqueue_style('ab_testing_for_wp_admin_style');
     }
 
     public function menu() {
@@ -35,7 +42,10 @@ class AdminPage {
                 if ($timeStamp < 0) {
                     $test['startedAt'] = '—';
                 } else {
-                    $test['startedAt'] = date(__('Y/m/d'), strtotime($test['startedAt']));
+                    $time = strtotime($test['startedAt']);
+                    $date = date(__('Y/m/d'), $time);
+                    $days = round((time() - $time) / (60 * 60 * 24));
+                    $test['startedAt'] = sprintf(_n('%s (%d day)', '%s (%d days)', $days), $date, $days);
                 }
 
                 return $test;
