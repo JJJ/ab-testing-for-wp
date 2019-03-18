@@ -45,10 +45,6 @@ registerBlockType('ab-testing-for-wp/ab-test-block-variant', {
     const { id, name } = attributes;
 
     const template = [
-      ['core/heading', {
-        content: sprintf(__('A/B Test Variant "%s"'), name),
-        level: 4,
-      }],
       ['core/button', {
         text: sprintf(__('Button for Test Variant "%s"'), name),
       }],
