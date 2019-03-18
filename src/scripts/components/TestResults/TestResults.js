@@ -51,11 +51,9 @@ class TestResults extends Component<TestResultsProps, TestResultsState> {
     const { isEnabled } = this.props;
     const { results, loading } = this.state;
 
-    if (
-      loading
-      || (!isEnabled && results.reduce((acc, b) => acc + b.participants, 0) === 0)
-      || results.length === 0
-    ) {
+    const hasParticipants = results.reduce((acc, b) => acc + b.participants, 0) > 0;
+
+    if (loading || (!isEnabled && !hasParticipants)) {
       return null;
     }
 
@@ -72,45 +70,49 @@ class TestResults extends Component<TestResultsProps, TestResultsState> {
 
     return (
       <PanelBody title={__('Results so far')}>
-        <table className="TestResults">
-          <tbody>
-            <tr>
-              <td className="TestResultName">{__('Variation')}</td>
-              {enrichedResults.map(result => (
-                <td
-                  className={classNames(result.winner ? 'TestResultWinner' : 'TestResultLoser', 'TestResultValue')}
-                  key={result.id}
-                >
-                  {result.name}
-                </td>
-              ))}
-            </tr>
-            <tr>
-              <td className="TestResultName">{__('Conversion Rate')}</td>
-              {enrichedResults.map(result => (
-                <td
-                  className={classNames(result.winner ? 'TestResultWinner' : 'TestResultLoser', 'TestResultValue')}
-                  key={result.id}
-                >
-                  {result.rate}
-                  %
-                </td>
-              ))}
-            </tr>
-            <tr>
-              <td className="TestResultName">{__('Conversions')}</td>
-              {enrichedResults.map(result => (
-                <td className="TestResultValue" key={result.id}>{result.conversions}</td>
-              ))}
-            </tr>
-            <tr>
-              <td className="TestResultName">{__('Participants')}</td>
-              {enrichedResults.map(result => (
-                <td className="TestResultValue" key={result.id}>{result.participants}</td>
-              ))}
-            </tr>
-          </tbody>
-        </table>
+        {hasParticipants ? (
+          <table className="TestResults">
+            <tbody>
+              <tr>
+                <td className="TestResultName">{__('Variation')}</td>
+                {enrichedResults.map(result => (
+                  <td
+                    className={classNames(result.winner ? 'TestResultWinner' : 'TestResultLoser', 'TestResultValue')}
+                    key={result.id}
+                  >
+                    {result.name}
+                  </td>
+                ))}
+              </tr>
+              <tr>
+                <td className="TestResultName">{__('Conversion Rate')}</td>
+                {enrichedResults.map(result => (
+                  <td
+                    className={classNames(result.winner ? 'TestResultWinner' : 'TestResultLoser', 'TestResultValue')}
+                    key={result.id}
+                  >
+                    {result.rate}
+                    %
+                  </td>
+                ))}
+              </tr>
+              <tr>
+                <td className="TestResultName">{__('Conversions')}</td>
+                {enrichedResults.map(result => (
+                  <td className="TestResultValue" key={result.id}>{result.conversions}</td>
+                ))}
+              </tr>
+              <tr>
+                <td className="TestResultName">{__('Participants')}</td>
+                {enrichedResults.map(result => (
+                  <td className="TestResultValue" key={result.id}>{result.participants}</td>
+                ))}
+              </tr>
+            </tbody>
+          </table>
+        ) : (
+          <div>No participants yet.</div>
+        )}
       </PanelBody>
     );
   }
