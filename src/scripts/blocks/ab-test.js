@@ -31,7 +31,7 @@ const ALLOWED_BLOCKS = ['ab-testing-for-wp/ab-test-block-variant'];
 const makeTemplate = variant => ['ab-testing-for-wp/ab-test-block-variant', variant];
 
 registerBlockType('ab-testing-for-wp/ab-test-block', {
-  title: __('A/B test'),
+  title: __('A/B Test'),
   description: __('A/B test container which contains the possible variants.'),
   icon: SVGIcon,
   category: 'widgets',

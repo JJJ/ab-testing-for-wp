@@ -4,17 +4,19 @@ namespace ABTestingForWP;
 
 class AdminPage {
     private $abTestMananger;
+    private $fileRoot;
 
     public function __construct($fileRoot) {
         $this->abTestManager = new ABTestManager();
+        $this->fileRoot = $fileRoot;
 
-        $this->loadStyles($fileRoot);
+        $this->loadStyles();
 
         add_action('admin_menu', [$this, 'menu']);
     }
 
-    public function loadStyles($fileRoot) {
-        wp_register_style('ab_testing_for_wp_admin_style', plugins_url('/src/css/admin.css', $fileRoot), []);
+    public function loadStyles() {
+        wp_register_style('ab_testing_for_wp_admin_style', plugins_url('/src/css/admin.css', $this->fileRoot), []);
         wp_enqueue_style('ab_testing_for_wp_admin_style');
     }
 
@@ -26,13 +28,31 @@ class AdminPage {
             'A/B Testing', 
             'manage_options',
             'ab-testing-for-wp', 
-            [$this, 'settingsPage'], 
+            [$this, 'overview'], 
             $icon, 
             61
         );
+
+        add_submenu_page( 
+            'ab-testing-for-wp',
+            __('Active A/B Tests Overview'),
+            __('All A/B Tests'), 
+            'manage_options', 
+            'ab-testing-for-wp',
+            [$this, 'overview']
+        );
+
+        add_submenu_page( 
+            'ab-testing-for-wp',
+            __('How to Use A/B Testing'),
+            __('How to Use'), 
+            'manage_options', 
+            'ab-testing-for-wp_howto',
+            [$this, 'howto']
+        );
     }
 
-    public function settingsPage() {
+    public function overview() {
         $testsData = $this->abTestManager->getAllTests();
 
         $testsData = array_map(
@@ -57,7 +77,13 @@ class AdminPage {
             'activeTests' => $testsData,
         ];
 
-        require __DIR__ . '/pages/admin.php';
+        require __DIR__ . '/pages/overview.php';
+    }
+
+    public function howto() {
+        $assets = plugins_url('/src/assets/', $this->fileRoot);
+
+        require __DIR__ . '/pages/howto.php';
     }
 
 }
