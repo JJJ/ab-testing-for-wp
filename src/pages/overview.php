@@ -27,6 +27,7 @@
           <tr></tr>
           <tr style="display: table-row;" id="ABTestResults-<?php echo $test['id']; ?>">
             <td colspan="5" style="display: table-cell">
+              <?php if ($test['totalParticipants'] > 0) : ?> 
               <table class="wp-list-table widefat fixed striped variations">
                 <thead>
                   <tr>
@@ -45,6 +46,9 @@
                   </tr>
                 <?php endforeach; ?>
               </table>
+              <?php else : ?>
+                <p><em><?php echo __('No results for this test yet.'); ?></em></p>
+              <?php endif; ?>
             </td>
           </tr>
         <?php endforeach; ?>

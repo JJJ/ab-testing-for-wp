@@ -65,6 +65,7 @@ class ABTestManager {
         INNER JOIN `{$this->postsTable}` AS p1 ON t.postId = p1.id
         LEFT JOIN `{$this->postsTable}` AS p2 ON t.postGoal = p2.id
         WHERE t.isArchived = 0
+        ORDER BY t.postId ASC
         ");
 
         return array_map(

@@ -3,9 +3,10 @@
   <h1><?php echo __('How to Use A/B Testing'); ?></h1>
   <div class="welcome-panel how-to">
     <div class="how-to-panel-content">
+      <h3><?php echo __('Introduction to A/B Testing for WordPress'); ?></h3>
+      
       <img style="width: 33%; max-width: 250px; float: right; margin-left: 30px;" src="<?php echo $assets; ?>how-to-1.png" />
 
-      <h3><?php echo __('Introduction to A/B Testing for WordPress'); ?></h3>
       <p><?php echo __('A/B Testing for WordPress allows you to setup split tests on any of your posts or pages. You can add A/B Test blocks in your content using the Gutenberg content editor.'); ?></p>
       <p><?php echo __('Each block will contain the variants of your test and allow you to configure the tests. You can find the A/B Test block in the "Widgets" category.'); ?></p>
 
