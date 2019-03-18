@@ -63,7 +63,7 @@ class ABTestManager {
         ) as totalParticipants
         FROM `{$this->abTestTable}` AS t
         INNER JOIN `{$this->postsTable}` AS p1 ON t.postId = p1.id
-        INNER JOIN `{$this->postsTable}` AS p2 ON t.postGoal = p2.id
+        LEFT JOIN `{$this->postsTable}` AS p2 ON t.postGoal = p2.id
         WHERE t.isArchived = 0
         ");
 
@@ -75,7 +75,7 @@ class ABTestManager {
                 $test['variants'] = $this->wpdb->get_results($this->wpdb->prepare("
                 SELECT name, participants, conversions
                 FROM `{$this->variantTable}`
-                WHERE testId = %d
+                WHERE testId = %s
                 ", $test['id']));
 
                 $test['variants'] = array_map(

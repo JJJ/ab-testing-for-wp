@@ -51,7 +51,11 @@ class TestResults extends Component<TestResultsProps, TestResultsState> {
     const { isEnabled } = this.props;
     const { results, loading } = this.state;
 
-    if (loading || (!isEnabled && results.reduce((acc, b) => acc + b.participants, 0) === 0)) {
+    if (
+      loading
+      || (!isEnabled && results.reduce((acc, b) => acc + b.participants, 0) === 0)
+      || results.length === 0
+    ) {
       return null;
     }
 
