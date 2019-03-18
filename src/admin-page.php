@@ -68,6 +68,10 @@ class AdminPage {
                     $test['startedAt'] = sprintf(_n('%s (%d day)', '%s (%d days)', $days), $date, $days);
                 }
 
+                if ($test['postGoal'] === '0') {
+                    $test['goalName'] = '—';
+                }
+
                 return $test;
             },
             $testsData
