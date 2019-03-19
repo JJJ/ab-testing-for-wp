@@ -5,7 +5,6 @@
  */
 /*
     Plugin Name: A/B Testing for WordPress
-    Plugin URI: https://theclevernode.com
     Description: Incredibly easy A/B testing for WordPress
     Version: 1.0.0
     Author: CleverNode
@@ -42,7 +41,7 @@ function bootstrap() {
             new AdminPage(__FILE__);
         }
     }
-    
+
     // only on frontend
     if(!is_admin()) {
         new RegisterRenderScripts(__FILE__);
