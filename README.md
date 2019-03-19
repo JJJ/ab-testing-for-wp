@@ -1,6 +1,9 @@
 # A/B Testing for WordPress
 
-WordPress plugin which will enable to run A/B tests from anywhere within your content.
+WordPress plugin which allow you to run A/B tests from anywhere within your content.
+
+Utilize the new Gutenberg editor to create split tests to serve to your visitors and find out
+which variation works best.
 
 ![Gutenberg Demo](src/assets/plugin-gutenberg-demo.gif)
 
@@ -14,3 +17,24 @@ WordPress plugin which will enable to run A/B tests from anywhere within your co
 ## Requirements
 
 - At least WordPress 5.0 (uses the new Gutenberg editor)
+
+## Development
+
+Requirements: [Node.js](https://nodejs.org/en/) and [Composer](https://getcomposer.org/).
+
+Clone the project and `npm install`.
+
+Use the following commands:
+
+```
+# one time build
+npm run build
+
+# development watch mode for JavaScript
+npm run dev
+
+# prepare for release (clean, build, archive)
+npm run release
+```
+
+
