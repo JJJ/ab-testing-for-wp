@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit576b177d23230b6d6384b0b1e1e998d8
+class ComposerStaticInit3ca069ed2eeb7caff92dca41e2d25775
 {
     public static $classMap = array (
         'ABTestingForWP\\ABTestContentParser' => __DIR__ . '/../..' . '/src/ab-test-content-parser.php',
@@ -22,7 +22,7 @@ class ComposerStaticInit576b177d23230b6d6384b0b1e1e998d8
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->classMap = ComposerStaticInit576b177d23230b6d6384b0b1e1e998d8::$classMap;
+            $loader->classMap = ComposerStaticInit3ca069ed2eeb7caff92dca41e2d25775::$classMap;
 
         }, null, ClassLoader::class);
     }
