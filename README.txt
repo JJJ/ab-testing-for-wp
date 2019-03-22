@@ -15,6 +15,10 @@ Create A/B tests right in the content editor. Test which button colour works bes
 
 A/B Testing for WordPress allows you to create split tests right from the visual content editor. Measures the results of your added tests and shows you which variant is the most optimal choice.
 
+You add a block to your content which you can fill with anything you want to and switch between variants instantaneously. Define distribution weight, pick a goal of the test, pick the control variant and off you go!
+
+Everything has been implemented with SEO in the back of my mind, which means the plugin will do nothing to affect your SEO. It works just like most A/B testing tools out there, but directly from your own WordPress site without the use of 3th-party services.
+
 == Installation ==
 1. Upload "ab-testing-for-wp" folder to the "/wp-content/plugins/" directory.
 1. Activate the plugin through the "Plugins" screen in WordPress.
@@ -35,6 +39,9 @@ No. Only the control version of your test is shown to search engines and website
 
 = Does A/B Testing for WordPress allow weight distribution? =
 Yes. You can change the amount of visitors should see each variant.
+
+= How can I contribute to this plugin? =
+You can find the [source and repository over at GitHub](https://github.com/Gaya/ab-testing-for-wp).
 
 == Screenshots ==
 1. Creating an A/B Test in the post editor
