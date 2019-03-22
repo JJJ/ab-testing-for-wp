@@ -5,17 +5,15 @@ Donate link: https://theclevernode.com
 Requires at least: 5.0
 Tested up to: 5.1.1
 Requires PHP: 5.6
-Stable tag: 1.0
+Stable tag: 1.0.1
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
 == Description ==
 
-Create A/B tests right from the Gutenberg content editor. Test which button colour works best, what
-content drives people to engage, or anything you can imagine!
+Create A/B tests right in the content editor. Test which button colour works best, what content drives people to engage, or anything you can imagine!
 
-A/B Testing for WordPress allows you to create split tests right from the visual content editor.
-Measures the results of your added tests and shows you which variant is the most optimal choice.
+A/B Testing for WordPress allows you to create split tests right from the visual content editor. Measures the results of your added tests and shows you which variant is the most optimal choice.
 
 == Installation ==
 1. Upload "ab-testing-for-wp" folder to the "/wp-content/plugins/" directory.
@@ -28,25 +26,23 @@ Measures the results of your added tests and shows you which variant is the most
 Yes.
 
 = How does A/B Testing for WordPress measure tests? =
-When a visitor sees a test variant it will be logged as a participant of the variant. When the
-visitor visits the goal page, the visitor will also be logged as a conversion of the variant.
+When a visitor sees a test variant the visitor will be logged as a participant of that variant. When the visitor visits the goal page of the test, the visitor will also be logged as a conversion of the variant.
 
-A/B Testing for WordPress will calculate the percentage of the participants who became conversions
-and determines a winning variant through these numbers.
+A/B Testing for WordPress will calculate the percentage of the participants who became conversions and determines a winning variant through these numbers.
 
 = Does A/B Testing for WordPress affect SEO? =
-No. Only the control version of your test is shown to search engines and website caches. The variant
-which the visitor will see is replaced using JavaScript.
+No. Only the control version of your test is shown to search engines and website caches. The variant which the visitor will see is replaced using JavaScript.
 
 = Does A/B Testing for WordPress allow weight distribution? =
 Yes. You can change the amount of visitors should see each variant.
 
 == Screenshots ==
 1. Creating an A/B Test in the post editor
-2. Overview of running tests
+2. Creating an A/B Test in the post editor (still)
+3. Overview of running tests
 
 == Changelog ==
-= 1.0 =
+= 1.0.0 =
 * Initial release
 
 == Upgrade Notice ==
