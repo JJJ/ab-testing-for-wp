@@ -10,14 +10,19 @@ echo "Version is" $VERSION
 # build
 npm run build
 
+# clean SVN folders
+rm -rf $SVN_DIR/trunk/*
+rm -rf $SVN_DIR/assets/*
+
 # copy files
-rsync -av --exclude='.git' --exclude='node_modules' --exclude='svn' --exclude='assets' ./assets $SVN_DIR/assets
-rsync -av --exclude='.git' --exclude='node_modules' --exclude='svn' --exclude='assets' ./ $SVN_DIR/trunk
-rsync -av --exclude='.git' --exclude='node_modules' --exclude='svn' --exclude='assets' ./ $SVN_DIR/tags/$VERSION
+rsync -av --exclude-from '.rsyncignore' ./assets $SVN_DIR
+rsync -av --exclude-from '.rsyncignore' ./ $SVN_DIR/trunk
+rsync -av --exclude-from '.rsyncignore' ./ $SVN_DIR/tags/$VERSION
 
 # commit SVN
 cd $SVN_DIR
-svn add trunk
-svn add tags
+svn add trunk --force
+svn add tags --force
+svn add assets --force
 svn ci -m 'Committing tag' $VERSION
 svn up
