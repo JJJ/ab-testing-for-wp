@@ -1,5 +1,5 @@
 === A/B Testing for WordPress ===
-Contributors: gayakessler
+Contributors: gayakessler, clevernode
 Tags: ab-testing, testing, test, split-test, measure, optimize, optimise, marketing
 Donate link: https://theclevernode.com
 Requires at least: 5.0
