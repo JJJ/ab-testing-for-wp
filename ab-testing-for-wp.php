@@ -1,12 +1,12 @@
 <?php
 /**
  * @package ABTestingForWP
- * @version 1.0
+ * @version 1.0.1
  */
 /*
     Plugin Name: A/B Testing for WordPress
     Description: Incredibly easy A/B testing for WordPress
-    Version: 1.0.0
+    Version: 1.0.1
     Author: CleverNode
     Author URI: https://theclevernode.com
     Text Domain: ab-testing-for-wp
@@ -26,9 +26,9 @@
 
 namespace ABTestingForWP;
 
-if ( ! defined( 'ABSPATH' ) ) {
-	header( 'Status: 403 Forbidden' );
-	header( 'HTTP/1.1 403 Forbidden' );
+if (!defined('ABSPATH')) {
+	header('Status: 403 Forbidden');
+	header('HTTP/1.1 403 Forbidden');
 	exit;
 }
 
