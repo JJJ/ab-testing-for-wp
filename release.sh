@@ -11,8 +11,8 @@ echo "Version is" $VERSION
 npm run build
 
 # clean SVN folders
-rm -rf $SVN_DIR/trunk/*
-rm -rf $SVN_DIR/assets/*
+rm -Rf $SVN_DIR/trunk/*
+rm -Rf $SVN_DIR/assets/*
 
 # copy files
 rsync -av --exclude-from '.rsyncignore' ./assets $SVN_DIR
@@ -21,8 +21,16 @@ rsync -av --exclude-from '.rsyncignore' ./ $SVN_DIR/tags/$VERSION
 
 # commit SVN
 cd $SVN_DIR
-svn add trunk --force
-svn add tags --force
-svn add assets --force
+
+# DO THE ADD ALL NOT KNOWN FILES UNIX COMMAND
+svn add --force * --auto-props --parents --depth infinity -q
+
+# DO THE REMOVE ALL DELETED FILES UNIX COMMAND
+MISSING_PATHS=$( svn status | sed -e '/^!/!d' -e 's/^!//' )
+
+# iterate over filepaths
+for MISSING_PATH in $MISSING_PATHS; do
+	svn rm --force "$MISSING_PATH"
+done
+
 svn ci -m 'Committing tag' $VERSION
-svn up
