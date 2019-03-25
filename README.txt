@@ -53,7 +53,7 @@ You can find the [source and repository over at GitHub](https://github.com/Gaya/
 
 == Changelog ==
 = 1.1.0 =
-* Initial release
+* Some text fixes and assets redos
 
 = 1.0.0 =
 * Initial release
