@@ -1,0 +1,11 @@
+#wpadminbar #wp-admin-bar-ab-testing-for-wp > .ab-item::before {
+  content: "";
+  background-image: url('../assets/ab-testing-for-wp-logo-icon.svg') !important;
+  background-repeat: no-repeat;
+  background-size: 18px 18px;
+  background-position: 50% 50%;
+  top: 1px;
+  width: 20px;
+  height: 20px;
+  display: inline-block;
+}
