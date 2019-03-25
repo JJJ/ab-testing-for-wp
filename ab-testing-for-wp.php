@@ -1,12 +1,13 @@
 <?php
 /**
  * @package ABTestingForWP
- * @version 1.0.1
+ * @version 1.1.0
  */
 /*
     Plugin Name: A/B Testing for WordPress
-    Description: Incredibly easy A/B testing for WordPress
-    Version: 1.0.1
+    Plugin URI: https://theclevernode.com/ab-testing-for-wordpress/
+    Description: Easiest way to create split tests on your WordPress sites, right from the content editor!
+    Version: 1.1.0
     Author: CleverNode
     Author URI: https://theclevernode.com
     Text Domain: ab-testing-for-wp

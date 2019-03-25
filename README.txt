@@ -1,11 +1,11 @@
 === A/B Testing for WordPress ===
-Contributors: gayakessler, clevernode
+Contributors: clevernode
 Tags: ab-testing, testing, test, split-test, measure, optimize, optimise, marketing
-Donate link: https://theclevernode.com
+Donate link: https://theclevernode.com/ab-testing-for-wordpress/
 Requires at least: 5.0
 Tested up to: 5.1.1
 Requires PHP: 5.6
-Stable tag: 1.0.1
+Stable tag: 1.1.0
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -40,6 +40,9 @@ No. Only the control version of your test is shown to search engines and website
 = Does A/B Testing for WordPress allow weight distribution? =
 Yes. You can change the amount of visitors should see each variant.
 
+= What does A/B Testing for WordPress count as a goal? =
+Currently you can only pick local pages as a goal to track. Counting outbound links as conversion is not possible (yet).
+
 = How can I contribute to this plugin? =
 You can find the [source and repository over at GitHub](https://github.com/Gaya/ab-testing-for-wp).
 
@@ -49,6 +52,9 @@ You can find the [source and repository over at GitHub](https://github.com/Gaya/
 3. Overview of running tests
 
 == Changelog ==
+= 1.1.0 =
+* Initial release
+
 = 1.0.0 =
 * Initial release
 
