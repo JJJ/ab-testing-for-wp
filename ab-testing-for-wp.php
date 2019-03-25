@@ -46,6 +46,7 @@ function bootstrap() {
     // only on frontend
     if(!is_admin()) {
         new RegisterRenderScripts(__FILE__);
+        new RegisterFrontendAdminBar(__FILE__);
     }
 
     // on every request

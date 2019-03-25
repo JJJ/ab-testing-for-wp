@@ -14,6 +14,7 @@ class ComposerStaticInit3ca069ed2eeb7caff92dca41e2d25775
         'ABTestingForWP\\AdminPage' => __DIR__ . '/../..' . '/src/admin-page.php',
         'ABTestingForWP\\BlockRenderer' => __DIR__ . '/../..' . '/src/block-renderer.php',
         'ABTestingForWP\\Installer' => __DIR__ . '/../..' . '/src/installer.php',
+        'ABTestingForWP\\RegisterFrontendAdminBar' => __DIR__ . '/../..' . '/src/register-frontend-admin-bar.php',
         'ABTestingForWP\\RegisterGutenbergBlocks' => __DIR__ . '/../..' . '/src/register-gutenberg-blocks.php',
         'ABTestingForWP\\RegisterREST' => __DIR__ . '/../..' . '/src/register-rest.php',
         'ABTestingForWP\\RegisterRenderScripts' => __DIR__ . '/../..' . '/src/register-render-scripts.php',
