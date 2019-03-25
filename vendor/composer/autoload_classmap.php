@@ -13,6 +13,7 @@ return array(
     'ABTestingForWP\\AdminPage' => $baseDir . '/src/admin-page.php',
     'ABTestingForWP\\BlockRenderer' => $baseDir . '/src/block-renderer.php',
     'ABTestingForWP\\Installer' => $baseDir . '/src/installer.php',
+    'ABTestingForWP\\RegisterFrontendAdminBar' => $baseDir . '/src/register-frontend-admin-bar.php',
     'ABTestingForWP\\RegisterGutenbergBlocks' => $baseDir . '/src/register-gutenberg-blocks.php',
     'ABTestingForWP\\RegisterREST' => $baseDir . '/src/register-rest.php',
     'ABTestingForWP\\RegisterRenderScripts' => $baseDir . '/src/register-render-scripts.php',
