@@ -1,5 +1,5 @@
 <?php defined('ABSPATH') or exit; ?>
-<div class="wrap">
+<div class="wrap ab-testing-for-wp">
   <h1><?php echo __('Active A/B Tests'); ?></h1>
 
   <?php if (sizeof($templateData['activeTests']) > 0) : ?>
@@ -21,7 +21,7 @@
             </td>
             <td><?php echo $test['startedAt']; ?></td>
             <td class="column-primary"><?php echo edit_post_link($test['postName'], '', '', $test['postId']); ?></td>
-            <td><?php echo $test['goalName']; ?></td>
+            <td><?php echo $test['postGoal'] === '0' ? $test['goalName'] : edit_post_link($test['goalName'], '', '', $test['postGoal']); ?></td>
             <td class="num"><?php echo $test['totalParticipants']; ?></td>
           </tr>
           <tr></tr>
