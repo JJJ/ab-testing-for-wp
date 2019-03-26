@@ -101,6 +101,8 @@ class BlockRenderer {
 
         $testId = $request->get_param('test');
         $postId = $request->get_param('post');
+        $variantId = $request->get_param('variant');
+        $forcedVariant = isset($variantId);
 
         // get contents of the post to extract gutenberg block
         $content_post = get_post($postId);
@@ -121,13 +123,16 @@ class BlockRenderer {
         // get control variant of the test
         $controlVariant = $this->getControlVariant($variants, $testId, $control);
 
-        // pick a variant of the test
-        $pickedVariant = $isEnabled ? $this->pickVariant($variants, $testId) : $controlVariant;
+        // skip picking variant if provided in request
+        if (!$forcedVariant) {
+            // pick a variant of the test
+            $pickedVariant = $isEnabled ? $this->pickVariant($variants, $testId) : $controlVariant;
 
-        $variantId = $pickedVariant['id'];
+            $variantId = $pickedVariant['id'];
+        }
 
-        // skip parsing HTML if control
-        if ($variantId === $control) {
+        // skip parsing HTML if control and variant not provided
+        if ($variantId === $control && !$forcedVariant) {
             return rest_ensure_response([ 'id' => $variantId ]);
         }
 
