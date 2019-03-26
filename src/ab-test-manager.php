@@ -23,10 +23,7 @@ class ABTestManager {
     }
 
     public function updateBlockData($postId) {
-        $content_post = get_post($postId);
-        $content = $content_post->post_content;
-
-        $testsData = ABTestContentParser::testDataFromContent($content);
+        $testsData = $this->getTestDataByPost($postId);
 
         // wipe relational data, but not logs
         $this->wipeTestDataFromPost($postId);
@@ -38,6 +35,13 @@ class ABTestManager {
                 $this->insertVariant($testData['id'], $variant);
             }
         }
+    }
+
+    public function getTestDataByPost($postId) {
+        $content_post = get_post($postId);
+        $content = $content_post->post_content;
+
+        return ABTestContentParser::testDataFromContent($content);
     }
 
     public function deleteBlockData($postId) {
