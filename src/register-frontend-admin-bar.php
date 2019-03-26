@@ -23,7 +23,11 @@ class RegisterFrontendAdminBar {
         wp_register_style('ab_testing_for_wp_admin_bar_style', plugins_url('/src/css/admin-bar.css', $this->fileRoot), []);
         wp_enqueue_style('ab_testing_for_wp_admin_bar_style');
 
-        wp_register_script('ab-testing-for-wp-admin-bar', plugins_url('/dist/admin-bar.js', $this->fileRoot), []);
+        wp_register_script(
+            'ab-testing-for-wp-admin-bar', 
+            plugins_url('/dist/admin-bar.js', $this->fileRoot), 
+            ['wp-api-fetch']
+        );
         wp_localize_script(
             'ab-testing-for-wp-admin-bar', 
             'ABTestingForWP_AdminBar', 
