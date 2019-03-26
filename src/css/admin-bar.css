@@ -10,6 +10,36 @@
   display: inline-block;
 }
 
+#wpadminbar #wp-admin-bar-ab-testing-for-wp .ab-testing-for-wp__test > .ab-item::after {
+  content: "";
+  width: 10px;
+  height: 10px;
+  background: #d4d4d4;
+  border-radius: 20px;
+  display: inline-block;
+  padding: 0;
+  float: left;
+  margin: 8px 8px 0 0;
+}
+
+#wpadminbar #wp-admin-bar-ab-testing-for-wp .ab-testing-for-wp__test.ab-testing-for-wp__enabled > .ab-item::after {
+  background: #46B450;
+}
+
+#wpadminbar #wp-admin-bar-ab-testing-for-wp .ab-testing-for-wp__variant.ab-testing-for-wp__selected > .ab-item::after {
+  content: "◂";
+  margin-left: 5px;
+  font-size: 1.4em;
+}
+
+#wpadminbar #wp-admin-bar-ab-testing-for-wp .ab-testing-for-wp__variant > .ab-item {
+  cursor: pointer;
+}
+
+#wpadminbar #wp-admin-bar-ab-testing-for-wp .ab-testing-for-wp__test .ab-item:hover {
+  color: #00b9eb;
+}
+
 .ab-testing-for-wp__highlight {
   animation-name: pulse_animation;
   animation-duration: 700ms;
