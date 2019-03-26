@@ -9,3 +9,22 @@
   height: 20px;
   display: inline-block;
 }
+
+.ab-testing-for-wp__highlight {
+  animation-name: pulse_animation;
+  animation-duration: 700ms;
+  transform-origin: 70% 70%;
+  animation-iteration-count: infinite;
+  animation-timing-function: ease;
+  box-shadow: 0 0 20px rgba(38, 142, 199, 0);
+  border-radius: 15px;
+  pointer-events: none;
+  z-index: 90000;
+}
+
+@keyframes pulse_animation {
+  0% { box-shadow: 0 0 20px rgba(38, 142, 199, 0.4); }
+  30% { box-shadow: 0 0 20px rgba(38, 142, 199, 1); }
+  60% { box-shadow: 0 0 20px rgba(38, 142, 199, 1); }
+  100% { box-shadow: 0 0 20px rgba(38, 142, 199, 0.4); }
+}
