@@ -5,7 +5,7 @@ Donate link: https://theclevernode.com/ab-testing-for-wordpress/
 Requires at least: 5.0
 Tested up to: 5.1.1
 Requires PHP: 5.6
-Stable tag: 1.1.0
+Stable tag: 1.1.1
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -53,7 +53,8 @@ You can find the [source and repository over at GitHub](https://github.com/Gaya/
 
 == Changelog ==
 = 1.1.0 =
-* Some text fixes and assets redos
+* Updated assets
+* Minor fixes
 
 = 1.0.0 =
 * Initial release

@@ -30,7 +30,7 @@ table.running-tests {
   cursor: pointer;
 }
 
-.check-column.check-column-normal {
+.ab-testing-for-wp table .check-column.check-column-normal {
   padding: 8px 10px;
 }
 
