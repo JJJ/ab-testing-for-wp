@@ -1,5 +1,5 @@
 <?php defined('ABSPATH') or exit; ?>
-<div class="wrap">
+<div class="wrap ab-testing-for-wp">
   <h1><?php echo __('Active A/B Tests'); ?></h1>
 
   <?php if (sizeof($templateData['activeTests']) > 0) : ?>
