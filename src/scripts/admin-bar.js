@@ -35,6 +35,10 @@ function handleVariant(e: Event) {
   // skip if test data is not present
   if (!test) return;
 
+  // update selected test
+  window.ABTestingForWP_AdminBar.cookieData[test.id] = variantId;
+  setTestStatus();
+
   const testId = test.id;
   apiFetch({ path: `/ab-testing-for-wp/v1/ab-test?test=${testId}&variant=${variantId}&post=${postId}` })
     .then((result) => {
