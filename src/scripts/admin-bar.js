@@ -2,8 +2,10 @@
 
 import scrollIntoView from 'scroll-into-view';
 
-import { findId, findTestById } from './helpers/test-dom';
+import { findId, findTestById, setTestStatus } from './helpers/test-dom';
 import highLightElement from './helpers/highlight';
+
+const { apiFetch } = window.wp;
 
 function handleTest() {
   const testId = findId(this);
@@ -18,7 +20,30 @@ function handleTest() {
 function handleVariant(e: Event) {
   e.stopPropagation();
 
-  console.log('Variant', findId(this));
+  // skip if already selected
+  if (this.classList.contains('ab-testing-for-wp__selected')) return;
+
+  // skip if data needed is not present
+  if (!window.ABTestingForWP_AdminBar || !window.ABTestingForWP) return;
+
+  const { testsData } = window.ABTestingForWP_AdminBar;
+  const { postId } = window.ABTestingForWP;
+
+  const variantId = findId(this);
+  const test = testsData.find(item => item.variants.some(variant => variant.id === variantId));
+
+  // skip if test data is not present
+  if (!test) return;
+
+  const testId = test.id;
+  apiFetch({ path: `/ab-testing-for-wp/v1/ab-test?test=${testId}&variant=${variantId}&post=${postId}` })
+    .then((result) => {
+      if (result.html) {
+        const target = document.querySelector(`.ABTestWrapper[data-test=${testId}]`);
+
+        if (target) target.innerHTML = result.html;
+      }
+    });
 }
 
 function bindAdminBarEvents() {
@@ -28,37 +53,6 @@ function bindAdminBarEvents() {
 
   document.querySelectorAll('.ab-testing-for-wp__variant').forEach((item) => {
     item.addEventListener('click', handleVariant);
-  });
-}
-
-function setTestStatus() {
-  if (!window.ABTestingForWP_AdminBar) return;
-
-  const data = window.ABTestingForWP_AdminBar;
-  const prefix = 'wp-admin-bar-ab-testing-for-wp_';
-
-  // remove current state
-  document
-    .querySelectorAll('.ab-testing-for-wp__test')
-    .forEach(node => node.classList.remove('ab-testing-for-wp__enabled'));
-
-  document
-    .querySelectorAll('.ab-testing-for-wp__variant')
-    .forEach(node => node.classList.remove('ab-testing-for-wp__selected'));
-
-  data.testsData.forEach((test) => {
-    const element = document.getElementById(`${prefix}${test.id}`);
-
-    if (!element) return;
-
-    if (test.isEnabled) element.classList.add('ab-testing-for-wp__enabled');
-
-    test.variants.forEach((variant) => {
-      const variantElement = document.getElementById(`${prefix}${variant.id}`);
-
-      if (!variantElement) return;
-      if (data.cookieData[test.id] === variant.id) variantElement.classList.add('ab-testing-for-wp__selected');
-    });
   });
 }
 
