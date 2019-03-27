@@ -8,7 +8,6 @@ const { __, sprintf } = i18n;
 const {
   Modal,
   Button,
-  ButtonGroup,
   RadioControl,
 } = components;
 
@@ -21,6 +20,7 @@ type DeclareWinnerProps = {
     participants: number;
     conversions: number;
   }[];
+  onDeclareWinner: (id: string) => void;
 };
 
 type DeclareWinnerState = {
@@ -47,7 +47,7 @@ class DeclareWinner extends Component<DeclareWinnerProps, DeclareWinnerState> {
   toConfirm = () => this.setState({ confirm: true });
 
   render() {
-    const { variants } = this.props;
+    const { variants, onDeclareWinner } = this.props;
     const { isOpen, confirm, value } = this.state;
 
     const selectedValue = value !== ''
@@ -90,7 +90,15 @@ class DeclareWinner extends Component<DeclareWinnerProps, DeclareWinnerState> {
               {__('This will remove the test and place the winning variant in the content.')}
             </p>
             <div style={{ marginTop: '1.5em' }}>
-              <Button isLarge isPrimary style={{ marginRight: 4 }}>
+              <Button
+                isLarge
+                isPrimary
+                style={{ marginRight: 4 }}
+                onClick={() => {
+                  onDeclareWinner(selectedValue);
+                  this.closeModal();
+                }}
+              >
                 {sprintf(__('Yes, "%s" is the winner'), selectedVariant.name)}
               </Button>
               <Button isLarge isDefault onClick={this.closeModal}>
