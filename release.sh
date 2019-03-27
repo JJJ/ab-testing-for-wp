@@ -33,4 +33,5 @@ for MISSING_PATH in $MISSING_PATHS; do
 	svn rm --force "$MISSING_PATH"
 done
 
+svn up
 svn ci -m 'Release tag' $VERSION
