@@ -84,10 +84,13 @@ class DeclareWinner extends Component<DeclareWinnerProps, DeclareWinnerState> {
         {isOpen && confirm && (
           <Modal title={__('Are you sure?')} onRequestClose={this.closeModal}>
             <p>
-              {sprintf(__('Are you sure you want to declare variant "%s" as the winner?'), selectedVariant.name)}
+              {sprintf(__('Do you want to declare variant "%s" as the winner?'), selectedVariant.name)}
             </p>
             <p>
-              {__('This will remove the test and place the winning variant in the content.')}
+              {__('This will remove the test and place the winning variant in its place.')}
+            </p>
+            <p>
+              <strong>{__('The test will be removed!')}</strong>
             </p>
             <div style={{ marginTop: '1.5em' }}>
               <Button
