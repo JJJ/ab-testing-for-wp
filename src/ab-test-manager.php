@@ -25,8 +25,8 @@ class ABTestManager {
     public function updateBlockData($postId) {
         $post = get_post($postId);
 
-        // skip saving revisions and unpublished posts
-        if ($post->post_type === 'revision' || $post->post_status !== 'publish') return;
+        // skip saving revisions
+        if ($post->post_type === 'revision') return;
 
         $testsData = $this->getTestDataByPost($postId);
 
