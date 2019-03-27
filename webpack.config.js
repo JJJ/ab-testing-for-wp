@@ -10,7 +10,7 @@ module.exports = {
     'ab-test': './blocks/ab-test.js',
     'ab-test-variant': './blocks/ab-test-variant.js',
   },
-  context: path.resolve(__dirname, 'src/scripts'),
+  context: path.resolve(__dirname, 'src/js'),
   output: {
     filename: '[name].js',
     path: path.resolve(__dirname, 'dist'),
