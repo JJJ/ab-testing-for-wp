@@ -5,6 +5,8 @@ import classNames from 'classnames';
 
 import { apiFetch, components, i18n } from '../../WP';
 
+import DeclareWinner from './DeclareWinner';
+
 import './TestResults.css';
 
 const { __ } = i18n;
@@ -71,45 +73,49 @@ class TestResults extends Component<TestResultsProps, TestResultsState> {
     return (
       <PanelBody title={__('Results so far')}>
         {hasParticipants ? (
-          <table className="TestResults">
-            <tbody>
-              <tr>
-                <td className="TestResultName">{__('Variation')}</td>
-                {enrichedResults.map(result => (
-                  <td
-                    className={classNames(result.winner ? 'TestResultWinner' : 'TestResultLoser', 'TestResultValue')}
-                    key={result.id}
-                  >
-                    {result.name}
-                  </td>
-                ))}
-              </tr>
-              <tr>
-                <td className="TestResultName">{__('Conversion Rate')}</td>
-                {enrichedResults.map(result => (
-                  <td
-                    className={classNames(result.winner ? 'TestResultWinner' : 'TestResultLoser', 'TestResultValue')}
-                    key={result.id}
-                  >
-                    {result.rate}
-                    %
-                  </td>
-                ))}
-              </tr>
-              <tr>
-                <td className="TestResultName">{__('Conversions')}</td>
-                {enrichedResults.map(result => (
-                  <td className="TestResultValue" key={result.id}>{result.conversions}</td>
-                ))}
-              </tr>
-              <tr>
-                <td className="TestResultName">{__('Participants')}</td>
-                {enrichedResults.map(result => (
-                  <td className="TestResultValue" key={result.id}>{result.participants}</td>
-                ))}
-              </tr>
-            </tbody>
-          </table>
+          <div>
+            <table className="TestResults">
+              <tbody>
+                <tr>
+                  <td className="TestResultName">{__('Variation')}</td>
+                  {enrichedResults.map(result => (
+                    <td
+                      className={classNames(result.winner ? 'TestResultWinner' : 'TestResultLoser', 'TestResultValue')}
+                      key={result.id}
+                    >
+                      {result.name}
+                    </td>
+                  ))}
+                </tr>
+                <tr>
+                  <td className="TestResultName">{__('Conversion Rate')}</td>
+                  {enrichedResults.map(result => (
+                    <td
+                      className={classNames(result.winner ? 'TestResultWinner' : 'TestResultLoser', 'TestResultValue')}
+                      key={result.id}
+                    >
+                      {result.rate}
+                      %
+                    </td>
+                  ))}
+                </tr>
+                <tr>
+                  <td className="TestResultName">{__('Conversions')}</td>
+                  {enrichedResults.map(result => (
+                    <td className="TestResultValue" key={result.id}>{result.conversions}</td>
+                  ))}
+                </tr>
+                <tr>
+                  <td className="TestResultName">{__('Participants')}</td>
+                  {enrichedResults.map(result => (
+                    <td className="TestResultValue" key={result.id}>{result.participants}</td>
+                  ))}
+                </tr>
+              </tbody>
+            </table>
+            <br />
+            <DeclareWinner variants={enrichedResults} />
+          </div>
         ) : (
           <div>No participants yet.</div>
         )}
