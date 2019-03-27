@@ -9,7 +9,7 @@
     "flow": "flow",
     "build": "NODE_ENV=production webpack",
     "dev": "webpack --watch",
-    "archive": "zip -r ab-testing-for-wp.zip ./ -x 'node_modules/*' -x '.git/*' -x 'svn/*' -x '.idea/*' -x '*.DS_Store'",
+    "archive": "zip -r ab-testing-for-wp.zip ./ -x 'node_modules/*' -x '.git/*' -x 'svn/*' -x 'site/*' -x '.idea/*' -x '*.DS_Store'",
     "clean": "rm -rf ./dist && rm -rf ab-testing-for-wp.zip",
     "dumpautoload": "composer dump-autoload",
     "release": "npm run clean && npm run dumpautoload && npm run build && npm run archive",
@@ -53,6 +53,10 @@
   "dependencies": {
     "classnames": "^2.2.6",
     "date-fns": "^1.30.1",
+    "ncp": "^2.0.0",
+    "node-sass": "^4.11.0",
+    "nunjucks": "^3.2.0",
+    "rimraf": "^2.6.3",
     "scroll-into-view": "^1.9.5",
     "shortid": "^2.2.14",
     "unique-string": "^1.0.0"
