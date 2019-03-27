@@ -5,7 +5,7 @@
  */
 /*
     Plugin Name: A/B Testing for WordPress
-    Plugin URI: https://theclevernode.com/ab-testing-for-wordpress/
+    Plugin URI: https://abtestingforwp.com
     Description: Easiest way to create split tests on your WordPress sites, right from the content editor!
     Version: 1.2.1
     Author: CleverNode
