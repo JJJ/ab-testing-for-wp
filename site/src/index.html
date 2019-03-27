@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" >
+    <meta name="robots" content="noodp,noydir">
+
+    <title>{{ page.title }}</title>
+    <meta name="description" content="{% block description %}{{ page.description }}{% endblock %}">
+
+    <link rel="stylesheet" href="{{ env.locals.url }}/assets/css/style.css">
+
+    <link rel="mask-icon" href="{{ env.locals.url }}/assets/images/icon.svg" color="#268ec7">
+    <link rel="icon" type="image/png" href="{{ env.locals.url }}/assets/images/favicon-32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="{{ env.locals.url }}/assets/images/favicon-16x16.png" sizes="16x16">
+    <link rel="icon" type="image/svg+xml" href="{{ env.locals.url }}/assets/images/icon.svg">
+    <meta name="theme-color" content="#ffffff">
+
+    <meta property="og:title" content="{{ page.title }}"/>
+    <meta property="og:description" content="{{ page.description }}"/>
+    <meta property="og:url" content="{{ env.locals.url }}/ab-testing-for-wordpress"/>
+    <meta property="og:site_name" content="A/B Testing for WordPress"/>
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@gayakessler" />
+    <meta name="twitter:url" content="{{ env.locals.url }}"/>
+    <meta name="twitter:title" content="{{ page.title }}"/>
+    <meta name="twitter:description" content="{{ page.description }}"/>
+    <meta name="twitter:image" content="{{ env.locals.url }}/assets/images/og_abtestingforwp_poster.jpg">
+
+    <meta property="og:locale" content="en_US"/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:image" content="{{ env.locals.url }}/assets/images/og_abtestingforwp_poster.jpg"/>
+
+    {{ livereloadScript | safe }}
+
+    <!-- Matomo -->
+    <script type="text/javascript">
+      var _paq = window._paq || [];
+      /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
+      _paq.push(['trackPageView']);
+      _paq.push(['enableLinkTracking']);
+      (function() {
+        var u="https://matomo.clevernode.dev/piwik/";
+        _paq.push(['setTrackerUrl', u+'matomo.php']);
+        _paq.push(['setSiteId', '3']);
+        var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+        g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);
+      })();
+    </script>
+    <noscript><p><img src="https://matomo.clevernode.dev/piwik/matomo.php?idsite=3&amp;rec=1" style="border:0;" alt="" /></p></noscript>
+    <!-- End Matomo Code -->
+</head>
+
+<body>
+<header class="header">
+    <section class="container">
+        <section class="container-text">
+            <img width="100" height="100" src="{{ env.locals.url }}/assets/images/icon-light.svg" alt="A/B Testing for WordPress logo" />
+            <h1>A/B Testing for WordPress</h1>
+            <p>
+                <strong>Easiest way to create split tests</strong> on your WordPress sites, right from the content editor!
+            </p>
+            <p>
+                Improve your website and start measuring your audience now.
+            </p>
+
+            <a class="cta" href="https://wordpress.org/plugins/ab-testing-for-wp/">
+                Download for Free
+            </a>
+        </section>
+        <img class="monitor" src="{{ env.locals.url }}/assets/images/monitor.svg" alt="Monitor displaying A/B Tests" />
+    </section>
+</header>
+
+<section class="usp">
+    <ul>
+        <li>
+            <img class="icon rounded blue" src="{{ env.locals.url }}/assets/images/market-research.svg" alt="Test Your Audience" />
+            <div class="content">
+                <h2>Test Your Audience</h2>
+                <p>
+                    Perform A/B tests on your website to measure what works best for your audience.
+                </p>
+            </div>
+        </li>
+        <li>
+            <img class="icon rounded green" src="{{ env.locals.url }}/assets/images/financial-analysis.svg" alt="Improve Your Site" />
+            <div class="content">
+                <h2>Improve Your Site</h2>
+                <p>
+                    Use the results of your tests to generate more leads and conversions.
+                </p>
+            </div>
+        </li>
+        <li>
+            <img class="icon" src="{{ env.locals.url }}/assets/images/campaign-tweaking.svg" alt="A/B Tests From the Content Editor" />
+            <div class="content">
+                <h2>A/B Tests From the Content Editor</h2>
+                <p>
+                    Create A/B testing right in the content editor of your pages and posts.
+                </p>
+            </div>
+        </li>
+        <li>
+            <img class="icon rounded blue" src="{{ env.locals.url }}/assets/images/seo-report.svg" alt="Instant Test Results" />
+            <div class="content">
+                <h2>Instant Test Results</h2>
+                <p>
+                    Instantaneously see results in the admin section of WordPress. See the amount participants and conversions in one glance.
+                </p>
+            </div>
+        </li>
+        <li>
+            <img class="icon rounded blue" src="{{ env.locals.url }}/assets/images/web-protection.svg" alt="SEO Safe" />
+            <div class="content">
+                <h2>SEO Safe</h2>
+                <p>
+                    Will not affect your current SEO and is built to adhere to SEO rules.
+                </p>
+            </div>
+        </li>
+        <li>
+            <img class="icon rounded green" src="{{ env.locals.url }}/assets/images/web-development.svg" alt="No Coding Skills Required" />
+            <div class="content">
+                <h2>No Coding Skills Required</h2>
+                <p>
+                    Implement A/B tests without hiring a web developer. Anyone can create tests using
+                    this plugin.
+                </p>
+            </div>
+        </li>
+    </ul>
+</section>
+
+<section class="example-1">
+    <h2>What it Looks Like in WordPress</h2>
+    <img src="{{ env.locals.url }}/assets/images/screenshot-1.gif" alt="Demonstration of how A/B Testing works in WordPress" />
+</section>
+
+<section class="example-2">
+    <div class="container">
+        <div class="content">
+            <h2>Measure Conversions of Your Tests</h2>
+
+            <p>
+                With A/B Testing for WordPress you can serve multiple variants of your content to your visitors. This allows you to track which version of your website will lead to more conversions.
+            </p>
+
+            <p>
+                A/B Testing for WordPress will serve either version of the test variants and measures the amount of visitors who reach the goal page. Let the plugin figure out which of the variants was most popular with your audience.
+            </p>
+        </div>
+        <img src="{{ env.locals.url }}/assets/images/screenshot-3.jpg" alt="An overview of active tests" />
+    </div>
+</section>
+
+<section class="example-1">
+    <h2>Preview Test Variation from Your Admin Bar</h2>
+    <img src="{{ env.locals.url }}/assets/images/screenshot-2.gif" alt="Demonstration of variation previewing from the admin bar" />
+</section>
+
+<section class="download">
+    <a class="cta" href="https://wordpress.org/plugins/ab-testing-for-wp/">
+        Use A/B Testing for WordPress Now!
+    </a>
+</section>
+
+<section class="faq">
+    <div class="container">
+        <h2>How does A/B Testing for WordPress measure tests?</h2>
+        <p>
+            When a visitor sees a test variant the visitor will be logged as a participant of that
+            variant. When the visitor visits the goal page of the test, the visitor will also be
+            logged as a conversion of the variant.
+        </p>
+        <p>
+            A/B Testing for WordPress will calculate the percentage of the participants who became
+            conversions and determines a winning variant through these numbers.
+        </p>
+        <h2>Does A/B Testing for WordPress affect SEO?</h2>
+        <p>
+            No. Only the control version of your test is shown to search engines and website caches.
+            The variant which the visitor will see is replaced using JavaScript.
+        </p>
+        <h2>Does A/B Testing for WordPress allow weight distribution?</h2>
+        <p>
+            Yes. You can change the amount of visitors should see each variant.
+        </p>
+        <h2>What does A/B Testing for WordPress count as a goal?</h2>
+        <p>
+            Currently you can only pick local pages as a goal to track. Counting outbound links as
+            conversion is not possible (yet).
+        </p>
+    </div>
+</section>
+
+<footer class="footer">
+    <section class="content">
+        <p>
+            A/B Testing for WordPress is a plugin by <a href="https://theclevernode.com">CleverNode</a>
+        </p>
+        <p>
+            For questions or support contact: <a href="mailto:gaya@theclevernode.com">gaya@theclevernode.com</a>
+        </p>
+    </section>
+</footer>
+</body>
+</html>
