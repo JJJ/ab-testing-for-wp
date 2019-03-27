@@ -2,3 +2,4 @@ node_modules/
 dist/
 svn/
 stats.json
+site/build
