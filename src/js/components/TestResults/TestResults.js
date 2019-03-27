@@ -15,6 +15,7 @@ const { PanelBody } = components;
 type TestResultsProps = {
   testId: string;
   isEnabled: boolean;
+  onDeclareWinner: (id: string) => void;
 };
 
 type TestResultsState = {
@@ -50,7 +51,7 @@ class TestResults extends Component<TestResultsProps, TestResultsState> {
   }
 
   render() {
-    const { isEnabled } = this.props;
+    const { isEnabled, onDeclareWinner } = this.props;
     const { results, loading } = this.state;
 
     const hasParticipants = results.reduce((acc, b) => acc + b.participants, 0) > 0;
@@ -68,7 +69,12 @@ class TestResults extends Component<TestResultsProps, TestResultsState> {
         winner: !results
           .every(variant => result.participants / result.conversions
             >= variant.participants / variant.conversions),
-      }));
+      }))
+      .sort((a, b) => {
+        if (a.name > b.name) return 1;
+        if (a.name > b.name) return -1;
+        return 0;
+      });
 
     return (
       <PanelBody title={__('Results so far')}>
@@ -113,12 +119,12 @@ class TestResults extends Component<TestResultsProps, TestResultsState> {
                 </tr>
               </tbody>
             </table>
-            <br />
-            <DeclareWinner variants={enrichedResults} />
           </div>
         ) : (
           <div>No participants yet.</div>
         )}
+        <br />
+        <DeclareWinner variants={enrichedResults} onDeclareWinner={onDeclareWinner} />
       </PanelBody>
     );
   }
