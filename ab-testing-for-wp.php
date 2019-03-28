@@ -39,7 +39,7 @@ function bootstrap() {
     // only on admin
     if(is_admin()) {
         if(!defined('DOING_AJAX') || !DOING_AJAX) {
-            new AdminPage(__FILE__);
+            new RegisterAdminPage(__FILE__);
         }
     }
 
