@@ -16,7 +16,7 @@ class RegisterAdminPage {
         add_action('admin_menu', [$this, 'menu']);
     }
 
-    public function loadStyles() {
+    private function loadStyles() {
         wp_register_style('ab_testing_for_wp_admin_style', plugins_url('/src/css/admin.css', $this->fileRoot), []);
         wp_enqueue_style('ab_testing_for_wp_admin_style');
     }

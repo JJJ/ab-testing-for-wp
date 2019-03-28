@@ -36,6 +36,9 @@ if (!defined('ABSPATH')) {
 require __DIR__ . '/vendor/autoload.php';
 
 function bootstrap() {
+    // on every request
+    new RegisterGutenbergBlocks(__FILE__);
+
     // only on admin
     if(is_admin()) {
         if(!defined('DOING_AJAX') || !DOING_AJAX) {
@@ -48,9 +51,6 @@ function bootstrap() {
         new RegisterRenderScripts(__FILE__);
         new RegisterFrontendAdminBar(__FILE__);
     }
-
-    // on every request
-    new RegisterGutenbergBlocks(__FILE__);
 }
 
 function bootstrapREST() {
