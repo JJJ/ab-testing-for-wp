@@ -16,6 +16,9 @@ import PageSelector from '../components/PageSelector/PageSelector';
 import ControlSettings from '../components/ControlSettings/ControlSettings';
 import EnabledSettings from '../components/EnabledSettings/EnabledSettings';
 import TestResults from '../components/TestResults/TestResults';
+import Onboarding from '../components/Onboarding/Onboarding';
+
+import { getOption } from '../helpers/options';
 
 import SVGIcon from './ab-test-logo';
 
@@ -34,7 +37,12 @@ const ALLOWED_BLOCKS = ['ab-testing-for-wp/ab-test-block-variant'];
 const makeTemplate = variant => ['ab-testing-for-wp/ab-test-block-variant', variant];
 
 function ABTestBlock(props: ABTestBlockProps) {
-  const { attributes, setAttributes, onDeclareWinner } = props;
+  const {
+    clientId,
+    attributes,
+    setAttributes,
+    onDeclareWinner,
+  } = props;
 
   const {
     id,
@@ -44,6 +52,8 @@ function ABTestBlock(props: ABTestBlockProps) {
     isEnabled,
     startedAt,
   } = attributes;
+
+  const completedOnboarding = !!getOption('completedOnboarding');
 
   // initialize attributes
   if (!id) {
@@ -101,6 +111,7 @@ function ABTestBlock(props: ABTestBlockProps) {
 
   return (
     <div className={`ABTest--${id}`}>
+      {!completedOnboarding && <Onboarding clientId={clientId} />}
       <style>{css}</style>
       <InspectorControls>
         <EnabledSettings
