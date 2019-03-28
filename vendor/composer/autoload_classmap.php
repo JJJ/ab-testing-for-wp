@@ -7,12 +7,13 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'ABTestingForWP\\ABTestContentParser' => $baseDir . '/src/ab-test-content-parser.php',
-    'ABTestingForWP\\ABTestManager' => $baseDir . '/src/ab-test-manager.php',
+    'ABTestingForWP\\ABTestManager' => $baseDir . '/src/data/ab-test-manager.php',
     'ABTestingForWP\\ABTestStats' => $baseDir . '/src/ab-test-stats.php',
     'ABTestingForWP\\ABTestTracking' => $baseDir . '/src/ab-test-tracking.php',
     'ABTestingForWP\\AdminPage' => $baseDir . '/src/admin-page.php',
     'ABTestingForWP\\BlockRenderer' => $baseDir . '/src/block-renderer.php',
     'ABTestingForWP\\Installer' => $baseDir . '/src/installer.php',
+    'ABTestingForWP\\PostsActions' => $baseDir . '/src/actions/posts.php',
     'ABTestingForWP\\RegisterFrontendAdminBar' => $baseDir . '/src/register-frontend-admin-bar.php',
     'ABTestingForWP\\RegisterGutenbergBlocks' => $baseDir . '/src/register-gutenberg-blocks.php',
     'ABTestingForWP\\RegisterREST' => $baseDir . '/src/register-rest.php',
