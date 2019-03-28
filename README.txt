@@ -5,7 +5,7 @@ Donate link: https://abtestingforwp.com/
 Requires at least: 5.0
 Tested up to: 5.1.1
 Requires PHP: 5.6
-Stable tag: 1.3.0
+Stable tag: 1.3.1
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -53,7 +53,7 @@ You can find the [source and repository over at GitHub](https://github.com/Gaya/
 4. Overview of running tests
 
 == Changelog ==
-= 1.3.0 =
+= 1.3.1 =
 * Ability to declare a winner of the test. Replacing the test block with the winning variant's content.
 
 = 1.2.2 =
