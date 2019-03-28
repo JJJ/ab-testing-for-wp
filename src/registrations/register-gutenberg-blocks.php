@@ -15,6 +15,9 @@ class RegisterGutenbergBlocks {
         $this->registerGutenbergScript('ab-testing-for-wp_ab-test-block', 'ab-test.js');
         $this->registerGutenbergScript('ab-testing-for-wp_ab-test-block-variant', 'ab-test-variant.js');
 
+        // add Gutenberg options if admin
+        $this->addOptions('ab-testing-for-wp_ab-test-block');
+
         // register AB test container
         register_block_type('ab-testing-for-wp/ab-test-block', [
             'editor_script' => 'ab-testing-for-wp_ab-test-block',
@@ -29,6 +32,15 @@ class RegisterGutenbergBlocks {
         // update test data meta on saving posts
         add_action('save_post', [$postActions, 'updateBlockData']);
         add_action('delete_post', [$postActions, 'deleteBlockData']);
+    }
+
+    private function addOptions($scriptHandle) {
+        // only for admin pages
+        if(is_admin() && !defined('DOING_AJAX') || !DOING_AJAX) {
+            $optionsManager = new OptionsManager();
+    
+            wp_localize_script($scriptHandle, 'ab_testing_for_wp_options', $optionsManager->getAllOptions());
+        }
     }
 
     public function registerGutenbergScript($name, $file) {
