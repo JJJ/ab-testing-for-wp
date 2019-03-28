@@ -12,6 +12,7 @@ return array(
     'ABTestingForWP\\ABTestTracking' => $baseDir . '/src/data/ab-test-tracking.php',
     'ABTestingForWP\\BlockRenderer' => $baseDir . '/src/helpers/block-renderer.php',
     'ABTestingForWP\\Installer' => $baseDir . '/src/data/installer.php',
+    'ABTestingForWP\\OptionsManager' => $baseDir . '/src/data/options-manager.php',
     'ABTestingForWP\\PostsActions' => $baseDir . '/src/actions/posts.php',
     'ABTestingForWP\\RegisterAdminPage' => $baseDir . '/src/registrations/register-admin-page.php',
     'ABTestingForWP\\RegisterFrontendAdminBar' => $baseDir . '/src/registrations/register-frontend-admin-bar.php',
