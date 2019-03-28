@@ -15,6 +15,7 @@ declare type ABTestAttributes = {
   variants: ABTestVariant[];
   control: string;
   isEnabled: boolean;
+  completedOnboarding: boolean;
   postGoal: number;
   startedAt: Date | string;
 };
