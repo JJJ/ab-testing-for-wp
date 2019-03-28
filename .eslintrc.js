@@ -9,6 +9,7 @@ module.exports = {
     wp: false,
     ABTestingForWP: false,
     ABTestingForWP_AdminBar: false,
+    ABTestingForWP_Options: false,
   },
   rules: {
     'react/react-in-jsx-scope': 0,

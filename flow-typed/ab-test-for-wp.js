@@ -20,5 +20,6 @@ declare type ABTestAttributes = {
 };
 
 declare type GutenbergProps = {
+  clientId: string;
   setAttributes: (newState: any) => void;
 };
