@@ -22,35 +22,11 @@ class ABTestManager {
         $this->postsTable = $table_prefix . 'posts';
     }
 
-    public function updateBlockData($postId) {
-        $post = get_post($postId);
-
-        // skip saving revisions
-        if ($post->post_type === 'revision') return;
-
-        $testsData = $this->getTestDataByPost($postId);
-
-        // wipe relational data, but not logs
-        $this->wipeTestDataFromPost($postId);
-
-        foreach ($testsData as $testData) {
-            $this->insertTest($postId, $testData);
-
-            foreach ($testData['variants'] as $variant) {
-                $this->insertVariant($testData['id'], $variant);
-            }
-        }
-    }
-
     public function getTestDataByPost($postId) {
         $content_post = get_post($postId);
         $content = $content_post->post_content;
 
         return ABTestContentParser::testDataFromContent($content);
-    }
-
-    public function deleteBlockData($postId) {
-        $this->archiveTestDataFromPost($postId);
     }
 
     public function getStatsByTest($testId) {
@@ -176,7 +152,7 @@ class ABTestManager {
         $this->wpdb->query($query);
     }
 
-    private function wipeTestDataFromPost($postId) {
+    public function wipeTestDataFromPost($postId) {
         $query = "
         DELETE `{$this->variantTable}`, `{$this->abTestTable}`
         FROM `{$this->variantTable}`
@@ -187,12 +163,12 @@ class ABTestManager {
         $this->wpdb->query($this->wpdb->prepare($query, $postId));
     }
 
-    private function archiveTestDataFromPost($postId) {
+    public function archiveTestDataFromPost($postId) {
         $query = "UPDATE `{$this->abTestTable}` SET isArchived = 1 WHERE postId = %d";
         $this->wpdb->query($this->wpdb->prepare($query, $postId));
     }
 
-    private function insertTest($postId, $testData) {
+    public function insertTest($postId, $testData) {
         $isEnabled = isset($testData['isEnabled']) && (bool) $testData['isEnabled'] ? 1 : 0;
         $startedAt = isset($testData['startedAt']) ? $testData['startedAt'] : '';
         $postGoal = isset($testData['postGoal']) ? $testData['postGoal'] : 0;
@@ -214,7 +190,7 @@ class ABTestManager {
         ));
     }
 
-    private function insertVariant($testId, $variant) {
+    public function insertVariant($testId, $variant) {
         list($participants, $conversions) = $this->getStatsByVariation($variant['id']);
 
         $query = "

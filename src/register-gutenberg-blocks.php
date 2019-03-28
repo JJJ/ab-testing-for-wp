@@ -9,7 +9,7 @@ class RegisterGutenbergBlocks {
         $this->fileRoot = $fileRoot;
 
         $renderer = new BlockRenderer();
-        $abTestManager = new ABTestManager();
+        $postActions = new PostsActions();
 
         // register scripts
         $this->registerGutenbergScript('ab-testing-for-wp_ab-test-block', 'ab-test.js');
@@ -27,8 +27,8 @@ class RegisterGutenbergBlocks {
         ]);
 
         // update test data meta on saving posts
-        add_action('save_post', [$abTestManager, 'updateBlockData']);
-        add_action('delete_post', [$abTestManager, 'deleteBlockData']);
+        add_action('save_post', [$postActions, 'updateBlockData']);
+        add_action('delete_post', [$postActions, 'deleteBlockData']);
     }
 
     public function registerGutenbergScript($name, $file) {
