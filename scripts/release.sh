@@ -12,9 +12,6 @@ read answer
 if [[ "$answer" != "${answer#[Yy]}" ]]; then
   echo "Releasing...";
 
-  # build
-  npm run build
-
   # clean SVN folders
   rm -Rf $SVN_DIR/trunk/*
   rm -Rf $SVN_DIR/assets/*
@@ -39,8 +36,7 @@ if [[ "$answer" != "${answer#[Yy]}" ]]; then
   done
 
   svn up
-  svn ci -m 'Release tag' $VERSION
-
+  echo "Commit change in SVN folder to finalize release";
 else
   echo "Aborting";
 fi;
