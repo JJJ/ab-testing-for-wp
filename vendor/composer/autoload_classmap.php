@@ -6,16 +6,17 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
-    'ABTestingForWP\\ABTestContentParser' => $baseDir . '/src/ab-test-content-parser.php',
+    'ABTestingForWP\\ABTestContentParser' => $baseDir . '/src/helpers/ab-test-content-parser.php',
     'ABTestingForWP\\ABTestManager' => $baseDir . '/src/data/ab-test-manager.php',
-    'ABTestingForWP\\ABTestStats' => $baseDir . '/src/ab-test-stats.php',
-    'ABTestingForWP\\ABTestTracking' => $baseDir . '/src/ab-test-tracking.php',
-    'ABTestingForWP\\AdminPage' => $baseDir . '/src/admin-page.php',
-    'ABTestingForWP\\BlockRenderer' => $baseDir . '/src/block-renderer.php',
-    'ABTestingForWP\\Installer' => $baseDir . '/src/installer.php',
+    'ABTestingForWP\\ABTestStats' => $baseDir . '/src/data/ab-test-stats.php',
+    'ABTestingForWP\\ABTestTracking' => $baseDir . '/src/data/ab-test-tracking.php',
+    'ABTestingForWP\\BlockRenderer' => $baseDir . '/src/helpers/block-renderer.php',
+    'ABTestingForWP\\Installer' => $baseDir . '/src/data/installer.php',
     'ABTestingForWP\\PostsActions' => $baseDir . '/src/actions/posts.php',
-    'ABTestingForWP\\RegisterFrontendAdminBar' => $baseDir . '/src/register-frontend-admin-bar.php',
-    'ABTestingForWP\\RegisterGutenbergBlocks' => $baseDir . '/src/register-gutenberg-blocks.php',
-    'ABTestingForWP\\RegisterREST' => $baseDir . '/src/register-rest.php',
-    'ABTestingForWP\\RegisterRenderScripts' => $baseDir . '/src/register-render-scripts.php',
+    'ABTestingForWP\\RegisterAdminPage' => $baseDir . '/src/registrations/register-admin-page.php',
+    'ABTestingForWP\\RegisterFrontendAdminBar' => $baseDir . '/src/registrations/register-frontend-admin-bar.php',
+    'ABTestingForWP\\RegisterGutenbergBlocks' => $baseDir . '/src/registrations/register-gutenberg-blocks.php',
+    'ABTestingForWP\\RegisterREST' => $baseDir . '/src/registrations/register-rest.php',
+    'ABTestingForWP\\RegisterRenderScripts' => $baseDir . '/src/registrations/register-render-scripts.php',
+    'ABTestingForWP\\TestsActions' => $baseDir . '/src/actions/tests.php',
 );

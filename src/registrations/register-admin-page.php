@@ -2,9 +2,10 @@
 
 namespace ABTestingForWP;
 
-class AdminPage {
+class RegisterAdminPage {
     private $abTestMananger;
     private $fileRoot;
+    private $srcRoot = __DIR__ . '/../';
 
     public function __construct($fileRoot) {
         $this->abTestManager = new ABTestManager();
@@ -21,7 +22,7 @@ class AdminPage {
     }
 
     public function menu() {
-        $icon = file_get_contents(__DIR__ . '/assets/ab-testing-for-wp-base64-logo.svg');
+        $icon = file_get_contents($this->srcRoot . 'assets/ab-testing-for-wp-base64-logo.svg');
 
         add_menu_page(
             'A/B Testing',
@@ -81,13 +82,13 @@ class AdminPage {
             'activeTests' => $testsData,
         ];
 
-        require __DIR__ . '/pages/overview.php';
+        require $this->srcRoot . 'pages/overview.php';
     }
 
     public function howto() {
         $assets = plugins_url('/src/assets/', $this->fileRoot);
 
-        require __DIR__ . '/pages/howto.php';
+        require $this->srcRoot . 'pages/howto.php';
     }
 
 }
