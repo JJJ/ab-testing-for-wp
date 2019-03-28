@@ -1,6 +1,6 @@
 {
   "name": "ab-test-wordpress",
-  "version": "1.3.0",
+  "version": "1.3.1",
   "description": "A/B Test right from your WordPress posts.",
   "main": "index.js",
   "scripts": {
@@ -12,7 +12,9 @@
     "archive": "zip -r ab-testing-for-wp.zip ./ -x 'node_modules/*' -x '.git/*' -x 'svn/*' -x 'site/*' -x '.idea/*' -x '*.DS_Store'",
     "clean": "rm -rf ./dist && rm -rf ab-testing-for-wp.zip",
     "dumpautoload": "composer dump-autoload",
-    "release": "npm run clean && npm run dumpautoload && npm run build && npm run archive",
+    "bump-version": "sh scripts/bump.sh",
+    "prepare-release": "npm run clean && npm run dumpautoload && npm run build && npm run archive",
+    "release": "npm run bump-version && npm run prepare-release && sh scripts/release.sh",
     "analyze": "webpack --json > stats.json",
     "build-site": "node site/build.js && imagemin site/build/assets/images/* --out-dir=site/build/assets/images"
   },
