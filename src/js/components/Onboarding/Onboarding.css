@@ -1,0 +1,17 @@
+.ab-testing-for-wp__Onboarding {
+  position: absolute;
+  z-index: 999;
+  background: #fff;
+  box-shadow: 3px 3px 8px rgba(0,0,0, 0.2);
+  padding: 5px 15px;
+}
+
+.ab-testing-for-wp__OnboardingModal .ButtonContainer {
+  margin: 2em 0 1em 0;
+  display: flex;
+  align-items: center;
+}
+
+.ab-testing-for-wp__OnboardingModal .ButtonContainer button {
+  margin-right: 10px;
+}

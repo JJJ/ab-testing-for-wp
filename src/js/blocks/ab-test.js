@@ -18,7 +18,7 @@ import EnabledSettings from '../components/EnabledSettings/EnabledSettings';
 import TestResults from '../components/TestResults/TestResults';
 import Onboarding from '../components/Onboarding/Onboarding';
 
-import { getOption } from '../helpers/options';
+import { getOption, setOption } from '../helpers/options';
 
 import SVGIcon from './ab-test-logo';
 
@@ -51,9 +51,13 @@ function ABTestBlock(props: ABTestBlockProps) {
     control,
     isEnabled,
     startedAt,
+    completedOnboarding,
   } = attributes;
 
-  const completedOnboarding = !!getOption('completedOnboarding');
+  const cancelOnboarding = () => {
+    setOption('completedOnboarding', true);
+    setAttributes({ completedOnboarding: true });
+  };
 
   // initialize attributes
   if (!id) {
@@ -111,7 +115,12 @@ function ABTestBlock(props: ABTestBlockProps) {
 
   return (
     <div className={`ABTest--${id}`}>
-      {!completedOnboarding && <Onboarding clientId={clientId} />}
+      {!completedOnboarding && (
+        <Onboarding
+          cancelOnboarding={cancelOnboarding}
+          clientId={clientId}
+        />
+      )}
       <style>{css}</style>
       <InspectorControls>
         <EnabledSettings
@@ -210,6 +219,11 @@ registerBlockType('ab-testing-for-wp/ab-test-block', {
     startedAt: {
       type: 'string',
       default: '',
+    },
+    completedOnboarding: {
+      type: 'boolean',
+      default: !!getOption('completedOnboarding'),
+      source: 'text',
     },
   },
   edit,
