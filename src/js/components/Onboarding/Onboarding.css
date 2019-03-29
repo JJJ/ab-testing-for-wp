@@ -25,6 +25,18 @@
   padding: 12px 0;
   background: #fff;
   font-size: 1.2em;
+  transition: background 0.2s ease;
+  cursor: pointer;
+}
+
+.ab-testing-for-wp__Onboarding .buttons button:focus,
+.ab-testing-for-wp__Onboarding .buttons button:hover {
+  color: #fff;
+  background: #007eb1;
+}
+
+.ab-testing-for-wp__Onboarding .buttons button:hover {
+  background: #0075a4;
 }
 
 .ab-testing-for-wp__Onboarding {

@@ -46,7 +46,10 @@ class Onboarding extends Component<OnboardingProps, OnboardingState> {
     if (!document.body) return;
     document.body.appendChild(this.stepContainer);
 
+    // reset position and display
     this.stepContainer.style.display = 'block';
+    this.stepContainer.style.top = 0;
+    this.stepContainer.style.left = 0;
 
     const prevButton = this.stepContainer.querySelector('button.prev');
     if (prevButton) {
@@ -99,6 +102,7 @@ class Onboarding extends Component<OnboardingProps, OnboardingState> {
         if (!testContainer) return;
         testContainer.scrollIntoView();
         this.setupStepContainer();
+
         this.placeStepContainer(testContainer, (testBoundingRects, containerBoundingRects) => {
           const offsetLeft = (testBoundingRects.width - containerBoundingRects.width) / 2;
           const left = testBoundingRects.left + offsetLeft;
