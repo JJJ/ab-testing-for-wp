@@ -7,8 +7,6 @@ export function drawOverlayAround(
   spacingBottom: number = 0,
   spacingLeft: number = 0,
 ) {
-  const boundingRects = target.getBoundingClientRect();
-
   let overlay = document.getElementById('OverboardingOverlay');
   let preventClick = document.getElementById('OverboardingPreventClick');
 
@@ -28,6 +26,8 @@ export function drawOverlayAround(
     if (!document.body) return;
     document.body.appendChild(preventClick);
   }
+
+  const boundingRects = target.getBoundingClientRect();
 
   const top = boundingRects.top - spacingTop;
   const left = boundingRects.left - spacingLeft;
