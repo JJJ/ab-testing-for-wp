@@ -36,7 +36,7 @@ class RegisterGutenbergBlocks {
 
     private function addOptions($scriptHandle) {
         // only for admin pages
-        if(is_admin() && !defined('DOING_AJAX') || !DOING_AJAX) {
+        if(is_admin() && (!defined('DOING_AJAX') || !DOING_AJAX)) {
             $optionsManager = new OptionsManager();
     
             wp_localize_script($scriptHandle, 'ABTestingForWP_Options', $optionsManager->getAllOptions());
