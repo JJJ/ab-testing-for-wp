@@ -1,9 +1,58 @@
+.ab-testing-for-wp__Onboarding .content p {
+  font-size: 1.2em;
+}
+
+.ab-testing-for-wp__Onboarding .content {
+  padding: 0 15px;
+  max-width: 320px;
+  text-align: center;
+}
+
+.ab-testing-for-wp__Onboarding .buttons {
+  display: flex;
+  align-items: stretch;
+  justify-items: stretch;
+  border-top: 1px solid #ededed;
+}
+
+.ab-testing-for-wp__Onboarding .buttons button.next {
+  background: #ededed;
+}
+
+.ab-testing-for-wp__Onboarding .buttons button {
+  border: 0;
+  flex-grow: 1;
+  padding: 12px 0;
+  background: #fff;
+  font-size: 1.2em;
+}
+
 .ab-testing-for-wp__Onboarding {
   position: absolute;
-  z-index: 999;
+  z-index: 999999;
   background: #fff;
-  box-shadow: 3px 3px 8px rgba(0,0,0, 0.2);
-  padding: 5px 15px;
+  box-shadow: 3px 3px 8px rgba(0, 0, 0, 0.5);
+  display: none;
+}
+
+.ab-testing-for-wp__OnboardingOverlay {
+  position: fixed;
+  z-index: 999998;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  transition: clip-path 0.3s ease;
+}
+
+#OverboardingPreventClick {
+  position: fixed;
+  z-index: 999998;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
 }
 
 .ab-testing-for-wp__OnboardingModal .ButtonContainer {
