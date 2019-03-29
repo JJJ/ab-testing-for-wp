@@ -98,7 +98,6 @@ class Onboarding extends Component<OnboardingProps, OnboardingState> {
         const variantSelector = testContainer.querySelector('.ab-test-for-wp__VariantSelector');
 
         if (!variantSelector) return;
-        drawOverlayAround(variantSelector, 10, 10, 10, 10);
         const variantBoundingRects = variantSelector.getBoundingClientRect();
 
         const containerBoundingRects = this.stepContainer.getBoundingClientRect();
@@ -109,6 +108,8 @@ class Onboarding extends Component<OnboardingProps, OnboardingState> {
 
         this.stepContainer.style.top = `${top}px`;
         this.stepContainer.style.left = `${left}px`;
+
+        drawOverlayAround(variantSelector, 10, 10, 10, 10);
       }
 
       if (step === 3) {
@@ -118,7 +119,6 @@ class Onboarding extends Component<OnboardingProps, OnboardingState> {
         const variantSelector = testContainer.querySelector('.ab-test-for-wp__VariantSelector');
 
         if (!variantSelector) return;
-        drawOverlayAround(variantSelector, 10, 10, 10, 10);
         const variantBoundingRects = variantSelector.getBoundingClientRect();
 
         const containerBoundingRects = this.stepContainer.getBoundingClientRect();
@@ -130,24 +130,26 @@ class Onboarding extends Component<OnboardingProps, OnboardingState> {
 
         this.stepContainer.style.top = `${top}px`;
         this.stepContainer.style.left = `${left}px`;
+
+        drawOverlayAround(variantSelector, 10, 10, 10, 10);
       }
 
       if (step === 4) {
         const sideBar = document.querySelector('.edit-post-sidebar');
 
         if (!sideBar) return;
-        drawOverlayAround(sideBar);
         const sideBarRects = sideBar.getBoundingClientRect();
 
         const containerBoundingRects = this.stepContainer.getBoundingClientRect();
 
         const left = sideBarRects.left - containerBoundingRects.width - 60;
         const top = sideBarRects.top
-          - (containerBoundingRects.height / 2)
-          + (sideBarRects.height / 2);
+          + containerBoundingRects.height;
 
         this.stepContainer.style.top = `${top}px`;
         this.stepContainer.style.left = `${left}px`;
+
+        drawOverlayAround(sideBar);
       }
     });
   };
