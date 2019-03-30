@@ -100,7 +100,7 @@ class Onboarding extends Component<OnboardingProps, OnboardingState> {
       if (step === 1) {
         const testContainer = this.testContainer();
         if (!testContainer) return;
-        testContainer.scrollIntoView();
+        testContainer.scrollIntoView({ block: 'center' });
         this.setupStepContainer();
 
         this.placeStepContainer(testContainer, (testBoundingRects, containerBoundingRects) => {
@@ -122,7 +122,7 @@ class Onboarding extends Component<OnboardingProps, OnboardingState> {
         const variantSelector = testContainer.querySelector('.ab-test-for-wp__VariantSelector');
 
         if (!variantSelector) return;
-        variantSelector.scrollIntoView();
+        variantSelector.scrollIntoView({ block: 'center' });
 
         this.placeStepContainer(variantSelector, (variantBoundingRects, containerBoundingRects) => {
           const left = variantBoundingRects.left - containerBoundingRects.width - 60;
@@ -143,7 +143,7 @@ class Onboarding extends Component<OnboardingProps, OnboardingState> {
         const variantSelector = testContainer.querySelector('.ab-test-for-wp__VariantSelector');
 
         if (!variantSelector) return;
-        variantSelector.scrollIntoView();
+        variantSelector.scrollIntoView({ block: 'center' });
 
         this.placeStepContainer(variantSelector, (variantBoundingRects, containerBoundingRects) => {
           const left = variantBoundingRects.left - containerBoundingRects.width - 60;
@@ -177,7 +177,7 @@ class Onboarding extends Component<OnboardingProps, OnboardingState> {
         this.setupStepContainer();
         const panel = document.querySelectorAll('.components-panel__body')[step - 3];
 
-        panel.scrollIntoView();
+        panel.scrollIntoView({ block: 'center' });
         this.placeStepContainer(panel, (panelRects, containerBoundingRects) => {
           const left = panelRects.left - containerBoundingRects.width - 120;
           const top = panelRects.top - ((containerBoundingRects.height - panelRects.height) / 2);
@@ -192,7 +192,7 @@ class Onboarding extends Component<OnboardingProps, OnboardingState> {
         this.setupStepContainer();
         const panel = document.querySelectorAll('.components-panel__body')[1];
 
-        panel.scrollIntoView();
+        panel.scrollIntoView({ block: 'center' });
         this.placeStepContainer(panel, (panelRects, containerBoundingRects) => {
           const left = panelRects.left - containerBoundingRects.width - 120;
           const top = panelRects.top - ((containerBoundingRects.height - panelRects.height) / 2);
