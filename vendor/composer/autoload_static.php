@@ -21,7 +21,6 @@ class ComposerStaticInit3ca069ed2eeb7caff92dca41e2d25775
         'ABTestingForWP\\RegisterGutenbergBlocks' => __DIR__ . '/../..' . '/src/registrations/register-gutenberg-blocks.php',
         'ABTestingForWP\\RegisterREST' => __DIR__ . '/../..' . '/src/registrations/register-rest.php',
         'ABTestingForWP\\RegisterRenderScripts' => __DIR__ . '/../..' . '/src/registrations/register-render-scripts.php',
-        'ABTestingForWP\\TestsActions' => __DIR__ . '/../..' . '/src/actions/tests.php',
     );
 
     public static function getInitializer(ClassLoader $loader)

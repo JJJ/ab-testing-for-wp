@@ -20,5 +20,4 @@ return array(
     'ABTestingForWP\\RegisterGutenbergBlocks' => $baseDir . '/src/registrations/register-gutenberg-blocks.php',
     'ABTestingForWP\\RegisterREST' => $baseDir . '/src/registrations/register-rest.php',
     'ABTestingForWP\\RegisterRenderScripts' => $baseDir . '/src/registrations/register-render-scripts.php',
-    'ABTestingForWP\\TestsActions' => $baseDir . '/src/actions/tests.php',
 );
