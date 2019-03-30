@@ -6,6 +6,19 @@ class OptionsManager {
     
     private $optionsKey = 'ab-testing-for-wp-options';
 
+    public function __construct() {
+        // figure out defaults
+        $allOptions = $this->getAllOptions();
+
+        if (!isset($allOptions['completedOnboarding'])) {
+            $testManager = new ABTestManager();
+
+            if ($testManager->hasTests()) {
+                $this->setOption('completedOnboarding', true);
+            }
+        }
+    }
+
     public function getOption($key, $default) {
         $allOptions = $this->getAllOptions();
 

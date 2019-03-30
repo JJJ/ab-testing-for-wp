@@ -37,6 +37,10 @@ class ABTestManager {
         ", $testId));
     }
 
+    public function hasTests() {
+        return sizeof($this->wpdb->get_results("SELECT id FROM `{$this->abTestTable}`")) > 0;
+    }
+
     public function getAllTests() {
         $data = $this->wpdb->get_results("
         SELECT t.id, t.isEnabled, t.startedAt, t.control, t.postId, t.postGoal,
