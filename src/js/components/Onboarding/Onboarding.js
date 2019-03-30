@@ -122,6 +122,7 @@ class Onboarding extends Component<OnboardingProps, OnboardingState> {
         const variantSelector = testContainer.querySelector('.ab-test-for-wp__VariantSelector');
 
         if (!variantSelector) return;
+        variantSelector.scrollIntoView();
 
         this.placeStepContainer(variantSelector, (variantBoundingRects, containerBoundingRects) => {
           const left = variantBoundingRects.left - containerBoundingRects.width - 60;
@@ -142,6 +143,8 @@ class Onboarding extends Component<OnboardingProps, OnboardingState> {
         const variantSelector = testContainer.querySelector('.ab-test-for-wp__VariantSelector');
 
         if (!variantSelector) return;
+        variantSelector.scrollIntoView();
+
         this.placeStepContainer(variantSelector, (variantBoundingRects, containerBoundingRects) => {
           const left = variantBoundingRects.left - containerBoundingRects.width - 60;
           const top = variantBoundingRects.top
@@ -293,7 +296,7 @@ class Onboarding extends Component<OnboardingProps, OnboardingState> {
             {__('Please contact support if you have any questions.')}
           </p>
           <div className="ButtonContainer">
-            <Button isPrimary onClick={this.stopTour}>{__('Finish tour')}</Button>
+            <Button isPrimary focus onClick={this.stopTour}>{__('Finish tour')}</Button>
             <Button isLink onClick={() => this.goToStep(1)}>{__('Restart tour')}</Button>
           </div>
         </Modal>
@@ -313,7 +316,7 @@ class Onboarding extends Component<OnboardingProps, OnboardingState> {
           {__('Would you like a quick tour on how to setup a test?')}
         </p>
         <div className="ButtonContainer">
-          <Button isPrimary onClick={() => this.goToStep(1)}>{__('Sure, start the tour!')}</Button>
+          <Button isPrimary focus onClick={() => this.goToStep(1)}>{__('Sure, start the tour!')}</Button>
           <Button isLink onClick={this.stopTour}>{__('No thanks')}</Button>
         </div>
       </Modal>
