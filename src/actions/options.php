@@ -10,15 +10,16 @@ class OptionsActions {
         $this->optionsManager = new OptionsManager();
     }
 
-    public function handleOptions() {
-        if (!$request->get_param('key') || !$request->get_param('value')) {
+    public function handleOptions($request) {
+        $body = json_decode($request->get_body(), true);
+
+        if (!isset($body['key']) || !isset($body['value'])) {
             return new \WP_Error('rest_invalid_request', 'Missing key or value parameter.', ['status' => 400]);
         }
 
-        $key = $request->get_param('key');
-        $value = $request->get_param('value');
-
-        $this->optionsManager->setOption($key, $value);
+        $this->optionsManager->setOption($body['key'], $body['value']);
+        
+        return rest_ensure_response(true);
     }
 
 }

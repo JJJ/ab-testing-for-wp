@@ -1,5 +1,7 @@
 // @flow
 
+import { apiFetch } from '../WP';
+
 const WPOptions = window.ABTestingForWP_Options || {};
 
 export function getOptions() {
@@ -15,5 +17,9 @@ export function setOption(key: string, value: any) {
   getOptions()[key] = value;
 
   // update backend value
-  console.log('update option in php');
+  apiFetch({
+    path: '/ab-testing-for-wp/v1/options',
+    method: 'POST',
+    body: JSON.stringify({ key, value }),
+  });
 }

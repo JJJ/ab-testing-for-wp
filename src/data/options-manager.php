@@ -24,7 +24,7 @@ class OptionsManager {
     }
 
     public function getAllOptions() {
-        return get_option($this->optionsKey, new \stdClass());
+        return get_option($this->optionsKey, []);
     }
 
     private function saveOptions($options) {
