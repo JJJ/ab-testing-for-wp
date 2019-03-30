@@ -113,9 +113,11 @@ function ABTestBlock(props: ABTestBlockProps) {
       }
     `;
 
+  const showOnboarding = !completedOnboarding && window.innerWidth > 780;
+
   return (
     <div className={`ABTest--${id}`}>
-      {!completedOnboarding && (
+      {showOnboarding && (
         <Onboarding
           cancelOnboarding={cancelOnboarding}
           clientId={clientId}

@@ -327,6 +327,8 @@ class Onboarding extends Component<OnboardingProps, OnboardingState> {
 export default withDispatch(dispatch => ({
   selectBlock(clientId: string) {
     const { selectBlock } = dispatch('core/editor');
+    const { openGeneralSidebar } = dispatch('core/edit-post');
     selectBlock(clientId);
+    openGeneralSidebar('edit-post/block');
   },
 }))(Onboarding);
