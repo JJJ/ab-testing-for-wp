@@ -21,10 +21,8 @@ type PostSelectorState = {
   loading: boolean;
   selectedType: string;
   posts: {
-    title: {
-      rendered: string;
-    };
-    id: number;
+    post_title: string;
+    ID: number;
   }[];
   types: {
     [key: string]: {
@@ -42,7 +40,7 @@ class PostSelector extends Component<PostSelectorProps, PostSelectorState> {
     selectedType: '',
   };
 
-  forbiddenTypes = [];
+  forbiddenTypes = ['attachment', 'wp_block'];
 
   componentDidMount() {
     const { value } = this.props;
@@ -55,9 +53,13 @@ class PostSelector extends Component<PostSelectorProps, PostSelectorState> {
       resolvePostType = apiFetch({ path: `/ab-testing-for-wp/v1/get-post-type?post_id=${postId}` });
     }
 
+    const resolveTypes = apiFetch({ path: '/wp/v2/types' })
+      // filter out only acceptable types for now
+      .then(types => ({ page: types.page, post: types.post }));
+
     Promise.all([
       resolvePostType,
-      apiFetch({ path: '/wp/v2/types' }),
+      resolveTypes,
     ]).then(([postType, types]) => {
       const filteredTypes = { ...types };
       this.forbiddenTypes.forEach(type => delete filteredTypes[type]);
@@ -79,7 +81,7 @@ class PostSelector extends Component<PostSelectorProps, PostSelectorState> {
   getPostsOfType(type: string) {
     const postId = data.select('core/editor').getCurrentPostId();
 
-    apiFetch({ path: `/wp/v2/posts?type=${type}&per_page=100&exclude=${postId}` })
+    apiFetch({ path: `/ab-testing-for-wp/v1/get-posts-by-type?type=${type}&&exclude=${postId}` })
       .then((posts) => {
         this.setState({
           posts,
@@ -109,12 +111,10 @@ class PostSelector extends Component<PostSelectorProps, PostSelectorState> {
             <SelectControl
               label={__('Type')}
               value={selectedType}
-              options={[
-                ...Object.keys(types).map(type => ({
-                  label: types[type].name,
-                  value: types[type].slug,
-                })),
-              ]}
+              options={Object.keys(types).map(type => ({
+                label: types[type].name,
+                value: types[type].slug,
+              }))}
               onChange={this.changePostType}
             />
             <SelectControl
@@ -122,7 +122,7 @@ class PostSelector extends Component<PostSelectorProps, PostSelectorState> {
               value={value || 0}
               options={[
                 { label: __('No goal selected'), value: 0 },
-                ...posts.map(post => ({ label: post.title.rendered, value: post.id })),
+                ...posts.map(post => ({ label: post.post_title, value: post.ID })),
               ]}
               onChange={newValue => onChange(parseInt(newValue, 10))}
               help={__('Goal page for this test. If the visitor lands on this page it will add a point to the tested variant.')}
