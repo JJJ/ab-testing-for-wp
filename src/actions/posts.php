@@ -34,4 +34,12 @@ class PostsActions {
         $this->abTestManager->archiveTestDataFromPost($postId);
     }
 
+    public function getPostType($request) {
+        if (!$request->get_param('post_id')) {
+            return new \WP_Error('rest_invalid_request', 'Missing post_id parameter.', ['status' => 400]);
+        }
+
+        return get_post_type($request->get_param('post_id'));
+    }
+
 }
