@@ -45,12 +45,10 @@ class PostSelector extends Component<PostSelectorProps, PostSelectorState> {
   componentDidMount() {
     const { value } = this.props;
 
-    const postId = data.select('core/editor').getCurrentPostId();
-
     let resolvePostType = Promise.resolve('');
 
     if (value) {
-      resolvePostType = apiFetch({ path: `/ab-testing-for-wp/v1/get-post-type?post_id=${postId}` });
+      resolvePostType = apiFetch({ path: `/ab-testing-for-wp/v1/get-post-type?post_id=${value}` });
     }
 
     const resolveTypes = apiFetch({ path: '/wp/v2/types' })
@@ -103,6 +101,8 @@ class PostSelector extends Component<PostSelectorProps, PostSelectorState> {
       selectedType,
     } = this.state;
     const { onChange, value } = this.props;
+
+    console.log(selectedType);
 
     return (
       <PanelBody title={__('Testing Goal')}>
