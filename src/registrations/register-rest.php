@@ -64,6 +64,18 @@ class RegisterREST {
                 }
             ]
         );
+
+        register_rest_route(
+            'ab-testing-for-wp/v1',
+            '/get-posts-by-type',
+            [
+                'methods' => 'GET',
+                'callback' => [$posts, 'getPostsByType'],
+                'permission_callback' => function () {
+                    return current_user_can('edit_posts');
+                }
+            ]
+        );
     }
 
     public function __construct() {
