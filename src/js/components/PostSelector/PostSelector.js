@@ -12,17 +12,17 @@ import {
 const { __ } = i18n;
 const { PanelBody, SelectControl } = components;
 
-type PageSelectorProps = {
+type PostSelectorProps = {
   value: number;
   onChange: (page: number) => void;
 };
 
-type PageSelectorState = {
+type PostSelectorState = {
   loading: boolean;
   pages: any[];
 };
 
-class PageSelector extends Component<PageSelectorProps, PageSelectorState> {
+class PostSelector extends Component<PostSelectorProps, PostSelectorState> {
   state = {
     loading: true,
     pages: [],
@@ -62,4 +62,4 @@ class PageSelector extends Component<PageSelectorProps, PageSelectorState> {
   }
 }
 
-export default PageSelector;
+export default PostSelector;
