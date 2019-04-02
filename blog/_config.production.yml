@@ -2,4 +2,4 @@
 
 # URL
 url: https://abtestingforwp.com
-root: https://abtestingforwp.com
+root: __ROOT_URL__/

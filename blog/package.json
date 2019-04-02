@@ -6,7 +6,10 @@
     "version": "3.8.0"
   },
   "scripts": {
-    "generate": "hexo generate --config _config.yml,_config.production.yml"
+    "build": "npm run generate && npm run replace && npm run clean",
+    "generate": "hexo generate --config _config.yml,_config.production.yml",
+    "replace": "sed -i .bak s#__ROOT_URL__#https:\/\/abtestingforwp.com#g **/*.html",
+    "clean": "rm -f **/*.html.bak"
   },
   "dependencies": {
     "hexo": "^3.8.0",
