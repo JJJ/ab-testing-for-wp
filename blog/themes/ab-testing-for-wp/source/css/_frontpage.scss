@@ -1,0 +1,166 @@
+@import 'variables';
+
+.usp {
+  margin: 3em 0;
+
+  ul {
+    max-width: $max-container;
+    margin: 0 auto;
+    padding: 0 3%;
+
+    li {
+      display: flex;
+      align-items: center;
+      margin: 3em 0;
+      width: 100%;
+
+      &:nth-child(2n) {
+        .icon {
+          order: 2;
+          margin-left: 25px;
+          margin-right: 0;
+        }
+      }
+    }
+  }
+
+  .icon {
+    width: 100px;
+    height: 100px;
+    margin-right: 25px;
+
+    &.rounded {
+      padding: 10px;
+      border-radius: 10px;
+      width: 80px;
+      height: 80px;
+    }
+
+    &.green {
+      background-color: #199333;
+    }
+
+    &.blue {
+      background-color: $ab-blue;
+    }
+  }
+
+  .content {
+    width: 100%;
+  }
+}
+
+.example-1 {
+  margin: 4em auto;
+  width: 100%;
+  max-width: $max-container + 120;
+
+  img {
+    width: 100%;
+  }
+
+  h2 {
+    text-align: center;
+    margin-bottom: 2em;
+  }
+}
+
+.example-2 {
+  padding: 3em 0;
+  background: darken(#fff, 3);
+
+  .container {
+    margin: 0 auto;
+    max-width: $max-container;
+    padding: 0 3%;
+  }
+
+  img {
+    display: block;
+    width: calc(100% - 2em);
+    padding: 10px;
+    background: #fff;
+  }
+
+  p {
+    margin: 1em 0;
+  }
+}
+
+.download {
+  display: flex;
+  justify-content: center;
+  padding: 1em 2em;
+}
+
+footer {
+  background: #323232;
+  color: #bfbfbf;
+  text-align: center;
+  padding: 2em 3%;
+  font-style: italic;
+
+  a {
+    color: #fff;
+  }
+
+  p {
+    margin: 1em 0;
+  }
+}
+
+.faq {
+  margin: 3em 0;
+
+  .container {
+    margin: 0 auto;
+    max-width: $max-container;
+    padding: 0 3%;
+  }
+
+  p {
+    margin: 1em 0;
+  }
+}
+
+@media only screen and (min-width: $screen-md) {
+  .header .monitor {
+    position: absolute;
+    width: 43%;
+    left: 55%;
+    top: 3em;
+    max-width: 600px;
+  }
+
+  .usp {
+    ul {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      justify-content: space-between;
+
+      li, li:nth-child(2n) {
+        width: 47%;
+
+        .icon {
+          order: 0;
+          margin-right: 25px;
+          margin-left: 0;
+        }
+      }
+    }
+  }
+
+  .example-2 {
+    .container {
+      display: flex;
+      align-items: center;
+    }
+
+    .content {
+      margin-right: 2em;
+      width: 40%;
+      flex-shrink: 0;
+    }
+  }
+}
