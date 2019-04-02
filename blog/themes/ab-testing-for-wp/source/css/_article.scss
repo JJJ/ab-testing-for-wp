@@ -1,0 +1,57 @@
+@import 'variables';
+
+.archive,
+.article {
+  padding: 3em 3%;
+  margin: 0 auto;
+  max-width: 600px;
+}
+
+.article-header {
+  h1 {
+    font-size: 2em;
+    line-height: 1.5em;
+  }
+}
+
+.article-date {
+  color: lighten($body, 50);
+  margin: 0.5em 0;
+}
+
+.article-entry {
+  img {
+    width: calc(100% + 2em);
+    margin: 1em -1em;
+  }
+
+  p {
+    margin: 1em 0;
+  }
+
+  a {
+    color: $ab-blue;
+
+    &:hover {
+      color: darken($ab-blue, 10);
+    }
+  }
+}
+
+.archive-post {
+  display: flex;
+  margin: 0.5em 0;
+
+  .article-date {
+    margin: 0;
+  }
+
+  h1 a {
+    color: $ab-blue;
+    margin-right: 5px;
+
+    &:hover {
+      color: darken($ab-blue, 10);
+    }
+  }
+}

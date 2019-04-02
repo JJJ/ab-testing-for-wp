@@ -1,0 +1,34 @@
+@import 'variables';
+@import 'reset';
+@import 'frontpage';
+@import 'header';
+@import 'footer';
+@import 'article';
+
+body {
+  background: $bg;
+  color: $body;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  line-height: 1.7em;
+  font-size: 18px;
+  overflow-x: hidden;
+}
+
+strong {
+  font-weight: bold;
+}
+
+em {
+  font-style: italic;
+}
+
+h2 {
+  font-size: 1.3em;
+  margin-bottom: 0.3em;
+  font-weight: 600;
+}
+
+h3 {
+  font-size: 1.1em;
+  font-weight: 500;
+}

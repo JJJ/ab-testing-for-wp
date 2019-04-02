@@ -5,19 +5,27 @@ Donate link: https://abtestingforwp.com/
 Requires at least: 5.0
 Tested up to: 5.1.1
 Requires PHP: 5.6
-Stable tag: 1.4.0
+Stable tag: 1.5.0
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
 == Description ==
 
-Create A/B tests right in the content editor. Test which button colour works best, what content drives people to engage, or anything you can imagine!
+**Easiest way to create split tests on your WordPress sites, right from the content editor!**
 
-A/B Testing for WordPress allows you to create split tests right from the visual content editor. Measures the results of your added tests and shows you which variant is the most optimal choice.
+Improve your website and start measuring your audience now.
 
-You add a block to your content which you can fill with anything you want to and switch between variants instantaneously. Define distribution weight, pick a goal of the test, pick the control variant and off you go!
+Create A/B tests right in the content editor. Test which button colour works best, what content drives people to engage, anything you can imagine!
 
-Everything has been implemented with SEO in the back of my mind, which means the plugin will do nothing to affect your SEO. It works just like most A/B testing tools out there, but directly from your own WordPress site without the use of 3th-party services.
+A/B Testing for WordPress allows you to create split tests right from the visual content editor. Measures the results of your tests and shows you which variant is the most popular choice.
+
+You add a block to your content which you can fill with anything you want to, and switch between variants instantaneously to preview what visitors will see. Define distribution weight, pick the goal of the test, and off you go!
+
+Everything has been implemented with SEO in the back of the mind, which means the plugin will do nothing to affect your SEO. It works just like most A/B testing tools out there, but natively from your own WordPress site without the use of 3th-party services.
+
+A/B Testing for WordPress provides an overview of running tests and the measured results. When you are done running your tests and can come to a conclusion you can break the winning variant out of the test and remove the test from the content with just one click.
+
+Start measuring what works best on your site without all the hassle!
 
 == Installation ==
 1. Upload "ab-testing-for-wp" folder to the "/wp-content/plugins/" directory.
@@ -27,7 +35,7 @@ Everything has been implemented with SEO in the back of my mind, which means the
 == Frequently Asked Questions ==
 
 = Is A/B Testing for WordPress free to use? =
-Yes.
+Yes, no sign up for 3th-party services needed.
 
 = How does A/B Testing for WordPress measure tests? =
 When a visitor sees a test variant the visitor will be logged as a participant of that variant. When the visitor visits the goal page of the test, the visitor will also be logged as a conversion of the variant.
@@ -41,7 +49,7 @@ No. Only the control version of your test is shown to search engines and website
 Yes. You can change the amount of visitors should see each variant.
 
 = What does A/B Testing for WordPress count as a goal? =
-Currently you can only pick local pages as a goal to track. Counting outbound links as conversion is not possible (yet).
+You can pick and post or page as a goal to track. Counting outbound links or custom post types as conversion is not possible (yet).
 
 = How can I contribute to this plugin? =
 You can find the [source and repository over at GitHub](https://github.com/Gaya/ab-testing-for-wp).
@@ -53,6 +61,9 @@ You can find the [source and repository over at GitHub](https://github.com/Gaya/
 4. Overview of running tests
 
 == Changelog ==
+= 1.5.0 =
+* Ability to pick posts and pages as conversion goals
+
 = 1.4.0 =
 * Onboarding tour for first time users
 

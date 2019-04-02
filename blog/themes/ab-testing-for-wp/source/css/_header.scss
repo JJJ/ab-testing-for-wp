@@ -1,0 +1,87 @@
+@import 'variables';
+
+.download,
+.header {
+  background: {
+    color: $ab-blue;
+    position: 50% 50%;
+    image: repeating-linear-gradient(
+        315deg,
+        $ab-blue,
+        $ab-blue 8px,
+        $ab-blue-darker 8px,
+        $ab-blue-darker 13px
+    );
+  }
+  color: $ab-light;
+
+  .container {
+    margin: 0 auto;
+    max-width: $max-container;
+    padding: 3em 5%;
+  }
+
+  .container-text {
+    max-width: 400px;
+  }
+
+  .monitor {
+    width: 100%;
+    height: auto;
+    margin-top: 1em;
+  }
+
+  img {
+    display: block;
+  }
+
+  h1 {
+    font-size: 2.4em;
+    line-height: 1.3em;
+    margin: 0.5em 0;
+    font-weight: bold;
+    max-width: 290px;
+  }
+
+  p {
+    margin: 1em 0;
+  }
+
+  .cta {
+    color: $ab-light;
+    text-decoration: none;
+    font-weight: bold;
+    padding: 0.8em 1.8em;
+    display: inline-block;
+    margin: 1em 0;
+    border: 3px solid $ab-light;
+    transition: color 0.2s ease, background-color 0.2s ease;
+    text-align: center;
+
+    &:hover {
+      background: $ab-light;
+      color: $ab-blue;
+    }
+  }
+
+  a {
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    color: $ab-light;
+  }
+
+  &--small {
+    padding: 1em 3%;
+
+    h1 {
+      max-width: none;
+      margin: 0 0 0 0.5em;
+      font-size: 1.4em;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+  }
+}
