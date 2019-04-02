@@ -7,7 +7,7 @@
       </header>
     <% } %>
     <div class="article-meta">
-      <%- partial('post/date', {class_name: 'article-date', date_format: null}) %>
+      <%- partial('post/date', {class_name: 'article-date', date_format: null, prefix: 'Published on ' }) %>
     </div>
     <div class="article-entry" itemprop="articleBody">
       <% if (post.excerpt && index){ %>

@@ -1,5 +1,6 @@
 @import 'variables';
 
+.archive,
 .article {
   padding: 3em 3%;
   margin: 0 auto;
@@ -30,6 +31,24 @@
 
   a {
     color: $ab-blue;
+
+    &:hover {
+      color: darken($ab-blue, 10);
+    }
+  }
+}
+
+.archive-post {
+  display: flex;
+  margin: 0.5em 0;
+
+  .article-date {
+    margin: 0;
+  }
+
+  h1 a {
+    color: $ab-blue;
+    margin-right: 5px;
 
     &:hover {
       color: darken($ab-blue, 10);

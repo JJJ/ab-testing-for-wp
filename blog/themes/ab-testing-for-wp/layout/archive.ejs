@@ -1,0 +1,14 @@
+<%- partial('partials/header') %>
+<section class="archive">
+  <h2>Blog</h2>
+
+  <div class="archive-posts">
+    <% page.posts.each(function(post){ %>
+      <article class="archive-post">
+        <%- partial('partials/post/title', { post, index: 1, class_name: '' }) %>
+        <%- partial('partials/post/date', { post, date_format: null, prefix: '' }) %>
+      </article>
+    <% }) %>
+  </div>
+</section>
+<%- partial('partials/footer') %>
