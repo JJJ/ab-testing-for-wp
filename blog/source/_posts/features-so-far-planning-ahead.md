@@ -45,7 +45,7 @@ WordPress adds a bar at the top of your website for easy access to admin functio
 
 ###  Declaring a Winner
 
-When you feel like the test haas had a enough time and there is a clear winner, you can declare a winner by going to the test options in the content editor.
+When you feel like the test has had enough time and there is a clear winner, you can declare a winner by going to the test options in the content editor.
 
 Pick a winner, and the contents of the variant will be "broken free" of the test. The test will also be removed from the page to make room for the winning variant.
 

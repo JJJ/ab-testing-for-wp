@@ -2,6 +2,7 @@
 @import 'reset';
 @import 'frontpage';
 @import 'header';
+@import 'footer';
 @import 'article';
 
 body {
@@ -24,9 +25,10 @@ em {
 h2 {
   font-size: 1.3em;
   margin-bottom: 0.3em;
-  font-weight: bold;
+  font-weight: 600;
 }
 
 h3 {
-  font-size: 1.2em;
+  font-size: 1.1em;
+  font-weight: 500;
 }
