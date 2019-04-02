@@ -5,6 +5,9 @@
   "hexo": {
     "version": "3.8.0"
   },
+  "scripts": {
+    "generate": "hexo generate --config _config.yml,_config.production.yml"
+  },
   "dependencies": {
     "hexo": "^3.8.0",
     "hexo-generator-archive": "^0.1.5",
