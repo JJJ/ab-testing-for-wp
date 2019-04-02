@@ -74,6 +74,11 @@
   &--small {
     padding: 1em 3%;
 
+    .container {
+      padding: 0;
+      max-width: 600px;
+    }
+
     h1 {
       max-width: none;
       margin: 0 0 0 0.5em;
