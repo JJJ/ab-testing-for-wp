@@ -1,0 +1,14 @@
+<%- partial('partials/header') %>
+<article id="<%= post.layout %>-<%= post.slug %>" class="article article-type-<%= post.layout %>" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    <% if (post.link || post.title){ %>
+      <header class="article-header">
+        <%- partial('post/title', {class_name: 'article-title'}) %>
+      </header>
+    <% } %>
+    <div class="article-entry" itemprop="articleBody">
+      <%- post.content %>
+    </div>
+  </div>
+</article>
+<%- partial('partials/footer') %>
