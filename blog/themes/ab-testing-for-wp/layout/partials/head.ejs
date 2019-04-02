@@ -1,0 +1,54 @@
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" >
+  <meta name="robots" content="noodp,noydir">
+
+  <% var title = page.title ? `${page.title} - ${config.title}` : `${config.title} — by CleverNode`; %>
+  <% var description = page.description ? page.description : config.description; %>
+
+  <title><%= title %></title>
+  <meta name="description" content="<%= description %>">
+
+  <%- css('css/style') %>
+
+  <link rel="mask-icon" href="<%- url_for('/images/icon.svg') %>" color="#268ec7">
+  <link rel="icon" type="image/png" href="<%- url_for('/images/favicon-32x32.png') %>" sizes="32x32">
+  <link rel="icon" type="image/png" href="<%- url_for('/images/favicon-16x16.png') %>" sizes="16x16">
+  <link rel="icon" type="image/svg+xml" href="<%- url_for('/images/icon.svg') %>">
+  <meta name="theme-color" content="#ffffff">
+
+  <meta property="og:title" content="<%= title %>"/>
+  <meta property="og:description" content="<%= config.description %>"/>
+  <meta property="og:url" content="<%= page.link %>"/>
+  <meta property="og:site_name" content="A/B Testing for WordPress"/>
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:site" content="@gayakessler" />
+  <meta name="twitter:url" content="<%= page.link %>"/>
+  <meta name="twitter:title" content="<%= title %>"/>
+  <meta name="twitter:description" content="<%= description %>"/>
+  <meta name="twitter:image" content="<%- url_for('/images/og_abtestingforwp_poster.jpg') %>">
+
+  <meta property="og:locale" content="en_US"/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:image" content="<%- url_for('/images/og_abtestingforwp_poster.jpg') %>"/>
+
+  <!-- Matomo -->
+  <script type="text/javascript">
+    var _paq = window._paq || [];
+    /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
+    _paq.push(['trackPageView']);
+    _paq.push(['enableLinkTracking']);
+    (function() {
+      var u="https://matomo.clevernode.dev/piwik/";
+      _paq.push(['setTrackerUrl', u+'matomo.php']);
+      _paq.push(['setSiteId', '3']);
+      var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+      g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);
+    })();
+  </script>
+  <noscript><p><img src="https://matomo.clevernode.dev/piwik/matomo.php?idsite=3&amp;rec=1" style="border:0;" alt="" /></p></noscript>
+  <!-- End Matomo Code -->
+</head>
