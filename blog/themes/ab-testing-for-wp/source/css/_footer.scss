@@ -1,0 +1,48 @@
+@import 'variables';
+
+footer {
+  background: #323232;
+  color: darken($bg, 25);
+  text-align: center;
+  padding: 2em 3%;
+  font-size: 0.9em;
+
+  .menu {
+    ul {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    li {
+      &:after {
+        margin-right: 4.5px;
+        content: "—";
+      }
+
+      &:last-child{
+        margin-right: 0;
+
+        &:after {
+          content: "";
+        }
+      }
+    }
+  }
+
+  .content {
+    font-style: italic;
+  }
+
+  a {
+    color: $bg;
+
+    &:hover {
+      color: darken($bg, 25);
+    }
+  }
+
+  p {
+    margin: 1em 0;
+  }
+}

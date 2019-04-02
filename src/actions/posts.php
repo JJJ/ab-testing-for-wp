@@ -34,4 +34,36 @@ class PostsActions {
         $this->abTestManager->archiveTestDataFromPost($postId);
     }
 
+    public function getPostType($request) {
+        if (!$request->get_param('post_id')) {
+            return new \WP_Error('rest_invalid_request', 'Missing post_id parameter.', ['status' => 400]);
+        }
+
+        return rest_ensure_response(get_post_type($request->get_param('post_id')));
+    }
+
+    public function getPostsByType($request) {
+        if (!$request->get_param('type')) {
+            return new \WP_Error('rest_invalid_request', 'Missing type parameter.', ['status' => 400]);
+        }
+
+        $type = $request->get_param('type');
+        $notIn = [];
+
+        if ($request->get_param('exclude')) {
+            $notIn = explode(',', $request->get_param('exclude'));
+        }
+
+        $query = new \WP_Query([
+            'post_type' => $type,
+            'post__not_in' => $notIn,
+        ]);
+
+        if ($query->have_posts()) {
+            return rest_ensure_response($query->posts);
+        }
+
+        return rest_ensure_response([]);
+    }
+
 }

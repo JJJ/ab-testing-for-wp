@@ -9,6 +9,7 @@ class RegisterREST {
         $tracker = new ABTestTracking();
         $stats = new ABTestStats();
         $options = new OptionsActions();
+        $posts = new PostsActions();
 
         register_rest_route(
             'ab-testing-for-wp/v1',
@@ -46,6 +47,30 @@ class RegisterREST {
             [
                 'methods' => 'POST',
                 'callback' => [$options, 'handleOptions'],
+                'permission_callback' => function () {
+                    return current_user_can('edit_posts');
+                }
+            ]
+        );
+
+        register_rest_route(
+            'ab-testing-for-wp/v1',
+            '/get-post-type',
+            [
+                'methods' => 'GET',
+                'callback' => [$posts, 'getPostType'],
+                'permission_callback' => function () {
+                    return current_user_can('edit_posts');
+                }
+            ]
+        );
+
+        register_rest_route(
+            'ab-testing-for-wp/v1',
+            '/get-posts-by-type',
+            [
+                'methods' => 'GET',
+                'callback' => [$posts, 'getPostsByType'],
                 'permission_callback' => function () {
                     return current_user_can('edit_posts');
                 }

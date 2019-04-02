@@ -12,7 +12,7 @@ import {
 import VariantSelector from '../components/VariantSelector/VariantSelector';
 import BoxShadow from '../components/BoxShadow/BoxShadow';
 import DistributionSettings from '../components/DistributionSettings/DistributionSettings';
-import PageSelector from '../components/PageSelector/PageSelector';
+import PostSelector from '../components/PostSelector/PostSelector';
 import ControlSettings from '../components/ControlSettings/ControlSettings';
 import EnabledSettings from '../components/EnabledSettings/EnabledSettings';
 import TestResults from '../components/TestResults/TestResults';
@@ -139,7 +139,7 @@ function ABTestBlock(props: ABTestBlockProps) {
           variants={variants}
           onUpdateVariants={onUpdateVariants}
         />
-        <PageSelector
+        <PostSelector
           value={postGoal}
           onChange={onPostGoalChange}
         />
