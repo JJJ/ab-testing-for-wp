@@ -6,6 +6,7 @@
     "version": "3.8.0"
   },
   "scripts": {
+    "serve": "hexo server",
     "build": "npm run generate && npm run replace",
     "generate": "hexo generate --config _config.yml,_config.production.yml",
     "replace": "replace-in-file /__ROOT_URL__/g 'https://abtestingforwp.com' public/*.html,public/**/*.html,public/**/**/*.html --isRegex"
