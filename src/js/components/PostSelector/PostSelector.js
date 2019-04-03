@@ -95,6 +95,12 @@ class PostSelector extends Component<PostSelectorProps, PostSelectorState> {
     } = this.state;
     const { onChange, value } = this.props;
 
+    const currentType = types.find(type => type.name === selectedType) || {};
+
+    if (!loading && !currentType) {
+      return null;
+    }
+
     return (
       <PanelBody title={__('Testing Goal')}>
         {!loading && (
@@ -109,14 +115,14 @@ class PostSelector extends Component<PostSelectorProps, PostSelectorState> {
               onChange={this.changePostType}
             />
             <SelectControl
-              label={__('Post')}
+              label={currentType.itemName}
               value={value || 0}
               options={[
                 { label: __('No goal selected'), value: 0 },
                 ...posts.map(post => ({ label: post.post_title, value: post.ID })),
               ]}
+              help={currentType.help}
               onChange={newValue => onChange(parseInt(newValue, 10))}
-              help={__('Goal page for this test. If the visitor lands on this page it will add a point to the tested variant.')}
             />
           </div>
         )}
