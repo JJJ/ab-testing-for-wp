@@ -8,8 +8,9 @@ class HTMLForms extends Integration {
 
     protected function loadIntegration() {
         add_filter('ab-testing-for-wp_goal-types', [$this, 'addGoalType']);
+        add_action('hf_process_form', [$this, 'catchFormSubmits']);
     }
-
+    
     public function addGoalType($types) {
         return array_merge(
             $types,
@@ -22,6 +23,11 @@ class HTMLForms extends Integration {
                 ]
             ]
         );
+    }
+
+    public function catchFormSubmits($form) {
+        var_dump($form);
+        die();
     }
 
 }

@@ -8,6 +8,10 @@ class RegisterGutenbergBlocks {
     public function __construct($fileRoot) {
         $this->fileRoot = $fileRoot;
 
+        add_action('init', [$this, 'bootstrap']);
+    }
+
+    public function bootstrap() {
         $renderer = new BlockRenderer();
         $postActions = new PostsActions();
 
