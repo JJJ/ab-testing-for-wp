@@ -16,6 +16,12 @@ class ABTestTracking {
 
         $postId = $request->get_param('post');
 
+        $tracked = $this->trackPostId($postId);
+
+        return rest_ensure_response($tracked);
+    }
+
+    public function trackPostId($postId) {
         // get tests with this page as goal
         $cookieData = [];
 
@@ -52,7 +58,7 @@ class ABTestTracking {
 
         setcookie('ab-testing-for-wp', json_encode($cookieData), time() + (60*60*24*30), '/');
 
-        return rest_ensure_response($tracked);
+        return $tracked;
     }
 
     public function addParticipation($variantId) {
