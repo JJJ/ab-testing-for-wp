@@ -15,8 +15,8 @@ class GoalActions {
         $allowedTypes = [];
 
         foreach ($types as $key => $type) {
+            // only allow posts and pages
             if ($key !== 'post' && $key !== 'page') continue;
-
             array_push($allowedTypes, [ 'name' => $type->name, 'label' => $type->label ]);
         }
 
