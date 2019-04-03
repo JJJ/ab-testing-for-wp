@@ -1,7 +1,7 @@
 ---
 title: Features so Far, and Planning Ahead
 date: 2019-04-02
-description: Dit is een test
+description: A/B Testing for WordPress features during the first weeks, and what's ahead for the plugin.
 ---
 
 About two weeks ago the first version of [A/B Testing for WordPress](/) was released.
