@@ -5,8 +5,6 @@ namespace ABTestingForWP;
 class GoalActions {
 
     public function getGoalTypes() {
-        do_action('ab-testing-for-wp_rest_init');
-
         $types = get_post_types(
             [
                 'public' => true,

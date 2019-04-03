@@ -8,7 +8,7 @@ class HTMLForms extends Integration {
 
     protected function loadIntegration() {
         add_filter('ab-testing-for-wp_goal-types', [$this, 'addGoalType']);
-        add_action('hf_process_form', [$this, 'catchFormSubmits']);
+        add_action('hf_form_success', [$this, 'catchFormSubmits']);
     }
     
     public function addGoalType($types) {
@@ -26,8 +26,7 @@ class HTMLForms extends Integration {
     }
 
     public function catchFormSubmits($form) {
-        var_dump($form);
-        die();
+        $formId = $form->form_id;
     }
 
 }
