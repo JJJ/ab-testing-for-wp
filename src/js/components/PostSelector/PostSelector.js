@@ -51,7 +51,7 @@ class PostSelector extends Component<PostSelectorProps, PostSelectorState> {
       resolvePostType = apiFetch({ path: `/ab-testing-for-wp/v1/get-post-type?post_id=${value}` });
     }
 
-    const resolveTypes = apiFetch({ path: '/wp/v2/types' })
+    const resolveTypes = apiFetch({ path: '/ab-testing-for-wp/v1/get-goal-types' })
       // filter out only acceptable types for now
       .then(types => ({ page: types.page, post: types.post }));
 
@@ -101,8 +101,6 @@ class PostSelector extends Component<PostSelectorProps, PostSelectorState> {
       selectedType,
     } = this.state;
     const { onChange, value } = this.props;
-
-    console.log(selectedType);
 
     return (
       <PanelBody title={__('Testing Goal')}>
