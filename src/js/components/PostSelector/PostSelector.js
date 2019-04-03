@@ -27,6 +27,8 @@ type PostSelectorState = {
   types: {
     name: string;
     label: string;
+    itemName: string;
+    help: string;
   }[];
 };
 

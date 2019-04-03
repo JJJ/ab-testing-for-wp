@@ -2,6 +2,10 @@
 
 namespace ABTestingForWP;
 
+if(!function_exists('is_plugin_active')) {
+    require_once ABSPATH . 'wp-admin/includes/plugin.php';
+}
+
 class Integration {
 
     protected function getPluginSlug() {
@@ -9,8 +13,12 @@ class Integration {
     }
 
     public function __construct() {
-        if (!is_plugin_active($this->getPluginSlug())) return;
+        if (!$this->isPluginActive()) return;
         $this->loadIntegration();
+    }
+
+    private function isPluginActive() {
+        return is_plugin_active($this->getPluginSlug());
     }
 
 }
