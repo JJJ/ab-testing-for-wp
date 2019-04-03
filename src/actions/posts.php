@@ -57,6 +57,7 @@ class PostsActions {
         $query = new \WP_Query([
             'post_type' => $type,
             'post__not_in' => $notIn,
+            'numberposts' => -1,
         ]);
 
         if ($query->have_posts()) {

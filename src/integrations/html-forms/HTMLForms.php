@@ -15,7 +15,7 @@ class HTMLForms extends Integration {
             $types,
             [
                 [ 
-                    'name' => 'html-forms', 
+                    'name' => 'html-form', 
                     'label' => 'HTML Forms',
                     'itemName' => 'On submit of form',
                     'help' => 'If the visitor submits this form it will add a point to the tested variant.'
