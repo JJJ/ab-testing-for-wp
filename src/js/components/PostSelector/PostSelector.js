@@ -25,22 +25,18 @@ type PostSelectorState = {
     ID: number;
   }[];
   types: {
-    [key: string]: {
-      name: string;
-      slug: string;
-    };
-  };
+    name: string;
+    label: string;
+  }[];
 };
 
 class PostSelector extends Component<PostSelectorProps, PostSelectorState> {
   state = {
     loading: true,
     posts: [],
-    types: {},
+    types: [],
     selectedType: '',
   };
-
-  forbiddenTypes = ['attachment', 'wp_block'];
 
   componentDidMount() {
     const { value } = this.props;
@@ -51,24 +47,19 @@ class PostSelector extends Component<PostSelectorProps, PostSelectorState> {
       resolvePostType = apiFetch({ path: `/ab-testing-for-wp/v1/get-post-type?post_id=${value}` });
     }
 
-    const resolveTypes = apiFetch({ path: '/ab-testing-for-wp/v1/get-goal-types' })
-      // filter out only acceptable types for now
-      .then(types => ({ page: types.page, post: types.post }));
+    const resolveTypes = apiFetch({ path: '/ab-testing-for-wp/v1/get-goal-types' });
 
     Promise.all([
       resolvePostType,
       resolveTypes,
     ]).then(([postType, types]) => {
-      const filteredTypes = { ...types };
-      this.forbiddenTypes.forEach(type => delete filteredTypes[type]);
-
       // auto select first result
       const selectedType = postType === ''
-        ? filteredTypes[Object.keys(filteredTypes)[0]].slug
+        ? types[0].name
         : postType.toString();
 
       this.setState({
-        types: filteredTypes,
+        types,
         selectedType,
       });
 
@@ -109,9 +100,9 @@ class PostSelector extends Component<PostSelectorProps, PostSelectorState> {
             <SelectControl
               label={__('Type')}
               value={selectedType}
-              options={Object.keys(types).map(type => ({
-                label: types[type].name,
-                value: types[type].slug,
+              options={types.map(type => ({
+                label: type.label,
+                value: type.name,
               }))}
               onChange={this.changePostType}
             />
