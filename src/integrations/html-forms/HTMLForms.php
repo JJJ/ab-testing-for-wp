@@ -27,6 +27,9 @@ class HTMLForms extends Integration {
 
     public function catchFormSubmits($form) {
         $formId = $form->form_id;
+        $abTestTracking = new ABTestTracking();
+
+        $abTestTracking->trackPostId($formId);
     }
 
 }
