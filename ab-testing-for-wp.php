@@ -64,5 +64,5 @@ function bootstrapREST() {
 
 // register WordPress hooks
 new Installer(__FILE__);
-add_action('init', 'ABTestingForWP\\bootstrap');
+bootstrap();
 add_action('rest_api_init', 'ABTestingForWP\\bootstrapREST');
