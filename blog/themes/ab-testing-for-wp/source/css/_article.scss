@@ -21,8 +21,7 @@
 
 .article-entry {
   img {
-    width: calc(100% + 2em);
-    margin: 1em -1em;
+    width: 100%;
   }
 
   p {
@@ -34,6 +33,15 @@
 
     &:hover {
       color: darken($ab-blue, 10);
+    }
+  }
+}
+
+@media only screen and (min-width: $screen-md) {
+  .article-entry {
+    img {
+      width: calc(100% + 2em);
+      margin: 1em -1em;
     }
   }
 }
