@@ -102,8 +102,6 @@ class PostSelector extends Component<PostSelectorProps, PostSelectorState> {
     } = this.state;
     const { onChange, value } = this.props;
 
-    console.log(selectedType);
-
     return (
       <PanelBody title={__('Testing Goal')}>
         {!loading && (
