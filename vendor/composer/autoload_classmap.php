@@ -12,6 +12,7 @@ return array(
     'ABTestingForWP\\ABTestTracking' => $baseDir . '/src/data/ab-test-tracking.php',
     'ABTestingForWP\\BlockRenderer' => $baseDir . '/src/helpers/block-renderer.php',
     'ABTestingForWP\\BootStrapIntegrations' => $baseDir . '/src/integrations/bootstrap.php',
+    'ABTestingForWP\\GoalActions' => $baseDir . '/src/actions/goals.php',
     'ABTestingForWP\\HTMLForms' => $baseDir . '/src/integrations/html-forms/HTMLForms.php',
     'ABTestingForWP\\Installer' => $baseDir . '/src/data/installer.php',
     'ABTestingForWP\\Integration' => $baseDir . '/src/integrations/Integration.php',
