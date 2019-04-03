@@ -13,6 +13,7 @@ class ComposerStaticInit3ca069ed2eeb7caff92dca41e2d25775
         'ABTestingForWP\\ABTestTracking' => __DIR__ . '/../..' . '/src/data/ab-test-tracking.php',
         'ABTestingForWP\\BlockRenderer' => __DIR__ . '/../..' . '/src/helpers/block-renderer.php',
         'ABTestingForWP\\BootStrapIntegrations' => __DIR__ . '/../..' . '/src/integrations/bootstrap.php',
+        'ABTestingForWP\\GoalActions' => __DIR__ . '/../..' . '/src/actions/goals.php',
         'ABTestingForWP\\HTMLForms' => __DIR__ . '/../..' . '/src/integrations/html-forms/HTMLForms.php',
         'ABTestingForWP\\Installer' => __DIR__ . '/../..' . '/src/data/installer.php',
         'ABTestingForWP\\Integration' => __DIR__ . '/../..' . '/src/integrations/Integration.php',
