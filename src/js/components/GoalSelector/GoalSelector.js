@@ -12,12 +12,12 @@ import {
 const { __ } = i18n;
 const { PanelBody, SelectControl } = components;
 
-type PostSelectorProps = {
+type GoalSelectorProps = {
   value: number;
   onChange: (page: number) => void;
 };
 
-type PostSelectorState = {
+type GoalSelectorState = {
   loading: boolean;
   selectedType: string;
   posts: {
@@ -32,7 +32,7 @@ type PostSelectorState = {
   }[];
 };
 
-class PostSelector extends Component<PostSelectorProps, PostSelectorState> {
+class GoalSelector extends Component<GoalSelectorProps, GoalSelectorState> {
   state = {
     loading: true,
     posts: [],
@@ -131,4 +131,4 @@ class PostSelector extends Component<PostSelectorProps, PostSelectorState> {
   }
 }
 
-export default PostSelector;
+export default GoalSelector;
