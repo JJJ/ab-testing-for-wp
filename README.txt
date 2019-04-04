@@ -68,6 +68,7 @@ You can find the [source and repository over at GitHub](https://github.com/Gaya/
 2. Testing the variants on your website
 3. Creating an A/B Test in the post editor (still)
 4. Overview of running tests
+5. Integration with HTML Forms
 
 == Changelog ==
 = 1.5.0 =
