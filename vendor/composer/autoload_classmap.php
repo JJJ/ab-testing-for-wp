@@ -17,6 +17,7 @@ return array(
     'ABTestingForWP\\HTMLForms' => $baseDir . '/src/integrations/html-forms/HTMLForms.php',
     'ABTestingForWP\\Installer' => $baseDir . '/src/data/installer.php',
     'ABTestingForWP\\Integration' => $baseDir . '/src/integrations/Integration.php',
+    'ABTestingForWP\\MC4WP' => $baseDir . '/src/integrations/mc4wp/MC4WP.php',
     'ABTestingForWP\\OptionsActions' => $baseDir . '/src/actions/options.php',
     'ABTestingForWP\\OptionsManager' => $baseDir . '/src/data/options-manager.php',
     'ABTestingForWP\\PostsActions' => $baseDir . '/src/actions/posts.php',
