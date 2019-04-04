@@ -9,7 +9,9 @@ class BootStrapIntegrations {
     }
 
     public function loadIntegrations() {
+        // Contact form plugins
         new HTMLForms();
+        new ContactForm7();
     }
 
 }
