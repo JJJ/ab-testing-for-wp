@@ -9,9 +9,10 @@ class BootStrapIntegrations {
     }
 
     public function loadIntegrations() {
-        // Contact form plugins
+        // Form plugins
         new HTMLForms();
         new ContactForm7();
+        new MC4WP();
     }
 
 }
