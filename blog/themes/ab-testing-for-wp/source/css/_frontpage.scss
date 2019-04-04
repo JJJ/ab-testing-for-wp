@@ -65,7 +65,8 @@
   }
 }
 
-.example-2 {
+.example-2,
+.example-3 {
   padding: 3em 0;
   background: darken(#fff, 3);
 
@@ -84,6 +85,12 @@
 
   p {
     margin: 1em 0;
+  }
+}
+
+.example-3 {
+  img {
+    padding: 30px;
   }
 }
 
@@ -135,6 +142,7 @@
     }
   }
 
+  .example-3,
   .example-2 {
     .container {
       display: flex;
@@ -145,6 +153,15 @@
       margin-right: 2em;
       width: 40%;
       flex-shrink: 0;
+    }
+  }
+
+  .example-3 {
+    .content {
+      order: 2;
+      margin-left: 2em;
+      margin-right: 0;
+      width: 60%;
     }
   }
 }
