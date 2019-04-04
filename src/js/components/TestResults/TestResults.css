@@ -19,10 +19,21 @@
   color: #dc3232;
 }
 
-.TestResultValue {
+.TestResults .TestResultVariationName.TestResultControl:after {
+  content: "*";
+}
+
+.TestResults .TestResultDifference {
+  font-size: 0.7em;
+  display: block;
+  text-align: center;
+}
+
+.TestResults td.TestResultValue {
   text-align: center;
   line-height: 1.8em;
   padding-left: 14px;
   white-space: nowrap;
   width: 1px;
+  vertical-align: top;
 }

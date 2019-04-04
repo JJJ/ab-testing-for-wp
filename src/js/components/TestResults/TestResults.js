@@ -12,20 +12,23 @@ import './TestResults.css';
 const { __ } = i18n;
 const { PanelBody } = components;
 
+type TestResult = {
+  id: string;
+  name: string;
+  participants: number;
+  conversions: number;
+};
+
 type TestResultsProps = {
   testId: string;
+  control: string;
   isEnabled: boolean;
   onDeclareWinner: (id: string) => void;
 };
 
 type TestResultsState = {
   loading: boolean;
-  results: {
-    id: string;
-    name: string;
-    participants: number;
-    conversions: number;
-  }[];
+  results: TestResult[];
 };
 
 class TestResults extends Component<TestResultsProps, TestResultsState> {
@@ -50,8 +53,24 @@ class TestResults extends Component<TestResultsProps, TestResultsState> {
       });
   }
 
+  calc(control: string, results: TestResult[]) {
+    const controlVariant = results.find(result => result.id === control);
+
+    if (controlVariant) {
+      const crc = controlVariant.conversions / controlVariant.participants;
+
+      results
+        .filter(result => result.id !== control)
+        .forEach((result) => {
+          const crr = result.conversions / result.participants;
+          const relativeUplift = (crr - crc) / crc;
+        });
+      console.log(controlVariant);
+    }
+  }
+
   render() {
-    const { isEnabled, onDeclareWinner } = this.props;
+    const { control, isEnabled, onDeclareWinner } = this.props;
     const { results, loading } = this.state;
 
     const hasParticipants = results.reduce((acc, b) => acc + b.participants, 0) > 0;
@@ -60,12 +79,25 @@ class TestResults extends Component<TestResultsProps, TestResultsState> {
       return null;
     }
 
+    this.calc(control, results);
+
+    const controlVariant = results.find(result => result.id === control);
+
+    let crc = 0;
+    if (controlVariant) {
+      crc = controlVariant.conversions / controlVariant.participants;
+    }
+
     const enrichedResults = results
       .map(result => ({
         ...result,
+        control: control === result.id,
         rate: result.participants === 0
           ? 0
           : Math.round((100 / result.participants) * result.conversions),
+        uplift: Math.round(
+          crc === 0 ? 0 : (result.conversions / result.participants - crc) / crc * 1000,
+        ) / 10,
         winner: result.participants > 0 && !results
           .every(variant => result.participants / result.conversions
             >= variant.participants / variant.conversions),
@@ -86,7 +118,15 @@ class TestResults extends Component<TestResultsProps, TestResultsState> {
                   <td className="TestResultName">{__('Variation')}</td>
                   {enrichedResults.map(result => (
                     <td
-                      className={classNames(result.winner ? 'TestResultWinner' : 'TestResultLoser', 'TestResultValue')}
+                      className={classNames(
+                        {
+                          TestResultWinner: result.winner,
+                          TestResultLoser: !result.winner,
+                          TestResultControl: result.control,
+                        },
+                        'TestResultValue',
+                        'TestResultVariationName',
+                      )}
                       key={result.id}
                     >
                       {result.name}
@@ -97,11 +137,24 @@ class TestResults extends Component<TestResultsProps, TestResultsState> {
                   <td className="TestResultName">{__('Conversion Rate')}</td>
                   {enrichedResults.map(result => (
                     <td
-                      className={classNames(result.winner ? 'TestResultWinner' : 'TestResultLoser', 'TestResultValue')}
+                      className={classNames(
+                        {
+                          TestResultWinner: result.winner,
+                          TestResultLoser: !result.winner,
+                          TestResultControl: result.control,
+                        },
+                        'TestResultValue',
+                      )}
                       key={result.id}
                     >
                       {result.rate}
                       %
+
+                      {result.uplift !== 0 && (
+                        <span className="TestResultDifference">
+                          {`${result.uplift > 0 ? '+' : ''}${result.uplift}%`}
+                        </span>
+                      )}
                     </td>
                   ))}
                 </tr>

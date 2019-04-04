@@ -133,6 +133,7 @@ function ABTestBlock(props: ABTestBlockProps) {
         <TestResults
           isEnabled={isEnabled}
           testId={id}
+          control={control}
           onDeclareWinner={onDeclareWinner}
         />
         <DistributionSettings
