@@ -17,17 +17,17 @@ class HTMLForms extends Integration {
     }
     
     public function addGoalType($types) {
-        return array_merge(
-            $types,
-            [
-                [ 
-                    'name' => 'html-form', 
-                    'label' => 'HTML Forms',
-                    'itemName' => 'On submit of form',
-                    'help' => 'If the visitor submits this form it will add a point to the tested variant.'
-                ]
+        array_push(
+            $types, 
+            [ 
+                'name' => 'html-form', 
+                'label' => 'HTML Forms',
+                'itemName' => 'On submit of form',
+                'help' => 'If the visitor submits this form it will add a point to the tested variant.'
             ]
         );
+
+        return $types;
     }
 
     public function catchFormSubmits($form) {
