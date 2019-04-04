@@ -7,7 +7,7 @@ import { apiFetch, components, i18n } from '../../WP';
 
 import DeclareWinner from './DeclareWinner';
 
-import calc from './Calc';
+import calcTestWinner from '../../helpers/calcTestWinner';
 
 import './TestResults.css';
 
@@ -24,13 +24,6 @@ function getTranslationString(control, testResult) {
     : 'Test results are significant enough to say control variation %s remains a winner with 95%% confidence.';
 }
 
-export type TestResult = {
-  id: string;
-  name: string;
-  participants: number;
-  conversions: number;
-};
-
 type TestResultsProps = {
   testId: string;
   control: string;
@@ -40,7 +33,7 @@ type TestResultsProps = {
 
 type TestResultsState = {
   loading: boolean;
-  results: TestResult[];
+  results: ABTestResult[];
 };
 
 class TestResults extends Component<TestResultsProps, TestResultsState> {
@@ -75,7 +68,7 @@ class TestResults extends Component<TestResultsProps, TestResultsState> {
       return null;
     }
 
-    const testResult = calc(control, results);
+    const testResult = calcTestWinner(control, results);
 
     const controlVariant = results.find(result => result.id === control);
 

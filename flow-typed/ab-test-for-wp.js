@@ -24,3 +24,10 @@ declare type GutenbergProps = {
   clientId: string;
   setAttributes: (newState: any) => void;
 };
+
+declare type ABTestResult = {
+  id: string;
+  name: string;
+  participants: number;
+  conversions: number;
+};
