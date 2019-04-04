@@ -64,7 +64,7 @@ class ABTestManager {
                 $test['isEnabled'] = (bool) $test['isEnabled'];
 
                 $test['variants'] = $this->wpdb->get_results($this->wpdb->prepare("
-                SELECT name, participants, conversions
+                SELECT id, name, participants, conversions
                 FROM `{$this->variantTable}`
                 WHERE testId = %s
                 ORDER BY name ASC
