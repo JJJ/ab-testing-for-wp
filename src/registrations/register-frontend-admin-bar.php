@@ -10,6 +10,10 @@ class RegisterFrontendAdminBar {
         $this->fileRoot = $fileRoot;
         $this->abTestManager = new ABTestManager();
         
+        add_action('init', [$this, 'bootstrap']);
+    }
+    
+    public function bootstrap() {
         if (is_admin_bar_showing()) {
             add_action('wp_enqueue_scripts', [$this, 'loadAssets']);
             add_action('admin_bar_menu', [$this, 'addAdminBarMenu'], 90);

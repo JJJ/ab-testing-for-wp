@@ -21,7 +21,14 @@
             </td>
             <td><?php echo $test['startedAt']; ?></td>
             <td class="column-primary"><?php echo edit_post_link($test['postName'], '', '', $test['postId']); ?></td>
-            <td><?php echo $test['postGoal'] === '0' ? $test['goalName'] : edit_post_link($test['goalName'], '', '', $test['postGoal']); ?></td>
+            <td>
+              <?php if ($test['goalType'] === 'page' || $test['goalType'] === 'post') {
+                edit_post_link($test['goalName'], '', '', $test['postGoal']);
+              } else {
+                echo $test['goalName'];
+              }
+              ?>
+            </td>
             <td class="num"><?php echo $test['totalParticipants']; ?></td>
           </tr>
           <tr></tr>
