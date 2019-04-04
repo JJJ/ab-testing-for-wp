@@ -44,15 +44,16 @@ class ABTestManager {
     public function getAllTests() {
         $data = $this->wpdb->get_results("
         SELECT t.id, t.isEnabled, t.startedAt, t.control, t.postId, t.postGoal,
-        p1.post_title AS postName, p2.post_title AS goalName, t.isArchived,
+        p1.post_title AS postName, p2.post_title AS goalName, p2.post_type AS goalType,
+        t.isArchived,
         (
             SELECT SUM(participants)
             FROM wp_ab_testing_for_wp_variant AS v
             WHERE v.testId = t.id
         ) as totalParticipants
         FROM `{$this->abTestTable}` AS t
-        INNER JOIN `{$this->postsTable}` AS p1 ON t.postId = p1.id
-        LEFT JOIN `{$this->postsTable}` AS p2 ON t.postGoal = p2.id
+        INNER JOIN `{$this->postsTable}` AS p1 ON t.postId = p1.ID
+        LEFT JOIN `{$this->postsTable}` AS p2 ON t.postGoal = p2.ID
         WHERE t.isArchived = 0
         ORDER BY t.postId ASC
         ");

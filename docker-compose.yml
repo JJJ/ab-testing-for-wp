@@ -28,6 +28,7 @@ services:
        WORDPRESS_DB_NAME: wordpress
        WORDPRESS_DEBUG: 1
      volumes:
+       - ./wp-content:/var/www/html/wp-content
        - ./:/var/www/html/wp-content/plugins/ab-testing-for-wp
 
 volumes:

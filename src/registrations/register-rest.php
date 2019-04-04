@@ -10,6 +10,7 @@ class RegisterREST {
         $stats = new ABTestStats();
         $options = new OptionsActions();
         $posts = new PostsActions();
+        $goals = new GoalActions();
 
         register_rest_route(
             'ab-testing-for-wp/v1',
@@ -71,6 +72,18 @@ class RegisterREST {
             [
                 'methods' => 'GET',
                 'callback' => [$posts, 'getPostsByType'],
+                'permission_callback' => function () {
+                    return current_user_can('edit_posts');
+                }
+            ]
+        );
+
+        register_rest_route(
+            'ab-testing-for-wp/v1',
+            '/get-goal-types',
+            [
+                'methods' => 'GET',
+                'callback' => [$goals, 'getGoalTypes'],
                 'permission_callback' => function () {
                     return current_user_can('edit_posts');
                 }

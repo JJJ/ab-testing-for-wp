@@ -11,8 +11,12 @@ class RegisterAdminPage {
         $this->abTestManager = new ABTestManager();
         $this->fileRoot = $fileRoot;
 
+        add_action('init', [$this, 'bootstrap']);
+    }
+    
+    public function bootstrap() {
         $this->loadStyles();
-
+    
         add_action('admin_menu', [$this, 'menu']);
     }
 
