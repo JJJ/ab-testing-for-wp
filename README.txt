@@ -71,6 +71,9 @@ You can find the [source and repository over at GitHub](https://github.com/Gaya/
 5. Integration with HTML Forms
 
 == Changelog ==
+= 1.6.0 =
+* Added integrations with HTML Forms, Mailchimp for WordPress, and Contact Form 7
+
 = 1.5.0 =
 * Ability to pick posts and pages as conversion goals
 
