@@ -80,7 +80,7 @@ class TestResults extends Component<TestResultsProps, TestResultsState> {
     const controlVariant = results.find(result => result.id === control);
 
     let crc = 0;
-    if (controlVariant) {
+    if (controlVariant && controlVariant.participants > 0) {
       crc = controlVariant.conversions / controlVariant.participants;
     }
 
