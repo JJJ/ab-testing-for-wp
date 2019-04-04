@@ -66,7 +66,7 @@ class TestResults extends Component<TestResultsProps, TestResultsState> {
         rate: result.participants === 0
           ? 0
           : Math.round((100 / result.participants) * result.conversions),
-        winner: !results
+        winner: result.participants > 0 && !results
           .every(variant => result.participants / result.conversions
             >= variant.participants / variant.conversions),
       }))
