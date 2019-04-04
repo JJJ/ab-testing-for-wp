@@ -50,7 +50,12 @@
                       <?php echo $variant['name']; ?>
                       <?php if ($variant['id'] === $test['control']) echo '*'; ?>
                     </td>
-                    <td class="column-primary"><?php echo $variant['rate']; ?>%</td>
+                    <td class="column-primary">
+                      <?php echo $variant['rate']; ?>%
+                      <?php if ($variant['uplift'] <> 0): ?>
+                        <span class="ABTestUplift">(<?php echo $variant['uplift'] > 0 ? '+' : ''; echo $variant['uplift']; ?>%)</span>
+                      <?php endif; ?>
+                    </td>
                     <td><?php echo $variant['conversions']; ?></td>
                     <td><?php echo $variant['participants']; ?></td>
                   </tr>
