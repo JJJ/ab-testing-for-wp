@@ -70,13 +70,30 @@ class ABTestManager {
                 ORDER BY name ASC
                 ", $test['id']));
 
+                foreach($test['variants'] as $variant) {
+                    $variant = (array) $variant;
+
+                    if ($variant['id'] === $test['control']) {
+                        $controlVariant = $variant;
+                    }
+                }
+
+                $crc = $controlVariant['participants'] > 0
+                    ? $controlVariant['conversions'] / $controlVariant['participants']
+                    : 0;
+
                 $test['variants'] = array_map(
-                    function ($variant) {
+                    function ($variant) use ($crc) {
                         $variant = (array) $variant;
 
-                        $variant['rate'] = $variant['participants'] > 0
-                            ? round(($variant['conversions'] / $variant['participants']) * 100)
+                        $crr = $variant['participants'] > 0
+                            ? $variant['conversions'] / $variant['participants']
                             : 0;
+
+                        $variant['rate'] = $variant['participants'] > 0
+                            ? round($crr * 100)
+                            : 0;
+                        $variant['uplift'] = round($crc === 0 ? 0 : ($crr - $crc) / $crc * 1000) / 10;
 
                         return $variant;
                     },
