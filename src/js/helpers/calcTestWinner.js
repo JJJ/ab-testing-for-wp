@@ -1,7 +1,5 @@
 // @flow
 
-import type { TestResult } from './TestResults';
-
 function convertRatio(p: number, c: number) {
   return p === 0 ? 0 : c / p;
 }
@@ -14,7 +12,7 @@ function getCRSE(p: number, c: number) {
   ];
 }
 
-function findWinner(results: TestResult[]) {
+function findWinner(results: ABTestResult[]) {
   return results
     .find((result) => {
       const cr = convertRatio(result.participants, result.conversions);
@@ -22,7 +20,7 @@ function findWinner(results: TestResult[]) {
     });
 }
 
-function calc(control: string, results: TestResult[]) {
+function calcTestWinner(control: string, results: ABTestResult[]) {
   const winner = findWinner(results);
 
   if (!winner) return null;
@@ -46,4 +44,4 @@ function calc(control: string, results: TestResult[]) {
   };
 }
 
-export default calc;
+export default calcTestWinner;
