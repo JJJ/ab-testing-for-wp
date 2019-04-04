@@ -46,7 +46,10 @@
                 </thead>
                 <?php foreach ($test['variants'] as $variant) : ?>
                   <tr class="<?php echo $variant['leading'] && $variant['participants'] > 0 ? 'ABTestWinning' : 'ABTestLosing'; ?>">
-                    <td class="check-column check-column-normal"><?php echo $variant['name']; ?></td>
+                    <td class="check-column check-column-normal">
+                      <?php echo $variant['name']; ?>
+                      <?php if ($variant['id'] === $test['control']) echo '*'; ?>
+                    </td>
                     <td class="column-primary"><?php echo $variant['rate']; ?>%</td>
                     <td><?php echo $variant['conversions']; ?></td>
                     <td><?php echo $variant['participants']; ?></td>

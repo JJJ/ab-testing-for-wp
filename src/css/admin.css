@@ -32,6 +32,7 @@ table.running-tests {
 
 .ab-testing-for-wp table .check-column.check-column-normal {
   padding: 8px 10px;
+  white-space: nowrap;
 }
 
 .how-to .how-to-panel-content > *:first-child {
