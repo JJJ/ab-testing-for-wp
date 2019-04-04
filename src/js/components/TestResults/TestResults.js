@@ -7,12 +7,24 @@ import { apiFetch, components, i18n } from '../../WP';
 
 import DeclareWinner from './DeclareWinner';
 
+import calc from './Calc';
+
 import './TestResults.css';
 
-const { __ } = i18n;
+const { __, sprintf } = i18n;
 const { PanelBody } = components;
 
-type TestResult = {
+function getTranslationString(control, testResult) {
+  if (!testResult.confident) {
+    return 'Test results for are NOT significant enough to declare a winner yet.';
+  }
+
+  return testResult.winner.id !== control
+    ? 'Test results are significant enough to declare variation %s the winner with 95%% confidence.'
+    : 'Test results are significant enough to say control variation %s remains a winner with 95%% confidence.';
+}
+
+export type TestResult = {
   id: string;
   name: string;
   participants: number;
@@ -53,22 +65,6 @@ class TestResults extends Component<TestResultsProps, TestResultsState> {
       });
   }
 
-  calc(control: string, results: TestResult[]) {
-    const controlVariant = results.find(result => result.id === control);
-
-    if (controlVariant) {
-      const crc = controlVariant.conversions / controlVariant.participants;
-
-      results
-        .filter(result => result.id !== control)
-        .forEach((result) => {
-          const crr = result.conversions / result.participants;
-          const relativeUplift = (crr - crc) / crc;
-        });
-      console.log(controlVariant);
-    }
-  }
-
   render() {
     const { control, isEnabled, onDeclareWinner } = this.props;
     const { results, loading } = this.state;
@@ -79,7 +75,7 @@ class TestResults extends Component<TestResultsProps, TestResultsState> {
       return null;
     }
 
-    this.calc(control, results);
+    const testResult = calc(control, results);
 
     const controlVariant = results.find(result => result.id === control);
 
@@ -175,6 +171,22 @@ class TestResults extends Component<TestResultsProps, TestResultsState> {
           </div>
         ) : (
           <div>No participants yet.</div>
+        )}
+        {testResult && (
+          <div
+            className={classNames(
+              'Significance',
+              {
+                'Significance--success': testResult.confident && testResult.winner.id !== control,
+                'Significance--failed': testResult.confident && testResult.winner.id === control,
+              },
+            )}
+          >
+            {sprintf(
+              getTranslationString(control, testResult),
+              testResult.winner.name,
+            )}
+          </div>
         )}
         <br />
         <DeclareWinner variants={enrichedResults} onDeclareWinner={onDeclareWinner} />
