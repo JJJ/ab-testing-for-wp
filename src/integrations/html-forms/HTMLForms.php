@@ -6,6 +6,11 @@ class HTMLForms extends Integration {
 
     protected $pluginSlug = 'html-forms/html-forms.php';
 
+    protected function extraPluginCheck() {
+        // check if code is really loaded
+        return function_exists('HTML_Forms\\_bootstrap');
+    }
+
     protected function loadIntegration() {
         add_filter('ab-testing-for-wp_goal-types', [$this, 'addGoalType']);
         add_action('hf_form_success', [$this, 'catchFormSubmits']);

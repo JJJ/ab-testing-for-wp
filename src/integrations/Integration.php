@@ -18,7 +18,14 @@ class Integration {
     }
 
     private function isPluginActive() {
-        return is_plugin_active($this->getPluginSlug());
+        return is_plugin_active($this->getPluginSlug()) && $this->extraPluginCheck();
+    }
+
+    /**
+     * You can overwrite this method for an extra check in the isPluginActive
+     */
+    protected function extraPluginCheck() {
+        return true;
     }
 
 }
