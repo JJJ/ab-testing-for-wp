@@ -32,3 +32,11 @@ h3 {
   font-size: 1.1em;
   font-weight: 500;
 }
+
+body p a {
+  color: $ab-blue;
+
+  &:hover {
+    color: darken($ab-blue, 20);
+  }
+}
