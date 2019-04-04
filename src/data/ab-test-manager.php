@@ -67,6 +67,7 @@ class ABTestManager {
                 SELECT name, participants, conversions
                 FROM `{$this->variantTable}`
                 WHERE testId = %s
+                ORDER BY name ASC
                 ", $test['id']));
 
                 $test['variants'] = array_map(
