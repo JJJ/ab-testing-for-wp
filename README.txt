@@ -17,14 +17,23 @@ Improve your website and start measuring your audience now.
 
 Create A/B tests right in the content editor. Test which button colour works best, what content drives people to engage, anything you can imagine!
 
+= Add A/B Tests from Anywhere in the Content Editor =
 A/B Testing for WordPress allows you to create split tests right from the visual content editor. Measures the results of your tests and shows you which variant is the most popular choice.
 
 You add a block to your content which you can fill with anything you want to, and switch between variants instantaneously to preview what visitors will see. Define distribution weight, pick the goal of the test, and off you go!
 
+= Safe for SEO =
 Everything has been implemented with SEO in the back of the mind, which means the plugin will do nothing to affect your SEO. It works just like most A/B testing tools out there, but natively from your own WordPress site without the use of 3th-party services.
 
+= Measure Results =
 A/B Testing for WordPress provides an overview of running tests and the measured results. When you are done running your tests and can come to a conclusion you can break the winning variant out of the test and remove the test from the content with just one click.
 
+= Integrates with Other Plugins =
+A/B Testing for WordPress integrates with other WordPress plugins. This provides a streamlined experience to test variations of what the integrated plugin has to offer. Think form submissions, sign ups, product sales.
+
+Integrates with [Mailchimp for WordPress](https://wordpress.org/plugins/mailchimp-for-wp/), [HTML Forms](https://wordpress.org/plugins/html-forms/), [Contact Form 7](https://wordpress.org/plugins/contact-form-7/)
+
+= Test Your Visitors Right Now! =
 Start measuring what works best on your site without all the hassle!
 
 == Installation ==
