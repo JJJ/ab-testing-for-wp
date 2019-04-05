@@ -11,18 +11,58 @@ class RegisterAdminPage {
         $this->abTestManager = new ABTestManager();
         $this->fileRoot = $fileRoot;
 
-        add_action('init', [$this, 'bootstrap']);
-    }
-    
-    public function bootstrap() {
-        $this->loadStyles();
-    
         add_action('admin_menu', [$this, 'menu']);
+        add_action('current_screen', [$this, 'screenLoad']);
+    }
+
+    public function screenLoad() {
+        $screen = get_current_screen();
+        $base = 'a-b-testing_page_ab-testing-for-wp';
+        $toplevelBase = 'toplevel_page_ab-testing-for-wp';
+
+        if (substr($screen->id, 0, strlen($base)) === $base || $screen->id === $toplevelBase) {
+            // an A/B Testing for WordPress admin page
+            $this->loadStyles();
+            $this->loadScripts($this->getPageData($screen->id));
+        }
     }
 
     private function loadStyles() {
         wp_register_style('ab_testing_for_wp_admin_style', plugins_url('/src/css/admin.css', $this->fileRoot), []);
         wp_enqueue_style('ab_testing_for_wp_admin_style');
+    }
+
+    private function loadScripts($data = null) {
+        wp_register_script(
+            'ab-testing-for-wp-admin', 
+            plugins_url('/dist/admin.js', $this->fileRoot), 
+            ['wp-api-fetch', 'wp-element']
+        );
+
+        if (isset($data)) {
+            wp_localize_script(
+                'ab-testing-for-wp-admin', 
+                'ABTestingForWP_Data', 
+                $data
+            );
+        }
+
+        wp_enqueue_script('ab-testing-for-wp-admin');
+    }
+
+    private function getPageData($pageName) {
+        $base = 'a-b-testing_page_ab-testing-for-wp';
+        $toplevelBase = 'toplevel_page_ab-testing-for-wp';
+
+        $pageName = str_replace($base, '', $pageName);
+        $pageName = str_replace($toplevelBase, '', $pageName);
+
+        switch ($pageName) {
+            case '_new':
+                return $this->overviewData();
+            default:
+                return [];
+        }
     }
 
     public function menu() {
@@ -49,6 +89,15 @@ class RegisterAdminPage {
 
         add_submenu_page( 
             'ab-testing-for-wp',
+            __('Active A/B Tests Overview'),
+            __('All A/B Tests (new)'), 
+            'manage_options', 
+            'ab-testing-for-wp_new',
+            [$this, 'appContainer']
+        );
+
+        add_submenu_page( 
+            'ab-testing-for-wp',
             __('How to Use A/B Testing'),
             __('How to Use'), 
             'manage_options', 
@@ -57,7 +106,11 @@ class RegisterAdminPage {
         );
     }
 
-    public function overview() {
+    public function appContainer() {
+        echo "<div id='admin_app'></div>";
+    }
+
+    private function overviewData() {
         $testsData = $this->abTestManager->getAllTests();
 
         $testsData = array_map(
@@ -82,9 +135,13 @@ class RegisterAdminPage {
             $testsData
         );
 
-        $templateData = [
+        return [
             'activeTests' => $testsData,
         ];
+    }
+
+    public function overview() {
+        $templateData = $this->overviewData();
 
         require $this->srcRoot . 'pages/overview.php';
     }
