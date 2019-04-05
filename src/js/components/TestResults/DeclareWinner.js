@@ -2,7 +2,7 @@
 
 import { Component } from 'react';
 
-import { components, i18n } from '../../WP';
+import { components, i18n } from '../../wp';
 
 const { __, sprintf } = i18n;
 const {

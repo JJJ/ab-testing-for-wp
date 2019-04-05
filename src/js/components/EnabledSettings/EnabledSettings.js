@@ -2,7 +2,7 @@
 
 import distanceInWordsToNow from 'date-fns/distance_in_words_to_now';
 
-import { i18n, components } from '../../WP';
+import { i18n, components } from '../../wp';
 
 const { __, sprintf } = i18n;
 const { PanelBody, ToggleControl } = components;

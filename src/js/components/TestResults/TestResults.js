@@ -3,7 +3,7 @@
 import { Component } from 'react';
 import classNames from 'classnames';
 
-import { apiFetch, components, i18n } from '../../WP';
+import { apiFetch, components, i18n } from '../../wp';
 
 import DeclareWinner from './DeclareWinner';
 
