@@ -133,10 +133,12 @@ function Overview({ data }: { data: OverviewData }) {
                     ) : (
                       <p><em>{__('No results for this test yet.')}</em></p>
                     )}
-                    <Significance
-                      control={test.control}
-                      results={test.variants.map(toTestVariantResult)}
-                    />
+                    {test.totalParticipants > 0 && (
+                      <Significance
+                        control={test.control}
+                        results={test.variants.map(toTestVariantResult)}
+                      />
+                    )}
                   </td>
                 </tr>
               </Fragment>
