@@ -1,6 +1,6 @@
 // @flow @jsx wp.element.createElement
 
-import { i18n, blocks, editor } from '../WP';
+import { i18n, blocks, editor } from '../wp';
 
 const { registerBlockType } = blocks;
 const { __, sprintf } = i18n;

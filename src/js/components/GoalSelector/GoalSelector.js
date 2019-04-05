@@ -7,7 +7,7 @@ import {
   components,
   apiFetch,
   data,
-} from '../../WP';
+} from '../../wp';
 
 const { __ } = i18n;
 const { PanelBody, SelectControl } = components;

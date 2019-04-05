@@ -2,6 +2,10 @@
   width: 100%;
 }
 
+.ABTestUplift {
+  font-size: 0.8em;
+}
+
 .ABTestWinning td {
   color: #46B450!important;
 }
@@ -32,6 +36,7 @@ table.running-tests {
 
 .ab-testing-for-wp table .check-column.check-column-normal {
   padding: 8px 10px;
+  white-space: nowrap;
 }
 
 .how-to .how-to-panel-content > *:first-child {

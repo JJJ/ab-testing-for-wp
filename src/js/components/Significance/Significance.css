@@ -1,0 +1,15 @@
+.Significance {
+  border-left: 4px solid #aaa;
+  background-color: #eee;
+  padding: 0.5em 1em;
+}
+
+.Significance.Significance--success {
+  border-left-color: #46B450;
+  background-color: #e3efe3;
+}
+
+.Significance.Significance--failed {
+  border-left-color: #dc3232;
+  background-color: #f5ebec;
+}
