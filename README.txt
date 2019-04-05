@@ -26,7 +26,9 @@ You add a block to your content which you can fill with anything you want to, an
 Everything has been implemented with SEO in the back of the mind, which means the plugin will do nothing to affect your SEO. It works just like most A/B testing tools out there, but natively from your own WordPress site without the use of 3th-party services.
 
 = Measure Results =
-A/B Testing for WordPress provides an overview of running tests and the measured results. When you are done running your tests and can come to a conclusion you can break the winning variant out of the test and remove the test from the content with just one click.
+A/B Testing for WordPress provides an overview of running tests and the measured results. It also shows the **statistical significance of the test results** so you can be confident a test is successful or not.
+
+When you are done running your tests and can come to a conclusion you can break the winning variant out of the test and remove the test from the content with just one click.
 
 = Integrates with Other Plugins =
 A/B Testing for WordPress integrates with other WordPress plugins. This provides a streamlined experience to test variations of what the integrated plugin has to offer. Think form submissions, sign ups, product sales.
@@ -71,6 +73,9 @@ You can find the [source and repository over at GitHub](https://github.com/Gaya/
 5. Integration with HTML Forms
 
 == Changelog ==
+= 1.7.0 =
+* Shows statistical significance of the results in the overview and test settings so you can be confident that the results can be trusted
+
 = 1.6.0 =
 * Added integrations with HTML Forms, Mailchimp for WordPress, and Contact Form 7
 
@@ -81,7 +86,7 @@ You can find the [source and repository over at GitHub](https://github.com/Gaya/
 * Onboarding tour for first time users
 
 = 1.3.1 =
-* Ability to declare a winner of the test. Replacing the test block with the winning variant's content.
+* Ability to declare a winner of the test. Replacing the test block with the winning variant's content
 
 = 1.2.2 =
 * Instant variant previews from the admin bar
@@ -96,4 +101,4 @@ You can find the [source and repository over at GitHub](https://github.com/Gaya/
 * Initial release
 
 == Upgrade Notice ==
-No updates yet.
+No updates yet
