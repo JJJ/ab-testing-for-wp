@@ -5,8 +5,8 @@ import classNames from 'classnames';
 
 import { apiFetch, components, i18n } from '../../wp';
 
+import Significance from '../Significance/Significance';
 import DeclareWinner from './DeclareWinner';
-import Significance from './Significance';
 
 import './TestResults.css';
 
