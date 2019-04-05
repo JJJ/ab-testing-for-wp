@@ -1,6 +1,6 @@
 // @flow @jsx wp.element.createElement
 
-import { components } from '../../WP';
+import { components } from '../../wp';
 
 import './VariantSelector.css';
 

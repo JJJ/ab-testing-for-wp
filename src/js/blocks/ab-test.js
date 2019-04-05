@@ -7,7 +7,7 @@ import {
   blocks,
   editor,
   data,
-} from '../WP';
+} from '../wp';
 
 import VariantSelector from '../components/VariantSelector/VariantSelector';
 import BoxShadow from '../components/BoxShadow/BoxShadow';

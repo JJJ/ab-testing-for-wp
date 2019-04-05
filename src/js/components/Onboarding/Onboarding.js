@@ -2,7 +2,7 @@
 
 import { createRef, Component } from 'react';
 
-import { data, components, i18n } from '../../WP';
+import { data, components, i18n } from '../../wp';
 
 import Arrow from './Arrow';
 import { drawOverlayAround, removeOverlay } from './Overlay';

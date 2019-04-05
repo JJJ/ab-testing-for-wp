@@ -1,6 +1,6 @@
 // @flow @jsx wp.element.createElement
 
-import { i18n, components } from '../../WP';
+import { i18n, components } from '../../wp';
 
 const { __ } = i18n;
 const { PanelBody, SelectControl } = components;
