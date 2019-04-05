@@ -36,3 +36,7 @@
   white-space: nowrap;
   width: 1px;
 }
+
+.TestResults + .Significance {
+  margin-top: 1.5em;
+}
