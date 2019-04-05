@@ -7,7 +7,7 @@ import {
   blocks,
   editor,
   data,
-} from '../WP';
+} from '../wp';
 
 import VariantSelector from '../components/VariantSelector/VariantSelector';
 import BoxShadow from '../components/BoxShadow/BoxShadow';
@@ -133,6 +133,7 @@ function ABTestBlock(props: ABTestBlockProps) {
         <TestResults
           isEnabled={isEnabled}
           testId={id}
+          control={control}
           onDeclareWinner={onDeclareWinner}
         />
         <DistributionSettings

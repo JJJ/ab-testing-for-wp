@@ -7,6 +7,7 @@ module.exports = {
   entry: {
     'ab-testing-for-wp': './ab-testing-for-wp.js',
     'admin-bar': './admin-bar.js',
+    admin: './admin.js',
     'ab-test': './blocks/ab-test.js',
     'ab-test-variant': './blocks/ab-test-variant.js',
   },

@@ -1,6 +1,6 @@
 // @flow
 
-import { apiFetch } from '../WP';
+import { apiFetch } from '../wp';
 
 const WPOptions = window.ABTestingForWP_Options || {};
 
