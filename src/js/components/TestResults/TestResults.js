@@ -6,23 +6,12 @@ import classNames from 'classnames';
 import { apiFetch, components, i18n } from '../../wp';
 
 import DeclareWinner from './DeclareWinner';
-
-import calcTestWinner from '../../helpers/calcTestWinner';
+import Significance from './Significance';
 
 import './TestResults.css';
 
-const { __, sprintf } = i18n;
+const { __ } = i18n;
 const { PanelBody } = components;
-
-function getTranslationString(control, testResult) {
-  if (!testResult.confident) {
-    return 'Test results for are NOT significant enough to declare a winner yet.';
-  }
-
-  return testResult.winner.id !== control
-    ? 'Test results are significant enough to declare variation %s the winner with 95%% confidence.'
-    : 'Test results are significant enough to say control variation %s remains a winner with 95%% confidence.';
-}
 
 type TestResultsProps = {
   testId: string;
@@ -67,8 +56,6 @@ class TestResults extends Component<TestResultsProps, TestResultsState> {
     if (loading || (!isEnabled && !hasParticipants)) {
       return null;
     }
-
-    const testResult = calcTestWinner(control, results);
 
     const controlVariant = results.find(result => result.id === control);
 
@@ -165,22 +152,7 @@ class TestResults extends Component<TestResultsProps, TestResultsState> {
         ) : (
           <div>No participants yet.</div>
         )}
-        {testResult && (
-          <div
-            className={classNames(
-              'Significance',
-              {
-                'Significance--success': testResult.confident && testResult.winner.id !== control,
-                'Significance--failed': testResult.confident && testResult.winner.id === control,
-              },
-            )}
-          >
-            {sprintf(
-              getTranslationString(control, testResult),
-              testResult.winner.name,
-            )}
-          </div>
-        )}
+        <Significance control={control} results={results} />
         <br />
         <DeclareWinner variants={enrichedResults} onDeclareWinner={onDeclareWinner} />
       </PanelBody>
