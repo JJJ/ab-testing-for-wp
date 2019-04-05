@@ -16,10 +16,12 @@ function getPage() {
 }
 
 function AdminPage({ data }: AdminPageProps) {
+  if (!data) return null;
+
   const page = getPage();
 
   switch (page) {
-    case 'new':
+    case '':
       return <Overview data={data} />;
     default:
       throw new Error(`Component for ${page} can not be found`);
