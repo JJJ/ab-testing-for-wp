@@ -4,6 +4,7 @@ import React, { Fragment } from 'react';
 import classNames from 'classnames';
 
 import Table from '../../components/Table/Table';
+import Significance from '../../../Significance/Significance';
 
 import { i18n } from '../../../../wp';
 
@@ -40,6 +41,13 @@ type OverviewData = {
 function postLink(name: string, link?: string) {
   return link ? (<a href={link}>{name}</a>) : name;
 }
+
+const toTestVariantResult = variant => ({
+  id: variant.id,
+  name: variant.name,
+  participants: variant.participants,
+  conversions: variant.conversions,
+});
 
 function Overview({ data }: { data: OverviewData }) {
   const { activeTests } = data;
@@ -122,6 +130,10 @@ function Overview({ data }: { data: OverviewData }) {
                     ) : (
                       <p><em>{__('No results for this test yet.')}</em></p>
                     )}
+                    <Significance
+                      control={test.control}
+                      results={test.variants.map(toTestVariantResult)}
+                    />
                   </td>
                 </tr>
               </Fragment>
