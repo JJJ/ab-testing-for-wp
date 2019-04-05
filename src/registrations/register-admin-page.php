@@ -131,12 +131,6 @@ class RegisterAdminPage {
         ];
     }
 
-    public function overview() {
-        $templateData = $this->overviewData();
-
-        require $this->srcRoot . 'pages/overview.php';
-    }
-
     public function howto() {
         $assets = plugins_url('/src/assets/', $this->fileRoot);
 
