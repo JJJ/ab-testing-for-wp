@@ -39,7 +39,10 @@ type OverviewData = {
 };
 
 function postLink(name: string, link?: string) {
-  return link ? (<a href={link}>{name}</a>) : name;
+  const e = document.createElement('div');
+  e.innerHTML = link || '';
+  const decodedLink = e.textContent;
+  return link ? (<a href={decodedLink}>{name}</a>) : name;
 }
 
 const toTestVariantResult = variant => ({
