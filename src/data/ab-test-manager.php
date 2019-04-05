@@ -62,6 +62,10 @@ class ABTestManager {
             function ($test) {
                 $test = (array) $test;
                 $test['isEnabled'] = (bool) $test['isEnabled'];
+                $test['isArchived'] = (bool) $test['isArchived'];
+
+                $test['postLink'] = get_edit_post_link($test['postId']);
+                $test['goalLink'] = get_edit_post_link($test['postGoal']);
 
                 $test['variants'] = $this->wpdb->get_results($this->wpdb->prepare("
                 SELECT id, name, participants, conversions
@@ -85,6 +89,9 @@ class ABTestManager {
                 $test['variants'] = array_map(
                     function ($variant) use ($crc) {
                         $variant = (array) $variant;
+
+                        $variant['conversions'] = (int) $variant['conversions'];
+                        $variant['participants'] = (int) $variant['participants'];
 
                         $crr = $variant['participants'] > 0
                             ? $variant['conversions'] / $variant['participants']

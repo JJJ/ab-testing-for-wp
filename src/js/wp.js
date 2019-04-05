@@ -5,6 +5,7 @@ const {
   components,
   apiFetch,
   data,
+  element,
 } = wp;
 
 export {
@@ -14,4 +15,5 @@ export {
   components,
   apiFetch,
   data,
+  element,
 };
