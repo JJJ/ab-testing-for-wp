@@ -58,7 +58,7 @@ class RegisterAdminPage {
         $pageName = str_replace($toplevelBase, '', $pageName);
 
         switch ($pageName) {
-            case '_new':
+            case '':
                 return $this->overviewData();
             default:
                 return [];
@@ -73,7 +73,7 @@ class RegisterAdminPage {
             'A/B Testing', 
             'manage_options',
             'ab-testing-for-wp', 
-            [$this, 'overview'], 
+            [$this, 'appContainer'], 
             $icon, 
             61
         );
@@ -84,15 +84,6 @@ class RegisterAdminPage {
             __('All A/B Tests'), 
             'manage_options', 
             'ab-testing-for-wp',
-            [$this, 'overview']
-        );
-
-        add_submenu_page( 
-            'ab-testing-for-wp',
-            __('Active A/B Tests Overview'),
-            __('All A/B Tests (new)'), 
-            'manage_options', 
-            'ab-testing-for-wp_new',
             [$this, 'appContainer']
         );
 
