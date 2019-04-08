@@ -8,17 +8,41 @@ if(!function_exists('is_plugin_active')) {
 
 class Integration {
 
-    protected function getPluginSlug() {
-        return $this->pluginSlug;
-    }
+    protected $wpdb;
+    private $query = '';
+    private $transform = false;
 
     public function __construct() {
         if (!$this->isPluginActive()) return;
         $this->loadIntegration();
+
+        global $wpdb;
+        $this->wpdb = $wpdb;
+    }
+
+    protected function getPluginSlug() {
+        return $this->pluginSlug;
     }
 
     private function isPluginActive() {
         return is_plugin_active($this->getPluginSlug()) && $this->extraPluginCheck();
+    }
+
+    protected function addCustomQuery($type = '', $query = '', $tranform = false) {
+        if ($query === '') return;
+
+        // very ugly pass arguments to next function call
+        $this->query = $query;
+        $this->tranform = $tranform;
+
+        add_filter("ab-testing-for-wp_custom-query-$type", [$this, 'performCustomQuery']);
+    }
+
+    public function performCustomQuery() {
+        $results = $this->wpdb->get_results($this->query);
+    
+        if (!$this->tranform) return $results;
+        return array_map($this->tranform, $results);
     }
 
     /**
