@@ -204,18 +204,19 @@ class ABTestManager {
         $postGoal = isset($testData['postGoal']) ? $testData['postGoal'] : 0;
 
         $query = "
-        REPLACE INTO `{$this->abTestTable}` (id, postId, isEnabled, startedAt, control, postGoal, isArchived)
+        REPLACE INTO `{$this->abTestTable}` (id, postId, isEnabled, startedAt, control, postGoal, postGoalType, isArchived)
         VALUES (%s, %s, %d, %s, %s, %s, %d);
         ";
 
         $this->wpdb->query($this->wpdb->prepare(
             $query, 
             $testData['id'], 
-            $postId, 
+            $postId,
             $isEnabled, 
             $startedAt, 
             $testData['control'],
             $postGoal,
+            $testData['postGoalType'],
             0
         ));
     }
