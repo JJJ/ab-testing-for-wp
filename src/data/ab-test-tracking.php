@@ -16,7 +16,7 @@ class ABTestTracking {
 
         $postId = $request->get_param('post');
 
-        $tracked = $this->trackPostId($postId);
+        $tracked = $this->trackPostId($postId, get_post_type($postId));
 
         return rest_ensure_response($tracked);
     }
