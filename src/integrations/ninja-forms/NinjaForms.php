@@ -17,7 +17,7 @@ class NinjaForms extends Integration {
 
         $this->addCustomQuery(
             'NinjaForms',
-            "SELECT id, title FROM wp_nf3_forms ORDER BY updated_at DESC",
+            "SELECT id, title FROM %snf3_forms ORDER BY updated_at DESC",
             function ($item) {
                 return [
                     'ID' => $item->id,
