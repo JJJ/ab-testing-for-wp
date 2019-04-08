@@ -13,7 +13,7 @@ class NinjaForms extends Integration {
 
     protected function loadIntegration() {
         add_filter('ab-testing-for-wp_goal-types', [$this, 'addGoalType']);
-        // add_action('wpcf7_submit', [$this, 'catchFormSubmits']);
+        add_action('ninja_forms_after_submission', [$this, 'catchFormSubmits']);
 
         $this->addCustomQuery(
             'NinjaForms',
@@ -41,11 +41,11 @@ class NinjaForms extends Integration {
         return $types;
     }
 
-    public function catchFormSubmits($form) {
-        $formId = $form->id();
+    public function catchFormSubmits($submission) {
+        $formId = $submission["form_id"];
         $abTestTracking = new ABTestTracking();
 
-        $abTestTracking->trackPostId($formId);
+        $abTestTracking->trackPostId($formId, 'NinjaForms');
     }
 
 }

@@ -57,8 +57,6 @@ class PostsActions {
         // catch custom CPTs
         $customQueryResults = apply_filters("ab-testing-for-wp_custom-query-$type", false);
 
-        var_dump($customQueryResults);
-
         if ($customQueryResults) return rest_ensure_response($customQueryResults);
 
         $query = new \WP_Query([
