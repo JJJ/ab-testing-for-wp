@@ -34,7 +34,7 @@ class MC4WP extends Integration {
         $formId = $form->ID;
         $abTestTracking = new ABTestTracking();
 
-        $abTestTracking->trackPostId($formId);
+        $abTestTracking->trackPostId($formId, 'mc4wp-form');
     }
 
 }
