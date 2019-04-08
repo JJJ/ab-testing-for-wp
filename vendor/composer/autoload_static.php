@@ -16,6 +16,7 @@ class ComposerStaticInit3ca069ed2eeb7caff92dca41e2d25775
         'ABTestingForWP\\ContactForm7' => __DIR__ . '/../..' . '/src/integrations/contact-form-7/ContactForm7.php',
         'ABTestingForWP\\Formidable' => __DIR__ . '/../..' . '/src/integrations/formidable/Formidable.php',
         'ABTestingForWP\\GoalActions' => __DIR__ . '/../..' . '/src/actions/goals.php',
+        'ABTestingForWP\\GravityForms' => __DIR__ . '/../..' . '/src/integrations/gravityforms/GravityForms.php',
         'ABTestingForWP\\HTMLForms' => __DIR__ . '/../..' . '/src/integrations/html-forms/HTMLForms.php',
         'ABTestingForWP\\Installer' => __DIR__ . '/../..' . '/src/data/installer.php',
         'ABTestingForWP\\Integration' => __DIR__ . '/../..' . '/src/integrations/Integration.php',
