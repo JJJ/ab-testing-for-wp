@@ -10,6 +10,7 @@ class OptionsManager {
         // figure out defaults
         $allOptions = $this->getAllOptions();
 
+        // set default for completedOnboarding
         if (!isset($allOptions['completedOnboarding'])) {
             $testManager = new ABTestManager();
 
