@@ -27,7 +27,7 @@ class Installer {
         }
 
 		return $collate;
-	}
+    }
 
     private function createTables() {
         global $wpdb;
@@ -49,6 +49,7 @@ class Installer {
             `startedAt` datetime DEFAULT NULL,
             `control` varchar(32) DEFAULT NULL,
             `postGoal` bigint(20) DEFAULT NULL,
+            `postGoalType` varchar(20) DEFAULT NULL,
             `isArchived` tinyint(1) DEFAULT 0,
             PRIMARY KEY (`id`)
         ) ENGINE = InnoDB {$collate};";
