@@ -19,6 +19,7 @@ class ComposerStaticInit3ca069ed2eeb7caff92dca41e2d25775
         'ABTestingForWP\\Installer' => __DIR__ . '/../..' . '/src/data/installer.php',
         'ABTestingForWP\\Integration' => __DIR__ . '/../..' . '/src/integrations/Integration.php',
         'ABTestingForWP\\MC4WP' => __DIR__ . '/../..' . '/src/integrations/mc4wp/MC4WP.php',
+        'ABTestingForWP\\NinjaForms' => __DIR__ . '/../..' . '/src/integrations/ninja-forms/NinjaForms.php',
         'ABTestingForWP\\OptionsActions' => __DIR__ . '/../..' . '/src/actions/options.php',
         'ABTestingForWP\\OptionsManager' => __DIR__ . '/../..' . '/src/data/options-manager.php',
         'ABTestingForWP\\PostsActions' => __DIR__ . '/../..' . '/src/actions/posts.php',
