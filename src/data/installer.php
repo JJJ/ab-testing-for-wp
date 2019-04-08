@@ -4,12 +4,50 @@ namespace ABTestingForWP;
 
 class Installer {
 
+    private $migrations = [
+        'addGoalTypeColumn',
+    ];
+
     public function __construct($fileRoot) {
         register_activation_hook($fileRoot, [$this, 'install']);
+        add_action('init', [$this, 'runMigrations']);
     }
     
     public function install() {
         $this->createTables();
+    }
+
+    public function runMigrations() {
+        $optionsManager = new OptionsManager();
+        $lastMigration = $optionsManager->getOption('lastMigration', '');
+        $lastMigrationToBeAt = $this->migrations[sizeof($this->migrations) - 1];
+
+        if ($lastMigration !== $lastMigrationToBeAt) {
+            // find index in array to start at
+            $start = array_search($lastMigration, $this->migrations);
+            $start = $start === false ? 0 : $start + 1;
+
+            $migrationsToRun = array_slice($this->migrations, $start);
+
+            if (sizeof($migrationsToRun) === 0) return;
+            
+            global $wpdb;
+
+            $wpdb->hide_errors();
+            
+            $tablePrefix = $wpdb->prefix;
+
+            foreach($migrationsToRun as $methodName) {
+                $wpdb->query($this->$methodName($tablePrefix));
+            }
+
+            // update last run migration to last in line
+            $optionsManager->setOption('lastMigration', $lastMigrationToBeAt);
+        }
+    }
+
+    private function addGoalTypeColumn($tablePrefix) {
+        return "ALTER TABLE `{$tablePrefix}ab_testing_for_wp_ab_test` ADD `postGoalType` VARCHAR(20) NULL DEFAULT NULL AFTER `postGoal`";
     }
 
     private function getDBCollate() {
