@@ -13,6 +13,7 @@ return array(
     'ABTestingForWP\\BlockRenderer' => $baseDir . '/src/helpers/block-renderer.php',
     'ABTestingForWP\\BootStrapIntegrations' => $baseDir . '/src/integrations/bootstrap.php',
     'ABTestingForWP\\ContactForm7' => $baseDir . '/src/integrations/contact-form-7/ContactForm7.php',
+    'ABTestingForWP\\Formidable' => $baseDir . '/src/integrations/formidable/Formidable.php',
     'ABTestingForWP\\GoalActions' => $baseDir . '/src/actions/goals.php',
     'ABTestingForWP\\HTMLForms' => $baseDir . '/src/integrations/html-forms/HTMLForms.php',
     'ABTestingForWP\\Installer' => $baseDir . '/src/data/installer.php',

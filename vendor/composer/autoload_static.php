@@ -14,6 +14,7 @@ class ComposerStaticInit3ca069ed2eeb7caff92dca41e2d25775
         'ABTestingForWP\\BlockRenderer' => __DIR__ . '/../..' . '/src/helpers/block-renderer.php',
         'ABTestingForWP\\BootStrapIntegrations' => __DIR__ . '/../..' . '/src/integrations/bootstrap.php',
         'ABTestingForWP\\ContactForm7' => __DIR__ . '/../..' . '/src/integrations/contact-form-7/ContactForm7.php',
+        'ABTestingForWP\\Formidable' => __DIR__ . '/../..' . '/src/integrations/formidable/Formidable.php',
         'ABTestingForWP\\GoalActions' => __DIR__ . '/../..' . '/src/actions/goals.php',
         'ABTestingForWP\\HTMLForms' => __DIR__ . '/../..' . '/src/integrations/html-forms/HTMLForms.php',
         'ABTestingForWP\\Installer' => __DIR__ . '/../..' . '/src/data/installer.php',
