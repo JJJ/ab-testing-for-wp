@@ -48,6 +48,7 @@ function ABTestBlock(props: ABTestBlockProps) {
     id,
     variants,
     postGoal,
+    postGoalType,
     control,
     isEnabled,
     startedAt,
@@ -80,6 +81,7 @@ function ABTestBlock(props: ABTestBlockProps) {
       id: shortid.generate(),
       variants: defaultVariants,
       postGoal: 0,
+      postGoalType: '',
       control: defaultVariants[0].id,
       isEnabled: false,
     });
@@ -94,6 +96,7 @@ function ABTestBlock(props: ABTestBlockProps) {
     variants: newVariants,
   });
   const onPostGoalChange = (postId: number) => setAttributes({ postGoal: postId });
+  const onPostGoalTypeChange = (type: string) => setAttributes({ postGoalType: type });
   const onControlChange = (variantId: string) => setAttributes({ control: variantId });
   const onEnabledChange = (enabled: boolean) => setAttributes({
     isEnabled: enabled,
@@ -141,8 +144,10 @@ function ABTestBlock(props: ABTestBlockProps) {
           onUpdateVariants={onUpdateVariants}
         />
         <GoalSelector
+          type={postGoalType}
           value={postGoal}
           onChange={onPostGoalChange}
+          onTypeChange={onPostGoalTypeChange}
         />
         <ControlSettings
           value={control}
@@ -218,6 +223,10 @@ registerBlockType('ab-testing-for-wp/ab-test-block', {
     postGoal: {
       type: 'number',
       default: 0,
+    },
+    postGoalType: {
+      type: 'string',
+      default: '',
     },
     startedAt: {
       type: 'string',
