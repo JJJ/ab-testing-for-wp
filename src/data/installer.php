@@ -6,6 +6,7 @@ class Installer {
 
     private $migrations = [
         'addGoalTypeColumn',
+        'fillInGoalType',
     ];
 
     public function __construct($fileRoot) {
@@ -48,6 +49,13 @@ class Installer {
 
     private function addGoalTypeColumn($tablePrefix) {
         return "ALTER TABLE `{$tablePrefix}ab_testing_for_wp_ab_test` ADD `postGoalType` VARCHAR(20) NULL DEFAULT NULL AFTER `postGoal`";
+    }
+
+    private function fillInGoalType($tablePrefix) {
+        return "UPDATE wp_ab_testing_for_wp_ab_test AS t
+        INNER JOIN wp_posts AS p on t.postGoal = p.ID
+        SET t.postGoalType = p.post_type
+        WHERE t.postGoalType IS NULL";
     }
 
     private function getDBCollate() {
