@@ -30,6 +30,7 @@ class Installer {
 
             $migrationsToRun = array_slice($this->migrations, $start);
 
+            // if for some reason the migrations are empty... abort
             if (sizeof($migrationsToRun) === 0) return;
             
             global $wpdb;
