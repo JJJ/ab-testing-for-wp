@@ -22,43 +22,44 @@ class ABTestTracking {
     }
 
     public function trackPostId($postId, $postGoalType = '') {
-        // get tests with this page as goal
-        $cookieData = [];
-
         if (isset($_COOKIE['ab-testing-for-wp'])) {
             $cookieData = json_decode(stripslashes($_COOKIE['ab-testing-for-wp']), true);
-        }
 
-        $variants = $this->abTestManager->getEnabledVariantsByGoal($postId, $postGoalType);
+            $variants = $this->abTestManager->getEnabledVariantsByGoal($postId, $postGoalType);
 
-        if (!isset($cookieData['tracked'])) {
-            $cookieData['tracked'] = [];
-        }
-
-        $tracked = [];
-
-        foreach ($variants as $variant) {
-            if (!$variant['isEnabled']) continue;
-
-            if (
-                // not already tracked
-                !in_array($variant['variantId'], $cookieData['tracked'])
-                // if in this tests participants
-                && isset($cookieData[$variant['testId']])
-                // actually in this variant
-                && $cookieData[$variant['testId']] === $variant['variantId']
-            ) {
-                array_push($tracked, $variant['variantId']);
-                $this->abTestManager->addTracking($variant['variantId'], 'C');
+            // create tracked array if not present
+            if (!isset($cookieData['tracked'])) {
+                $cookieData['tracked'] = [];
             }
+
+            $tracked = [];
+
+            foreach ($variants as $variant) {
+                if (!$variant['isEnabled']) continue;
+
+                if (
+                    // not already tracked
+                    !in_array($variant['variantId'], $cookieData['tracked'])
+                    // if in this tests participants
+                    && isset($cookieData[$variant['testId']])
+                    // actually in this variant
+                    && $cookieData[$variant['testId']] === $variant['variantId']
+                ) {
+                    array_push($tracked, $variant['variantId']);
+                    $this->abTestManager->addTracking($variant['variantId'], 'C');
+                }
+            }
+
+            // add tracked variants to cookie
+            $cookieData['tracked'] = array_merge([], $cookieData['tracked'], $tracked);
+
+            setcookie('ab-testing-for-wp', json_encode($cookieData), time() + (60*60*24*30), '/');
+
+            return $tracked;
         }
 
-        // add tracked variants to cookie
-        $cookieData['tracked'] = array_merge([], $cookieData['tracked'], $tracked);
-
-        setcookie('ab-testing-for-wp', json_encode($cookieData), time() + (60*60*24*30), '/');
-
-        return $tracked;
+        // if no cookie... can't track page
+        return [];
     }
 
     public function addParticipation($variantId) {
