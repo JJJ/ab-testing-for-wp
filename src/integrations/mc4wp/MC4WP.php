@@ -22,8 +22,8 @@ class MC4WP extends Integration {
             [ 
                 'name' => 'mc4wp-form', 
                 'label' => 'Mailchimp for WordPress',
-                'itemName' => 'On signup',
-                'help' => 'If the visitor signs up for your newsletter it will add a point to the tested variant.'
+                'itemName' => __('On signup'),
+                'help' => __('If the visitor signs up for your newsletter it will add a point to the tested variant.')
             ]
         );
 
