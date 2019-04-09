@@ -131,12 +131,12 @@ function ABTestBlock(props: ABTestBlockProps) {
         <EnabledSettings
           value={isEnabled}
           onChange={onEnabledChange}
-          startedAt={startedAt}
         />
         <TestResults
           isEnabled={isEnabled}
           testId={id}
           control={control}
+          startedAt={startedAt}
           onDeclareWinner={onDeclareWinner}
         />
         <DistributionSettings
