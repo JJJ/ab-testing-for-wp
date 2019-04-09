@@ -5,7 +5,7 @@ Donate link: https://abtestingforwp.com/
 Requires at least: 5.0
 Tested up to: 5.1.1
 Requires PHP: 5.6
-Stable tag: 1.8.0
+Stable tag: 1.8.1
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -73,8 +73,9 @@ You can find the [source and repository over at GitHub](https://github.com/Gaya/
 5. Integration with HTML Forms
 
 == Changelog ==
-= 1.8.0 =
+= 1.8.1 =
 * Added integrations for Ninja Forms, Gravity Forms, WPForms, and Formidable
+* Fixed rare race condition in cookie setting
 
 = 1.7.0 =
 * Shows statistical significance of the results in the overview and test settings so you can be confident that the results can be trusted
