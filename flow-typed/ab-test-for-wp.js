@@ -17,6 +17,7 @@ declare type ABTestAttributes = {
   isEnabled: boolean;
   completedOnboarding: boolean;
   postGoal: number;
+  postGoalType: string;
   startedAt: Date | string;
 };
 

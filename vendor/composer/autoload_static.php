@@ -14,11 +14,14 @@ class ComposerStaticInit3ca069ed2eeb7caff92dca41e2d25775
         'ABTestingForWP\\BlockRenderer' => __DIR__ . '/../..' . '/src/helpers/block-renderer.php',
         'ABTestingForWP\\BootStrapIntegrations' => __DIR__ . '/../..' . '/src/integrations/bootstrap.php',
         'ABTestingForWP\\ContactForm7' => __DIR__ . '/../..' . '/src/integrations/contact-form-7/ContactForm7.php',
+        'ABTestingForWP\\Formidable' => __DIR__ . '/../..' . '/src/integrations/formidable/Formidable.php',
         'ABTestingForWP\\GoalActions' => __DIR__ . '/../..' . '/src/actions/goals.php',
+        'ABTestingForWP\\GravityForms' => __DIR__ . '/../..' . '/src/integrations/gravityforms/GravityForms.php',
         'ABTestingForWP\\HTMLForms' => __DIR__ . '/../..' . '/src/integrations/html-forms/HTMLForms.php',
         'ABTestingForWP\\Installer' => __DIR__ . '/../..' . '/src/data/installer.php',
         'ABTestingForWP\\Integration' => __DIR__ . '/../..' . '/src/integrations/Integration.php',
         'ABTestingForWP\\MC4WP' => __DIR__ . '/../..' . '/src/integrations/mc4wp/MC4WP.php',
+        'ABTestingForWP\\NinjaForms' => __DIR__ . '/../..' . '/src/integrations/ninja-forms/NinjaForms.php',
         'ABTestingForWP\\OptionsActions' => __DIR__ . '/../..' . '/src/actions/options.php',
         'ABTestingForWP\\OptionsManager' => __DIR__ . '/../..' . '/src/data/options-manager.php',
         'ABTestingForWP\\PostsActions' => __DIR__ . '/../..' . '/src/actions/posts.php',
@@ -27,6 +30,7 @@ class ComposerStaticInit3ca069ed2eeb7caff92dca41e2d25775
         'ABTestingForWP\\RegisterGutenbergBlocks' => __DIR__ . '/../..' . '/src/registrations/register-gutenberg-blocks.php',
         'ABTestingForWP\\RegisterREST' => __DIR__ . '/../..' . '/src/registrations/register-rest.php',
         'ABTestingForWP\\RegisterRenderScripts' => __DIR__ . '/../..' . '/src/registrations/register-render-scripts.php',
+        'ABTestingForWP\\WPForms' => __DIR__ . '/../..' . '/src/integrations/wpforms/WPForms.php',
     );
 
     public static function getInitializer(ClassLoader $loader)

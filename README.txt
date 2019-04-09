@@ -5,7 +5,7 @@ Donate link: https://abtestingforwp.com/
 Requires at least: 5.0
 Tested up to: 5.1.1
 Requires PHP: 5.6
-Stable tag: 1.7.0
+Stable tag: 1.8.0
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -33,7 +33,7 @@ When you are done running your tests and can come to a conclusion you can break 
 = Integrates with Other Plugins =
 A/B Testing for WordPress integrates with other WordPress plugins. This provides a streamlined experience to test variations of what the integrated plugin has to offer. Think form submissions, sign ups, product sales.
 
-Integrates with [Mailchimp for WordPress](https://wordpress.org/plugins/mailchimp-for-wp/), [HTML Forms](https://wordpress.org/plugins/html-forms/), [Contact Form 7](https://wordpress.org/plugins/contact-form-7/)
+Integrates with [Mailchimp for WordPress](https://wordpress.org/plugins/mailchimp-for-wp/), [HTML Forms](https://wordpress.org/plugins/html-forms/), [Contact Form 7](https://wordpress.org/plugins/contact-form-7/), [WPForms](https://wordpress.org/plugins/wpforms-lite/), Gravity Forms, [Ninja Forms](https://wordpress.org/plugins/ninja-forms/), [Formidable](https://wordpress.org/plugins/formidable/)
 
 = Test Your Visitors Right Now! =
 Start measuring what works best on your site without all the hassle!
@@ -73,6 +73,9 @@ You can find the [source and repository over at GitHub](https://github.com/Gaya/
 5. Integration with HTML Forms
 
 == Changelog ==
+= 1.8.0 =
+* Added integrations for Ninja Forms, Gravity Forms, WPForms, and Formidable
+
 = 1.7.0 =
 * Shows statistical significance of the results in the overview and test settings so you can be confident that the results can be trusted
 
