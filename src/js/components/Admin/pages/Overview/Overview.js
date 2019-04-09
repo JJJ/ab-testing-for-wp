@@ -3,6 +3,9 @@
 import React, { Fragment } from 'react';
 import classNames from 'classnames';
 
+import format from 'date-fns/format';
+import distanceInWords from 'date-fns/distance_in_words';
+
 import Table from '../../components/Table/Table';
 import Significance from '../../../Significance/Significance';
 
@@ -24,13 +27,14 @@ type OverviewData = {
   activeTests: {
     id: string;
     control: string;
+    name: string;
     goalName: string;
     goalType: string;
     goalLink?: string;
     postGoal: string;
     postName: string;
     postLink?: string;
-    startedAt: string;
+    startedAt: number;
     totalParticipants: number;
     isArchived: string;
     isEnabled: boolean;
@@ -86,7 +90,9 @@ function Overview({ data }: { data: OverviewData }) {
                         )}
                     />
                   </td>
-                  <td>{test.startedAt}</td>
+                  <td>
+                    {`${format(test.startedAt, 'YYYY/MM/DD')} (${distanceInWords(test.startedAt, new Date())})`}
+                  </td>
                   <td className="column-primary">{postLink(test.postName, test.postLink)}</td>
                   <td className="column-primary">{postLink(test.goalName, test.goalLink)}</td>
                   <td className="num">{test.totalParticipants}</td>
