@@ -68,7 +68,8 @@ function Overview({ data }: { data: OverviewData }) {
           <thead>
             <tr>
               <th className="check-column" />
-              <th className="column-primary">{__('Started At')}</th>
+              <th className="column-primary">{__('Title')}</th>
+              <th>{__('Started At')}</th>
               <th>{__('On Page')}</th>
               <th>{__('Goal')}</th>
               <th className="num">{__('Participants')}</th>
@@ -90,16 +91,15 @@ function Overview({ data }: { data: OverviewData }) {
                         )}
                     />
                   </td>
-                  <td>
-                    {`${format(test.startedAt, 'YYYY/MM/DD')} (${distanceInWords(test.startedAt, new Date())})`}
-                  </td>
+                  <td>{test.name}</td>
+                  <td>{`${format(test.startedAt, 'YYYY/MM/DD')} (${distanceInWords(test.startedAt, new Date())})`}</td>
                   <td className="column-primary">{postLink(test.postName, test.postLink)}</td>
                   <td className="column-primary">{postLink(test.goalName, test.goalLink)}</td>
                   <td className="num">{test.totalParticipants}</td>
                 </tr>
                 <tr />
                 <tr style={{ display: 'table-row' }} id={`ABTestResults-${test.id}`}>
-                  <td colSpan="5" style={{ display: 'table-cell' }}>
+                  <td colSpan="6" style={{ display: 'table-cell' }}>
                     {test.totalParticipants > 0 ? (
                       <Table className="variations">
                         <thead>
