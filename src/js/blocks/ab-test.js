@@ -144,8 +144,8 @@ function ABTestBlock(props: ABTestBlockProps) {
           onUpdateVariants={onUpdateVariants}
         />
         <GoalSelector
-          type={postGoalType}
           value={postGoal}
+          type={postGoalType}
           onChange={onPostGoalChange}
           onTypeChange={onPostGoalTypeChange}
         />
