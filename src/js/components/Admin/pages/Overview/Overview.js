@@ -44,11 +44,18 @@ type OverviewData = {
   }[];
 };
 
-function postLink(name: string, link?: string) {
+function postLink(name: string, link?: string, testId?: string) {
   const e = document.createElement('div');
   e.innerHTML = link || '';
   const decodedLink = e.textContent;
-  return link ? (<a href={decodedLink}>{name}</a>) : name;
+
+  const url = [
+    decodedLink,
+    testId ? '&test=' : '',
+    testId,
+  ].join('');
+
+  return link ? (<a href={url}>{name}</a>) : name;
 }
 
 const toTestVariantResult = variant => ({
@@ -93,9 +100,9 @@ function Overview({ data }: { data: OverviewData }) {
                         )}
                     />
                   </td>
-                  <td className="column-primary">{postLink(test.title, test.postLink)}</td>
+                  <td className="column-primary">{postLink(test.title, test.postLink, test.id)}</td>
                   <td>{`${format(test.startedAt, 'YYYY/MM/DD')} (${distanceInWords(test.startedAt, new Date())})`}</td>
-                  <td>{postLink(test.postName, test.postLink)}</td>
+                  <td>{postLink(test.postName, test.postLink, test.id)}</td>
                   <td>{postLink(test.goalName, test.goalLink)}</td>
                   <td className="num">{test.totalParticipants}</td>
                 </tr>
