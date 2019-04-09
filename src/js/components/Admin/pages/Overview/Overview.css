@@ -1,0 +1,44 @@
+.ABTestVariationsTable {
+  width: 100%;
+}
+
+.ABTestUplift {
+  font-size: 0.8em;
+}
+
+.ABTestWinning td {
+  color: #46B450!important;
+}
+
+.ABTestLosing td {
+  color: #dc3232!important;
+}
+
+table.running-tests {
+  margin-top: 2em;
+}
+
+.running-tests .indicator.indicator--on {
+  background-color: #46B450;
+}
+
+.running-tests .indicator {
+  background-color: #d4d4d4;
+  width: 14px;
+  height: 14px;
+  border-radius: 100%;
+  margin: 3px 0 0 0;
+}
+
+.running-tests .column-primary a {
+  font-weight: 600;
+}
+
+.ABTestToggle {
+  cursor: pointer;
+}
+
+.ab-testing-for-wp table .check-column.check-column-normal {
+  padding: 8px 10px;
+  white-space: nowrap;
+}

@@ -47,7 +47,7 @@ function ABTestBlock(props: ABTestBlockProps) {
   const {
     id,
     variants,
-    name,
+    title,
     postGoal,
     postGoalType,
     control,
@@ -82,7 +82,7 @@ function ABTestBlock(props: ABTestBlockProps) {
 
     setAttributes({
       id: shortid.generate(),
-      name: sprintf(__('New test on "%s"'), getCurrentPost().title),
+      title: sprintf(__('New test on "%s"'), getCurrentPost().title),
       variants: defaultVariants,
       postGoal: 0,
       postGoalType: '',
@@ -99,7 +99,7 @@ function ABTestBlock(props: ABTestBlockProps) {
   const onUpdateVariants = (newVariants: ABTestVariant[]) => setAttributes({
     variants: newVariants,
   });
-  const onNameChange = (newName: string) => setAttributes({ name: newName });
+  const onTitleChange = (newTitle: string) => setAttributes({ title: newTitle });
   const onPostGoalChange = (postId: number) => setAttributes({ postGoal: postId });
   const onPostGoalTypeChange = (type: string) => setAttributes({ postGoalType: type });
   const onControlChange = (variantId: string) => setAttributes({ control: variantId });
@@ -134,9 +134,9 @@ function ABTestBlock(props: ABTestBlockProps) {
       <style>{css}</style>
       <InspectorControls>
         <GeneralSettings
-          name={name}
+          title={title}
           isEnabled={isEnabled}
-          onChangeName={onNameChange}
+          onChangeTitle={onTitleChange}
           onChangeEnabled={onEnabledChange}
         />
         <TestResults
@@ -219,7 +219,7 @@ registerBlockType('ab-testing-for-wp/ab-test-block', {
       type: 'array',
       default: [],
     },
-    name: {
+    title: {
       type: 'string',
       default: '',
     },

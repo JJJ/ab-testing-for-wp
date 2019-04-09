@@ -7,8 +7,8 @@ class Installer {
     private $migrations = [
         'addGoalTypeColumn',
         'fillInGoalType',
-        'addNameColumn',
-        'fillInName',
+        'addTitleColumn',
+        'fillInTitle',
     ];
 
     public function __construct($fileRoot) {
@@ -61,14 +61,14 @@ class Installer {
         WHERE t.postGoalType IS NULL";
     }
 
-    private function addNameColumn($tablePrefix) {
-        return "ALTER TABLE `{$tablePrefix}ab_testing_for_wp_ab_test` ADD `name` TEXT NULL AFTER `startedAt`";
+    private function addTitleColumn($tablePrefix) {
+        return "ALTER TABLE `{$tablePrefix}ab_testing_for_wp_ab_test` ADD `title` TEXT NULL AFTER `startedAt`";
     }
 
-    private function fillInName($tablePrefix) {
+    private function fillInTitle($tablePrefix) {
         return "UPDATE `{$tablePrefix}ab_testing_for_wp_ab_test` AS t
         INNER JOIN `{$tablePrefix}posts` AS p on t.postId = p.ID
-        SET t.name = CONCAT('Test \"', p.post_title, '\"')
+        SET t.title = CONCAT('Test \"', p.post_title, '\"')
         WHERE t.name IS NULL";
     }
 
