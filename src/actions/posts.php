@@ -54,11 +54,12 @@ class PostsActions {
             $notIn = explode(',', $request->get_param('exclude'));
         }
 
-        // catch custom CPTs
+        // catch custom table structure CPTs
         $customQueryResults = apply_filters("ab-testing-for-wp_custom-query-$type", false);
 
         if ($customQueryResults) return rest_ensure_response($customQueryResults);
 
+        // or if it's a "normal" CPT: perform ordinary query
         $query = new \WP_Query([
             'post_type' => $type,
             'post__not_in' => $notIn,
