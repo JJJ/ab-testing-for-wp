@@ -11,6 +11,8 @@ import Significance from '../../../Significance/Significance';
 
 import { i18n } from '../../../../wp';
 
+import './Overview.css';
+
 const { __ } = i18n;
 
 type TestVariant = {
@@ -27,7 +29,7 @@ type OverviewData = {
   activeTests: {
     id: string;
     control: string;
-    name: string;
+    title: string;
     goalName: string;
     goalType: string;
     goalLink?: string;
@@ -91,10 +93,10 @@ function Overview({ data }: { data: OverviewData }) {
                         )}
                     />
                   </td>
-                  <td>{test.name}</td>
+                  <td className="column-primary">{postLink(test.title, test.postLink)}</td>
                   <td>{`${format(test.startedAt, 'YYYY/MM/DD')} (${distanceInWords(test.startedAt, new Date())})`}</td>
-                  <td className="column-primary">{postLink(test.postName, test.postLink)}</td>
-                  <td className="column-primary">{postLink(test.goalName, test.goalLink)}</td>
+                  <td>{postLink(test.postName, test.postLink)}</td>
+                  <td>{postLink(test.goalName, test.goalLink)}</td>
                   <td className="num">{test.totalParticipants}</td>
                 </tr>
                 <tr />

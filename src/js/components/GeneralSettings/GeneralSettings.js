@@ -6,24 +6,24 @@ const { __ } = i18n;
 const { PanelBody, ToggleControl, TextControl } = components;
 
 type GeneralSettingsProps = {
-  name: string;
+  title: string;
   isEnabled: boolean;
-  onChangeName: (name: string) => void;
+  onChangeTitle: (title: string) => void;
   onChangeEnabled: (enabled: boolean) => void;
 };
 
 function GeneralSettings({
-  name,
+  title,
   isEnabled,
-  onChangeName,
+  onChangeTitle,
   onChangeEnabled,
 }: GeneralSettingsProps) {
   return (
     <PanelBody title={__('General Settings')}>
       <TextControl
-        label={__('Name of test')}
-        value={name}
-        onChange={onChangeName}
+        label={__('Title of test')}
+        value={title}
+        onChange={onChangeTitle}
       />
       <ToggleControl
         label={__('Run this test')}

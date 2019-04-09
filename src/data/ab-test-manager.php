@@ -43,7 +43,7 @@ class ABTestManager {
 
     public function getAllTests() {
         $data = $this->wpdb->get_results("
-        SELECT t.id, t.isEnabled, t.startedAt, t.name, t.control, t.postId, t.postGoal,
+        SELECT t.id, t.isEnabled, t.startedAt, t.title, t.control, t.postId, t.postGoal,
         p1.post_title AS postName, p2.post_title AS goalName, p2.post_type AS goalType,
         t.isArchived,
         (
@@ -213,7 +213,7 @@ class ABTestManager {
 
         $query = "
         REPLACE INTO `{$this->abTestTable}`
-        (id, postId, isEnabled, startedAt, name, control, postGoal, postGoalType, isArchived)
+        (id, postId, isEnabled, startedAt, title, control, postGoal, postGoalType, isArchived)
         VALUES (%s, %s, %d, %s, %s, %s, %s, %s, %d);
         ";
 
@@ -223,7 +223,7 @@ class ABTestManager {
             $postId,
             $isEnabled,
             $startedAt,
-            $testData['name'],
+            $testData['title'],
             $testData['control'],
             $postGoal,
             $testData['postGoalType'],

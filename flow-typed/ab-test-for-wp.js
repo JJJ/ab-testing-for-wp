@@ -13,7 +13,7 @@ declare type ABTestVariant = {
 declare type ABTestAttributes = {
   id: string;
   variants: ABTestVariant[];
-  name: string;
+  title: string;
   control: string;
   isEnabled: boolean;
   completedOnboarding: boolean;
