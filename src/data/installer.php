@@ -13,7 +13,7 @@ class Installer {
 
     public function __construct($fileRoot) {
         register_activation_hook($fileRoot, [$this, 'install']);
-        add_action('init', [$this, 'runMigrations']);
+        add_action('init', [$this, 'runMigrations'], 1);
     }
     
     public function install() {
