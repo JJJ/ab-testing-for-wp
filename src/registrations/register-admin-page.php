@@ -89,6 +89,17 @@ class RegisterAdminPage {
 
         add_submenu_page( 
             'ab-testing-for-wp',
+            __('Add New A/B Test'),
+            __('Add New A/B Test'), 
+            'manage_options', 
+            'post-new.php?post_type=abt4wp-test',
+            [$this, 'gotoEditor']
+        );
+
+        // post-new.php?post_type=abt4wp-test
+
+        add_submenu_page( 
+            'ab-testing-for-wp',
             __('How to Use A/B Testing'),
             __('How to Use'), 
             'manage_options', 
@@ -99,6 +110,10 @@ class RegisterAdminPage {
 
     public function appContainer() {
         echo "<div id='admin_app'></div>";
+    }
+
+    public function gotoEditor() {
+        echo "<script>window.location = \"" . admin_url('/post-new.php?post_type=abt4wp-test') . "\";</script>";
     }
 
     private function overviewData() {
