@@ -26,6 +26,7 @@ class ComposerStaticInit3ca069ed2eeb7caff92dca41e2d25775
         'ABTestingForWP\\OptionsManager' => __DIR__ . '/../..' . '/src/data/options-manager.php',
         'ABTestingForWP\\PostsActions' => __DIR__ . '/../..' . '/src/actions/posts.php',
         'ABTestingForWP\\RegisterAdminPage' => __DIR__ . '/../..' . '/src/registrations/register-admin-page.php',
+        'ABTestingForWP\\RegisterCustomPostType' => __DIR__ . '/../..' . '/src/registrations/register-custom-post-type.php',
         'ABTestingForWP\\RegisterFrontendAdminBar' => __DIR__ . '/../..' . '/src/registrations/register-frontend-admin-bar.php',
         'ABTestingForWP\\RegisterGutenbergBlocks' => __DIR__ . '/../..' . '/src/registrations/register-gutenberg-blocks.php',
         'ABTestingForWP\\RegisterREST' => __DIR__ . '/../..' . '/src/registrations/register-rest.php',

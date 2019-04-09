@@ -25,6 +25,7 @@ return array(
     'ABTestingForWP\\OptionsManager' => $baseDir . '/src/data/options-manager.php',
     'ABTestingForWP\\PostsActions' => $baseDir . '/src/actions/posts.php',
     'ABTestingForWP\\RegisterAdminPage' => $baseDir . '/src/registrations/register-admin-page.php',
+    'ABTestingForWP\\RegisterCustomPostType' => $baseDir . '/src/registrations/register-custom-post-type.php',
     'ABTestingForWP\\RegisterFrontendAdminBar' => $baseDir . '/src/registrations/register-frontend-admin-bar.php',
     'ABTestingForWP\\RegisterGutenbergBlocks' => $baseDir . '/src/registrations/register-gutenberg-blocks.php',
     'ABTestingForWP\\RegisterREST' => $baseDir . '/src/registrations/register-rest.php',
