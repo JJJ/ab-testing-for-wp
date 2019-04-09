@@ -15,6 +15,7 @@ class BootStrapIntegrations {
         new MC4WP();
         new NinjaForms();
         new Formidable();
+        new GravityForms();
     }
 
 }
