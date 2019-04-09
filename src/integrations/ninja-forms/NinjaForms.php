@@ -33,8 +33,8 @@ class NinjaForms extends Integration {
             [ 
                 'name' => 'NinjaForms', 
                 'label' => 'Ninja Forms',
-                'itemName' => 'On submit of form',
-                'help' => 'If the visitor submits this form it will add a point to the tested variant.'
+                'itemName' => __('On submit of form'),
+                'help' => __('If the visitor submits this form it will add a point to the tested variant.')
             ]
         );
 
