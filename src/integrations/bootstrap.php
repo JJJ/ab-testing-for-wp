@@ -16,6 +16,7 @@ class BootStrapIntegrations {
         new NinjaForms();
         new Formidable();
         new GravityForms();
+        new WPForms();
     }
 
 }
