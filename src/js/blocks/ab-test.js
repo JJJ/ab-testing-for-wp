@@ -22,7 +22,7 @@ import { getOption, setOption } from '../helpers/options';
 
 import SVGIcon from './ab-test-logo';
 
-const { __ } = i18n;
+const { __, sprintf } = i18n;
 const { registerBlockType, createBlock } = blocks;
 const { InnerBlocks, InspectorControls } = editor;
 const { withDispatch, select } = data;
@@ -47,6 +47,7 @@ function ABTestBlock(props: ABTestBlockProps) {
   const {
     id,
     variants,
+    name,
     postGoal,
     postGoalType,
     control,
@@ -62,6 +63,8 @@ function ABTestBlock(props: ABTestBlockProps) {
 
   // initialize attributes
   if (!id) {
+    const { getCurrentPost } = select('core/editor');
+
     const defaultVariants: ABTestVariant[] = [
       {
         id: shortid.generate(),
@@ -79,6 +82,7 @@ function ABTestBlock(props: ABTestBlockProps) {
 
     setAttributes({
       id: shortid.generate(),
+      name: sprintf(__('New test on "%s"'), getCurrentPost().title),
       variants: defaultVariants,
       postGoal: 0,
       postGoalType: '',
@@ -95,6 +99,7 @@ function ABTestBlock(props: ABTestBlockProps) {
   const onUpdateVariants = (newVariants: ABTestVariant[]) => setAttributes({
     variants: newVariants,
   });
+  const onNameChange = (newName: string) => setAttributes({ name: newName });
   const onPostGoalChange = (postId: number) => setAttributes({ postGoal: postId });
   const onPostGoalTypeChange = (type: string) => setAttributes({ postGoalType: type });
   const onControlChange = (variantId: string) => setAttributes({ control: variantId });
@@ -129,7 +134,9 @@ function ABTestBlock(props: ABTestBlockProps) {
       <style>{css}</style>
       <InspectorControls>
         <GeneralSettings
+          name={name}
           isEnabled={isEnabled}
+          onChangeName={onNameChange}
           onChangeEnabled={onEnabledChange}
         />
         <TestResults
@@ -211,6 +218,10 @@ registerBlockType('ab-testing-for-wp/ab-test-block', {
     variants: {
       type: 'array',
       default: [],
+    },
+    name: {
+      type: 'string',
+      default: '',
     },
     control: {
       type: 'string',
