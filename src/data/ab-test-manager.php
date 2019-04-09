@@ -43,7 +43,7 @@ class ABTestManager {
 
     public function getAllTests() {
         $data = $this->wpdb->get_results("
-        SELECT t.id, t.isEnabled, t.startedAt, t.control, t.postId, t.postGoal,
+        SELECT t.id, t.isEnabled, t.startedAt, t.name, t.control, t.postId, t.postGoal,
         p1.post_title AS postName, p2.post_title AS goalName, p2.post_type AS goalType,
         t.isArchived,
         (
