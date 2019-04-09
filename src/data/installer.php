@@ -7,6 +7,8 @@ class Installer {
     private $migrations = [
         'addGoalTypeColumn',
         'fillInGoalType',
+        'addNameColumn',
+        'fillInName',
     ];
 
     public function __construct($fileRoot) {
@@ -32,7 +34,7 @@ class Installer {
 
             // if for some reason the migrations are empty... abort
             if (sizeof($migrationsToRun) === 0) return;
-            
+
             global $wpdb;
 
             $wpdb->hide_errors();
@@ -57,6 +59,17 @@ class Installer {
         INNER JOIN `{$tablePrefix}posts` AS p on t.postGoal = p.ID
         SET t.postGoalType = p.post_type
         WHERE t.postGoalType IS NULL";
+    }
+
+    private function addNameColumn($tablePrefix) {
+        return "ALTER TABLE `{$tablePrefix}ab_testing_for_wp_ab_test` ADD `name` TEXT NULL AFTER `startedAt`";
+    }
+
+    private function fillInName($tablePrefix) {
+        return "UPDATE `{$tablePrefix}ab_testing_for_wp_ab_test` AS t
+        INNER JOIN `{$tablePrefix}posts` AS p on t.postId = p.ID
+        SET t.name = CONCAT('Test \"', p.post_title, '\"')
+        WHERE t.name IS NULL";
     }
 
     private function getDBCollate() {
@@ -96,7 +109,6 @@ class Installer {
             `startedAt` datetime DEFAULT NULL,
             `control` varchar(32) DEFAULT NULL,
             `postGoal` bigint(20) DEFAULT NULL,
-            `postGoalType` varchar(20) DEFAULT NULL,
             `isArchived` tinyint(1) DEFAULT 0,
             PRIMARY KEY (`id`)
         ) ENGINE = InnoDB {$collate};";
