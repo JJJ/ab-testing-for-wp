@@ -144,13 +144,21 @@ class ABTestManager {
         return [$participants, $conversions];
     }
 
-    public function getEnabledVariantsByGoal($postId) {
-        $variants = $this->wpdb->get_results($this->wpdb->prepare("
+    public function getEnabledVariantsByGoal($postId, $postGoalType = '') {
+        $extraQuery = "";
+
+        if ($postGoalType !== '') {
+            $extraQuery = $this->wpdb->prepare("AND t.postGoalType = %s", $postGoalType);
+        }
+
+        $query = $this->wpdb->prepare("
         SELECT t.id as testId, v.id as variantId, t.isEnabled
         FROM `{$this->abTestTable}` AS t
         INNER JOIN `{$this->variantTable}` AS v ON v.testid = t.id       
-        WHERE t.postGoal = %d AND t.isEnabled = 1
-        ", $postId));
+        WHERE t.postGoal = %d AND t.isEnabled = 1 $extraQuery
+        ", $postId);
+
+        $variants = $this->wpdb->get_results($query);
 
         return array_map(
             function ($variant) {
@@ -204,18 +212,19 @@ class ABTestManager {
         $postGoal = isset($testData['postGoal']) ? $testData['postGoal'] : 0;
 
         $query = "
-        REPLACE INTO `{$this->abTestTable}` (id, postId, isEnabled, startedAt, control, postGoal, isArchived)
-        VALUES (%s, %s, %d, %s, %s, %s, %d);
+        REPLACE INTO `{$this->abTestTable}` (id, postId, isEnabled, startedAt, control, postGoal, postGoalType, isArchived)
+        VALUES (%s, %s, %d, %s, %s, %s, %s, %d);
         ";
 
         $this->wpdb->query($this->wpdb->prepare(
-            $query, 
-            $testData['id'], 
-            $postId, 
-            $isEnabled, 
-            $startedAt, 
+            $query,
+            $testData['id'],
+            $postId,
+            $isEnabled,
+            $startedAt,
             $testData['control'],
             $postGoal,
+            $testData['postGoalType'],
             0
         ));
     }

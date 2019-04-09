@@ -14,12 +14,13 @@ const { PanelBody, SelectControl } = components;
 
 type GoalSelectorProps = {
   value: number;
+  type: string;
   onChange: (page: number) => void;
+  onTypeChange: (type: string) => void;
 };
 
 type GoalSelectorState = {
   loading: boolean;
-  selectedType: string;
   posts: {
     post_title: string;
     ID: number;
@@ -37,15 +38,14 @@ class GoalSelector extends Component<GoalSelectorProps, GoalSelectorState> {
     loading: true,
     posts: [],
     types: [],
-    selectedType: '',
   };
 
   componentDidMount() {
-    const { value } = this.props;
+    const { value, type, onTypeChange } = this.props;
 
-    let resolvePostType = Promise.resolve('');
+    let resolvePostType = Promise.resolve(type);
 
-    if (value) {
+    if (!type && value) {
       resolvePostType = apiFetch({ path: `/ab-testing-for-wp/v1/get-post-type?post_id=${value}` });
     }
 
@@ -60,10 +60,11 @@ class GoalSelector extends Component<GoalSelectorProps, GoalSelectorState> {
         ? types[0].name
         : postType.toString();
 
-      this.setState({
-        types,
-        selectedType,
-      });
+      if (type !== selectedType) {
+        onTypeChange(selectedType);
+      }
+
+      this.setState({ types });
 
       this.getPostsOfType(selectedType);
     });
@@ -82,7 +83,9 @@ class GoalSelector extends Component<GoalSelectorProps, GoalSelectorState> {
   }
 
   changePostType = (selectedType: string) => {
-    this.setState({ selectedType });
+    const { onTypeChange } = this.props;
+
+    onTypeChange(selectedType);
     this.getPostsOfType(selectedType);
   };
 
@@ -91,11 +94,10 @@ class GoalSelector extends Component<GoalSelectorProps, GoalSelectorState> {
       loading,
       posts,
       types,
-      selectedType,
     } = this.state;
-    const { onChange, value } = this.props;
+    const { onChange, value, type } = this.props;
 
-    const currentType = types.find(type => type.name === selectedType) || {};
+    const currentType = types.find(t => t.name === type) || {};
 
     if (!loading && !currentType) {
       return null;
@@ -107,10 +109,10 @@ class GoalSelector extends Component<GoalSelectorProps, GoalSelectorState> {
           <div>
             <SelectControl
               label={__('Type')}
-              value={selectedType}
-              options={types.map(type => ({
-                label: type.label,
-                value: type.name,
+              value={type}
+              options={types.map(t => ({
+                label: t.label,
+                value: t.name,
               }))}
               onChange={this.changePostType}
             />

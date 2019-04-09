@@ -13,6 +13,10 @@ class BootStrapIntegrations {
         new HTMLForms();
         new ContactForm7();
         new MC4WP();
+        new NinjaForms();
+        new Formidable();
+        new GravityForms();
+        new WPForms();
     }
 
 }

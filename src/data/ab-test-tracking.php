@@ -16,12 +16,12 @@ class ABTestTracking {
 
         $postId = $request->get_param('post');
 
-        $tracked = $this->trackPostId($postId);
+        $tracked = $this->trackPostId($postId, get_post_type($postId));
 
         return rest_ensure_response($tracked);
     }
 
-    public function trackPostId($postId) {
+    public function trackPostId($postId, $postGoalType = '') {
         // get tests with this page as goal
         $cookieData = [];
 
@@ -29,7 +29,7 @@ class ABTestTracking {
             $cookieData = json_decode(stripslashes($_COOKIE['ab-testing-for-wp']), true);
         }
 
-        $variants = $this->abTestManager->getEnabledVariantsByGoal($postId);
+        $variants = $this->abTestManager->getEnabledVariantsByGoal($postId, $postGoalType);
 
         if (!isset($cookieData['tracked'])) {
             $cookieData['tracked'] = [];
