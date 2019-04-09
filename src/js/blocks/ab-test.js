@@ -47,6 +47,7 @@ class ABTestBlock extends Component<ABTestBlockProps> {
     // check if test from querystring is this test
     if (attributes.id !== test) return;
 
+    // this hack is needed for Gutenberg :(
     setTimeout(() => {
       // find the block in the content
       const block = document.getElementById(`block-${clientId}`);
@@ -57,7 +58,7 @@ class ABTestBlock extends Component<ABTestBlockProps> {
 
       // select block in editor
       selectBlock();
-    }, 1000);
+    }, 0);
   }
 
   render() {
