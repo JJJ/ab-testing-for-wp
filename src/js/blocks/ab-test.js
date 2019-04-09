@@ -14,7 +14,7 @@ import BoxShadow from '../components/BoxShadow/BoxShadow';
 import DistributionSettings from '../components/DistributionSettings/DistributionSettings';
 import GoalSelector from '../components/GoalSelector/GoalSelector';
 import ControlSettings from '../components/ControlSettings/ControlSettings';
-import EnabledSettings from '../components/EnabledSettings/EnabledSettings';
+import GeneralSettings from '../components/GeneralSettings/GeneralSettings';
 import TestResults from '../components/TestResults/TestResults';
 import Onboarding from '../components/Onboarding/Onboarding';
 
@@ -128,9 +128,9 @@ function ABTestBlock(props: ABTestBlockProps) {
       )}
       <style>{css}</style>
       <InspectorControls>
-        <EnabledSettings
-          value={isEnabled}
-          onChange={onEnabledChange}
+        <GeneralSettings
+          isEnabled={isEnabled}
+          onChangeEnabled={onEnabledChange}
         />
         <TestResults
           isEnabled={isEnabled}
