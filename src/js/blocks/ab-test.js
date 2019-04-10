@@ -106,9 +106,11 @@ class ABTestBlock extends Component<ABTestBlockProps> {
         },
       ];
 
+      const postTitle = getCurrentPost().title;
+
       setAttributes({
         id: shortid.generate(),
-        title: sprintf(__('New test on "%s"'), getCurrentPost().title),
+        title: sprintf(__(postTitle ? 'New test on "%s"' : 'New test'), postTitle),
         variants: defaultVariants,
         postGoal: 0,
         postGoalType: '',

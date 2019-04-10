@@ -33,6 +33,10 @@ class RegisterCustomPostType {
                 'show_in_menu' => false,
                 'show_in_admin_bar' => true,
                 'show_in_rest' => true,
+                'template' => [
+                    ['ab-testing-for-wp/ab-test-block', []],
+                ],
+                'template_lock' => 'all',
             ]
         );
     }
