@@ -36,7 +36,7 @@ class RegisterCustomPostType {
                 'template' => [
                     ['ab-testing-for-wp/ab-test-block', []],
                 ],
-                'template_lock' => 'all',
+                'template_lock' => 'insert',
             ]
         );
     }
