@@ -30,7 +30,7 @@ table.running-tests {
   margin: 3px 0 0 0;
 }
 
-.running-tests .column-primary a {
+.running-tests .column-primary .row-title a {
   font-weight: 600;
 }
 

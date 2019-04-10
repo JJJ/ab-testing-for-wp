@@ -72,7 +72,7 @@ function Overview({ data }: { data: OverviewData }) {
 
   return (
     <div className="wrap ab-testing-for-wp">
-      <h1>{__('Active A/B Tests')}</h1>
+      <h1>{__('A/B Tests')}</h1>
 
       {activeTests && activeTests.length > 0 ? (
         <Table className="running-tests">
@@ -102,7 +102,26 @@ function Overview({ data }: { data: OverviewData }) {
                         )}
                     />
                   </td>
-                  <td className="column-primary">{postLink(test.title, test.postLink, test.id)}</td>
+                  <td className="column-primary">
+                    <div className="row-title">
+                      {postLink(test.title, test.postLink, test.id)}
+                    </div>
+                    <div className="row-actions">
+                      <span className="edit">
+                        {postLink(__('Edit'), test.postLink, test.id)}
+                        {' | '}
+                      </span>
+                      <span className="trash">
+                        <a
+                          href="http://localhost:8000/wp-admin/post.php?post=1&amp;action=trash&amp;_wpnonce=ab2f23c226"
+                          className="submitdelete"
+                          aria-label="Move “Hello world!” to the Bin"
+                        >
+                          Bin
+                        </a>
+                      </span>
+                    </div>
+                  </td>
                   {test.startedAt > 0 ? (
                     <td>
                       <abbr title={`${format(test.startedAt, 'YYYY/MM/DD HH:mm')}`}>
@@ -126,7 +145,7 @@ function Overview({ data }: { data: OverviewData }) {
                 </tr>
                 <tr />
                 <tr style={{ display: 'table-row' }} id={`ABTestResults-${test.id}`}>
-                  <td colSpan="6" style={{ display: 'table-cell' }}>
+                  <td colSpan="6" style={{ display: 'table-cell', paddingTop: 0 }}>
                     {test.totalParticipants > 0 ? (
                       <Table className="variations">
                         <thead>
@@ -164,7 +183,7 @@ function Overview({ data }: { data: OverviewData }) {
                         </tbody>
                       </Table>
                     ) : (
-                      <p><em>{__('No results for this test yet.')}</em></p>
+                      <em>{__('No results for this test yet.')}</em>
                     )}
                     {test.totalParticipants > 0 && (
                       <Significance
