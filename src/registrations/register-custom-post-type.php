@@ -3,11 +3,8 @@
 namespace ABTestingForWP;
 
 class RegisterCustomPostType {
-    private $fileRoot;
 
-    public function __construct($fileRoot) {
-        $this->fileRoot = $fileRoot;
-
+    public function __construct() {
         add_action('init', [$this, 'registerTestType']);
     }
     
