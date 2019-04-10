@@ -87,9 +87,9 @@ class BlockRenderer {
         return $variants[0];
     }
 
-    private function wrapData($testId, $postId, $controlContent) {
+    private function wrapData($testId, $controlContent) {
         return 
-            '<div class="ABTestWrapper" data-test="' . $testId . '" data-post="' . $postId . '">'
+            '<div class="ABTestWrapper" data-test="' . $testId . '">'
                 . $controlContent
             . '</div>';
     }
@@ -157,11 +157,7 @@ class BlockRenderer {
             return '';
         }
 
-        return $this->wrapData(
-            $testId,
-            get_the_ID(),
-            $this->getVariantContent($content, $controlVariant['id'])
-        );
+        return $this->wrapData($testId, $this->getVariantContent($content, $controlVariant['id']));
     }
 
 }
