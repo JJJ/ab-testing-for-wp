@@ -25,25 +25,28 @@ type TestVariant = {
   uplift: number;
 }
 
+type TestData = {
+  id: string;
+  control: string;
+  title: string;
+  goalName: string;
+  goalType: string;
+  goalLink?: string;
+  postId: string;
+  postGoal: string;
+  postType: string;
+  postName: string;
+  postLink?: string;
+  postDeleteLink?: string;
+  startedAt: number;
+  totalParticipants: number;
+  isArchived: string;
+  isEnabled: boolean;
+  variants: TestVariant[];
+};
+
 type OverviewData = {
-  activeTests: {
-    id: string;
-    control: string;
-    title: string;
-    goalName: string;
-    goalType: string;
-    goalLink?: string;
-    postId: string;
-    postGoal: string;
-    postType: string;
-    postName: string;
-    postLink?: string;
-    startedAt: number;
-    totalParticipants: number;
-    isArchived: string;
-    isEnabled: boolean;
-    variants: TestVariant[];
-  }[];
+  activeTests: TestData[];
 };
 
 function postLink(name: string, link?: string, testId?: string) {
@@ -60,12 +63,124 @@ function postLink(name: string, link?: string, testId?: string) {
   return link ? (<a href={url}>{name !== '' ? name : __('No Name')}</a>) : name;
 }
 
+function removeLink(link?: string) {
+  return postLink(__('Remove'), link);
+}
+
 const toTestVariantResult = variant => ({
   id: variant.id,
   name: variant.name,
   participants: variant.participants,
   conversions: variant.conversions,
 });
+
+function Test(test: TestData) {
+  const isSingle = test.postType === 'abt4wp-test';
+
+  return (
+    <Fragment>
+      <tr>
+        <td className="check-column check-column-normal">
+          <div
+            className={
+              classNames(
+                'indicator',
+                {
+                  'indicator--on': test.isEnabled,
+                  'indicator--off': !test.isEnabled,
+                },
+              )}
+          />
+        </td>
+        <td className="column-primary">
+          <div className="row-title">
+            {postLink(test.title, test.postLink, test.id)}
+          </div>
+          <div className="row-actions">
+            <span className="edit">
+              {postLink(__('Edit'), test.postLink, test.id)}
+              {isSingle && ' | '}
+            </span>
+            {isSingle && (
+              <span className="trash">
+                {removeLink(test.postDeleteLink)}
+              </span>
+            )}
+          </div>
+        </td>
+        {test.startedAt > 0 ? (
+          <td>
+            <abbr title={`${format(test.startedAt, 'YYYY/MM/DD HH:mm')}`}>
+              {format(test.startedAt, 'YYYY/MM/DD')}
+            </abbr>
+            {` (${distanceInWords(test.startedAt, new Date())})`}
+          </td>
+        ) : (
+          <td>—</td>
+        )}
+        <td>
+          {
+            isSingle
+              ? <code>{`[ab-test id=${test.postId}]`}</code>
+              : postLink(test.postName, test.postLink, test.id)
+          }
+        </td>
+        <td>{postLink(test.goalName, test.goalLink)}</td>
+        <td className="num">{test.totalParticipants}</td>
+      </tr>
+      <tr />
+      <tr style={{ display: 'table-row' }} id={`ABTestResults-${test.id}`}>
+        <td colSpan="6" style={{ display: 'table-cell', paddingTop: 0 }}>
+          {test.totalParticipants > 0 ? (
+            <Table className="variations">
+              <thead>
+                <tr>
+                  <th className="check-column" />
+                  <th className="column-primary">{__('Conversion Rate')}</th>
+                  <th>{__('Conversions')}</th>
+                  <th>{__('Participants')}</th>
+                </tr>
+              </thead>
+              <tbody>
+                {test.variants.map(variant => (
+                  <tr className={variant.leading && variant.participants > 0 ? 'ABTestWinning' : 'ABTestLosing'}>
+                    <td className="check-column check-column-normal">
+                      {variant.name}
+                      {variant.id === test.control && ' *'}
+                    </td>
+                    <td className="column-primary">
+                      {`${variant.rate}%`}
+                      {variant.uplift !== 0 && (
+                        <span className="ABTestUplift">
+                          {[
+                            ' (',
+                            variant.uplift > 0 ? '+' : '',
+                            variant.uplift,
+                            '%)',
+                          ].join('')}
+                        </span>
+                      )}
+                    </td>
+                    <td>{variant.conversions}</td>
+                    <td>{variant.participants}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </Table>
+          ) : (
+            <em>{__('No results for this test yet.')}</em>
+          )}
+          {test.totalParticipants > 0 && (
+            <Significance
+              control={test.control}
+              results={test.variants.map(toTestVariantResult)}
+            />
+          )}
+        </td>
+      </tr>
+    </Fragment>
+  );
+}
 
 function Overview({ data }: { data: OverviewData }) {
   const { activeTests } = data;
@@ -86,116 +201,7 @@ function Overview({ data }: { data: OverviewData }) {
               <th className="num">{__('Participants')}</th>
             </tr>
           </thead>
-          <tbody>
-            {activeTests.map(test => (
-              <Fragment>
-                <tr>
-                  <td className="check-column check-column-normal">
-                    <div
-                      className={
-                        classNames(
-                          'indicator',
-                          {
-                            'indicator--on': test.isEnabled,
-                            'indicator--off': !test.isEnabled,
-                          },
-                        )}
-                    />
-                  </td>
-                  <td className="column-primary">
-                    <div className="row-title">
-                      {postLink(test.title, test.postLink, test.id)}
-                    </div>
-                    <div className="row-actions">
-                      <span className="edit">
-                        {postLink(__('Edit'), test.postLink, test.id)}
-                        {' | '}
-                      </span>
-                      <span className="trash">
-                        <a
-                          href="http://localhost:8000/wp-admin/post.php?post=1&amp;action=trash&amp;_wpnonce=ab2f23c226"
-                          className="submitdelete"
-                          aria-label="Move “Hello world!” to the Bin"
-                        >
-                          Bin
-                        </a>
-                      </span>
-                    </div>
-                  </td>
-                  {test.startedAt > 0 ? (
-                    <td>
-                      <abbr title={`${format(test.startedAt, 'YYYY/MM/DD HH:mm')}`}>
-                        {format(test.startedAt, 'YYYY/MM/DD')}
-                      </abbr>
-                      {` (${distanceInWords(test.startedAt, new Date())})`}
-                    </td>
-                  ) : (
-                    <td>—</td>
-                  )}
-                  <td>
-                    {test.postType === 'abt4wp-test'
-                      ? (
-                        <code>{`[ab-test id=${test.postId}]`}</code>
-                      )
-                      : postLink(test.postName, test.postLink, test.id)
-                    }
-                  </td>
-                  <td>{postLink(test.goalName, test.goalLink)}</td>
-                  <td className="num">{test.totalParticipants}</td>
-                </tr>
-                <tr />
-                <tr style={{ display: 'table-row' }} id={`ABTestResults-${test.id}`}>
-                  <td colSpan="6" style={{ display: 'table-cell', paddingTop: 0 }}>
-                    {test.totalParticipants > 0 ? (
-                      <Table className="variations">
-                        <thead>
-                          <tr>
-                            <th className="check-column" />
-                            <th className="column-primary">{__('Conversion Rate')}</th>
-                            <th>{__('Conversions')}</th>
-                            <th>{__('Participants')}</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          {test.variants.map(variant => (
-                            <tr className={variant.leading && variant.participants > 0 ? 'ABTestWinning' : 'ABTestLosing'}>
-                              <td className="check-column check-column-normal">
-                                {variant.name}
-                                {variant.id === test.control && ' *'}
-                              </td>
-                              <td className="column-primary">
-                                {`${variant.rate}%`}
-                                {variant.uplift !== 0 && (
-                                  <span className="ABTestUplift">
-                                    {[
-                                      ' (',
-                                      variant.uplift > 0 ? '+' : '',
-                                      variant.uplift,
-                                      '%)',
-                                    ].join('')}
-                                  </span>
-                                )}
-                              </td>
-                              <td>{variant.conversions}</td>
-                              <td>{variant.participants}</td>
-                            </tr>
-                          ))}
-                        </tbody>
-                      </Table>
-                    ) : (
-                      <em>{__('No results for this test yet.')}</em>
-                    )}
-                    {test.totalParticipants > 0 && (
-                      <Significance
-                        control={test.control}
-                        results={test.variants.map(toTestVariantResult)}
-                      />
-                    )}
-                  </td>
-                </tr>
-              </Fragment>
-            ))}
-          </tbody>
+          <tbody>{activeTests.map(Test)}</tbody>
         </Table>
       ) : (
         <Fragment>

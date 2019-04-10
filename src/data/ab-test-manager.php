@@ -65,6 +65,7 @@ class ABTestManager {
                 $test['isArchived'] = (bool) $test['isArchived'];
 
                 $test['postLink'] = get_edit_post_link($test['postId']);
+                $test['postDeleteLink'] = get_delete_post_link($test['postId'], '', true);
                 $test['goalLink'] = get_edit_post_link($test['postGoal']);
 
                 $test['variants'] = $this->wpdb->get_results($this->wpdb->prepare("
