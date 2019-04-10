@@ -78,7 +78,7 @@ function Test(test: TestData) {
   const isSingle = test.postType === 'abt4wp-test';
 
   return (
-    <Fragment>
+    <Fragment key={test.id}>
       <tr>
         <td className="check-column check-column-normal">
           <div
@@ -187,7 +187,14 @@ function Overview({ data }: { data: OverviewData }) {
 
   return (
     <div className="wrap ab-testing-for-wp">
-      <h1>{__('A/B Tests')}</h1>
+      <h1 className="wp-heading-inline">{__('A/B Tests')}</h1>
+      <a
+        href="post-new.php?post_type=abt4wp-test"
+        className="page-title-action"
+      >
+        {__('Add New')}
+      </a>
+      <hr className="wp-header-end" />
 
       {activeTests && activeTests.length > 0 ? (
         <Table className="running-tests">
@@ -195,7 +202,7 @@ function Overview({ data }: { data: OverviewData }) {
             <tr>
               <th className="check-column" />
               <th className="column-primary">{__('Title')}</th>
-              <th>{__('Started At')}</th>
+              <th>{__('Started at')}</th>
               <th>{__('Page / Shortcode')}</th>
               <th>{__('Conversion Goal')}</th>
               <th className="num">{__('Participants')}</th>
