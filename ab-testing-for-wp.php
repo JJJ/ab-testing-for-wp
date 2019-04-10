@@ -38,7 +38,8 @@ require __DIR__ . '/vendor/autoload.php';
 function bootstrap() {
     // on every request
     new RegisterGutenbergBlocks(__FILE__);
-    new RegisterCustomPostType(__FILE__);
+    new RegisterCustomPostType();
+    new RegisterShortcode();
     new BootStrapIntegrations();
 
     // only on admin
