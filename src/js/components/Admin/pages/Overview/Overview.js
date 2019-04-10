@@ -101,7 +101,11 @@ function Overview({ data }: { data: OverviewData }) {
                     />
                   </td>
                   <td className="column-primary">{postLink(test.title, test.postLink, test.id)}</td>
-                  <td>{`${format(test.startedAt, 'YYYY/MM/DD')} (${distanceInWords(test.startedAt, new Date())})`}</td>
+                  {test.startedAt > 0 ? (
+                    <td>{`${format(test.startedAt, 'YYYY/MM/DD')} (${distanceInWords(test.startedAt, new Date())})`}</td>
+                  ) : (
+                    <td>—</td>
+                  )}
                   <td>{postLink(test.postName, test.postLink, test.id)}</td>
                   <td>{postLink(test.goalName, test.goalLink)}</td>
                   <td className="num">{test.totalParticipants}</td>
