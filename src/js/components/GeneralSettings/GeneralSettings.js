@@ -6,6 +6,7 @@ const { __ } = i18n;
 const { PanelBody, ToggleControl, TextControl } = components;
 
 type GeneralSettingsProps = {
+  isSingle: boolean;
   title: string;
   isEnabled: boolean;
   onChangeTitle: (title: string) => void;
@@ -13,6 +14,7 @@ type GeneralSettingsProps = {
 };
 
 function GeneralSettings({
+  isSingle,
   title,
   isEnabled,
   onChangeTitle,
@@ -20,11 +22,13 @@ function GeneralSettings({
 }: GeneralSettingsProps) {
   return (
     <PanelBody title={__('General Settings')}>
-      <TextControl
-        label={__('Title of test')}
-        value={title}
-        onChange={onChangeTitle}
-      />
+      {!isSingle && (
+        <TextControl
+          label={__('Title of test')}
+          value={title}
+          onChange={onChangeTitle}
+        />
+      )}
       <ToggleControl
         label={__('Run this test')}
         help={__(isEnabled ? 'Test is in progress' : 'Showing control variant to every visitor')}
