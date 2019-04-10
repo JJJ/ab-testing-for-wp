@@ -1,9 +1,12 @@
 // @flow @jsx wp.element.createElement
 
-import { i18n, components } from '../../wp';
+import { i18n, components, data } from '../../wp';
+
+import './GeneralSettings.css';
 
 const { __ } = i18n;
 const { PanelBody, ToggleControl, TextControl } = components;
+const { select } = data;
 
 type GeneralSettingsProps = {
   isSingle: boolean;
@@ -20,6 +23,9 @@ function GeneralSettings({
   onChangeTitle,
   onChangeEnabled,
 }: GeneralSettingsProps) {
+  const { getCurrentPostId } = select('core/editor');
+  const postId = getCurrentPostId();
+
   return (
     <PanelBody title={__('General Settings')}>
       {!isSingle && (
@@ -35,6 +41,12 @@ function GeneralSettings({
         checked={isEnabled}
         onChange={onChangeEnabled}
       />
+      {isSingle && postId && (
+        <div className="shortcode-container">
+          <strong>Shortcode:</strong>
+          <code>{`[ab-test id=${postId}]`}</code>
+        </div>
+      )}
     </PanelBody>
   );
 }
