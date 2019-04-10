@@ -86,6 +86,8 @@ class ABTestBlock extends Component<ABTestBlockProps> {
     const variants = document.querySelectorAll(`.ABTest--${id} .wp-block[data-type="ab-testing-for-wp/ab-test-block-variant"]`);
 
     variants.forEach((variant) => {
+      if (!selected) return;
+
       const hasSelected = variant.querySelector(`.ABTestVariant--${selected.id}`);
       if (hasSelected) {
         variant.style.display = 'block'; // eslint-disable-line
