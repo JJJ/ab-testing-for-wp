@@ -28,6 +28,7 @@ class RegisterCustomPostType {
                 ],
                 'description' => __('A/B Test created with A/B Testing for WordPress.'),
                 'public' => true,
+                'publicly_queryable' => false,
                 'exclude_from_search' => true,
                 'show_ui' => true,
                 'show_in_menu' => false,
