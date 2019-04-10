@@ -33,7 +33,9 @@ type OverviewData = {
     goalName: string;
     goalType: string;
     goalLink?: string;
+    postId: string;
     postGoal: string;
+    postType: string;
     postName: string;
     postLink?: string;
     startedAt: number;
@@ -55,7 +57,7 @@ function postLink(name: string, link?: string, testId?: string) {
     testId,
   ].join('');
 
-  return link ? (<a href={url}>{name}</a>) : name;
+  return link ? (<a href={url}>{name !== '' ? name : __('No Name')}</a>) : name;
 }
 
 const toTestVariantResult = variant => ({
@@ -79,8 +81,8 @@ function Overview({ data }: { data: OverviewData }) {
               <th className="check-column" />
               <th className="column-primary">{__('Title')}</th>
               <th>{__('Started At')}</th>
-              <th>{__('On Page')}</th>
-              <th>{__('Goal')}</th>
+              <th>{__('Page / Shortcode')}</th>
+              <th>{__('Conversion Goal')}</th>
               <th className="num">{__('Participants')}</th>
             </tr>
           </thead>
@@ -106,7 +108,14 @@ function Overview({ data }: { data: OverviewData }) {
                   ) : (
                     <td>—</td>
                   )}
-                  <td>{postLink(test.postName, test.postLink, test.id)}</td>
+                  <td>
+                    {test.postType === 'abt4wp-test'
+                      ? (
+                        <code>{`[ab-test id=${test.postId}]`}</code>
+                      )
+                      : postLink(test.postName, test.postLink, test.id)
+                    }
+                  </td>
                   <td>{postLink(test.goalName, test.goalLink)}</td>
                   <td className="num">{test.totalParticipants}</td>
                 </tr>
