@@ -96,8 +96,6 @@ class RegisterAdminPage {
             [$this, 'gotoEditor']
         );
 
-        // post-new.php?post_type=abt4wp-test
-
         add_submenu_page( 
             'ab-testing-for-wp',
             __('How to Use A/B Testing'),
