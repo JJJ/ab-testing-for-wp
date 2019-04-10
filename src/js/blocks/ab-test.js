@@ -39,8 +39,24 @@ const ALLOWED_BLOCKS = ['ab-testing-for-wp/ab-test-block-variant'];
 
 const makeTemplate = variant => ['ab-testing-for-wp/ab-test-block-variant', variant];
 
+function isSingleTest() {
+  const { getCurrentPostType } = select('core/editor');
+  return getCurrentPostType() === 'abt4wp-test';
+}
+
 class ABTestBlock extends Component<ABTestBlockProps> {
   componentDidMount() {
+    this.selectOnSingleTest();
+    this.focusTestIntoView();
+  }
+
+  selectOnSingleTest() {
+    const { selectBlock } = this.props;
+
+    setTimeout(() => { if (isSingleTest()) selectBlock(); }, 0);
+  }
+
+  focusTestIntoView() {
     const { attributes, clientId, selectBlock } = this.props;
     const { test } = queryString.parse(window.location.search);
 
@@ -89,8 +105,6 @@ class ABTestBlock extends Component<ABTestBlockProps> {
 
     // initialize attributes
     if (!id) {
-      const { getCurrentPost } = select('core/editor');
-
       const defaultVariants: ABTestVariant[] = [
         {
           id: shortid.generate(),
@@ -106,14 +120,15 @@ class ABTestBlock extends Component<ABTestBlockProps> {
         },
       ];
 
+      const { getCurrentPost } = select('core/editor');
       const postTitle = getCurrentPost().title;
 
       setAttributes({
         id: shortid.generate(),
-        title: sprintf(__(postTitle ? 'New test on "%s"' : 'New test'), postTitle),
         variants: defaultVariants,
         postGoal: 0,
         postGoalType: '',
+        title: isSingleTest() ? '' : sprintf(__('New test on "%s"'), postTitle),
         control: defaultVariants[0].id,
         isEnabled: false,
       });
@@ -150,6 +165,7 @@ class ABTestBlock extends Component<ABTestBlockProps> {
     `;
 
     const showOnboarding = !completedOnboarding && window.innerWidth > 780;
+    const isSingle = isSingleTest();
 
     return (
       <div className={`ABTest--${id}`}>
@@ -163,6 +179,7 @@ class ABTestBlock extends Component<ABTestBlockProps> {
         <style>{css}</style>
         <InspectorControls>
           <GeneralSettings
+            isSingle={isSingle}
             title={title}
             isEnabled={isEnabled}
             onChangeTitle={onTitleChange}
