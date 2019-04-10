@@ -77,6 +77,28 @@ class ABTestBlock extends Component<ABTestBlockProps> {
     }, 0);
   }
 
+  currentVariant: string;
+
+  showVariant(id: string, selected?: ABTestVariant) {
+    if (!selected) return;
+    if (this.currentVariant === selected.id) return;
+
+    const variants = document.querySelectorAll(`.ABTest--${id} .wp-block[data-type="ab-testing-for-wp/ab-test-block-variant"]`);
+
+    variants.forEach((variant) => {
+      const hasSelected = variant.querySelector(`.ABTestVariant--${selected.id}`);
+      if (hasSelected) {
+        variant.style.display = 'block'; // eslint-disable-line
+
+        // update current variant
+        this.currentVariant = selected.id;
+        return;
+      }
+
+      variant.style.display = 'none'; // eslint-disable-line
+    });
+  }
+
   render() {
     const {
       clientId,
@@ -154,15 +176,8 @@ class ABTestBlock extends Component<ABTestBlockProps> {
 
     const selectedVariant = variants.find(test => !!test.selected);
 
-    const css = `
-      .ABTest--${id} .ABTestVariant { 
-        display: none;
-      }
-      
-      .ABTest--${id} .ABTestVariant--${selectedVariant && selectedVariant.id ? selectedVariant.id : ''} { 
-        display: block!important; 
-      }
-    `;
+    // side effect...
+    this.showVariant(id, selectedVariant);
 
     const showOnboarding = !completedOnboarding && window.innerWidth > 780;
     const isSingle = isSingleTest();
@@ -176,7 +191,9 @@ class ABTestBlock extends Component<ABTestBlockProps> {
             selectBlock={selectBlock}
           />
         )}
-        <style>{css}</style>
+
+        <style>{`.ABTest--${id} .wp-block[data-type="ab-testing-for-wp/ab-test-block-variant"] { display: none; }`}</style>
+
         <InspectorControls>
           <GeneralSettings
             isSingle={isSingle}
@@ -208,6 +225,7 @@ class ABTestBlock extends Component<ABTestBlockProps> {
             onChange={onControlChange}
           />
         </InspectorControls>
+
         <InnerBlocks
           templateLock="all"
           template={variants.map(makeTemplate)}
