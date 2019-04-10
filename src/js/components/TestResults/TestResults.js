@@ -156,7 +156,7 @@ class TestResults extends Component<TestResultsProps, TestResultsState> {
             </tbody>
           </table>
         ) : (
-          <div>No participants yet.</div>
+          <div className="TestResults"><em>{__('No participants yet.')}</em></div>
         )}
         <Significance control={control} results={results} />
         <DeclareWinner variants={enrichedResults} onDeclareWinner={onDeclareWinner} />
