@@ -85,6 +85,9 @@ class ABTestBlock extends Component<ABTestBlockProps> {
 
     const variants = document.querySelectorAll(`.ABTest--${id} .wp-block[data-type="ab-testing-for-wp/ab-test-block-variant"]`);
 
+    // if DOM is not mounted yet, try again on first possibility
+    if (variants.length === 0) setTimeout(() => this.showVariant(id, selected), 0);
+
     variants.forEach((variant) => {
       if (!selected) return;
 
@@ -176,7 +179,7 @@ class ABTestBlock extends Component<ABTestBlockProps> {
       startedAt: enabled && !startedAt ? new Date() : startedAt,
     });
 
-    const selectedVariant = variants.find(test => !!test.selected);
+    const selectedVariant = variants.find(variant => !!variant.selected);
 
     // side effect...
     this.showVariant(id, selectedVariant);
