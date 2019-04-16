@@ -17,7 +17,8 @@ module.exports = {
     path: path.resolve(__dirname, 'dist'),
   },
   externals: {
-    react: 'window.React',
+    react: 'window.wp.element',
+    'react-dom': 'window.wp.element',
   },
   module: {
     rules: [
