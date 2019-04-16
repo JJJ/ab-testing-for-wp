@@ -21,16 +21,13 @@ class RegisterFrontendAdminBar {
     }
 
     public function loadAssets() {
-        $postId = get_the_ID();
-        $testsData = $this->abTestManager->getTestDataByPost($postId);
-
         wp_register_style('ab_testing_for_wp_admin_bar_style', plugins_url('/src/css/admin-bar.css', $this->fileRoot), []);
         wp_enqueue_style('ab_testing_for_wp_admin_bar_style');
 
         wp_register_script(
             'ab-testing-for-wp-admin-bar', 
             plugins_url('/dist/admin-bar.js', $this->fileRoot), 
-            ['wp-api-fetch']
+            ['wp-api-fetch', 'wp-i18n']
         );
         wp_localize_script(
             'ab-testing-for-wp-admin-bar', 
@@ -43,9 +40,6 @@ class RegisterFrontendAdminBar {
     }
 
     public function addAdminBarMenu($wp_admin_bar) {
-        $postId = get_the_ID();
-        $testsData = $this->abTestManager->getTestDataByPost($postId);
-
         $wp_admin_bar->add_menu([
             'id' => 'ab-testing-for-wp',
             'title' => __('A/B Tests'),
