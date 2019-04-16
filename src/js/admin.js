@@ -1,10 +1,9 @@
-// @flow @jsx wp.element.createElement
+// @flow
 
-import { element } from './wp';
+import React from 'react';
+import { render } from 'react-dom';
 
 import AdminPage from './components/Admin/Admin';
-
-const { render } = element;
 
 function onLoad() {
   const root = document.getElementById('admin_app');
