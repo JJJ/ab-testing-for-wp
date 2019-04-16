@@ -1,6 +1,6 @@
-// @flow @jsx wp.element.createElement
+// @flow
 
-import { Component } from 'react';
+import React, { Component } from 'react';
 
 import { components, i18n } from '../../wp';
 

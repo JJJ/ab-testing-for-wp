@@ -1,6 +1,6 @@
-// @flow @jsx wp.element.createElement
+// @flow
 
-import { Component } from 'react';
+import React, { Component } from 'react';
 import shortid from 'shortid';
 import queryString from 'query-string';
 
