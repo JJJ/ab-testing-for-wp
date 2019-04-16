@@ -93,7 +93,7 @@ class RegisterREST {
 
         register_rest_route(
             'ab-testing-for-wp/v1',
-            '/get-test-info',
+            '/get-tests-info',
             [
                 'methods' => 'GET',
                 'callback' => [$tests, 'getTestsData'],

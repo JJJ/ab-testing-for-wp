@@ -27,7 +27,7 @@ class RegisterFrontendAdminBar {
         wp_register_script(
             'ab-testing-for-wp-admin-bar', 
             plugins_url('/dist/admin-bar.js', $this->fileRoot), 
-            ['wp-api-fetch', 'wp-i18n']
+            ['wp-api-fetch', 'wp-i18n', 'wp-element']
         );
         wp_localize_script(
             'ab-testing-for-wp-admin-bar', 
