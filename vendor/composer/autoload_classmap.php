@@ -31,6 +31,6 @@ return array(
     'ABTestingForWP\\RegisterREST' => $baseDir . '/src/registrations/register-rest.php',
     'ABTestingForWP\\RegisterRenderScripts' => $baseDir . '/src/registrations/register-render-scripts.php',
     'ABTestingForWP\\RegisterShortcode' => $baseDir . '/src/registrations/register-shortcode.php',
-    'ABTestingForWP\\TestActions' => $baseDir . '/src/actions/tests.php',
+    'ABTestingForWP\\TestsActions' => $baseDir . '/src/actions/tests.php',
     'ABTestingForWP\\WPForms' => $baseDir . '/src/integrations/wpforms/WPForms.php',
 );
