@@ -66,6 +66,19 @@ class ABTestManager {
         return $results[0];
     }
 
+    public function getTestsByIds($ids) {
+        $ids = array_map(
+            function ($id) {
+                return $this->wpdb->prepare("%s", $id);
+            },
+            $ids
+        );
+
+        $extraQuery = "AND t.id IN (" . join(",", $ids) . ")";
+
+        return $this->getAllTests($extraQuery);
+    }
+
     public function getTestPostId($testId) {
         return $this->wpdb->get_var($this->wpdb->prepare("
         SELECT t.postId
