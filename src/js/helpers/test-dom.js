@@ -12,7 +12,6 @@ export function setTestStatus() {
   if (!window.ABTestingForWP_AdminBar) return;
 
   const data = window.ABTestingForWP_AdminBar;
-  const prefix = 'wp-admin-bar-ab-testing-for-wp_';
 
   // remove current state
   document
@@ -24,14 +23,14 @@ export function setTestStatus() {
     .forEach(node => node.classList.remove('ab-testing-for-wp__selected'));
 
   data.testsData.forEach((test) => {
-    const element = document.getElementById(`${prefix}${test.id}`);
+    const element = document.getElementById(`.ab-list-item[data-id="${test.id}"]`);
 
     if (!element) return;
 
     if (test.isEnabled) element.classList.add('ab-testing-for-wp__enabled');
 
     test.variants.forEach((variant) => {
-      const variantElement = document.getElementById(`${prefix}${variant.id}`);
+      const variantElement = document.getElementById(`.ab-list-item[data-id="${variant.id}"]`);
 
       if (!variantElement) return;
       if (data.cookieData[test.id] === variant.id) variantElement.classList.add('ab-testing-for-wp__selected');

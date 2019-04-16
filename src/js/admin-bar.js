@@ -1,6 +1,7 @@
 // @flow
 
 import scrollIntoView from 'scroll-into-view';
+import queryString from 'query-string';
 
 import { apiFetch, i18n } from './wp';
 
@@ -29,7 +30,6 @@ function handleVariant(e: Event) {
   if (!window.ABTestingForWP_AdminBar || !window.ABTestingForWP) return;
 
   const { testsData } = window.ABTestingForWP_AdminBar;
-  const { postId } = window.ABTestingForWP;
 
   const variantId = findId(this);
   const test = testsData.find(item => item.variants.some(variant => variant.id === variantId));
@@ -42,7 +42,7 @@ function handleVariant(e: Event) {
   setTestStatus();
 
   const testId = test.id;
-  apiFetch({ path: `/ab-testing-for-wp/v1/ab-test?test=${testId}&variant=${variantId}&post=${postId}` })
+  apiFetch({ path: `/ab-testing-for-wp/v1/ab-test?test=${testId}&variant=${variantId}` })
     .then((result) => {
       if (result.html) {
         const target = document.querySelector(`.ABTestWrapper[data-test=${testId}]`);
@@ -64,6 +64,7 @@ function bindAdminBarEvents() {
 
 type MenuItem = {
   name: string;
+  id?: string;
   className?: string;
   children?: MenuItem[];
 };
@@ -86,6 +87,16 @@ function createMenu(items: MenuItem[], root = menuRoot().querySelector('.ab-sub-
   items.forEach((item) => {
     const listItem = document.createElement('li');
 
+    if (item.id) {
+      listItem.setAttribute('data-id', item.id);
+    }
+
+    listItem.classList.add('ab-list-item');
+
+    if (item.className) {
+      listItem.classList.add(item.className);
+    }
+
     const content = document.createElement('div');
     content.setAttribute('class', 'ab-item ab-empty-item');
     content.setAttribute('aria-haspopup', 'true');
@@ -95,13 +106,34 @@ function createMenu(items: MenuItem[], root = menuRoot().querySelector('.ab-sub-
 
     if (item.children && item.children.length > 0) {
       createMenu(item.children, listItem, false);
-      listItem.setAttribute('class', 'menupop');
+
+      listItem.classList.add('menupop');
+
+      listItem.addEventListener('mouseover', () => {
+        const target = listItem.querySelector('.ab-sub-wrapper');
+        if (!target) return;
+        target.style.display = 'block';
+      });
+
+      listItem.addEventListener('mouseleave', () => {
+        const target = listItem.querySelector('.ab-sub-wrapper');
+        if (!target) return;
+        target.style.display = 'none';
+      });
     }
 
     menu.appendChild(listItem);
   });
 
-  workRoot.appendChild(menu);
+  if (!clean) {
+    const wrapper = document.createElement('div');
+    wrapper.setAttribute('class', 'ab-sub-wrapper');
+
+    wrapper.appendChild(menu);
+    workRoot.appendChild(wrapper);
+  } else {
+    workRoot.appendChild(menu);
+  }
 }
 
 function scanPageForTests() {
@@ -120,21 +152,33 @@ function scanPageForTests() {
     const testIds = [];
     testsOnPage.forEach(test => testIds.push(test.getAttribute('data-test')));
 
-    console.log(testIds);
-    // createMenu([
-    //   {
-    //     name: __('No tests found on page.')
-    //   }
-    // ]);
+    apiFetch({ path: `/ab-testing-for-wp/v1/get-tests-info?${queryString.stringify({ id: testIds })}` })
+      .then((tests) => {
+        window.ABTestingForWP_AdminBar.testsData = tests;
+
+        createMenu(
+          tests.map(test => ({
+            name: test.title,
+            id: test.id,
+            className: 'ab-testing-for-wp__test',
+            children: test.variants.map(variant => ({
+              name: variant.name,
+              id: variant.id,
+              className: 'ab-testing-for-wp__variant',
+            })),
+          })),
+        );
+
+        setTestStatus();
+      });
   } else {
     createMenu([{ name: __('No tests found on page.') }]);
   }
 }
 
 function initAdminBar() {
-  // setTestStatus();
   // bindAdminBarEvents();
-  scanPageForTests();
+  // scanPageForTests();
 }
 
 document.addEventListener('DOMContentLoaded', initAdminBar);
