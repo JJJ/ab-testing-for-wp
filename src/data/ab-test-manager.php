@@ -41,7 +41,7 @@ class ABTestManager {
         return sizeof($this->wpdb->get_results("SELECT id FROM `{$this->abTestTable}`")) > 0;
     }
 
-    public function getAllTests() {
+    public function getAllTests($extraQuery = '') {
         $data = $this->wpdb->get_results("
         SELECT t.id, t.isEnabled, t.startedAt, t.title, t.control, t.postId, t.postGoal,
         p1.post_type AS postType, p1.post_title AS postName, p2.post_title AS goalName, 
@@ -54,79 +54,92 @@ class ABTestManager {
         FROM `{$this->abTestTable}` AS t
         INNER JOIN `{$this->postsTable}` AS p1 ON t.postId = p1.ID
         LEFT JOIN `{$this->postsTable}` AS p2 ON t.postGoal = p2.ID
-        WHERE t.isArchived = 0
+        WHERE t.isArchived = 0 {$extraQuery}
         ORDER BY t.postId ASC
         ");
 
-        return array_map(
-            function ($test) {
-                $test = (array) $test;
-                $test['isEnabled'] = (bool) $test['isEnabled'];
-                $test['isArchived'] = (bool) $test['isArchived'];
+        return array_map([$this, 'mapTest'], $data);
+    }
 
-                $test['postLink'] = get_edit_post_link($test['postId']);
-                $test['postDeleteLink'] = get_delete_post_link($test['postId'], '', true);
-                $test['goalLink'] = get_edit_post_link($test['postGoal']);
+    public function getTestById($testId) {
+        $results = $this->getAllTests($this->wpdb->prepare('AND t.id = %s', $testId));
+        return $results[0];
+    }
 
-                $test['variants'] = $this->wpdb->get_results($this->wpdb->prepare("
-                SELECT id, name, participants, conversions
-                FROM `{$this->variantTable}`
-                WHERE testId = %s
-                ORDER BY name ASC
-                ", $test['id']));
+    public function getTestPostId($testId) {
+        return $this->wpdb->get_var($this->wpdb->prepare("
+        SELECT t.postId
+        FROM `{$this->abTestTable}` AS t
+        WHERE t.isArchived = 0 AND t.id = %s
+        ORDER BY t.postId ASC
+        ", $testId));
+    }
 
-                foreach($test['variants'] as $variant) {
-                    $variant = (array) $variant;
+    private function mapTest($test) {
+        $test = (array) $test;
+        $test['isEnabled'] = (bool) $test['isEnabled'];
+        $test['isArchived'] = (bool) $test['isArchived'];
 
-                    if ($variant['id'] === $test['control']) {
-                        $controlVariant = $variant;
+        $test['postLink'] = get_edit_post_link($test['postId']);
+        $test['postDeleteLink'] = get_delete_post_link($test['postId'], '', true);
+        $test['goalLink'] = get_edit_post_link($test['postGoal']);
+
+        $test['variants'] = $this->wpdb->get_results($this->wpdb->prepare("
+        SELECT id, name, participants, conversions
+        FROM `{$this->variantTable}`
+        WHERE testId = %s
+        ORDER BY name ASC
+        ", $test['id']));
+
+        foreach($test['variants'] as $variant) {
+            $variant = (array) $variant;
+
+            if ($variant['id'] === $test['control']) {
+                $controlVariant = $variant;
+            }
+        }
+
+        $crc = $controlVariant['participants'] > 0
+            ? $controlVariant['conversions'] / $controlVariant['participants']
+            : 0;
+
+        $test['variants'] = array_map(
+            function ($variant) use ($crc) {
+                $variant = (array) $variant;
+
+                $variant['conversions'] = (int) $variant['conversions'];
+                $variant['participants'] = (int) $variant['participants'];
+
+                $crr = $variant['participants'] > 0
+                    ? $variant['conversions'] / $variant['participants']
+                    : 0;
+
+                $variant['rate'] = $variant['participants'] > 0
+                    ? round($crr * 100)
+                    : 0;
+                $variant['uplift'] = round($crc === 0 ? 0 : ($crr - $crc) / $crc * 1000) / 10;
+
+                return $variant;
+            },
+            $test['variants']
+        );
+
+        $test['variants'] = array_map(
+            function ($variant) use ($test) {
+                $variant['leading'] = true;
+
+                foreach ($test['variants'] as $check) {
+                    if ($check['rate'] > $variant['rate']) {
+                        $variant['leading'] = false;
                     }
                 }
 
-                $crc = $controlVariant['participants'] > 0
-                    ? $controlVariant['conversions'] / $controlVariant['participants']
-                    : 0;
-
-                $test['variants'] = array_map(
-                    function ($variant) use ($crc) {
-                        $variant = (array) $variant;
-
-                        $variant['conversions'] = (int) $variant['conversions'];
-                        $variant['participants'] = (int) $variant['participants'];
-
-                        $crr = $variant['participants'] > 0
-                            ? $variant['conversions'] / $variant['participants']
-                            : 0;
-
-                        $variant['rate'] = $variant['participants'] > 0
-                            ? round($crr * 100)
-                            : 0;
-                        $variant['uplift'] = round($crc === 0 ? 0 : ($crr - $crc) / $crc * 1000) / 10;
-
-                        return $variant;
-                    },
-                    $test['variants']
-                );
-
-                $test['variants'] = array_map(
-                    function ($variant) use ($test) {
-                        $variant['leading'] = true;
-
-                        foreach ($test['variants'] as $check) {
-                            if ($check['rate'] > $variant['rate']) {
-                                $variant['leading'] = false;
-                            }
-                        }
-
-                        return $variant;
-                    },
-                    $test['variants']
-                );
-
-                return $test;
+                return $variant;
             },
-            $data
+            $test['variants']
         );
+
+        return $test;
     }
 
     public function getStatsByVariation($variantId) {
