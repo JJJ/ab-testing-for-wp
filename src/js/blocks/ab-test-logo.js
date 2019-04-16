@@ -1,4 +1,6 @@
-// @flow @jsx wp.element.createElement
+// @flow
+
+import React from 'react';
 
 function ABTestLogo() {
   return (
