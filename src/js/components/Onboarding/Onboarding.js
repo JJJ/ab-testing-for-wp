@@ -1,8 +1,6 @@
 // @flow
 
-import React from 'react';
-
-import { createRef, Component } from 'react';
+import React, { createRef, Component } from 'react';
 
 import { components, i18n } from '../../wp';
 
