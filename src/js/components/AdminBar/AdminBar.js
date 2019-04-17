@@ -26,11 +26,28 @@ class AdminBar extends Component<*, AdminBarState> {
 
   componentDidMount() {
     const testsOnPage = document.querySelectorAll('.ABTestWrapper[data-test]');
-    const testIds = [];
-    testsOnPage.forEach(test => testIds.push(test.getAttribute('data-test')));
+
+    const sortedTestsOnPage = Array.from(testsOnPage).sort((a, b) => {
+      if (a.offsetTop > b.offsetTop) {
+        return 1;
+      }
+
+      if (a.offsetTop < b.offsetTop) {
+        return -1;
+      }
+
+      return 0;
+    });
+
+    const testIds = sortedTestsOnPage.map(test => test.getAttribute('data-test'));
 
     apiFetch({ path: `/ab-testing-for-wp/v1/get-tests-info?${queryString.stringify({ id: testIds })}` })
-      .then(tests => this.setState({ tests, isLoading: false }));
+      .then((tests) => {
+        this.setState({
+          tests: testIds.map(id => tests.find(test => test.id === id)),
+          isLoading: false,
+        });
+      });
   }
 
   onChangeVariant = (testId: string, variantId: string) => {
