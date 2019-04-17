@@ -22,7 +22,7 @@ import Onboarding from '../components/Onboarding/Onboarding';
 
 import { getOption, setOption } from '../helpers/options';
 
-import SVGIcon from './ab-test-logo';
+import SVGIcon from '../components/Logo/Logo';
 
 const { __, sprintf } = i18n;
 const { registerBlockType, createBlock } = blocks;

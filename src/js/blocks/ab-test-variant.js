@@ -4,6 +4,8 @@ import React from 'react';
 
 import { i18n, blocks, editor } from '../wp';
 
+import SVGIcon from '../components/Logo/Logo';
+
 const { registerBlockType } = blocks;
 const { __, sprintf } = i18n;
 const { InnerBlocks } = editor;
@@ -19,7 +21,7 @@ const disallowedBlocks = [
 
 registerBlockType('ab-testing-for-wp/ab-test-block-variant', {
   title: __('A/B Test Variant'),
-  icon: 'admin-settings',
+  icon: SVGIcon,
   category: 'widgets',
   parent: ['ab-testing-for-wp/ab-test-block'],
   supports: {
