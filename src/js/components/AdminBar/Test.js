@@ -2,9 +2,38 @@
 
 import React from 'react';
 import classNames from 'classnames';
+import scrollIntoView from 'scroll-into-view';
 
-function Test({ id, title, isEnabled, variants }: TestData) {
-  const { cookieData } = window.ABTestingForWP_AdminBar || { cookieData: {} };
+import highlightElement from './helpers/highlight';
+
+import Variant from './Variant';
+
+type TestProps = {
+  pickedVariants: {
+    [testId: string]: string;
+  };
+  onChangeVariant: (testId: string, variantId: string) => void;
+} & TestData;
+
+function findTestElementById(id: string) {
+  return document.querySelector(`.ABTestWrapper[data-test=${id}]`);
+}
+
+function Test({
+  id,
+  title,
+  isEnabled,
+  variants,
+  pickedVariants,
+  onChangeVariant,
+}: TestProps) {
+  const onHover = () => {
+    const element = findTestElementById(id);
+    if (!element) return;
+
+    scrollIntoView(element);
+    highlightElement(id, element);
+  };
 
   return (
     <li
@@ -12,6 +41,8 @@ function Test({ id, title, isEnabled, variants }: TestData) {
         'menupop ab-testing-for-wp__test',
         { 'ab-testing-for-wp__enabled': isEnabled },
       )}
+      onMouseOver={onHover}
+      onFocus={onHover}
     >
       <div className="ab-item ab-empty-item" aria-haspopup="true">
         <span>{title}</span>
@@ -19,14 +50,11 @@ function Test({ id, title, isEnabled, variants }: TestData) {
       <div className="ab-sub-wrapper">
         <ul className="ab-submenu">
           {variants.map(variant => (
-            <li
-              className={classNames(
-                'ab-testing-for-wp__variant',
-                { 'ab-testing-for-wp__selected': cookieData && cookieData[id] === variant.id },
-              )}
-            >
-              <div className="ab-item ab-empty-item">{variant.name}</div>
-            </li>
+            <Variant
+              {...variant}
+              onChangeVariant={(variantId: string) => onChangeVariant(id, variantId)}
+              isSelected={pickedVariants[id] === variant.id}
+            />
           ))}
         </ul>
       </div>

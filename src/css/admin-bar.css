@@ -1,3 +1,8 @@
+#wp-admin-bar-ab-testing-for-wp:hover > .ab-sub-wrapper,
+#wp-admin-bar-ab-testing-for-wp .menupop:hover > .ab-sub-wrapper {
+  display: block;
+}
+
 #wpadminbar #wp-admin-bar-ab-testing-for-wp > .ab-item::before {
   content: "";
   background-image: url('../assets/ab-testing-for-wp-logo-icon.svg') !important;
@@ -42,6 +47,11 @@
 
 #wpadminbar #wp-admin-bar-ab-testing-for-wp .ab-testing-for-wp__variant > .ab-item {
   cursor: pointer;
+}
+
+#wpadminbar #wp-admin-bar-ab-testing-for-wp .ab-testing-for-wp__variant button {
+  text-align: left;
+  background: none;
 }
 
 #wpadminbar #wp-admin-bar-ab-testing-for-wp .ab-testing-for-wp__test .ab-item:hover {
