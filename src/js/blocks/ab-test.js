@@ -286,6 +286,9 @@ registerBlockType('ab-testing-for-wp/ab-test-block', {
   description: __('A/B test container which contains the possible variants.'),
   icon: SVGIcon,
   category: 'widgets',
+  supports: {
+    inserter: false,
+  },
   attributes: {
     id: {
       type: 'string',
