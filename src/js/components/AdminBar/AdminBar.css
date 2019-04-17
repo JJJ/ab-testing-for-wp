@@ -1,0 +1,4 @@
+#wp-admin-bar-ab-testing-for-wp:hover > .ab-sub-wrapper,
+#wp-admin-bar-ab-testing-for-wp .menupop:hover > .ab-sub-wrapper {
+  display: block;
+}
