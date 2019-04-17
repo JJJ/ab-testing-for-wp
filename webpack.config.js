@@ -5,11 +5,17 @@ const mode = process.env.NODE_ENV || 'development';
 module.exports = {
   mode,
   entry: {
+    // frontend
     'ab-testing-for-wp': './ab-testing-for-wp.js',
+
+    // admin
     'admin-bar': './admin-bar.js',
     admin: './admin.js',
+
+    // gutenberg
     'ab-test': './blocks/ab-test.js',
     'ab-test-variant': './blocks/ab-test-variant.js',
+    'ab-test-inserter': './blocks/ab-test-inserter.js',
   },
   context: path.resolve(__dirname, 'src/js'),
   output: {
