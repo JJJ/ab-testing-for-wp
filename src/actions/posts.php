@@ -68,6 +68,7 @@ class PostsActions {
         $query = new \WP_Query([
             'post_type' => $type,
             'post__not_in' => $notIn,
+            'post_status' => ['publish'],
             'numberposts' => -1,
         ]);
 
