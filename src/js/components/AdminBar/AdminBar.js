@@ -7,19 +7,21 @@ import { i18n, apiFetch } from '../../wp';
 
 import Test from './Test';
 
-import './AdminBar.css';
-
 const { __, sprintf } = i18n;
 
 type AdminBarState = {
   isLoading: boolean;
   tests: TestData[];
+  pickedVariants: {
+    [testId: string]: string;
+  };
 };
 
 class AdminBar extends Component<*, AdminBarState> {
   state = {
     isLoading: true,
     tests: [],
+    pickedVariants: window.ABTestingForWP_AdminBar.cookieData || {},
   };
 
   componentDidMount() {
@@ -31,8 +33,28 @@ class AdminBar extends Component<*, AdminBarState> {
       .then(tests => this.setState({ tests, isLoading: false }));
   }
 
+  onChangeVariant = (testId: string, variantId: string) => {
+    const { pickedVariants } = this.state;
+
+    this.setState({
+      pickedVariants: {
+        ...pickedVariants,
+        [testId]: variantId,
+      },
+    });
+
+    apiFetch({ path: `/ab-testing-for-wp/v1/ab-test?test=${testId}&variant=${variantId}` })
+      .then((result) => {
+        if (result.html) {
+          const target = document.querySelector(`.ABTestWrapper[data-test=${testId}]`);
+
+          if (target) target.innerHTML = result.html;
+        }
+      });
+  };
+
   render() {
-    const { isLoading, tests } = this.state;
+    const { isLoading, tests, pickedVariants } = this.state;
 
     return (
       <Fragment>
@@ -59,7 +81,13 @@ class AdminBar extends Component<*, AdminBarState> {
                   </div>
                 </li>
               )
-              : tests.map(test => <Test {...test} />)}
+              : tests.map(test => (
+                <Test
+                  {...test}
+                  pickedVariants={pickedVariants}
+                  onChangeVariant={this.onChangeVariant}
+                />
+              ))}
           </ul>
         </div>
       </Fragment>
