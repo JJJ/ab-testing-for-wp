@@ -2,7 +2,7 @@
 
 import React from 'react';
 
-function ABTestLogo() {
+function Logo() {
   return (
     <svg
       version="1.1"
@@ -32,4 +32,4 @@ function ABTestLogo() {
   );
 }
 
-export default ABTestLogo;
+export default Logo;
