@@ -11,6 +11,12 @@ import './Inserter.css';
 const { __ } = i18n;
 const { Modal, Button, SelectControl } = components;
 
+type InserterProps = {
+  pickTest: (id: string) => void;
+  removeSelf: () => void;
+  insertNew: () => void;
+};
+
 type InserterState = {
   value: string;
   isLoading: boolean;
@@ -21,7 +27,7 @@ type InserterState = {
   }[];
 };
 
-class Inserter extends Component<*, InserterState> {
+class Inserter extends Component<InserterProps, InserterState> {
   state = {
     value: '',
     isLoading: true,
@@ -46,11 +52,22 @@ class Inserter extends Component<*, InserterState> {
   }
 
   insertNew = () => {
-    console.log('New');
+    const { insertNew } = this.props;
+
+    insertNew();
   };
 
   cancelInsert = () => {
-    console.log('Cancel');
+    const { removeSelf } = this.props;
+
+    removeSelf();
+  };
+
+  insertExisting = () => {
+    const { pickTest } = this.props;
+    const { value } = this.state;
+
+    pickTest(value);
   };
 
   render() {
@@ -80,8 +97,8 @@ class Inserter extends Component<*, InserterState> {
               }))}
               onChange={newValue => this.setState({ value: newValue })}
             />
-            <Button isPrimary onClick={this.insertNew}>
-              {__('Create New A/B Test')}
+            <Button isPrimary onClick={this.insertExisting} style={{ marginRight: 5 }}>
+              {__('Insert into Content')}
             </Button>
             <Button isDefault onClick={() => this.setState({ isPicking: false })}>
               {__('Cancel')}

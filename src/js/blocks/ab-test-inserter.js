@@ -2,24 +2,68 @@
 
 import React from 'react';
 
-import { blocks, i18n } from '../wp';
+import { blocks, i18n, data } from '../wp';
 
 import SVGIcon from '../components/Logo/Logo';
 import Inserter from '../components/Inserter/Inserter';
 
-const { registerBlockType } = blocks;
+const { registerBlockType, createBlock } = blocks;
 const { __ } = i18n;
+const { withDispatch } = data;
+
+type EditProps = {
+  attributes: {
+    id: string;
+  };
+  setAttributes: (newAttributes: any) => void;
+  removeSelf: () => void;
+  insertNew: () => void;
+};
 
 registerBlockType('ab-testing-for-wp/ab-test-block-inserter', {
   title: __('A/B Test'),
   icon: SVGIcon,
   category: 'widgets',
-  edit() {
-    return (
-      <Inserter />
-    );
+  attributes: {
+    id: {
+      type: 'string',
+      default: '',
+    },
   },
+  edit: withDispatch((dispatch, props) => {
+    const { removeBlock } = dispatch('core/editor');
+    const { clientId, insertBlocksAfter } = props;
+
+    const removeSelf = () => removeBlock(clientId);
+
+    return {
+      insertNew() {
+        insertBlocksAfter(createBlock('ab-testing-for-wp/ab-test-block'));
+        removeSelf();
+      },
+      removeSelf,
+    };
+  })(({
+    removeSelf,
+    insertNew,
+    attributes,
+    setAttributes,
+  }: EditProps) => {
+    if (attributes.id) {
+      return (
+        <div>Render {attributes.id}</div>
+      );
+    }
+
+    return (
+      <Inserter
+        pickTest={id => setAttributes({ id: id.toString() })}
+        removeSelf={removeSelf}
+        insertNew={insertNew}
+      />
+    );
+  }),
   save() {
-    return <div>Test</div>;
+    return <div />;
   },
 });
