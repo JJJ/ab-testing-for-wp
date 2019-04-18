@@ -89,6 +89,15 @@ class RegisterAdminPage {
 
         add_submenu_page( 
             'ab-testing-for-wp',
+            __('Add New A/B Test'),
+            __('Add New A/B Test'), 
+            'manage_options', 
+            'post-new.php?post_type=abt4wp-test',
+            [$this, 'gotoEditor']
+        );
+
+        add_submenu_page( 
+            'ab-testing-for-wp',
             __('How to Use A/B Testing'),
             __('How to Use'), 
             'manage_options', 
@@ -101,21 +110,16 @@ class RegisterAdminPage {
         echo "<div id='admin_app'></div>";
     }
 
+    public function gotoEditor() {
+        echo "<script>window.location = \"" . admin_url('/post-new.php?post_type=abt4wp-test') . "\";</script>";
+    }
+
     private function overviewData() {
         $testsData = $this->abTestManager->getAllTests();
 
         $testsData = array_map(
             function ($test) {
-                $timeStamp = strtotime($test['startedAt']);
-
-                if ($timeStamp < 0) {
-                    $test['startedAt'] = '—';
-                } else {
-                    $time = strtotime($test['startedAt']);
-                    $date = date(__('Y/m/d'), $time);
-                    $days = round((time() - $time) / (60 * 60 * 24));
-                    $test['startedAt'] = sprintf(_n('%s (%d day)', '%s (%d days)', $days), $date, $days);
-                }
+                $test['startedAt'] = strtotime($test['startedAt']) * 1000;
 
                 if ($test['postGoal'] === '0') {
                     $test['goalName'] = '—';

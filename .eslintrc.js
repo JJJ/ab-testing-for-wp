@@ -4,6 +4,7 @@ module.exports = {
   plugins: ['flowtype'],
   env: {
     browser: true,
+    node: true,
   },
   globals: {
     wp: false,

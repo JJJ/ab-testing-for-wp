@@ -1,4 +1,6 @@
-// @flow @jsx wp.element.createElement
+// @flow
+
+import React from 'react';
 
 import { i18n, components } from '../../wp';
 
@@ -13,12 +15,11 @@ type ControlSettingsProps = {
 
 function ControlSettings({ value, variants, onChange }: ControlSettingsProps) {
   return (
-    <PanelBody title={__('Control variant')}>
+    <PanelBody title={__('Control Variant')}>
       <SelectControl
         value={value || 0}
         options={variants.map(variant => ({ label: variant.name, value: variant.id }))}
         onChange={newValue => onChange(newValue)}
-        help={__('Variant you want to serve as the control version. This version will be shown to search engines and saved to caches for SEO.')}
       />
     </PanelBody>
   );

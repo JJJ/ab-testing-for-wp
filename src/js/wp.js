@@ -1,3 +1,5 @@
+// @flow
+
 const {
   i18n,
   blocks,
@@ -6,7 +8,7 @@ const {
   apiFetch,
   data,
   element,
-} = wp;
+} = window.wp;
 
 export {
   i18n,

@@ -1,6 +1,6 @@
-// @flow @jsx wp.element.createElement
+// @flow
 
-import { Component } from 'react';
+import React, { Component } from 'react';
 
 import { components, i18n } from '../../wp';
 
@@ -16,9 +16,11 @@ type DeclareWinnerProps = {
     id: string;
     name: string;
     rate: number;
-    winner: number;
+    winner: boolean;
     participants: number;
     conversions: number;
+    control: boolean;
+    uplift: number;
   }[];
   onDeclareWinner: (id: string) => void;
 };

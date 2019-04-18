@@ -1,0 +1,9 @@
+.shortcode-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.shortcode-container code {
+  font-size: 0.9em;
+}

@@ -87,22 +87,24 @@ class BlockRenderer {
         return $variants[0];
     }
 
-    private function wrapData($testId, $postId, $controlContent) {
+    private function wrapData($testId, $controlContent) {
         return 
-            '<div class="ABTestWrapper" data-test="' . $testId . '" data-post="' . $postId . '">'
+            '<div class="ABTestWrapper" data-test="' . $testId . '">'
                 . $controlContent
             . '</div>';
     }
 
     public function resolveVariant($request) {
-        if (!$request->get_param('test') || !$request->get_param('post')) {
-            return new \WP_Error('rest_invalid_request', 'Missing test or post parameter.', ['status' => 400]);
+        if (!$request->get_param('test')) {
+            return new \WP_Error('rest_invalid_request', 'Missing test parameter.', ['status' => 400]);
         }
 
         $testId = $request->get_param('test');
-        $postId = $request->get_param('post');
         $variantId = $request->get_param('variant');
         $forcedVariant = isset($variantId);
+
+        $testManager = new ABTestManager();
+        $postId = $testManager->getTestPostId($testId);
 
         // get contents of the post to extract gutenberg block
         $content_post = get_post($postId);
@@ -110,7 +112,7 @@ class BlockRenderer {
 
         // find the json data of the test in the post
         $testData = ABTestContentParser::findTestInContent($content, $testId);
-        
+
         if (!$testData) {
             return new \WP_Error('rest_invalid_request', 'Could not find test data on post.', ['status' => 400]);
         }
@@ -157,11 +159,14 @@ class BlockRenderer {
             return '';
         }
 
-        return $this->wrapData(
-            $testId,
-            get_the_ID(),
-            $this->getVariantContent($content, $controlVariant['id'])
-        );
+        return $this->wrapData($testId, $this->getVariantContent($content, $controlVariant['id']));
+    }
+
+    public function renderInsertedTest($attributes) {
+        $content_post = get_post($attributes['id']);
+        $content = $content_post->post_content;
+
+        return apply_filters('the_content', $content);
     }
 
 }
