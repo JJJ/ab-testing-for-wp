@@ -162,4 +162,11 @@ class BlockRenderer {
         return $this->wrapData($testId, $this->getVariantContent($content, $controlVariant['id']));
     }
 
+    public function renderInsertedTest($attributes) {
+        $content_post = get_post($attributes['id']);
+        $content = $content_post->post_content;
+
+        return apply_filters('the_content', $content);
+    }
+
 }

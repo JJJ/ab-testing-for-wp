@@ -37,6 +37,7 @@ class RegisterGutenbergBlocks {
         // register AB test inserter
         register_block_type('ab-testing-for-wp/ab-test-block-inserter', [
             'editor_script' => 'ab-testing-for-wp_ab-test-block-inserter',
+            'render_callback' => [$renderer, 'renderInsertedTest'],
         ]);
 
         // update test data meta on saving posts
