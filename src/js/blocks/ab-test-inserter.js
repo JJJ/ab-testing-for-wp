@@ -6,6 +6,7 @@ import { blocks, i18n, data } from '../wp';
 
 import SVGIcon from '../components/Logo/Logo';
 import Inserter from '../components/Inserter/Inserter';
+import TestPreview from '../components/TestPreview/TestPreview';
 
 const { registerBlockType, createBlock } = blocks;
 const { __ } = i18n;
@@ -49,11 +50,7 @@ registerBlockType('ab-testing-for-wp/ab-test-block-inserter', {
     attributes,
     setAttributes,
   }: EditProps) => {
-    if (attributes.id) {
-      return (
-        <div>Render {attributes.id}</div>
-      );
-    }
+    if (attributes.id) return <TestPreview id={attributes.id} />;
 
     return (
       <Inserter
@@ -64,6 +61,6 @@ registerBlockType('ab-testing-for-wp/ab-test-block-inserter', {
     );
   }),
   save() {
-    return <div />;
+    return null;
   },
 });
