@@ -4,16 +4,24 @@
   <div class="welcome-panel how-to">
     <div class="how-to-panel-content">
       <h3><?php echo __('Introduction to A/B Testing for WordPress'); ?></h3>
-      
+
       <img style="width: 33%; max-width: 250px; float: right; margin-left: 30px;" src="<?php echo $assets; ?>how-to-1.png" />
 
       <p><?php echo __('A/B Testing for WordPress allows you to setup split tests on any of your posts or pages. You can add A/B Test blocks in your content using the Gutenberg content editor.'); ?></p>
       <p><?php echo __('Each block will contain the variants of your test and allow you to configure the tests. You can find the A/B Test block in the "Widgets" category.'); ?></p>
 
-      <h3><?php echo __('Adding new Tests'); ?></h3>
+      <h3><?php echo __('Adding New Tests in your Content'); ?></h3>
       <p><?php echo __('To add a new test to your content, go to the edit page of the post or page you want to add the test to.'); ?></p>
       <p><?php echo __('Add a new "block" to the content, search for "A/B Test" under the category "Widgets".'); ?></p>
       <p><?php echo __('A prefilled A/B Test container will be put on the page. The test contains two variants: "A" and "B". Change the content of the variants as you please.'); ?></p>
+
+      <h3><?php echo __('Adding Tests Anywhere Else'); ?></h3>
+      <p><?php echo __('You can also create stand-alone tests which can be inserted anywhere on your website.'); ?></p>
+      <p><?php echo __('Under the "A/B Testing for WordPress" menu you\'ll find a "Add New A/B Test" which will create a stand-alone test outside of your normal content.'); ?></p>
+      <p><?php echo __('This A/B test will get a so called shortcode which can be inserted anywhere on your website.'); ?></p>
+      <p><?php echo __('This is especially useful when you want to render a test in your footer or header for example.'); ?></p>
+      <pre><code>&lt;?php echo do_shortcode("[ab-test id=1234]"); ?&gt;</code></pre>
+      <p><?php echo __('Use this code anywhere in your content or theme\'s code to output the test in that location. Replace "1234" with the ID of your test.'); ?></p>
 
       <h3><?php echo __('Enabling the Test'); ?></h3>
       <p><?php echo __('When the test is not enabled, it will not run. Meaning that only the control variant will be shown to visitors. The test result measurement will stop during this time.'); ?></p>
