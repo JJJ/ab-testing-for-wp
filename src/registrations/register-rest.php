@@ -102,6 +102,18 @@ class RegisterREST {
                 }
             ]
         );
+
+        register_rest_route(
+            'ab-testing-for-wp/v1',
+            '/get-test-content-by-post',
+            [
+                'methods' => 'GET',
+                'callback' => [$tests, 'getTestPreviewContentByPost'],
+                'permission_callback' => function () {
+                    return current_user_can('edit_posts');
+                }
+            ]
+        );
     }
 
     public function __construct() {

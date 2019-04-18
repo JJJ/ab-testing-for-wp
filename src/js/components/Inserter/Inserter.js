@@ -4,7 +4,7 @@ import React, { Component } from 'react';
 
 import { components, i18n, apiFetch } from '../../wp';
 
-import Loader from './Loader';
+import Loader from '../Loader/Loader';
 
 import './Inserter.css';
 
