@@ -9,6 +9,8 @@ import distanceInWords from 'date-fns/distance_in_words';
 import Table from '../../components/Table/Table';
 import Significance from '../../../Significance/Significance';
 
+import { decodeLink } from '../../../../helpers/wordpress';
+
 import { i18n } from '../../../../wp';
 
 import './Overview.css';
@@ -20,9 +22,7 @@ type OverviewData = {
 };
 
 function postLink(name: string, link?: string, testId?: string) {
-  const e = document.createElement('div');
-  e.innerHTML = link || '';
-  const decodedLink = e.textContent;
+  const decodedLink = decodeLink(link);
 
   const url = [
     decodedLink,

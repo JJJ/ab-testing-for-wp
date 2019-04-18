@@ -30,7 +30,10 @@ class TestsActions {
         $content_post = get_post($id);
         $content = $content_post->post_content;
 
-        return rest_ensure_response([ 'html' => $this->getPreviewHTML(apply_filters('the_content', $content)) ]);
+        return rest_ensure_response([ 
+            'html' => $this->getPreviewHTML(apply_filters('the_content', $content)),
+            'editLink' => get_edit_post_link($id)
+        ]);
     }
 
     private function getPreviewHTML($body) {
