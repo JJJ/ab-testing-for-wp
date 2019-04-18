@@ -1,6 +1,8 @@
-// @flow @jsx wp.element.createElement
+// @flow
 
-function ABTestLogo() {
+import React from 'react';
+
+function Logo() {
   return (
     <svg
       version="1.1"
@@ -30,4 +32,4 @@ function ABTestLogo() {
   );
 }
 
-export default ABTestLogo;
+export default Logo;

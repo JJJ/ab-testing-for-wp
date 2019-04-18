@@ -1,8 +1,8 @@
-// @flow @jsx wp.element.createElement
+// @flow
 
-import { createRef, Component } from 'react';
+import React, { createRef, Component } from 'react';
 
-import { data, components, i18n } from '../../wp';
+import { components, i18n } from '../../wp';
 
 import Arrow from './Arrow';
 import { drawOverlayAround, removeOverlay } from './Overlay';
@@ -10,12 +10,11 @@ import { drawOverlayAround, removeOverlay } from './Overlay';
 import './Onboarding.css';
 
 const { __ } = i18n;
-const { withDispatch } = data;
 const { Modal, Button } = components;
 
 type OnboardingProps = {
   clientId: string;
-  selectBlock: (clientId: string) => void;
+  selectBlock: () => void;
   cancelOnboarding: () => void;
 };
 
@@ -28,13 +27,13 @@ class Onboarding extends Component<OnboardingProps, OnboardingState> {
     step: 0,
   };
 
-  container = createRef();
+  container = createRef<HTMLElement>();
 
   componentDidMount() {
-    const { clientId, selectBlock } = this.props;
+    const { selectBlock } = this.props;
 
     // switch to block if rest has been loaded
-    setTimeout(() => selectBlock(clientId), 0);
+    setTimeout(selectBlock, 0);
   }
 
   setupStepContainer() {
@@ -48,8 +47,8 @@ class Onboarding extends Component<OnboardingProps, OnboardingState> {
 
     // reset position and display
     this.stepContainer.style.display = 'block';
-    this.stepContainer.style.top = 0;
-    this.stepContainer.style.left = 0;
+    this.stepContainer.style.top = '0';
+    this.stepContainer.style.left = '0';
 
     const prevButton = this.stepContainer.querySelector('button.prev');
     if (prevButton) {
@@ -64,7 +63,7 @@ class Onboarding extends Component<OnboardingProps, OnboardingState> {
   }
 
   placeStepContainer = (
-    target,
+    target: HTMLElement,
     calcPosition: (
       targetRect: ClientRect,
       containerRect: ClientRect,
@@ -207,7 +206,7 @@ class Onboarding extends Component<OnboardingProps, OnboardingState> {
     });
   };
 
-  stepContainer;
+  stepContainer: HTMLElement;
 
   render() {
     const { step } = this.state;
@@ -324,11 +323,4 @@ class Onboarding extends Component<OnboardingProps, OnboardingState> {
   }
 }
 
-export default withDispatch(dispatch => ({
-  selectBlock(clientId: string) {
-    const { selectBlock } = dispatch('core/editor');
-    const { openGeneralSidebar } = dispatch('core/edit-post');
-    selectBlock(clientId);
-    openGeneralSidebar('edit-post/block');
-  },
-}))(Onboarding);
+export default Onboarding;

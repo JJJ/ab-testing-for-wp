@@ -1,3 +1,8 @@
+#wp-admin-bar-ab-testing-for-wp:hover > .ab-sub-wrapper,
+#wp-admin-bar-ab-testing-for-wp .menupop:hover > .ab-sub-wrapper {
+  display: block;
+}
+
 #wpadminbar #wp-admin-bar-ab-testing-for-wp > .ab-item::before {
   content: "";
   background-image: url('../assets/ab-testing-for-wp-logo-icon.svg') !important;
@@ -10,6 +15,15 @@
   display: inline-block;
 }
 
+#wpadminbar #wp-admin-bar-ab-testing-for-wp .ab-testing-for-wp__test > .ab-item {
+  display: flex;
+  align-items: center;
+}
+
+#wpadminbar #wp-admin-bar-ab-testing-for-wp .ab-testing-for-wp__test > .ab-item span {
+  order: 2;
+}
+
 #wpadminbar #wp-admin-bar-ab-testing-for-wp .ab-testing-for-wp__test > .ab-item::after {
   content: "";
   width: 10px;
@@ -18,8 +32,8 @@
   border-radius: 20px;
   display: inline-block;
   padding: 0;
-  float: left;
-  margin: 8px 8px 0 0;
+  margin: 0 8px 0 0;
+  order: 1;
 }
 
 #wpadminbar #wp-admin-bar-ab-testing-for-wp .ab-testing-for-wp__test.ab-testing-for-wp__enabled > .ab-item::after {
@@ -33,6 +47,11 @@
 
 #wpadminbar #wp-admin-bar-ab-testing-for-wp .ab-testing-for-wp__variant > .ab-item {
   cursor: pointer;
+}
+
+#wpadminbar #wp-admin-bar-ab-testing-for-wp .ab-testing-for-wp__variant button {
+  text-align: left;
+  background: none;
 }
 
 #wpadminbar #wp-admin-bar-ab-testing-for-wp .ab-testing-for-wp__test .ab-item:hover {

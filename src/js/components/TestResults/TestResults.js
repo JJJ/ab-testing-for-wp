@@ -1,7 +1,8 @@
-// @flow @jsx wp.element.createElement
+// @flow
 
-import { Component } from 'react';
+import React, { Component } from 'react';
 import classNames from 'classnames';
+import distanceInWordsToNow from 'date-fns/distance_in_words_to_now';
 
 import { apiFetch, components, i18n } from '../../wp';
 
@@ -10,13 +11,14 @@ import DeclareWinner from './DeclareWinner';
 
 import './TestResults.css';
 
-const { __ } = i18n;
+const { __, sprintf } = i18n;
 const { PanelBody } = components;
 
 type TestResultsProps = {
   testId: string;
   control: string;
   isEnabled: boolean;
+  startedAt: Date | string;
   onDeclareWinner: (id: string) => void;
 };
 
@@ -48,7 +50,12 @@ class TestResults extends Component<TestResultsProps, TestResultsState> {
   }
 
   render() {
-    const { control, isEnabled, onDeclareWinner } = this.props;
+    const {
+      control,
+      isEnabled,
+      startedAt,
+      onDeclareWinner,
+    } = this.props;
     const { results, loading } = this.state;
 
     const hasParticipants = results.reduce((acc, b) => acc + b.participants, 0) > 0;
@@ -86,6 +93,7 @@ class TestResults extends Component<TestResultsProps, TestResultsState> {
 
     return (
       <PanelBody title={__('Results so far')}>
+        {startedAt && <p>{sprintf(__('Runtime: %s'), distanceInWordsToNow(startedAt))}</p>}
         {hasParticipants ? (
           <table className="TestResults">
             <tbody>
@@ -148,10 +156,9 @@ class TestResults extends Component<TestResultsProps, TestResultsState> {
             </tbody>
           </table>
         ) : (
-          <div>No participants yet.</div>
+          <div className="TestResults"><em>{__('No participants yet.')}</em></div>
         )}
         <Significance control={control} results={results} />
-        <br />
         <DeclareWinner variants={enrichedResults} onDeclareWinner={onDeclareWinner} />
       </PanelBody>
     );

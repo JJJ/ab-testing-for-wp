@@ -18,6 +18,7 @@ class RegisterGutenbergBlocks {
         // register scripts
         $this->registerGutenbergScript('ab-testing-for-wp_ab-test-block', 'ab-test.js');
         $this->registerGutenbergScript('ab-testing-for-wp_ab-test-block-variant', 'ab-test-variant.js');
+        $this->registerGutenbergScript('ab-testing-for-wp_ab-test-block-inserter', 'ab-test-inserter.js');
 
         // add Gutenberg options if admin
         $this->addOptions('ab-testing-for-wp_ab-test-block');
@@ -31,6 +32,12 @@ class RegisterGutenbergBlocks {
         // register AB test variant
         register_block_type('ab-testing-for-wp/ab-test-block-variant', [
             'editor_script' => 'ab-testing-for-wp_ab-test-block-variant',
+        ]);
+
+        // register AB test inserter
+        register_block_type('ab-testing-for-wp/ab-test-block-inserter', [
+            'editor_script' => 'ab-testing-for-wp_ab-test-block-inserter',
+            'render_callback' => [$renderer, 'renderInsertedTest'],
         ]);
 
         // update test data meta on saving posts

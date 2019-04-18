@@ -1,13 +1,13 @@
 <?php
 /**
  * @package ABTestingForWP
- * @version 1.8.1
+ * @version 1.9.0
  */
 /*
     Plugin Name: A/B Testing for WordPress
     Plugin URI: https://abtestingforwp.com
     Description: Easiest way to create split tests on your WordPress sites, right from the content editor!
-    Version: 1.8.1
+    Version: 1.9.0
     Author: CleverNode
     Author URI: https://theclevernode.com
     Text Domain: ab-testing-for-wp
@@ -38,6 +38,8 @@ require __DIR__ . '/vendor/autoload.php';
 function bootstrap() {
     // on every request
     new RegisterGutenbergBlocks(__FILE__);
+    new RegisterCustomPostType();
+    new RegisterShortcode();
     new BootStrapIntegrations();
 
     // only on admin

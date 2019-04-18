@@ -14,7 +14,7 @@ class PostsActions {
         $post = get_post($postId);
 
         // skip saving revisions
-        if ($post->post_type === 'revision') return;
+        if ($post->post_type === 'revision' || $post->post_status === 'auto-draft') return;
 
         $testsData = $this->abTestManager->getTestDataByPost($postId);
 
@@ -22,6 +22,11 @@ class PostsActions {
         $this->abTestManager->wipeTestDataFromPost($postId);
 
         foreach ($testsData as $testData) {
+            // fix title if single test post type
+            if ($post->post_type === 'abt4wp-test') {
+                $testData['title'] = $post->post_title;
+            }
+
             $this->abTestManager->insertTest($postId, $testData);
 
             foreach ($testData['variants'] as $variant) {
@@ -63,6 +68,7 @@ class PostsActions {
         $query = new \WP_Query([
             'post_type' => $type,
             'post__not_in' => $notIn,
+            'post_status' => ['publish'],
             'numberposts' => -1,
         ]);
 
