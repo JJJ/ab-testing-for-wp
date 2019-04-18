@@ -7,7 +7,6 @@
   background: rgba(255, 255, 255, 0.7);
   width: 100%;
   height: 100%;
-  z-index: 2;
   opacity: 0;
   transition: opacity 0.2s ease;
   display: flex;
@@ -17,8 +16,4 @@
 
 .EditWrapper__Overlay:hover {
   opacity: 1;
-}
-
-.EditWrapper  iframe{
-  z-index: 1;
 }
