@@ -6,7 +6,7 @@ import { blocks, i18n, data } from '../wp';
 
 import SVGIcon from '../components/Logo/Logo';
 import Inserter from '../components/Inserter/Inserter';
-import TestPreview from '../components/TestPreview/TestPreview';
+import EditWrapper from '../components/TestPreview/EditWrapper';
 
 const { registerBlockType, createBlock } = blocks;
 const { __ } = i18n;
@@ -50,7 +50,7 @@ registerBlockType('ab-testing-for-wp/ab-test-block-inserter', {
     attributes,
     setAttributes,
   }: EditProps) => {
-    if (attributes.id) return <TestPreview id={attributes.id} />;
+    if (attributes.id) return <EditWrapper id={attributes.id} />;
 
     return (
       <Inserter
