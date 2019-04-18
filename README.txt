@@ -62,6 +62,11 @@ Yes. You can change the amount of visitors should see each variant.
 = What does A/B Testing for WordPress count as a goal? =
 You can pick and post or page as a goal to track. Counting outbound links or custom post types as conversion is not possible (yet).
 
+= How Can I Add a Test to my Site? =
+You can enter tests right in the content of your pages and posts through the editor.
+
+Or create a separate test which you can place anywhere on your site using a shortcode. Works with any template!
+
 = How can I contribute to this plugin? =
 You can find the [source and repository over at GitHub](https://github.com/Gaya/ab-testing-for-wp).
 
@@ -73,6 +78,11 @@ You can find the [source and repository over at GitHub](https://github.com/Gaya/
 5. Integration with HTML Forms
 
 == Changelog ==
+= 1.9.0 =
+* Allows to create separate tests which can be added anywhere
+* Improved in editor test rendering
+* Improved A/B tests overview
+
 = 1.8.1 =
 * Added integrations for Ninja Forms, Gravity Forms, WPForms, and Formidable
 * Fixed rare race condition in cookie setting
