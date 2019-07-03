@@ -48,7 +48,7 @@ class ABTestManager {
         p2.post_type AS goalType, t.isArchived,
         (
             SELECT SUM(participants)
-            FROM wp_ab_testing_for_wp_variant AS v
+            FROM `{$this->variantTable}` AS v
             WHERE v.testId = t.id
         ) as totalParticipants
         FROM `{$this->abTestTable}` AS t
