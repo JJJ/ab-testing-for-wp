@@ -34,15 +34,15 @@ class RegisterAdminPage {
 
     private function loadScripts($data = null) {
         wp_register_script(
-            'ab-testing-for-wp-admin', 
-            plugins_url('/dist/admin.js', $this->fileRoot), 
+            'ab-testing-for-wp-admin',
+            plugins_url('/dist/admin-page.js', $this->fileRoot),
             ['wp-api-fetch', 'wp-element']
         );
 
         if (isset($data)) {
             wp_localize_script(
-                'ab-testing-for-wp-admin', 
-                'ABTestingForWP_Data', 
+                'ab-testing-for-wp-admin',
+                'ABTestingForWP_Data',
                 $data
             );
         }
@@ -70,37 +70,37 @@ class RegisterAdminPage {
 
         add_menu_page(
             'A/B Testing',
-            'A/B Testing', 
+            'A/B Testing',
             'manage_options',
-            'ab-testing-for-wp', 
-            [$this, 'appContainer'], 
-            $icon, 
+            'ab-testing-for-wp',
+            [$this, 'appContainer'],
+            $icon,
             61
         );
 
-        add_submenu_page( 
+        add_submenu_page(
             'ab-testing-for-wp',
             __('Active A/B Tests Overview'),
-            __('All A/B Tests'), 
-            'manage_options', 
+            __('All A/B Tests'),
+            'manage_options',
             'ab-testing-for-wp',
             [$this, 'appContainer']
         );
 
-        add_submenu_page( 
+        add_submenu_page(
             'ab-testing-for-wp',
             __('Add New A/B Test'),
-            __('Add New A/B Test'), 
-            'manage_options', 
+            __('Add New A/B Test'),
+            'manage_options',
             'post-new.php?post_type=abt4wp-test',
             [$this, 'gotoEditor']
         );
 
-        add_submenu_page( 
+        add_submenu_page(
             'ab-testing-for-wp',
             __('How to Use A/B Testing'),
-            __('How to Use'), 
-            'manage_options', 
+            __('How to Use'),
+            'manage_options',
             'ab-testing-for-wp_howto',
             [$this, 'howto']
         );

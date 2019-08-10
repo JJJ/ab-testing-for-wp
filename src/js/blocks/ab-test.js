@@ -45,6 +45,8 @@ function isSingleTest() {
 }
 
 class ABTestBlock extends Component<ABTestBlockProps> {
+  currentVariant: string;
+
   componentDidMount() {
     this.selectOnSingleTest();
     this.focusTestIntoView();
@@ -76,8 +78,6 @@ class ABTestBlock extends Component<ABTestBlockProps> {
       selectBlock();
     }, 0);
   }
-
-  currentVariant: string;
 
   showVariant(id: string, selected?: ABTestVariant) {
     if (!selected) return;

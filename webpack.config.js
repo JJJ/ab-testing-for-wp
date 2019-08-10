@@ -10,7 +10,7 @@ module.exports = {
 
     // admin
     'admin-bar': './admin-bar.js',
-    admin: './admin.js',
+    'admin-page': './admin-page.js',
 
     // gutenberg
     'ab-test': './blocks/ab-test.js',
