@@ -18,9 +18,9 @@ which variation works best.
 
 - At least WordPress 5.0 (uses the new Gutenberg editor)
 
-## Development
+## JavaScript Bundle Development
 
-Requirements: [Node.js](https://nodejs.org/en/) and [Composer](https://getcomposer.org/).
+Requirements: [Node.js](https://nodejs.org/en/)
 
 Clone the project and `npm install`.
 
@@ -37,4 +37,17 @@ npm run dev
 npm run release
 ```
 
+## Using Docker for development
 
+Requirements: [Composer](https://getcomposer.org/)
+
+```
+# Starting Docker container:
+docker-compose up -d
+```
+
+Development WordPress install now runs at [localhost:8000](http://localhost:8000)
+
+`./wp-content` of the project root is synced with the development install's `wp-content`.
+
+Look at `docker-compose.yml` for database passwords.
