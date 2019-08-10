@@ -20,10 +20,15 @@ class RegisterAdminPage {
         $base = 'a-b-testing_page_ab-testing-for-wp';
         $toplevelBase = 'toplevel_page_ab-testing-for-wp';
 
+        if ($screen->is_block_editor) {
+            // on all admin editor pages
+            $this->loadEditorScripts();
+        }
+
         if (substr($screen->id, 0, strlen($base)) === $base || $screen->id === $toplevelBase) {
             // an A/B Testing for WordPress admin page
             $this->loadStyles();
-            $this->loadScripts($this->getPageData($screen->id));
+            $this->loadPageScripts($this->getPageData($screen->id));
         }
     }
 
@@ -32,22 +37,32 @@ class RegisterAdminPage {
         wp_enqueue_style('ab_testing_for_wp_admin_style');
     }
 
-    private function loadScripts($data = null) {
+    private function loadEditorScripts() {
         wp_register_script(
-            'ab-testing-for-wp-admin',
+            'ab-testing-for-wp-admin-editor',
+            plugins_url('/dist/admin-editor.js', $this->fileRoot),
+            []
+        );
+
+        wp_enqueue_script('ab-testing-for-wp-admin-editor');
+    }
+
+    private function loadPageScripts($data = null) {
+        wp_register_script(
+            'ab-testing-for-wp-admin-page',
             plugins_url('/dist/admin-page.js', $this->fileRoot),
             ['wp-api-fetch', 'wp-element']
         );
 
         if (isset($data)) {
             wp_localize_script(
-                'ab-testing-for-wp-admin',
+                'ab-testing-for-wp-admin-page',
                 'ABTestingForWP_Data',
                 $data
             );
         }
 
-        wp_enqueue_script('ab-testing-for-wp-admin');
+        wp_enqueue_script('ab-testing-for-wp-admin-page');
     }
 
     private function getPageData($pageName) {
