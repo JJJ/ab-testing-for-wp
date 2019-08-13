@@ -6,6 +6,8 @@ import { i18n, blocks, editor } from '../wp';
 
 import SVGIcon from '../components/Logo/Logo';
 
+import allowedBlockTypes from '../core/allowedBlockTypes';
+
 const { registerBlockType } = blocks;
 const { __, sprintf } = i18n;
 const { InnerBlocks } = editor;
@@ -13,11 +15,6 @@ const { InnerBlocks } = editor;
 type ABTestBlockChildProps = {
   attributes: ABTestVariant;
 } & GutenbergProps;
-
-const disallowedBlocks = [
-  'ab-testing-for-wp/ab-test-block',
-  'ab-testing-for-wp/ab-test-block-variant',
-];
 
 registerBlockType('ab-testing-for-wp/ab-test-block-variant', {
   title: __('A/B Test Variant'),
@@ -55,16 +52,12 @@ registerBlockType('ab-testing-for-wp/ab-test-block-variant', {
       ['core/paragraph', { placeholder: sprintf(__('Enter content or add blocks for test variant "%s"'), name) }],
     ];
 
-    const allowedBlocks = wp.blocks.getBlockTypes()
-      .map(type => type.name)
-      .filter(typeName => disallowedBlocks.indexOf(typeName) === -1);
-
     return (
       <div className={`ABTestVariant ABTestVariant--${id}`}>
         <InnerBlocks
           template={template}
           templateLock={false}
-          allowedBlocks={allowedBlocks}
+          allowedBlocks={allowedBlockTypes()}
         />
       </div>
     );
