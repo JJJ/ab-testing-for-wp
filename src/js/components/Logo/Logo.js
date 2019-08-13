@@ -8,8 +8,8 @@ function Logo() {
       version="1.1"
       x="0px"
       y="0px"
-      width="101.2px"
-      height="101.2px"
+      width={20}
+      height={20}
       viewBox="0 0 101.2 101.2"
     >
       <polygon points="39.9,59.1 27.3,81.4 43.3,81.4 40,59.1" />

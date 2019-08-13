@@ -1,5 +1,4 @@
-function init() {
-  console.log('EDIT PAGE');
-}
+// @flow
 
-document.addEventListener('DOMContentLoaded', init);
+// register plugins
+import './plugins/ConvertButton/ConvertButton';

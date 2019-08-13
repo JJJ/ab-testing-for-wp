@@ -41,7 +41,7 @@ class RegisterAdminPage {
         wp_register_script(
             'ab-testing-for-wp-admin-editor',
             plugins_url('/dist/admin-editor.js', $this->fileRoot),
-            []
+            ['wp-plugins', 'wp-edit-post', 'wp-data', 'wp-i18n', 'wp-compose', 'wp-blocks']
         );
 
         wp_enqueue_script('ab-testing-for-wp-admin-editor');
