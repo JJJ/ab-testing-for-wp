@@ -19,15 +19,21 @@ const { __ } = i18n;
 const { registerPlugin } = plugins;
 const { PluginBlockSettingsMenuItem } = editPost;
 const { withSelect, withDispatch } = data;
-const { cloneBlock, createBlock } = blocks;
+const { createBlock } = blocks;
 
 type ConvertButtonProps = {
+  blockAttributes: any;
   selectedBlock: any;
   convertToTest: any;
   canConvert: boolean;
 }
 
-const ConvertButton = ({ convertToTest, selectedBlock, canConvert }: ConvertButtonProps) => {
+const ConvertButton = ({
+  blockAttributes,
+  convertToTest,
+  selectedBlock,
+  canConvert,
+}: ConvertButtonProps) => {
   if (!canConvert) return null;
 
   return (
@@ -36,9 +42,7 @@ const ConvertButton = ({ convertToTest, selectedBlock, canConvert }: ConvertButt
       icon={<Logo />}
       label={__('Convert to A/B test')}
       onClick={() => {
-        const testContainer = createBlock('ab-testing-for-wp/ab-test-block');
-        const cloned = cloneBlock(selectedBlock);
-        convertToTest(testContainer, cloned, selectedBlock);
+        convertToTest(selectedBlock, blockAttributes);
       }}
     />
   );
@@ -89,22 +93,29 @@ const enhancedConvertButton = compose.compose(
     const selectedBlock = editor.getSelectedBlock();
     const id = selectedBlock ? selectedBlock.clientId : '';
     const root = editor.getBlockHierarchyRootClientId(id);
+    const blockAttributes = editor.getBlockAttributes(id);
 
     return {
+      blockAttributes,
       canConvert: getCanConvert(editor.getBlocks, root, disallowed, id),
       selectedBlock,
     };
   }),
   withDispatch((dispatch) => {
-    const { insertBlock } = dispatch('core/editor');
     const { replaceBlock } = dispatch('core/block-editor');
 
     return {
-      convertToTest(bfd, original, cloned) {
-        const container = createBlock('ab-testing-for-wp/ab-test-block');
-        console.log(original, cloned, container);
+      convertToTest(original, blockAttributes) {
+        const container = createBlock(
+          'ab-testing-for-wp/ab-test-block',
+          {
+            defaultContent: {
+              block: original,
+              attributes: blockAttributes,
+            },
+          },
+        );
 
-        insertBlock(container);
         replaceBlock(
           original.clientId,
           container,

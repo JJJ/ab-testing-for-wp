@@ -16,6 +16,10 @@ type ABTestBlockChildProps = {
   attributes: ABTestVariant;
 } & GutenbergProps;
 
+function isValidContent(defaultContent: any) {
+  return defaultContent && defaultContent.block && defaultContent.block.name;
+}
+
 registerBlockType('ab-testing-for-wp/ab-test-block-variant', {
   title: __('A/B Test Variant'),
   icon: SVGIcon,
@@ -39,18 +43,26 @@ registerBlockType('ab-testing-for-wp/ab-test-block-variant', {
       type: 'boolean',
       default: false,
     },
+    defaultContent: {
+      type: 'object',
+      default: null,
+    },
   },
   edit(props: ABTestBlockChildProps) {
     const { attributes } = props;
 
-    const { id, name } = attributes;
+    const { id, name, defaultContent } = attributes;
 
-    const template = [
-      ['core/button', {
-        text: sprintf(__('Button for Test Variant "%s"'), name),
-      }],
-      ['core/paragraph', { placeholder: sprintf(__('Enter content or add blocks for test variant "%s"'), name) }],
-    ];
+    const template = defaultContent && isValidContent(defaultContent)
+      ? [
+        [defaultContent.block.name, defaultContent.attributes || {}],
+      ]
+      : [
+        ['core/button', {
+          text: sprintf(__('Button for Test Variant "%s"'), name),
+        }],
+        ['core/paragraph', { placeholder: sprintf(__('Enter content or add blocks for test variant "%s"'), name) }],
+      ];
 
     return (
       <div className={`ABTestVariant ABTestVariant--${id}`}>
