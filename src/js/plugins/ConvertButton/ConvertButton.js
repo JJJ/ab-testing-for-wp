@@ -42,7 +42,11 @@ const ConvertButton = ({
       icon={<Logo />}
       label={__('Convert to A/B test')}
       onClick={() => {
-        if (!window.confirm(__('Are you sure you want to convert this block to an A/B test?'))) return;
+        const isConfirmed = window.confirm(
+          __('Are you sure you want to convert this block to an A/B test?'),
+        );
+
+        if (!isConfirmed) return;
         convertToTest(selectedBlock, blockAttributes);
       }}
     />
