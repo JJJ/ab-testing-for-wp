@@ -6,6 +6,8 @@ import { i18n, blocks, editor } from '../wp';
 
 import SVGIcon from '../components/Logo/Logo';
 
+import allowedBlockTypes from '../core/allowedBlockTypes';
+
 const { registerBlockType } = blocks;
 const { __, sprintf } = i18n;
 const { InnerBlocks } = editor;
@@ -14,10 +16,9 @@ type ABTestBlockChildProps = {
   attributes: ABTestVariant;
 } & GutenbergProps;
 
-const disallowedBlocks = [
-  'ab-testing-for-wp/ab-test-block',
-  'ab-testing-for-wp/ab-test-block-variant',
-];
+function isValidContent(defaultContent: any) {
+  return defaultContent && defaultContent.block && defaultContent.block.name;
+}
 
 registerBlockType('ab-testing-for-wp/ab-test-block-variant', {
   title: __('A/B Test Variant'),
@@ -42,29 +43,33 @@ registerBlockType('ab-testing-for-wp/ab-test-block-variant', {
       type: 'boolean',
       default: false,
     },
+    defaultContent: {
+      type: 'object',
+      default: null,
+    },
   },
   edit(props: ABTestBlockChildProps) {
     const { attributes } = props;
 
-    const { id, name } = attributes;
+    const { id, name, defaultContent } = attributes;
 
-    const template = [
-      ['core/button', {
-        text: sprintf(__('Button for Test Variant "%s"'), name),
-      }],
-      ['core/paragraph', { placeholder: sprintf(__('Enter content or add blocks for test variant "%s"'), name) }],
-    ];
-
-    const allowedBlocks = wp.blocks.getBlockTypes()
-      .map(type => type.name)
-      .filter(typeName => disallowedBlocks.indexOf(typeName) === -1);
+    const template = defaultContent && isValidContent(defaultContent)
+      ? [
+        [defaultContent.block.name, defaultContent.attributes || {}],
+      ]
+      : [
+        ['core/button', {
+          text: sprintf(__('Button for Test Variant "%s"'), name),
+        }],
+        ['core/paragraph', { placeholder: sprintf(__('Enter content or add blocks for test variant "%s"'), name) }],
+      ];
 
     return (
       <div className={`ABTestVariant ABTestVariant--${id}`}>
         <InnerBlocks
           template={template}
           templateLock={false}
-          allowedBlocks={allowedBlocks}
+          allowedBlocks={allowedBlockTypes()}
         />
       </div>
     );

@@ -15,7 +15,7 @@ class Installer {
         register_activation_hook($fileRoot, [$this, 'install']);
         add_action('init', [$this, 'runMigrations'], 1);
     }
-    
+
     public function install() {
         $this->createTables();
     }
@@ -38,7 +38,7 @@ class Installer {
             global $wpdb;
 
             $wpdb->hide_errors();
-            
+
             $tablePrefix = $wpdb->prefix;
 
             foreach($migrationsToRun as $methodName) {
@@ -93,9 +93,9 @@ class Installer {
         global $wpdb;
 
         $wpdb->hide_errors();
-        
+
         $collate = $this->getDBCollate();
-        
+
 		$tablePrefix = $wpdb->prefix;
 
         $tablesSql = [];
@@ -133,7 +133,7 @@ class Installer {
             `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
             PRIMARY KEY (`id`)
         ) ENGINE = InnoDB {$collate};";
-        
+
         foreach($tablesSql as $sql) {
 			$wpdb->query($sql);
         }

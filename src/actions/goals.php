@@ -8,7 +8,7 @@ class GoalActions {
         $types = get_post_types(
             [
                 'public' => true,
-            ], 
+            ],
             'objects'
         );
 
@@ -31,7 +31,7 @@ class GoalActions {
             array_push($allowedTypes, array_merge(['name' => $type->name, 'label' => $type->label], $strings[$key]));
         }
 
-        $allowedTypes = apply_filters('ab-testing-for-wp_goal-types', $allowedTypes); 
+        $allowedTypes = apply_filters('ab-testing-for-wp_goal-types', $allowedTypes);
 
         return rest_ensure_response($allowedTypes);
     }

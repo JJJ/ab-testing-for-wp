@@ -26,12 +26,12 @@ class Formidable extends Integration {
             }
         );
     }
-    
+
     public function addGoalType($types) {
         array_push(
-            $types, 
-            [ 
-                'name' => 'Formidable', 
+            $types,
+            [
+                'name' => 'Formidable',
                 'label' => 'Formidable',
                 'itemName' => __('On submit of form'),
                 'help' => __('If the visitor submits this form it will add a point to the tested variant.')

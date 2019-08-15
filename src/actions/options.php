@@ -18,7 +18,7 @@ class OptionsActions {
         }
 
         $this->optionsManager->setOption($body['key'], $body['value']);
-        
+
         return rest_ensure_response(true);
     }
 

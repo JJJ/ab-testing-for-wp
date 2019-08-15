@@ -45,6 +45,8 @@ function isSingleTest() {
 }
 
 class ABTestBlock extends Component<ABTestBlockProps> {
+  currentVariant: string;
+
   componentDidMount() {
     this.selectOnSingleTest();
     this.focusTestIntoView();
@@ -76,8 +78,6 @@ class ABTestBlock extends Component<ABTestBlockProps> {
       selectBlock();
     }, 0);
   }
-
-  currentVariant: string;
 
   showVariant(id: string, selected?: ABTestVariant) {
     if (!selected) return;
@@ -123,6 +123,7 @@ class ABTestBlock extends Component<ABTestBlockProps> {
       isEnabled,
       startedAt,
       completedOnboarding,
+      defaultContent,
     } = attributes;
 
     const cancelOnboarding = () => {
@@ -138,12 +139,14 @@ class ABTestBlock extends Component<ABTestBlockProps> {
           name: 'A',
           selected: true,
           distribution: 50,
+          defaultContent,
         },
         {
           id: shortid.generate(),
           name: 'B',
           selected: false,
           distribution: 50,
+          defaultContent,
         },
       ];
 
@@ -326,6 +329,10 @@ registerBlockType('ab-testing-for-wp/ab-test-block', {
       type: 'boolean',
       default: !!getOption('completedOnboarding'),
       source: 'text',
+    },
+    defaultContent: {
+      type: 'object',
+      default: null,
     },
   },
   edit,
