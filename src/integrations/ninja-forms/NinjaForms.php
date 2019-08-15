@@ -26,12 +26,12 @@ class NinjaForms extends Integration {
             }
         );
     }
-    
+
     public function addGoalType($types) {
         array_push(
-            $types, 
-            [ 
-                'name' => 'NinjaForms', 
+            $types,
+            [
+                'name' => 'NinjaForms',
                 'label' => 'Ninja Forms',
                 'itemName' => __('On submit of form'),
                 'help' => __('If the visitor submits this form it will add a point to the tested variant.')

@@ -30,7 +30,7 @@ class TestsActions {
         $content_post = get_post($id);
         $content = $content_post->post_content;
 
-        return rest_ensure_response([ 
+        return rest_ensure_response([
             'html' => $this->getPreviewHTML(apply_filters('the_content', $content)),
             'editLink' => get_edit_post_link($id)
         ]);
@@ -38,7 +38,7 @@ class TestsActions {
 
     private function getPreviewHTML($body) {
         ob_start();
-        
+
         echo '<!DOCTYPE html>
         <html lang="en-US" class="no-js">
         <head>';

@@ -7,7 +7,7 @@ class RegisterCustomPostType {
     public function __construct() {
         add_action('init', [$this, 'registerTestType']);
     }
-    
+
     public function registerTestType() {
         register_post_type(
             'abt4wp-test',

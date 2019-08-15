@@ -32,7 +32,7 @@ class ABTestManager {
     public function getStatsByTest($testId) {
         return $this->wpdb->get_results($this->wpdb->prepare("
         SELECT id, name, participants, conversions
-        FROM `{$this->variantTable}` 
+        FROM `{$this->variantTable}`
         WHERE testId = %s;
         ", $testId));
     }
@@ -44,7 +44,7 @@ class ABTestManager {
     public function getAllTests($extraQuery = '') {
         $data = $this->wpdb->get_results("
         SELECT t.id, t.isEnabled, t.startedAt, t.title, t.control, t.postId, t.postGoal,
-        p1.post_type AS postType, p1.post_title AS postName, p2.post_title AS goalName, 
+        p1.post_type AS postType, p1.post_title AS postName, p2.post_title AS goalName,
         p2.post_type AS goalType, t.isArchived,
         (
             SELECT SUM(participants)
@@ -158,13 +158,13 @@ class ABTestManager {
     public function getStatsByVariation($variantId) {
         $participants = $this->wpdb->get_var($this->wpdb->prepare("
         SELECT COUNT(variantId)
-        FROM `{$this->logTable}` 
+        FROM `{$this->logTable}`
         WHERE variantId = %s AND track = 'P';
         ", $variantId));
 
         $conversions = $this->wpdb->get_var($this->wpdb->prepare("
         SELECT COUNT(variantId)
-        FROM `{$this->logTable}` 
+        FROM `{$this->logTable}`
         WHERE variantId = %s AND track = 'C';
         ", $variantId));
 
@@ -181,7 +181,7 @@ class ABTestManager {
         $query = $this->wpdb->prepare("
         SELECT t.id as testId, v.id as variantId, t.isEnabled
         FROM `{$this->abTestTable}` AS t
-        INNER JOIN `{$this->variantTable}` AS v ON v.testid = t.id       
+        INNER JOIN `{$this->variantTable}` AS v ON v.testid = t.id
         WHERE t.postGoal = %d AND t.isEnabled = 1 $extraQuery
         ", $postId);
 
@@ -271,7 +271,7 @@ class ABTestManager {
             $variant['id'],
             $testId,
             $variant['name'],
-            $participants, 
+            $participants,
             $conversions
         ));
     }

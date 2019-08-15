@@ -15,12 +15,12 @@ class MC4WP extends Integration {
         add_filter('ab-testing-for-wp_goal-types', [$this, 'addGoalType']);
         add_action('mc4wp_form_success', [$this, 'catchFormSubmits']);
     }
-    
+
     public function addGoalType($types) {
         array_push(
-            $types, 
-            [ 
-                'name' => 'mc4wp-form', 
+            $types,
+            [
+                'name' => 'mc4wp-form',
                 'label' => 'Mailchimp for WordPress',
                 'itemName' => __('On signup'),
                 'help' => __('If the visitor signs up for your newsletter it will add a point to the tested variant.')
