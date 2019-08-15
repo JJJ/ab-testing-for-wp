@@ -78,6 +78,9 @@ You can find the [source and repository over at GitHub](https://github.com/Gaya/
 5. Integration with HTML Forms
 
 == Changelog ==
+= 1.10.0 =
+* Ability to convert existing blocks to tests
+
 = 1.9.1 =
 * Fix hardcoded 'wp_ab_testing_for_wp_variant' table name causing errors
 
