@@ -2,7 +2,7 @@
 
 namespace ABTestingForWP;
 
-class PostsActions {    
+class PostsActions {
 
     private $abTestManager;
 

@@ -8,6 +8,7 @@ declare type ABTestVariant = {
   name: string;
   selected: boolean;
   distribution: number;
+  defaultContent?: any;
 };
 
 declare type ABTestAttributes = {
@@ -20,6 +21,7 @@ declare type ABTestAttributes = {
   postGoal: number;
   postGoalType: string;
   startedAt: Date | string;
+  defaultContent?: any;
 };
 
 declare type GutenbergProps = {

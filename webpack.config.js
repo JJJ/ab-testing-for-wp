@@ -6,11 +6,12 @@ module.exports = {
   mode,
   entry: {
     // frontend
-    'ab-testing-for-wp': './ab-testing-for-wp.js',
+    'ab-testing-for-wp': './frontend.js',
 
     // admin
+    'admin-editor': './admin-editor.js',
     'admin-bar': './admin-bar.js',
-    admin: './admin.js',
+    'admin-page': './admin-page.js',
 
     // gutenberg
     'ab-test': './blocks/ab-test.js',

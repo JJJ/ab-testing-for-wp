@@ -15,12 +15,12 @@ class ContactForm7 extends Integration {
         add_filter('ab-testing-for-wp_goal-types', [$this, 'addGoalType']);
         add_action('wpcf7_submit', [$this, 'catchFormSubmits']);
     }
-    
+
     public function addGoalType($types) {
         array_push(
-            $types, 
-            [ 
-                'name' => 'wpcf7_contact_form', 
+            $types,
+            [
+                'name' => 'wpcf7_contact_form',
                 'label' => 'Contact Form 7',
                 'itemName' => __('On submit of form'),
                 'help' => __('If the visitor submits this form it will add a point to the tested variant.')

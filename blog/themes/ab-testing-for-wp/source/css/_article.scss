@@ -44,6 +44,14 @@
   code {
     font-family: monospace;
   }
+
+  ol {
+    li {
+      list-style-type: decimal;
+      list-style-position: inside;
+      margin: 0.5em 0;
+    }
+  }
 }
 
 @media only screen and (min-width: $screen-md) {

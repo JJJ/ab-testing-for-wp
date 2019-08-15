@@ -15,6 +15,16 @@
       <p><?php echo __('Add a new "block" to the content, search for "A/B Test" under the category "Widgets".'); ?></p>
       <p><?php echo __('A prefilled A/B Test container will be put on the page. The test contains two variants: "A" and "B". Change the content of the variants as you please.'); ?></p>
 
+      <h3><?php echo __('Converting an Existing Block to a Test'); ?></h3>
+      <p><?php echo __('It\'s also possible to use an existing block on your page and convert it into a test without having to jump through hoops.'); ?></p>
+      <p><?php echo __('Find and select the block you want to convert to a test.'); ?></p>
+      <p><?php echo __('Press the "more settings" button (1. in figure below), then choose to convert to A/B test (2. in figure below)'); ?></p>
+
+      <img style="width: 100%; margin: 0 auto" src="<?php echo $assets; ?>how-to-2.png" />
+
+      <p><?php echo __('You block will now be wrapped inside of an A/B test, you can find you block in both the A and B variants. Don\'t forgot to change the variants and enable the test.'); ?></p>
+      <p><?php echo __('You cannot convert a block inside of an existing test into a test.'); ?></p>
+
       <h3><?php echo __('Adding Tests Anywhere Else'); ?></h3>
       <p><?php echo __('You can also create stand-alone tests which can be inserted anywhere on your website.'); ?></p>
       <p><?php echo __('Under the "A/B Testing for WordPress" menu you\'ll find a "Add New A/B Test" which will create a stand-alone test outside of your normal content.'); ?></p>
