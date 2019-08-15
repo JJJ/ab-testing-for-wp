@@ -22,6 +22,7 @@ function isValidContent(defaultContent: any) {
 
 registerBlockType('ab-testing-for-wp/ab-test-block-variant', {
   title: __('A/B Test Variant'),
+  description: __('Test variant belonging to the parent A/B test container'),
   icon: SVGIcon,
   category: 'widgets',
   parent: ['ab-testing-for-wp/ab-test-block'],

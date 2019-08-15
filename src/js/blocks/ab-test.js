@@ -285,7 +285,7 @@ const edit = withDispatch((dispatch, props) => {
 })(ABTestBlock);
 
 registerBlockType('ab-testing-for-wp/ab-test-block', {
-  title: __('A/B Test'),
+  title: __('A/B Test Container'),
   description: __('A/B test container which contains the possible variants.'),
   icon: SVGIcon,
   category: 'widgets',
