@@ -3,7 +3,7 @@
 namespace ABTestingForWP;
 
 class OptionsManager {
-    
+
     private $optionsKey = 'ab-testing-for-wp-options';
 
     public function __construct() {

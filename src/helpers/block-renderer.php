@@ -3,13 +3,13 @@
 namespace ABTestingForWP;
 
 class BlockRenderer {
-  
+
     private function randomTestDistributionPosition($variants) {
         $max = array_reduce(
-            $variants, 
-            function ($acc, $variant) { 
-                return $acc + $variant['distribution']; 
-            }, 
+            $variants,
+            function ($acc, $variant) {
+                return $acc + $variant['distribution'];
+            },
             0
         );
 
@@ -88,7 +88,7 @@ class BlockRenderer {
     }
 
     private function wrapData($testId, $controlContent) {
-        return 
+        return
             '<div class="ABTestWrapper" data-test="' . $testId . '">'
                 . $controlContent
             . '</div>';

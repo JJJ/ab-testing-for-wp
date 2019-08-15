@@ -49,7 +49,7 @@ class RegisterGutenbergBlocks {
         // only for admin pages
         if(is_admin() && (!defined('DOING_AJAX') || !DOING_AJAX)) {
             $optionsManager = new OptionsManager();
-    
+
             wp_localize_script($scriptHandle, 'ABTestingForWP_Options', $optionsManager->getAllOptions());
         }
     }

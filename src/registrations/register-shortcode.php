@@ -18,7 +18,7 @@ class RegisterShortcode {
         $post = get_post($atts['id']);
 
         if ($post->post_type !== 'abt4wp-test') return '';
-        
+
         return apply_filters('the_content', $post->post_content);
     }
 

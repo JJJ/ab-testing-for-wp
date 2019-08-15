@@ -9,10 +9,10 @@ class RegisterFrontendAdminBar {
     public function __construct($fileRoot) {
         $this->fileRoot = $fileRoot;
         $this->abTestManager = new ABTestManager();
-        
+
         add_action('init', [$this, 'bootstrap']);
     }
-    
+
     public function bootstrap() {
         if (is_admin_bar_showing()) {
             add_action('wp_enqueue_scripts', [$this, 'loadAssets']);
@@ -25,13 +25,13 @@ class RegisterFrontendAdminBar {
         wp_enqueue_style('ab_testing_for_wp_admin_bar_style');
 
         wp_register_script(
-            'ab-testing-for-wp-admin-bar', 
-            plugins_url('/dist/admin-bar.js', $this->fileRoot), 
+            'ab-testing-for-wp-admin-bar',
+            plugins_url('/dist/admin-bar.js', $this->fileRoot),
             ['wp-api-fetch', 'wp-i18n', 'wp-element']
         );
         wp_localize_script(
-            'ab-testing-for-wp-admin-bar', 
-            'ABTestingForWP_AdminBar', 
+            'ab-testing-for-wp-admin-bar',
+            'ABTestingForWP_AdminBar',
             [
                 'cookieData' => isset($_COOKIE['ab-testing-for-wp']) ? json_decode(stripslashes($_COOKIE['ab-testing-for-wp']), true) : [],
             ]
