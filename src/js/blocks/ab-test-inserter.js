@@ -23,6 +23,7 @@ type EditProps = {
 
 registerBlockType('ab-testing-for-wp/ab-test-block-inserter', {
   title: __('A/B Test'),
+  description: __('A/B Test inserter allows you to pick an existing test or create a new one.'),
   icon: SVGIcon,
   category: 'widgets',
   attributes: {
