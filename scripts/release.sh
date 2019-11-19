@@ -10,7 +10,12 @@ echo "Release version $VERSION (y/n)?"
 read answer
 
 if [[ "$answer" != "${answer#[Yy]}" ]]; then
-  echo "Releasing...";
+  echo "Releasing to GitHub...";
+
+  git tag v$VERSION
+  git push --tags
+
+  echo "Releasing to SVN...";
 
   # clean SVN folders
   rm -Rf $SVN_DIR/trunk/*
