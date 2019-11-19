@@ -78,6 +78,9 @@ You can find the [source and repository over at GitHub](https://github.com/Gaya/
 5. Integration with HTML Forms
 
 == Changelog ==
+= 1.11.0 =
+* Some minor bug fixes and improvements to the implementation
+
 = 1.10.0 =
 * Ability to convert existing blocks to tests
 
