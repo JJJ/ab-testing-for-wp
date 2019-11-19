@@ -15,7 +15,9 @@ jobs:
       - name: Use Node.js
         uses: actions/setup-node@v1
       - name: Build project
-        run: npm run prepare-release
+        run: |
+          npm ci
+          npm run prepare-release
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1.0.0
