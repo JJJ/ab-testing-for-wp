@@ -20,6 +20,9 @@ class Integration {
         $this->wpdb = $wpdb;
     }
 
+    protected function loadIntegration() {
+    }
+
     protected function getPluginSlug() {
         return $this->pluginSlug;
     }
