@@ -28,23 +28,25 @@ class Integration {
         return is_plugin_active($this->getPluginSlug()) && $this->extraPluginCheck();
     }
 
-    protected function addCustomQuery($type = '', $query = '', $tranform = false) {
+    protected function addCustomQuery($type = '', $query = '', $transform = false) {
         if ($query === '') return;
 
-        // very ugly pass arguments to next function call
-        $this->query = $query;
-        $this->tranform = $tranform;
-
-        add_filter("ab-testing-for-wp_custom-query-$type", [$this, 'performCustomQuery']);
+        add_filter(
+            "ab-testing-for-wp_custom-query-{$type}",
+            function () use ($this, $query, $transform) {
+                $this->performCustomQuery($query, $transform);
+            }
+            10,
+            0
+        );
     }
 
-    public function performCustomQuery() {
-        $query = str_replace('%s', $this->wpdb->prefix, $this->query);
+    public function performCustomQuery($query, $transform) {
+        $results = $this->wpdb->get_results(str_replace('%s', $this->wpdb->prefix, $query));
 
-        $results = $this->wpdb->get_results($query);
+        if (!$transform) return $results;
 
-        if (!$this->tranform) return $results;
-        return array_map($this->tranform, $results);
+        return array_map($transform, $results);
     }
 
     /**
