@@ -3,7 +3,7 @@ on:
     tags:
       - 'v*'
 
-name: Upload Release Asset
+name: A/B Testing for WP release strategy
 
 jobs:
   build:
@@ -14,6 +14,8 @@ jobs:
         uses: actions/checkout@master
       - name: Use Node.js
         uses: actions/setup-node@v1
+      - name: Use Composer
+        uses: MilesChou/composer-action/5.6/install@master
       - name: Build project
         run: |
           npm ci
