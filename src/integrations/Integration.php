@@ -36,15 +36,17 @@ class Integration {
 
         add_filter(
             "ab-testing-for-wp_custom-query-{$type}",
-            function () use ($this, $query, $transform) {
+            function () use ($query, $transform) {
                 $this->performCustomQuery($query, $transform);
-            }
+            },
             10,
             0
         );
     }
 
     public function performCustomQuery($query, $transform) {
+        var_dump($query);
+        die();
         $results = $this->wpdb->get_results(str_replace('%s', $this->wpdb->prefix, $query));
 
         if (!$transform) return $results;
