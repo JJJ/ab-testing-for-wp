@@ -45,8 +45,6 @@ class Integration {
     }
 
     public function performCustomQuery($query, $transform) {
-        var_dump($query);
-        die();
         $results = $this->wpdb->get_results(str_replace('%s', $this->wpdb->prefix, $query));
 
         if (!$transform) return $results;
