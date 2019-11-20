@@ -5,3 +5,5 @@ export function decodeLink(link?: string = ''): string {
   e.innerHTML = link;
   return e.textContent;
 }
+
+export default {};

@@ -42,6 +42,7 @@ const ConvertButton = ({
       icon={<Logo />}
       label={__('Convert to A/B test')}
       onClick={() => {
+        // eslint-disable-next-line no-alert
         const isConfirmed = window.confirm(
           __('Are you sure you want to convert this block to an A/B test?'),
         );
