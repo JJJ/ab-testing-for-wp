@@ -1,9 +1,9 @@
-name: A/B Testing for WordPress release strategy
+name: Release
 
 on:
   push:
     tags:
-      - 'v*'
+      - v[0-9]+.[0-9]+.[0-9]+
 
 jobs:
   build:
