@@ -9,7 +9,7 @@ which variation works best.
 
 ## Installing
 
-1. Download `ab-testing-for-wp.zip`
+1. Download `ab-testing-for-wp.zip` found on the [latest release](https://github.com/Gaya/ab-testing-for-wp/releases/latest)
 1. Unzip contents and upload "ab-testing-for-wp" folder to the "/wp-content/plugins/" directory.
 1. Activate the plugin through the "Plugins" screen in WordPress.
 1. You can now add tests to your content!
@@ -39,7 +39,7 @@ npm run release
 
 ## Using Docker for development
 
-Requirements: [Composer](https://getcomposer.org/)
+Requirements: [Composer](https://getcomposer.org/), [Docker](https://www.docker.com/products/developer-tools)
 
 ```
 # Starting Docker container:
