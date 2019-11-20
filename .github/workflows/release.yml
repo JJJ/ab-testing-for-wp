@@ -1,0 +1,42 @@
+name: A/B Testing for WordPress release strategy
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  build:
+    name: Release A/B Testing for WordPress
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@master
+      - name: Use Node.js
+        uses: actions/setup-node@v1
+      - name: Use Composer
+        uses: MilesChou/composer-action/5.6/install@master
+      - name: Build project
+        run: |
+          npm ci
+          npm run prepare-release
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1.0.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: Release ${{ github.ref }}
+          draft: false
+          prerelease: false
+      - name: Upload Release Asset
+        id: upload-release-asset
+        uses: actions/upload-release-asset@v1.0.1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./ab-testing-for-wp.zip
+          asset_name: ab-testing-for-wp.zip
+          asset_content_type: application/zip
