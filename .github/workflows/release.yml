@@ -1,13 +1,13 @@
+name: A/B Testing for WordPress release strategy
+
 on:
   push:
     tags:
       - 'v*'
 
-name: A/B Testing for WP release strategy
-
 jobs:
   build:
-    name: Upload Release Asset
+    name: Release A/B Testing for WordPress
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
