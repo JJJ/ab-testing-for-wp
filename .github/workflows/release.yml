@@ -19,7 +19,7 @@ jobs:
       - name: Build project
         run: |
           npm ci
-          npm run prepare-release
+          npm run package-release
       - name: Create Release on GitHub
         id: create_release
         uses: actions/create-release@v1.0.0
