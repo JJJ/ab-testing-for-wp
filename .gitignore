@@ -1,7 +1,7 @@
 node_modules/
 dist/
 svn/
+vendor/
 stats.json
-site/build
 wp-content
 ab-testing-for-wp.zip
