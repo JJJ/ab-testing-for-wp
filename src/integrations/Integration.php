@@ -36,9 +36,9 @@ class Integration {
 
         add_filter(
             "ab-testing-for-wp_custom-query-{$type}",
-            function () use ($this, $query, $transform) {
+            function () use ($query, $transform) {
                 $this->performCustomQuery($query, $transform);
-            }
+            },
             10,
             0
         );

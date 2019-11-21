@@ -29,6 +29,8 @@ class Onboarding extends Component<OnboardingProps, OnboardingState> {
 
   container = createRef<HTMLElement>();
 
+  stepContainer: HTMLElement;
+
   componentDidMount() {
     const { selectBlock } = this.props;
 
@@ -205,8 +207,6 @@ class Onboarding extends Component<OnboardingProps, OnboardingState> {
       if (step === 9) removeOverlay();
     });
   };
-
-  stepContainer: HTMLElement;
 
   render() {
     const { step } = this.state;
