@@ -9,7 +9,7 @@
     "flow": "flow",
     "build": "NODE_ENV=production webpack",
     "dev": "webpack --watch",
-    "archive": "zip -r ab-testing-for-wp.zip ./ -x 'node_modules/*' -x '.git/*' -x 'wp-content/*' -x 'blog/*' -x 'svn/*' -x '.idea/*' -x '*.DS_Store' -x 'assets/*'",
+    "archive": "zip -r ab-testing-for-wp.zip ./ -x 'node_modules/*' -x '.git/*' -x 'wp-content/*' -x 'blog/*' -x 'svn/*' -x '.idea/*' -x '*.DS_Store' -x '.wordpress-org/*'",
     "clean": "rm -rf ./dist && rm -rf ab-testing-for-wp.zip",
     "dumpautoload": "composer dump-autoload",
     "bump-version": "sh scripts/bump.sh",
