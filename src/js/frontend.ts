@@ -1,5 +1,3 @@
-// @flow
-
 import handleTestRender from './frontend/handleTestRender';
 import handleTestTracking from './frontend/handleTestTracking';
 

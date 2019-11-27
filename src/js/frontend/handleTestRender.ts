@@ -1,5 +1,3 @@
-// @flow
-
 const { apiFetch } = window.wp;
 
 function handleTestRender() {
