@@ -1,7 +1,7 @@
 module.exports = {
-  parser: 'babel-eslint',
-  extends: ['airbnb', 'plugin:flowtype/recommended'],
-  plugins: ['flowtype'],
+  parser: '@typescript-eslint/parser',
+  extends: ['airbnb', 'plugin:@typescript-eslint/recommended'],
+  plugins: ['@typescript-eslint'],
   env: {
     browser: true,
     node: true,
@@ -15,7 +15,7 @@ module.exports = {
   rules: {
     'react/react-in-jsx-scope': 0,
     'react/require-default-props': 0,
-    'react/jsx-filename-extension': [1, { extensions: ['.js', '.jsx'] }],
+    'react/jsx-filename-extension': [1, { extensions: ['.js', '.jsx', '.tsx'] }],
   },
   settings: {
     'import/resolver': 'webpack',
