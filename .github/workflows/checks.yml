@@ -17,8 +17,8 @@ jobs:
       run: npm run lint
       env:
         CI: true
-    - name: Flow Type
-      run: npm run flow
+    - name: Check TypeScript
+      run: npm run tsc
       env:
         CI: true
     - name: Build
