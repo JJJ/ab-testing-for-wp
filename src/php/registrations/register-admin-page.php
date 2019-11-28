@@ -5,7 +5,7 @@ namespace ABTestingForWP;
 class RegisterAdminPage {
     private $abTestMananger;
     private $fileRoot;
-    private $srcRoot = __DIR__ . '/../';
+    private $srcRoot = __DIR__ . '/../../';
 
     public function __construct($fileRoot) {
         $this->abTestManager = new ABTestManager();
