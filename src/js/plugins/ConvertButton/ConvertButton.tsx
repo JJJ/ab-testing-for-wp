@@ -31,7 +31,7 @@ const ConvertButton = ({
   convertToTest,
   selectedBlock,
   canConvert,
-}: ConvertButtonProps) => {
+}: ConvertButtonProps): JSX.Element | null => {
   if (!canConvert) return null;
 
   return (
@@ -39,7 +39,7 @@ const ConvertButton = ({
       allowedBlocks={allowedBlockTypes()}
       icon={<Logo />}
       label={__('Convert to A/B test')}
-      onClick={() => {
+      onClick={(): void => {
         // eslint-disable-next-line no-alert
         const isConfirmed = window.confirm(
           __('Are you sure you want to convert this block to an A/B test?'),
