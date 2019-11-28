@@ -23,11 +23,6 @@ declare interface ABTestAttributes {
   defaultContent?: any;
 }
 
-declare interface GutenbergProps {
-  clientId: string;
-  setAttributes: (newState: any) => void;
-}
-
 declare interface ABTestResult {
   id: string;
   name: string;
