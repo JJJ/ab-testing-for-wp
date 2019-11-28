@@ -1,4 +1,5 @@
-const path = require('path'); // eslint-disable-line import/no-extraneous-dependencies
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const path = require('path');
 
 const mode = process.env.NODE_ENV || 'development';
 
