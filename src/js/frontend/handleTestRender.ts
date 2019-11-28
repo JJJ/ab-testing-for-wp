@@ -1,6 +1,6 @@
-const { apiFetch } = window.wp;
+import apiFetch from '@wordpress/api-fetch';
 
-function handleTestRender() {
+function handleTestRender(): void {
   const testsOnPage = document.getElementsByClassName('ABTestWrapper');
 
   for (let i = 0; i < testsOnPage.length; i += 1) {

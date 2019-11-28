@@ -6,7 +6,7 @@ module.exports = {
   mode,
   entry: {
     // frontend
-    'ab-testing-for-wp': './frontend.js',
+    'ab-testing-for-wp': './frontend.ts',
 
     // admin
     'admin-editor': './admin-editor.js',
@@ -26,6 +26,7 @@ module.exports = {
   externals: {
     react: 'window.wp.element',
     'react-dom': 'window.wp.element',
+    '@wordpress/api-fetch': 'window.wp.apiFetch',
   },
   module: {
     rules: [

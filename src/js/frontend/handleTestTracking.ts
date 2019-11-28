@@ -1,4 +1,4 @@
-const { apiFetch } = window.wp;
+import apiFetch from '@wordpress/api-fetch';
 
 function handleTestTracking() {
   if (!ABTestingForWP || !ABTestingForWP.postId) return;
