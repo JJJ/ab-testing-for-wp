@@ -1,7 +1,7 @@
 import handleTestRender from './frontend/handleTestRender';
 import handleTestTracking from './frontend/handleTestTracking';
 
-function onLoad() {
+function onLoad(): void {
   handleTestRender();
   handleTestTracking();
 }

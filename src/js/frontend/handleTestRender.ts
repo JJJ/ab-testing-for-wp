@@ -8,7 +8,7 @@ function handleTestRender(): void {
     const testId = (test.getAttribute('data-test')) || '';
 
     // get variant from server
-    apiFetch({ path: `/ab-testing-for-wp/v1/ab-test?test=${testId}` })
+    apiFetch<{ html?: string }>({ path: `/ab-testing-for-wp/v1/ab-test?test=${testId}` })
       .then((variant) => {
         if (variant.html) {
           test.innerHTML = variant.html;
