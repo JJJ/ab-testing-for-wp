@@ -28,6 +28,7 @@ module.exports = {
     react: 'window.wp.element',
     'react-dom': 'window.wp.element',
     '@wordpress/api-fetch': 'window.wp.apiFetch',
+    '@wordpress/plugins': 'window.wp.plugins',
   },
   module: {
     rules: [

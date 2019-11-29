@@ -1,9 +1,9 @@
 import React from 'react';
+import plugins from '@wordpress/plugins';
 
 import Logo from '../../components/Logo/Logo';
 
 import {
-  plugins,
   editPost,
   i18n,
   data,
