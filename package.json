@@ -67,6 +67,8 @@
     "webpack-cli": "^3.3.10"
   },
   "dependencies": {
+    "@types/classnames": "^2.2.9",
+    "@types/scroll-into-view": "^1.6.7",
     "@wordpress/api-fetch": "^3.7.0",
     "@wordpress/blocks": "^6.8.0",
     "@wordpress/compose": "^3.8.0",
