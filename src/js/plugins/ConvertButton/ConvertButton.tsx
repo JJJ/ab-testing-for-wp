@@ -44,10 +44,10 @@ const ConvertButton = ({
 };
 
 function doesNotContainTarget(
-  getBlocks: (id: string) => { name: string, clientId: string }[],
+  getBlocks: (id: string) => { name: string; clientId: string }[],
   id: string,
   target: string,
-) {
+): boolean {
   const children = getBlocks(id);
 
   return children.every((c) => {
@@ -60,11 +60,11 @@ function doesNotContainTarget(
 }
 
 function getCanConvert(
-  getBlocks: (id: string) => { name: string, clientId: string }[],
+  getBlocks: (id: string) => { name: string; clientId: string }[],
   id: string,
   disallowed: string[],
   target: string,
-) {
+): boolean {
   const children = getBlocks(id);
 
   return children.every((c) => {
@@ -85,9 +85,9 @@ const enhancedConvertButton = compose(
       'ab-testing-for-wp/ab-test-block-variant',
     ];
 
-    const selectedBlock = editor.getSelectedBlock();
+    const selectedBlock = editor.getSelectedBlock<{ clientId: string }>();
     const id = selectedBlock ? selectedBlock.clientId : '';
-    const root = editor.getBlockHierarchyRootClientId(id);
+    const root = editor.getBlockHierarchyRootClientId<string>(id);
     const blockAttributes = editor.getBlockAttributes(id);
 
     return {
@@ -100,7 +100,7 @@ const enhancedConvertButton = compose(
     const { replaceBlock } = dispatch('core/block-editor');
 
     return {
-      convertToTest(original, blockAttributes) {
+      convertToTest(original: any, blockAttributes: any): void {
         const container = createBlock(
           'ab-testing-for-wp/ab-test-block',
           {
@@ -120,4 +120,6 @@ const enhancedConvertButton = compose(
   }),
 )(ConvertButton);
 
-registerPlugin('block-settings-menu-ab-test-convert', { render: enhancedConvertButton });
+const Icon: React.FC = () => <div />;
+
+registerPlugin('block-settings-menu-ab-test-convert', { icon: Icon, render: enhancedConvertButton });
