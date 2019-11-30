@@ -10,8 +10,8 @@ module.exports = {
     'ab-testing-for-wp': './frontend.ts',
 
     // admin
-    'admin-editor': './admin-editor.js',
-    'admin-bar': './admin-bar.js',
+    'admin-editor': './admin-editor.ts',
+    'admin-bar': './admin-bar.tsx',
     'admin-page': './admin-page.js',
 
     // gutenberg

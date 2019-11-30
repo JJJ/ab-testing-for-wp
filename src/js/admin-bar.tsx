@@ -5,7 +5,7 @@ import { render } from 'react-dom';
 
 import AdminBar from './components/AdminBar/AdminBar';
 
-function initAdminBar() {
+function initAdminBar(): void {
   const root = document.getElementById('wp-admin-bar-ab-testing-for-wp');
 
   if (!root) return;

@@ -1,13 +1,9 @@
-// @flow
-
 import React, { Fragment, Component } from 'react';
 import queryString from 'query-string';
-
-import { i18n, apiFetch } from '../../wp';
+import { __, sprintf } from '@wordpress/i18n';
+import apiFetch from '@wordpress/api-fetch';
 
 import Test from './Test';
-
-const { __, sprintf } = i18n;
 
 type AdminBarState = {
   isLoading: boolean;
