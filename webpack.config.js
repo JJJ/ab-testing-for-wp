@@ -28,6 +28,11 @@ module.exports = {
     react: 'window.wp.element',
     'react-dom': 'window.wp.element',
     '@wordpress/api-fetch': 'window.wp.apiFetch',
+    '@wordpress/blocks': 'window.wp.blocks',
+    '@wordpress/compose': 'window.wp.compose',
+    '@wordpress/data': 'window.wp.data',
+    '@wordpress/edit-post': 'window.wp.editPost',
+    '@wordpress/i18n': 'window.wp.i18n',
     '@wordpress/plugins': 'window.wp.plugins',
   },
   module: {

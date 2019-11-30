@@ -1,23 +1,14 @@
 import React from 'react';
-import plugins from '@wordpress/plugins';
+import { createBlock } from '@wordpress/blocks';
+import { compose } from '@wordpress/compose';
+import { withSelect, withDispatch } from '@wordpress/data';
+import { PluginBlockSettingsMenuItem } from '@wordpress/edit-post';
+import { __ } from '@wordpress/i18n';
+import { registerPlugin } from '@wordpress/plugins';
 
 import Logo from '../../components/Logo/Logo';
 
-import {
-  editPost,
-  i18n,
-  data,
-  compose,
-  blocks,
-} from '../../wp';
-
 import allowedBlockTypes from '../../core/allowedBlockTypes';
-
-const { __ } = i18n;
-const { registerPlugin } = plugins;
-const { PluginBlockSettingsMenuItem } = editPost;
-const { withSelect, withDispatch } = data;
-const { createBlock } = blocks;
 
 type ConvertButtonProps = {
   blockAttributes: any;
@@ -85,7 +76,7 @@ function getCanConvert(
   });
 }
 
-const enhancedConvertButton = compose.compose(
+const enhancedConvertButton = compose(
   withSelect((select) => {
     const editor = select('core/editor');
 
