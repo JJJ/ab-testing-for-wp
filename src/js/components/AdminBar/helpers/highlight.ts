@@ -1,8 +1,6 @@
-// @flow
+let lastHighlighted: string;
 
-let lastHighlighted;
-
-function offsetFromRects(rect) {
+function offsetFromRects(rect: DOMRect): { top: number; left: number } {
   const scrollLeft = window.pageXOffset
     || (document.documentElement || { scrollLeft: 0 }).scrollLeft;
   const scrollTop = window.pageYOffset
