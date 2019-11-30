@@ -13,9 +13,8 @@ module.exports = {
     ABTestingForWP_Options: false,
   },
   rules: {
-    'react/react-in-jsx-scope': 0,
     'react/require-default-props': 0,
-    'react/jsx-filename-extension': [1, { extensions: ['.js', '.jsx', '.tsx'] }],
+    '@typescript-eslint/camelcase': 0,
   },
   settings: {
     'import/resolver': {
