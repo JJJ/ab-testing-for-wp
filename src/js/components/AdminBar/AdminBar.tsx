@@ -1,4 +1,4 @@
-import React, { Fragment, Component } from 'react';
+import React, { Component, ReactNode } from 'react';
 import queryString from 'query-string';
 import { __, sprintf } from '@wordpress/i18n';
 import apiFetch from '@wordpress/api-fetch';
@@ -13,15 +13,19 @@ type AdminBarState = {
   };
 };
 
-class AdminBar extends Component<*, AdminBarState> {
-  state = {
-    isLoading: true,
-    tests: [],
-    pickedVariants: window.ABTestingForWP_AdminBar.cookieData || {},
-  };
+class AdminBar extends Component<{}, AdminBarState> {
+  constructor(props: {}) {
+    super(props);
 
-  componentDidMount() {
-    const testsOnPage = document.querySelectorAll('.ABTestWrapper[data-test]');
+    this.state = {
+      isLoading: true,
+      tests: [],
+      pickedVariants: ABTestingForWP_AdminBar.cookieData || {},
+    };
+  }
+
+  componentDidMount(): void {
+    const testsOnPage = document.querySelectorAll<HTMLElement>('.ABTestWrapper[data-test]');
 
     const sortedTestsOnPage = Array.from(testsOnPage).sort((a, b) => {
       if (a.offsetTop > b.offsetTop) {
@@ -35,18 +39,20 @@ class AdminBar extends Component<*, AdminBarState> {
       return 0;
     });
 
-    const testIds = sortedTestsOnPage.map(test => test.getAttribute('data-test'));
+    const testIds = sortedTestsOnPage.map((test) => test.getAttribute('data-test'));
 
-    apiFetch({ path: `/ab-testing-for-wp/v1/get-tests-info?${queryString.stringify({ id: testIds })}` })
+    apiFetch<TestData[]>({ path: `/ab-testing-for-wp/v1/get-tests-info?${queryString.stringify({ id: testIds })}` })
       .then((tests) => {
         this.setState({
-          tests: testIds.map(id => tests.find(test => test.id === id)),
+          tests: testIds
+            .map((id) => tests.find((test) => test.id === id))
+            .filter((test): boolean => typeof test !== 'undefined') as TestData[],
           isLoading: false,
         });
       });
   }
 
-  onChangeVariant = (testId: string, variantId: string) => {
+  onChangeVariant = (testId: string, variantId: string): void => {
     const { pickedVariants } = this.state;
 
     this.setState({
@@ -56,7 +62,7 @@ class AdminBar extends Component<*, AdminBarState> {
       },
     });
 
-    apiFetch({ path: `/ab-testing-for-wp/v1/ab-test?test=${testId}&variant=${variantId}` })
+    apiFetch<{ html: string }>({ path: `/ab-testing-for-wp/v1/ab-test?test=${testId}&variant=${variantId}` })
       .then((result) => {
         if (result.html) {
           const target = document.querySelector(`.ABTestWrapper[data-test=${testId}]`);
@@ -66,11 +72,11 @@ class AdminBar extends Component<*, AdminBarState> {
       });
   };
 
-  render() {
+  render(): ReactNode {
     const { isLoading, tests, pickedVariants } = this.state;
 
     return (
-      <Fragment>
+      <>
         <div
           className="ab-item ab-empty-item"
           aria-haspopup="true"
@@ -94,7 +100,7 @@ class AdminBar extends Component<*, AdminBarState> {
                   </div>
                 </li>
               )
-              : tests.map(test => (
+              : tests.map((test) => (
                 <Test
                   {...test}
                   pickedVariants={pickedVariants}
@@ -103,7 +109,7 @@ class AdminBar extends Component<*, AdminBarState> {
               ))}
           </ul>
         </div>
-      </Fragment>
+      </>
     );
   }
 }

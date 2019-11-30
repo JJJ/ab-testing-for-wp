@@ -2,6 +2,10 @@ declare const ABTestingForWP: {
   postId?: string;
 };
 
+declare const ABTestingForWP_AdminBar: {
+  cookieData: any;
+};
+
 declare interface ABTestVariant {
   id: string;
   name: string;

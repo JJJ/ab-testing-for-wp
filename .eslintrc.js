@@ -13,8 +13,10 @@ module.exports = {
     ABTestingForWP_Options: false,
   },
   rules: {
-    'react/require-default-props': 0,
     '@typescript-eslint/camelcase': 0,
+    'react/jsx-props-no-spreading': 0,
+    'react/require-default-props': 0,
+    'react/jsx-filename-extension': [1, { extensions: ['.jsx', '.tsx'] }],
   },
   settings: {
     'import/resolver': {
