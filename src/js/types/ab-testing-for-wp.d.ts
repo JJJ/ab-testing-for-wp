@@ -6,6 +6,10 @@ declare const ABTestingForWP_AdminBar: {
   cookieData: any;
 };
 
+declare const ABTestingForWP_Data: {
+  activeTests: ABTestAttributes[];
+}
+
 declare interface ABTestVariant {
   id: string;
   name: string;

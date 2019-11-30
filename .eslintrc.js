@@ -11,6 +11,7 @@ module.exports = {
     ABTestingForWP: false,
     ABTestingForWP_AdminBar: false,
     ABTestingForWP_Options: false,
+    ABTestingForWP_Data: false,
   },
   rules: {
     '@typescript-eslint/camelcase': 0,
