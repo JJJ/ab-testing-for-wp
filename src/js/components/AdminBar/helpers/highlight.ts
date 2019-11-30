@@ -8,7 +8,7 @@ function offsetFromRects(rect: DOMRect): { top: number; left: number } {
   return { top: rect.top + scrollTop, left: rect.left + scrollLeft };
 }
 
-export default function highlightElement(testId: string, node: HTMLElement) {
+export default function highlightElement(testId: string, node: HTMLElement): void {
   if (lastHighlighted === testId) return;
 
   lastHighlighted = testId;
