@@ -18,7 +18,7 @@ function findWinner(results: ABTestResult[]): ABTestResult | undefined {
     });
 }
 
-interface TestWinner { winner: ABTestResult; confident: boolean }
+export interface TestWinner { winner: ABTestResult; confident: boolean }
 
 function calcTestWinner(control: string, results: ABTestResult[]): null | TestWinner {
   const winner = findWinner(results);

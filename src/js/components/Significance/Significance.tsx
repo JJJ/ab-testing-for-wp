@@ -3,11 +3,11 @@ import { __, sprintf } from '@wordpress/i18n';
 
 import classNames from 'classnames';
 
-import calcTestWinner from '../../helpers/calcTestWinner';
+import calcTestWinner, { TestWinner } from '../../helpers/calcTestWinner';
 
 import './Significance.css';
 
-function getTranslationString(control, testResult) {
+function getTranslationString(control: string, testResult: TestWinner): string {
   if (!testResult.confident) {
     return 'Test results for are NOT significant enough to declare a winner yet.';
   }
@@ -22,7 +22,7 @@ type SignificanceProps = {
   results: ABTestResult[];
 };
 
-function Significance({ control, results }: SignificanceProps) {
+const Significance: React.FC<SignificanceProps> = ({ control, results }) => {
   const testResult = calcTestWinner(control, results);
 
   if (!testResult) return null;
@@ -43,6 +43,6 @@ function Significance({ control, results }: SignificanceProps) {
       )}
     </div>
   );
-}
+};
 
 export default Significance;
