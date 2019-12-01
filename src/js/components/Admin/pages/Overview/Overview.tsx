@@ -4,7 +4,7 @@ import React, { Fragment } from 'react';
 import classNames from 'classnames';
 
 import format from 'date-fns/format';
-import distanceInWords from 'date-fns/distance_in_words';
+import formatDistance from 'date-fns/formatDistance';
 
 import Table from '../../components/Table/Table';
 import Significance from '../../../Significance/Significance';
@@ -80,10 +80,10 @@ function Test(test: TestData) {
         </td>
         {test.startedAt > 0 ? (
           <td>
-            <abbr title={`${format(test.startedAt, 'YYYY/MM/DD HH:mm')}`}>
-              {format(test.startedAt, 'YYYY/MM/DD')}
+            <abbr title={`${format(test.startedAt, 'yyyy/MM/dd HH:mm')}`}>
+              {format(test.startedAt, 'yyyy/MM/dd')}
             </abbr>
-            {` (${distanceInWords(test.startedAt, new Date())})`}
+            {` (${formatDistance(new Date(), test.startedAt)})`}
           </td>
         ) : (
           <td>—</td>

@@ -1,8 +1,6 @@
-// @flow
-
 import React, { Component } from 'react';
 import classNames from 'classnames';
-import distanceInWordsToNow from 'date-fns/distance_in_words_to_now';
+import formatDistanceToNow from 'date-fns/formatDistanceToNow';
 
 import { apiFetch, components, i18n } from '../../wp';
 
@@ -93,7 +91,7 @@ class TestResults extends Component<TestResultsProps, TestResultsState> {
 
     return (
       <PanelBody title={__('Results so far')}>
-        {startedAt && <p>{sprintf(__('Runtime: %s'), distanceInWordsToNow(startedAt))}</p>}
+        {startedAt && <p>{sprintf(__('Runtime: %s'), formatDistanceToNow(startedAt))}</p>}
         {hasParticipants ? (
           <table className="TestResults">
             <tbody>
