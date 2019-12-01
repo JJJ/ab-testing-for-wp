@@ -1,15 +1,11 @@
-// @flow
-
 import React from 'react';
+import { __, sprintf } from '@wordpress/i18n';
 
 import classNames from 'classnames';
 
 import calcTestWinner from '../../helpers/calcTestWinner';
-import { i18n } from '../../wp';
 
 import './Significance.css';
-
-const { __, sprintf } = i18n;
 
 function getTranslationString(control, testResult) {
   if (!testResult.confident) {

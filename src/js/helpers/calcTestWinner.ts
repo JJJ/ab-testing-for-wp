@@ -1,33 +1,33 @@
-// @flow
-
-function convertRatio(p: number, c: number) {
+function convertRatio(p: number, c: number): number {
   return p === 0 ? 0 : c / p;
 }
 
-function getCRSE(p: number, c: number) {
+function getCRSE(p: number, c: number): [number, number] {
   const cr = convertRatio(p, c);
   return [
     cr,
-    (cr * (1 - cr) / p) ** 0.5,
+    ((cr * (1 - cr)) / p) ** 0.5,
   ];
 }
 
-function findWinner(results: ABTestResult[]) {
+function findWinner(results: ABTestResult[]): ABTestResult | undefined {
   return results
     .find((result) => {
       const cr = convertRatio(result.participants, result.conversions);
-      return results.every(item => convertRatio(item.participants, item.conversions) <= cr);
+      return results.every((item) => convertRatio(item.participants, item.conversions) <= cr);
     });
 }
 
-function calcTestWinner(control: string, results: ABTestResult[]) {
+interface TestWinner { winner: ABTestResult; confident: boolean }
+
+function calcTestWinner(control: string, results: ABTestResult[]): null | TestWinner {
   const winner = findWinner(results);
 
   if (!winner) return null;
 
   const controlVariant = winner.id === control
-    ? findWinner(results.filter(result => result.id !== control))
-    : results.find(result => result.id === control);
+    ? findWinner(results.filter((result) => result.id !== control))
+    : results.find((result) => result.id === control);
 
   if (!controlVariant) throw new Error('Control variant of test cannot be found.');
 
