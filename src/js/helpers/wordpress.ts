@@ -1,9 +1,9 @@
 // @flow
 
-export function decodeLink(link?: string = ''): string {
+export function decodeLink(link = ''): string {
   const e = document.createElement('div');
   e.innerHTML = link;
-  return e.textContent;
+  return e.textContent || '';
 }
 
 export default {};

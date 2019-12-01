@@ -1,7 +1,6 @@
-// @flow
-
 import React, { Fragment } from 'react';
 import classNames from 'classnames';
+import { __ } from '@wordpress/i18n';
 
 import format from 'date-fns/format';
 import formatDistance from 'date-fns/formatDistance';
@@ -11,11 +10,7 @@ import Significance from '../../../Significance/Significance';
 
 import { decodeLink } from '../../../../helpers/wordpress';
 
-import { i18n } from '../../../../wp';
-
 import './Overview.css';
-
-const { __ } = i18n;
 
 type OverviewData = {
   activeTests: TestData[];
