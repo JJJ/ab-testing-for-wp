@@ -8,22 +8,26 @@ type AdminPageProps = {
   data?: any;
 }
 
-function getPage() {
+function getPage(): string {
   const { page } = queryString.parse(window.location.search);
+
+  if (!page || Array.isArray(page)) {
+    return '';
+  }
+
   return page.replace('ab-testing-for-wp_', '').replace('ab-testing-for-wp', '');
 }
 
-function AdminPage({ data }: AdminPageProps) {
+const AdminPage: React.FC<AdminPageProps> = ({ data }) => {
   if (!data) return null;
 
   const page = getPage();
 
-  switch (page) {
-    case '':
-      return <Overview data={data} />;
-    default:
-      throw new Error(`Component for ${page} can not be found`);
+  if (page) {
+    throw new Error(`Component for ${page} can not be found`);
   }
-}
+
+  return <Overview data={data} />;
+};
 
 export default AdminPage;
