@@ -16,7 +16,7 @@ type OverviewData = {
   activeTests: TestData[];
 };
 
-function postLink(name: string, link?: string, testId?: string) {
+function postLink(name: string, link?: string, testId?: string): React.ReactNode | string {
   const decodedLink = decodeLink(link);
 
   const url = [
@@ -28,18 +28,18 @@ function postLink(name: string, link?: string, testId?: string) {
   return link ? (<a href={url}>{name !== '' ? name : __('No Name')}</a>) : name;
 }
 
-function removeLink(link?: string) {
+function removeLink(link?: string): React.ReactNode | null {
   return postLink(__('Remove'), link);
 }
 
-const toTestVariantResult = variant => ({
+const toTestVariantResult = (variant: TestVariant) => ({
   id: variant.id,
   name: variant.name,
   participants: variant.participants,
   conversions: variant.conversions,
 });
 
-function Test(test: TestData) {
+const Test: React.FC<{ test: TestData }> = ({ test }) => {
   const isSingle = test.postType === 'abt4wp-test';
 
   return (
@@ -54,7 +54,8 @@ function Test(test: TestData) {
                   'indicator--on': test.isEnabled,
                   'indicator--off': !test.isEnabled,
                 },
-              )}
+              )
+            }
           />
         </td>
         <td className="column-primary">
@@ -95,19 +96,19 @@ function Test(test: TestData) {
       </tr>
       <tr />
       <tr style={{ display: 'table-row' }} id={`ABTestResults-${test.id}`}>
-        <td colSpan="6" style={{ display: 'table-cell', paddingTop: 0 }}>
+        <td colSpan={6} style={{ display: 'table-cell', paddingTop: 0 }}>
           {test.totalParticipants > 0 ? (
             <Table className="variations">
               <thead>
                 <tr>
-                  <th className="check-column" />
+                  <th className="check-column">{}</th>
                   <th className="column-primary">{__('Conversion Rate')}</th>
                   <th>{__('Conversions')}</th>
                   <th>{__('Participants')}</th>
                 </tr>
               </thead>
               <tbody>
-                {test.variants.map(variant => (
+                {test.variants.map((variant) => (
                   <tr className={variant.leading && variant.participants > 0 ? 'ABTestWinning' : 'ABTestLosing'}>
                     <td className="check-column check-column-normal">
                       {variant.name}
@@ -138,51 +139,47 @@ function Test(test: TestData) {
           {test.totalParticipants > 0 && (
             <Significance
               control={test.control}
-              results={test.variants.map(toTestVariantResult)}
+              results={test.variants.map((variant) => toTestVariantResult(variant))}
             />
           )}
         </td>
       </tr>
     </Fragment>
   );
-}
+};
 
-function Overview({ data }: { data: OverviewData }) {
-  const { activeTests } = data;
+const Overview: React.FC<{ data: OverviewData }> = ({ data: { activeTests } }) => (
+  <div className="wrap ab-testing-for-wp">
+    <h1 className="wp-heading-inline">{__('A/B Tests')}</h1>
+    <a
+      href="post-new.php?post_type=abt4wp-test"
+      className="page-title-action"
+    >
+      {__('Add New')}
+    </a>
+    <hr className="wp-header-end" />
 
-  return (
-    <div className="wrap ab-testing-for-wp">
-      <h1 className="wp-heading-inline">{__('A/B Tests')}</h1>
-      <a
-        href="post-new.php?post_type=abt4wp-test"
-        className="page-title-action"
-      >
-        {__('Add New')}
-      </a>
-      <hr className="wp-header-end" />
-
-      {activeTests && activeTests.length > 0 ? (
-        <Table className="running-tests">
-          <thead>
-            <tr>
-              <th className="check-column" />
-              <th className="column-primary">{__('Title')}</th>
-              <th>{__('Started at')}</th>
-              <th>{__('Page / Shortcode')}</th>
-              <th>{__('Conversion Goal')}</th>
-              <th className="num">{__('Participants')}</th>
-            </tr>
-          </thead>
-          <tbody>{activeTests.map(Test)}</tbody>
-        </Table>
-      ) : (
-        <Fragment>
-          <h2>{__('No active tests found in content.')}</h2>
-          <p>{__('Edit a page or post to add an A/B Test to the content.')}</p>
-        </Fragment>
-      )}
-    </div>
-  );
-}
+    {activeTests && activeTests.length > 0 ? (
+      <Table className="running-tests">
+        <thead>
+          <tr>
+            <th className="check-column">{}</th>
+            <th className="column-primary">{__('Title')}</th>
+            <th>{__('Started at')}</th>
+            <th>{__('Page / Shortcode')}</th>
+            <th>{__('Conversion Goal')}</th>
+            <th className="num">{__('Participants')}</th>
+          </tr>
+        </thead>
+        <tbody>{activeTests.map((test) => <Test test={test} />)}</tbody>
+      </Table>
+    ) : (
+      <>
+        <h2>{__('No active tests found in content.')}</h2>
+        <p>{__('Edit a page or post to add an A/B Test to the content.')}</p>
+      </>
+    )}
+  </div>
+);
 
 export default Overview;
