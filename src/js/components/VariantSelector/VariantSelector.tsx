@@ -1,5 +1,3 @@
-// @flow
-
 import React from 'react';
 import { ButtonGroup, IconButton } from '@wordpress/components';
 
