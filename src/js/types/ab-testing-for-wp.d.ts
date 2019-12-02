@@ -8,7 +8,9 @@ declare const ABTestingForWP_AdminBar: {
 
 declare const ABTestingForWP_Data: {
   activeTests: ABTestAttributes[];
-}
+};
+
+declare const ABTestingForWP_Options: any;
 
 declare interface ABTestVariant {
   id: string;

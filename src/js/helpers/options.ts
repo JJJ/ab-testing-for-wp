@@ -1,18 +1,16 @@
-// @flow
+import apiFetch from '@wordpress/api-fetch';
 
-import { apiFetch } from '../wp';
+const WPOptions = ABTestingForWP_Options || {};
 
-const WPOptions = window.ABTestingForWP_Options || {};
-
-export function getOptions() {
+export function getOptions(): any {
   return WPOptions;
 }
 
-export function getOption(key: string) {
+export function getOption(key: string): any {
   return getOptions()[key];
 }
 
-export function setOption(key: string, value: any) {
+export function setOption(key: string, value: any): void {
   // update local value
   getOptions()[key] = value;
 
