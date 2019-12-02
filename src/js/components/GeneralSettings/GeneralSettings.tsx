@@ -1,14 +1,9 @@
-// @flow
-
 import React from 'react';
-
-import { i18n, components, data } from '../../wp';
+import { __ } from '@wordpress/i18n';
+import { PanelBody, ToggleControl, TextControl } from '@wordpress/components';
+import { select } from '@wordpress/data';
 
 import './GeneralSettings.css';
-
-const { __ } = i18n;
-const { PanelBody, ToggleControl, TextControl } = components;
-const { select } = data;
 
 type GeneralSettingsProps = {
   isSingle: boolean;
@@ -18,13 +13,13 @@ type GeneralSettingsProps = {
   onChangeEnabled: (enabled: boolean) => void;
 };
 
-function GeneralSettings({
+const GeneralSettings: React.FC<GeneralSettingsProps> = ({
   isSingle,
   title,
   isEnabled,
   onChangeTitle,
   onChangeEnabled,
-}: GeneralSettingsProps) {
+}) => {
   const { getCurrentPostId } = select('core/editor');
   const postId = getCurrentPostId();
 
@@ -51,6 +46,6 @@ function GeneralSettings({
       )}
     </PanelBody>
   );
-}
+};
 
 export default GeneralSettings;
