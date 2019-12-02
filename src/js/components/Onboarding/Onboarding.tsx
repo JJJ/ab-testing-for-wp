@@ -1,16 +1,13 @@
 // @flow
 
 import React, { createRef, Component } from 'react';
-
-import { components, i18n } from '../../wp';
+import { __ } from '@wordpress/i18n';
+import { Modal, Button } from '@wordpress/components';
 
 import Arrow from './Arrow';
 import { drawOverlayAround, removeOverlay } from './Overlay';
 
 import './Onboarding.css';
-
-const { __ } = i18n;
-const { Modal, Button } = components;
 
 type OnboardingProps = {
   clientId: string;
@@ -23,26 +20,30 @@ type OnboardingState = {
 };
 
 class Onboarding extends Component<OnboardingProps, OnboardingState> {
-  state = {
-    step: 0,
-  };
+  container = createRef<HTMLDivElement>();
 
-  container = createRef<HTMLElement>();
+  stepContainer: HTMLElement | undefined;
 
-  stepContainer: HTMLElement;
+  constructor(props: OnboardingProps) {
+    super(props);
 
-  componentDidMount() {
+    this.state = {
+      step: 0,
+    };
+  }
+
+  componentDidMount(): void {
     const { selectBlock } = this.props;
 
     // switch to block if rest has been loaded
     setTimeout(selectBlock, 0);
   }
 
-  setupStepContainer() {
+  setupStepContainer(): void {
     const { step } = this.state;
 
     if (!this.container.current) return;
-    this.stepContainer = this.container.current.cloneNode(true);
+    this.stepContainer = this.container.current.cloneNode(true) as HTMLDivElement;
 
     if (!document.body) return;
     document.body.appendChild(this.stepContainer);
@@ -57,7 +58,7 @@ class Onboarding extends Component<OnboardingProps, OnboardingState> {
       prevButton.addEventListener('click', () => this.goToStep(step - 1));
     }
 
-    const nextButton = this.stepContainer.querySelector('button.next');
+    const nextButton = this.stepContainer.querySelector<HTMLElement>('button.next');
     if (nextButton) {
       nextButton.addEventListener('click', () => this.goToStep(step + 1));
       nextButton.focus();
@@ -69,8 +70,10 @@ class Onboarding extends Component<OnboardingProps, OnboardingState> {
     calcPosition: (
       targetRect: ClientRect,
       containerRect: ClientRect,
-    ) => { left: number, top: number },
-  ) => {
+    ) => { left: number; top: number },
+  ): void => {
+    if (!this.stepContainer) return;
+
     const targetRects = target.getBoundingClientRect();
     const containerBoundingRects = this.stepContainer.getBoundingClientRect();
 
@@ -80,19 +83,19 @@ class Onboarding extends Component<OnboardingProps, OnboardingState> {
     this.stepContainer.style.left = `${left}px`;
   };
 
-  stopTour = () => {
+  stopTour = (): void => {
     const { cancelOnboarding } = this.props;
 
     cancelOnboarding();
     removeOverlay();
   };
 
-  testContainer = () => {
+  testContainer = (): HTMLElement | null => {
     const { clientId } = this.props;
     return document.getElementById(`block-${clientId}`);
   };
 
-  goToStep = (step: number) => {
+  goToStep = (step: number): void => {
     if (this.stepContainer && this.stepContainer.parentNode) {
       this.stepContainer.parentNode.removeChild(this.stepContainer);
     }
@@ -120,7 +123,7 @@ class Onboarding extends Component<OnboardingProps, OnboardingState> {
         const testContainer = this.testContainer();
 
         if (!testContainer) return;
-        const variantSelector = testContainer.querySelector('.ab-test-for-wp__VariantSelector');
+        const variantSelector = testContainer.querySelector<HTMLElement>('.ab-test-for-wp__VariantSelector');
 
         if (!variantSelector) return;
         variantSelector.scrollIntoView({ block: 'center' });
@@ -141,7 +144,7 @@ class Onboarding extends Component<OnboardingProps, OnboardingState> {
         const testContainer = this.testContainer();
 
         if (!testContainer) return;
-        const variantSelector = testContainer.querySelector('.ab-test-for-wp__VariantSelector');
+        const variantSelector = testContainer.querySelector<HTMLElement>('.ab-test-for-wp__VariantSelector');
 
         if (!variantSelector) return;
         variantSelector.scrollIntoView({ block: 'center' });
@@ -160,7 +163,7 @@ class Onboarding extends Component<OnboardingProps, OnboardingState> {
 
       if (step === 4) {
         this.setupStepContainer();
-        const sideBar = document.querySelector('.edit-post-sidebar');
+        const sideBar = document.querySelector<HTMLElement>('.edit-post-sidebar');
 
         if (!sideBar) return;
         this.placeStepContainer(sideBar, (sideBarRects, containerBoundingRects) => {
@@ -176,7 +179,7 @@ class Onboarding extends Component<OnboardingProps, OnboardingState> {
 
       if (step === 5 || step === 6 || step === 7) {
         this.setupStepContainer();
-        const panel = document.querySelectorAll('.components-panel__body')[step - 3];
+        const panel = document.querySelectorAll<HTMLElement>('.components-panel__body')[step - 3];
 
         panel.scrollIntoView({ block: 'center' });
         this.placeStepContainer(panel, (panelRects, containerBoundingRects) => {
@@ -191,7 +194,7 @@ class Onboarding extends Component<OnboardingProps, OnboardingState> {
 
       if (step === 8) {
         this.setupStepContainer();
-        const panel = document.querySelectorAll('.components-panel__body')[1];
+        const panel = document.querySelectorAll<HTMLElement>('.components-panel__body')[1];
 
         panel.scrollIntoView({ block: 'center' });
         this.placeStepContainer(panel, (panelRects, containerBoundingRects) => {
@@ -208,7 +211,7 @@ class Onboarding extends Component<OnboardingProps, OnboardingState> {
     });
   };
 
-  render() {
+  render(): React.ReactNode {
     const { step } = this.state;
 
     if (step === 1) {
@@ -295,8 +298,8 @@ class Onboarding extends Component<OnboardingProps, OnboardingState> {
             {__('Please contact support if you have any questions.')}
           </p>
           <div className="ButtonContainer">
-            <Button isPrimary focus onClick={this.stopTour}>{__('Finish tour')}</Button>
-            <Button isLink onClick={() => this.goToStep(1)}>{__('Restart tour')}</Button>
+            <Button isPrimary autoFocus onClick={this.stopTour}>{__('Finish tour')}</Button>
+            <Button isLink onClick={(): void => this.goToStep(1)}>{__('Restart tour')}</Button>
           </div>
         </Modal>
       );
@@ -315,7 +318,7 @@ class Onboarding extends Component<OnboardingProps, OnboardingState> {
           {__('Would you like a quick tour on how to setup a test?')}
         </p>
         <div className="ButtonContainer">
-          <Button isPrimary focus onClick={() => this.goToStep(1)}>{__('Sure, start the tour!')}</Button>
+          <Button isPrimary autoFocus onClick={(): void => this.goToStep(1)}>{__('Sure, start the tour!')}</Button>
           <Button isLink onClick={this.stopTour}>{__('No thanks')}</Button>
         </div>
       </Modal>

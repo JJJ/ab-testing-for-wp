@@ -1,12 +1,10 @@
-// @flow
-
 export function drawOverlayAround(
   target: HTMLElement,
-  spacingTop: number = 0,
-  spacingRight: number = 0,
-  spacingBottom: number = 0,
-  spacingLeft: number = 0,
-) {
+  spacingTop = 0,
+  spacingRight = 0,
+  spacingBottom = 0,
+  spacingLeft = 0,
+): void {
   let overlay = document.getElementById('OverboardingOverlay');
   let preventClick = document.getElementById('OverboardingPreventClick');
 
@@ -37,7 +35,7 @@ export function drawOverlayAround(
   overlay.style.clipPath = `polygon(0 0, 0 100%, ${left}px 100%, ${left}px ${top}px, ${right}px ${top}px, ${right}px ${bottom}px, ${left}px ${bottom}px, ${left}px 100%, 100% 100%, 100% 0%)`;
 }
 
-export function removeOverlay() {
+export function removeOverlay(): void {
   const overlay = document.getElementById('OverboardingOverlay');
   if (!overlay) return;
   const parent = overlay.parentNode;
