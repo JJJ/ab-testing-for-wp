@@ -18,12 +18,14 @@ interface GoalPostType {
   help: string;
 }
 
+interface GoalExternalPost {
+  post_title: string;
+  ID: number;
+}
+
 interface GoalSelectorState {
   loading: boolean;
-  posts: {
-    post_title: string;
-    ID: number;
-  }[];
+  posts: GoalExternalPost[];
   types: GoalPostType[];
 }
 
@@ -41,18 +43,16 @@ class GoalSelector extends Component<GoalSelectorProps, GoalSelectorState> {
   componentDidMount(): void {
     const { value, type, onTypeChange } = this.props;
 
-    let resolvePostType = Promise.resolve(type);
+    const resolvePostType = !type && value
+      ? apiFetch<string>({ path: `/ab-testing-for-wp/v1/get-post-type?post_id=${value}` })
+      : Promise.resolve(type);
 
-    if (!type && value) {
-      resolvePostType = apiFetch({ path: `/ab-testing-for-wp/v1/get-post-type?post_id=${value}` });
-    }
-
-    const resolveTypes = apiFetch({ path: '/ab-testing-for-wp/v1/get-goal-types' });
+    const resolveTypes = apiFetch<GoalPostType[]>({ path: '/ab-testing-for-wp/v1/get-goal-types' });
 
     Promise.all([
       resolvePostType,
       resolveTypes,
-    ]).then(([postType, types]: [string, GoalPostType[]]) => {
+    ]).then(([postType, types]) => {
       // auto select first result
       const selectedType = postType === ''
         ? types[0].name
@@ -68,10 +68,10 @@ class GoalSelector extends Component<GoalSelectorProps, GoalSelectorState> {
     });
   }
 
-  getPostsOfType(type: string) {
+  getPostsOfType(type: string): void {
     const postId = select('core/editor').getCurrentPostId();
 
-    apiFetch({ path: `/ab-testing-for-wp/v1/get-posts-by-type?type=${type}&&exclude=${postId}` })
+    apiFetch<GoalExternalPost[]>({ path: `/ab-testing-for-wp/v1/get-posts-by-type?type=${type}&&exclude=${postId}` })
       .then((posts) => {
         this.setState({
           posts,
@@ -80,14 +80,14 @@ class GoalSelector extends Component<GoalSelectorProps, GoalSelectorState> {
       });
   }
 
-  changePostType = (selectedType: string) => {
+  changePostType = (selectedType: string): void => {
     const { onTypeChange } = this.props;
 
     onTypeChange(selectedType);
     this.getPostsOfType(selectedType);
   };
 
-  render() {
+  render(): React.ReactNode {
     const {
       loading,
       posts,
@@ -95,7 +95,7 @@ class GoalSelector extends Component<GoalSelectorProps, GoalSelectorState> {
     } = this.state;
     const { onChange, value, type } = this.props;
 
-    const currentType = types.find(t => t.name === type) || {};
+    const currentType = types.find((t) => t.name === type) || { itemName: '', help: '' };
 
     if (!loading && !currentType) {
       return null;
@@ -108,7 +108,7 @@ class GoalSelector extends Component<GoalSelectorProps, GoalSelectorState> {
             <SelectControl
               label={__('Type')}
               value={type}
-              options={types.map(t => ({
+              options={types.map((t) => ({
                 label: t.label,
                 value: t.name,
               }))}
@@ -116,13 +116,13 @@ class GoalSelector extends Component<GoalSelectorProps, GoalSelectorState> {
             />
             <SelectControl
               label={currentType.itemName}
-              value={value || 0}
+              value={(value || 0).toString(10)}
               options={[
-                { label: __('No goal selected'), value: 0 },
-                ...posts.map(post => ({ label: post.post_title, value: post.ID })),
+                { label: __('No goal selected'), value: '0' },
+                ...posts.map((post) => ({ label: post.post_title, value: post.ID.toString() })),
               ]}
               help={currentType.help}
-              onChange={newValue => onChange(parseInt(newValue, 10))}
+              onChange={(newValue: string): void => onChange(parseInt(newValue, 10))}
             />
           </div>
         )}
