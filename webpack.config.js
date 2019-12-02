@@ -31,6 +31,7 @@ module.exports = {
     '@wordpress/blocks': 'window.wp.blocks',
     '@wordpress/compose': 'window.wp.compose',
     '@wordpress/data': 'window.wp.data',
+    '@wordpress/editor': 'window.wp.editor',
     '@wordpress/edit-post': 'window.wp.editPost',
     '@wordpress/i18n': 'window.wp.i18n',
     '@wordpress/plugins': 'window.wp.plugins',
