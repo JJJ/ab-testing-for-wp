@@ -36,20 +36,20 @@ function isSingleTest(): boolean {
 }
 
 class ABTestBlock extends Component<ABTestBlockProps> {
-  currentVariant: string;
+  currentVariant: string | undefined;
 
-  componentDidMount() {
+  componentDidMount(): void {
     this.selectOnSingleTest();
     this.focusTestIntoView();
   }
 
-  selectOnSingleTest() {
+  selectOnSingleTest(): void {
     const { selectBlock } = this.props;
 
     setTimeout(() => { if (isSingleTest()) selectBlock(); }, 0);
   }
 
-  focusTestIntoView() {
+  focusTestIntoView(): void {
     const { attributes, clientId, selectBlock } = this.props;
     const { test } = queryString.parse(window.location.search);
 
@@ -70,11 +70,11 @@ class ABTestBlock extends Component<ABTestBlockProps> {
     }, 0);
   }
 
-  showVariant(id: string, selected?: ABTestVariant) {
+  showVariant(id: string, selected?: ABTestVariant): void {
     if (!selected) return;
     if (this.currentVariant === selected.id) return;
 
-    const variants = document.querySelectorAll(`.ABTest--${id} .wp-block[data-type="ab-testing-for-wp/ab-test-block-variant"]`);
+    const variants = document.querySelectorAll<HTMLElement>(`.ABTest--${id} .wp-block[data-type="ab-testing-for-wp/ab-test-block-variant"]`);
 
     // if DOM is not mounted yet, try again on first possibility
     if (variants.length === 0) setTimeout(() => this.showVariant(id, selected), 0);
@@ -95,7 +95,7 @@ class ABTestBlock extends Component<ABTestBlockProps> {
     });
   }
 
-  render() {
+  render(): React.ReactNode {
     const {
       clientId,
       attributes,
@@ -117,7 +117,7 @@ class ABTestBlock extends Component<ABTestBlockProps> {
       defaultContent,
     } = attributes;
 
-    const cancelOnboarding = () => {
+    const cancelOnboarding = (): void => {
       setOption('completedOnboarding', true);
       setAttributes({ completedOnboarding: true });
     };
@@ -142,7 +142,7 @@ class ABTestBlock extends Component<ABTestBlockProps> {
       ];
 
       const { getCurrentPost } = select('core/editor');
-      const postTitle = getCurrentPost().title;
+      const postTitle = getCurrentPost<{ title: string }>().title;
 
       setAttributes({
         id: shortid.generate(),
@@ -155,25 +155,25 @@ class ABTestBlock extends Component<ABTestBlockProps> {
       });
     }
 
-    const onSelectVariant = (variantId: string) => {
+    const onSelectVariant = (variantId: string): void => {
       setAttributes({
-        variants: variants.map(variant => ({ ...variant, selected: variant.id === variantId })),
+        variants: variants.map((variant) => ({ ...variant, selected: variant.id === variantId })),
       });
     };
-    const onUpdateVariants = (newVariants: ABTestVariant[]) => setAttributes({
+    const onUpdateVariants = (newVariants: ABTestVariant[]): void => setAttributes({
       variants: newVariants,
     });
-    const onTitleChange = (newTitle: string) => setAttributes({ title: newTitle });
-    const onPostGoalChange = (postId: number) => setAttributes({ postGoal: postId });
-    const onPostGoalTypeChange = (type: string) => setAttributes({ postGoalType: type });
-    const onControlChange = (variantId: string) => setAttributes({ control: variantId });
-    const onEnabledChange = (enabled: boolean) => setAttributes({
+    const onTitleChange = (newTitle: string): void => setAttributes({ title: newTitle });
+    const onPostGoalChange = (postId: number): void => setAttributes({ postGoal: postId });
+    const onPostGoalTypeChange = (type: string): void => setAttributes({ postGoalType: type });
+    const onControlChange = (variantId: string): void => setAttributes({ control: variantId });
+    const onEnabledChange = (enabled: boolean): void => setAttributes({
       isEnabled: enabled,
       // set start time if no start time is known
       startedAt: enabled && !startedAt ? new Date() : startedAt,
     });
 
-    const selectedVariant = variants.find(variant => !!variant.selected);
+    const selectedVariant = variants.find((variant) => variant.selected);
 
     // side effect...
     this.showVariant(id, selectedVariant);
@@ -240,21 +240,21 @@ class ABTestBlock extends Component<ABTestBlockProps> {
   }
 }
 
-const edit = withDispatch((dispatch, props) => {
+const edit: any = withDispatch((dispatch, props: any) => {
   const { removeBlock } = dispatch('core/editor');
   const { getBlock } = select('core/editor');
   const { clientId, insertBlocksAfter } = props;
 
   return {
-    onDeclareWinner(variantId: string) {
-      const rootBlock = getBlock(clientId);
+    onDeclareWinner(variantId: string): void {
+      const rootBlock = getBlock<{ innerBlocks: any[] }>(clientId);
       const variantBlock = rootBlock.innerBlocks
-        .find(block => block.attributes && block.attributes.id === variantId);
+        .find((block) => block.attributes && block.attributes.id === variantId);
 
       if (!variantBlock) return;
 
       // copy inner blocks of variant
-      const blockCopies = variantBlock.innerBlocks.map(block => createBlock(
+      const blockCopies = variantBlock.innerBlocks.map((block: any) => createBlock(
         block.name,
         block.attributes,
         block.innerBlocks,
@@ -266,14 +266,14 @@ const edit = withDispatch((dispatch, props) => {
       // remove test
       removeBlock(clientId);
     },
-    selectBlock() {
+    selectBlock(): void {
       const { selectBlock } = dispatch('core/editor');
       const { openGeneralSidebar } = dispatch('core/edit-post');
       selectBlock(clientId);
       openGeneralSidebar('edit-post/block');
     },
   };
-})(ABTestBlock);
+})(ABTestBlock as any);
 
 registerBlockType('ab-testing-for-wp/ab-test-block', {
   title: __('A/B Test Container'),
@@ -319,11 +319,10 @@ registerBlockType('ab-testing-for-wp/ab-test-block', {
     completedOnboarding: {
       type: 'boolean',
       default: !!getOption('completedOnboarding'),
-      source: 'text',
     },
     defaultContent: {
-      type: 'object',
-      default: null,
+      type: 'array',
+      default: undefined,
     },
   },
   edit,
