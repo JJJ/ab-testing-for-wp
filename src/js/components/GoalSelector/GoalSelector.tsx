@@ -1,46 +1,44 @@
-// @flow
-
 import React, { Component } from 'react';
+import apiFetch from '@wordpress/api-fetch';
+import { __ } from '@wordpress/i18n';
+import { PanelBody, SelectControl } from '@wordpress/components';
+import { select } from '@wordpress/data';
 
-import {
-  i18n,
-  components,
-  apiFetch,
-  data,
-} from '../../wp';
-
-const { __ } = i18n;
-const { PanelBody, SelectControl } = components;
-
-type GoalSelectorProps = {
+interface GoalSelectorProps {
   value: number;
   type: string;
   onChange: (page: number) => void;
   onTypeChange: (type: string) => void;
-};
+}
 
-type GoalSelectorState = {
+interface GoalPostType {
+  name: string;
+  label: string;
+  itemName: string;
+  help: string;
+}
+
+interface GoalSelectorState {
   loading: boolean;
   posts: {
     post_title: string;
     ID: number;
   }[];
-  types: {
-    name: string;
-    label: string;
-    itemName: string;
-    help: string;
-  }[];
-};
+  types: GoalPostType[];
+}
 
 class GoalSelector extends Component<GoalSelectorProps, GoalSelectorState> {
-  state = {
-    loading: true,
-    posts: [],
-    types: [],
-  };
+  constructor(props: GoalSelectorProps) {
+    super(props);
 
-  componentDidMount() {
+    this.state = {
+      loading: true,
+      posts: [],
+      types: [],
+    };
+  }
+
+  componentDidMount(): void {
     const { value, type, onTypeChange } = this.props;
 
     let resolvePostType = Promise.resolve(type);
@@ -54,7 +52,7 @@ class GoalSelector extends Component<GoalSelectorProps, GoalSelectorState> {
     Promise.all([
       resolvePostType,
       resolveTypes,
-    ]).then(([postType, types]) => {
+    ]).then(([postType, types]: [string, GoalPostType[]]) => {
       // auto select first result
       const selectedType = postType === ''
         ? types[0].name
@@ -71,7 +69,7 @@ class GoalSelector extends Component<GoalSelectorProps, GoalSelectorState> {
   }
 
   getPostsOfType(type: string) {
-    const postId = data.select('core/editor').getCurrentPostId();
+    const postId = select('core/editor').getCurrentPostId();
 
     apiFetch({ path: `/ab-testing-for-wp/v1/get-posts-by-type?type=${type}&&exclude=${postId}` })
       .then((posts) => {

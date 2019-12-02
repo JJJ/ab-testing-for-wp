@@ -1,15 +1,11 @@
-// @flow
-
 import React, { Component } from 'react';
 import shortid from 'shortid';
 import queryString from 'query-string';
 
-import {
-  i18n,
-  blocks,
-  editor,
-  data,
-} from '../wp';
+import { __, sprintf } from '@wordpress/i18n';
+import { registerBlockType, createBlock } from '@wordpress/blocks';
+import { InnerBlocks, InspectorControls } from '@wordpress/block-editor';
+import { withDispatch, select } from '@wordpress/data';
 
 import VariantSelector from '../components/VariantSelector/VariantSelector';
 import BoxShadow from '../components/BoxShadow/BoxShadow';
@@ -24,11 +20,6 @@ import { getOption, setOption } from '../helpers/options';
 
 import SVGIcon from '../components/Logo/Logo';
 
-const { __, sprintf } = i18n;
-const { registerBlockType, createBlock } = blocks;
-const { InnerBlocks, InspectorControls } = editor;
-const { withDispatch, select } = data;
-
 type ABTestBlockProps = {
   attributes: ABTestAttributes;
   onDeclareWinner: (id: string) => void;
@@ -37,9 +28,9 @@ type ABTestBlockProps = {
 
 const ALLOWED_BLOCKS = ['ab-testing-for-wp/ab-test-block-variant'];
 
-const makeTemplate = variant => ['ab-testing-for-wp/ab-test-block-variant', variant];
+const makeTemplate = (variant: ABTestVariant): [string, ABTestVariant] => ['ab-testing-for-wp/ab-test-block-variant', variant];
 
-function isSingleTest() {
+function isSingleTest(): boolean {
   const { getCurrentPostType } = select('core/editor');
   return getCurrentPostType() === 'abt4wp-test';
 }
