@@ -15,7 +15,7 @@ module.exports = {
     'admin-page': './admin-page.js',
 
     // gutenberg
-    'ab-test': './blocks/ab-test.js',
+    'ab-test': './blocks/ab-test.tsx',
     'ab-test-variant': './blocks/ab-test-variant.js',
     'ab-test-inserter': './blocks/ab-test-inserter.js',
   },
