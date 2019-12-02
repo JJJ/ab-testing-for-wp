@@ -1,22 +1,17 @@
-// @flow
-
 import React from 'react';
-
-import { i18n, blocks, editor } from '../wp';
+import { registerBlockType } from '@wordpress/blocks';
+import { __, sprintf } from '@wordpress/i18n';
+import { InnerBlocks } from '@wordpress/block-editor';
 
 import SVGIcon from '../components/Logo/Logo';
 
 import allowedBlockTypes from '../core/allowedBlockTypes';
 
-const { registerBlockType } = blocks;
-const { __, sprintf } = i18n;
-const { InnerBlocks } = editor;
-
 type ABTestBlockChildProps = {
   attributes: ABTestVariant;
 } & GutenbergProps;
 
-function isValidContent(defaultContent: any) {
+function isValidContent(defaultContent: any): boolean {
   return defaultContent && defaultContent.block && defaultContent.block.name;
 }
 
@@ -45,8 +40,8 @@ registerBlockType('ab-testing-for-wp/ab-test-block-variant', {
       default: false,
     },
     defaultContent: {
-      type: 'object',
-      default: null,
+      type: 'array',
+      default: undefined,
     },
   },
   edit(props: ABTestBlockChildProps) {
