@@ -8,32 +8,38 @@ import Loader from '../Loader/Loader';
 
 import './Inserter.css';
 
-type InserterProps = {
+interface WPPost {
+  ID: string;
+  post_title: string;
+}
+
+interface InserterProps {
   pickTest: (id: string) => void;
   removeSelf: () => void;
   insertNew: () => void;
-};
+}
 
-type InserterState = {
+interface InserterState {
   value: string;
   isLoading: boolean;
   isPicking: boolean;
-  options: {
-    ID: string;
-    post_title: string;
-  }[];
-};
+  options: WPPost[];
+}
 
 class Inserter extends Component<InserterProps, InserterState> {
-  state = {
-    value: '',
-    isLoading: true,
-    isPicking: false,
-    options: [],
-  };
+  constructor(props: InserterProps) {
+    super(props);
+
+    this.state = {
+      value: '',
+      isLoading: true,
+      isPicking: false,
+      options: [],
+    };
+  }
 
   componentDidMount() {
-    apiFetch({ path: '/ab-testing-for-wp/v1/get-posts-by-type?type=abt4wp-test' })
+    apiFetch<WPPost[]>({ path: '/ab-testing-for-wp/v1/get-posts-by-type?type=abt4wp-test' })
       .then((options) => {
         if (options.length === 0) {
           this.insertNew();
@@ -48,26 +54,26 @@ class Inserter extends Component<InserterProps, InserterState> {
       });
   }
 
-  insertNew = () => {
+  insertNew = (): void => {
     const { insertNew } = this.props;
 
     insertNew();
   };
 
-  cancelInsert = () => {
+  cancelInsert = (): void => {
     const { removeSelf } = this.props;
 
     removeSelf();
   };
 
-  insertExisting = () => {
+  insertExisting = (): void => {
     const { pickTest } = this.props;
     const { value } = this.state;
 
     pickTest(value);
   };
 
-  render() {
+  render(): React.ReactElement {
     const {
       value,
       isLoading,
@@ -87,17 +93,17 @@ class Inserter extends Component<InserterProps, InserterState> {
           <section className="Inserter__picking">
             <SelectControl
               label={__('Pick A/B Test')}
-              selected={value}
-              options={options.map(option => ({
+              value={value}
+              options={options.map((option) => ({
                 label: option.post_title,
                 value: option.ID,
               }))}
-              onChange={newValue => this.setState({ value: newValue })}
+              onChange={(newValue) => this.setState({ value: newValue })}
             />
             <Button isPrimary onClick={this.insertExisting} style={{ marginRight: 5 }}>
               {__('Insert into Content')}
             </Button>
-            <Button isDefault onClick={() => this.setState({ isPicking: false })}>
+            <Button isDefault onClick={(): void => this.setState({ isPicking: false })}>
               {__('Cancel')}
             </Button>
           </section>
