@@ -1,15 +1,12 @@
-// @flow
-
 import React, { Component } from 'react';
 
-import { components, i18n, apiFetch } from '../../wp';
+import { __ } from '@wordpress/i18n';
+import { Modal, Button, SelectControl } from '@wordpress/components';
+import apiFetch from '@wordpress/api-fetch';
 
 import Loader from '../Loader/Loader';
 
 import './Inserter.css';
-
-const { __ } = i18n;
-const { Modal, Button, SelectControl } = components;
 
 type InserterProps = {
   pickTest: (id: string) => void;
@@ -22,8 +19,8 @@ type InserterState = {
   isLoading: boolean;
   isPicking: boolean;
   options: {
-    ID: string,
-    post_title: string,
+    ID: string;
+    post_title: string;
   }[];
 };
 
