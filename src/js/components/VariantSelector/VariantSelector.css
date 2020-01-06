@@ -5,11 +5,15 @@
   top: -15px;
 }
 
+.ab-test-for-wp__VariantSelector .components-button-group {
+  background: #fff;
+  border: 1px solid #e3e5e9;
+}
+
 .ab-test-for-wp__VariantSelector .components-button {
   width: 36px;
   justify-content: center;
-  border-top-left-radius: 0;
-  border-bottom-left-radius: 0;
+  border-radius: 0;
 }
 
 .ab-test-for-wp__VariantSelector .components-button.is-toggled:not(:disabled):not([aria-disabled="true"]):not(.is-default) {
