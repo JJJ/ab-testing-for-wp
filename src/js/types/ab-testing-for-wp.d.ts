@@ -3,7 +3,10 @@ declare const ABTestingForWP: {
 };
 
 declare const ABTestingForWP_AdminBar: {
-  cookieData: any;
+  cookieData: {
+    // test_id -> variant_id
+    [id: string]: string;
+  };
 };
 
 declare const ABTestingForWP_Data: {
