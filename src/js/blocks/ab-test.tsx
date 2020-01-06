@@ -205,7 +205,7 @@ class ABTestBlock extends Component<ABTestBlockProps> {
             isEnabled={isEnabled}
             testId={id}
             control={control}
-            startedAt={startedAt}
+            startedAt={typeof startedAt === 'string' ? parseInt(startedAt, 10) : startedAt}
             onDeclareWinner={onDeclareWinner}
           />
           <DistributionSettings
