@@ -32,7 +32,12 @@ function removeLink(link?: string): React.ReactNode | null {
   return postLink(__('Remove'), link);
 }
 
-const toTestVariantResult = (variant: TestVariant) => ({
+const toTestVariantResult = (variant: TestVariant): {
+  id: TestVariant['id'];
+  name: TestVariant['name'];
+  participants: TestVariant['participants'];
+  conversions: TestVariant['conversions'];
+} => ({
   id: variant.id,
   name: variant.name,
   participants: variant.participants,

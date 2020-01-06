@@ -50,7 +50,7 @@ const Test: React.FC<TestProps> = ({
           {variants.map((variant) => (
             <Variant
               {...variant}
-              onChangeVariant={(variantId: string) => onChangeVariant(id, variantId)}
+              onChangeVariant={(variantId: string): void => onChangeVariant(id, variantId)}
               isSelected={pickedVariants[id] === variant.id}
             />
           ))}

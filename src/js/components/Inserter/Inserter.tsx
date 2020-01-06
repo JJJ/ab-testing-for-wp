@@ -38,7 +38,7 @@ class Inserter extends Component<InserterProps, InserterState> {
     };
   }
 
-  componentDidMount() {
+  componentDidMount(): void {
     apiFetch<WPPost[]>({ path: '/ab-testing-for-wp/v1/get-posts-by-type?type=abt4wp-test' })
       .then((options) => {
         if (options.length === 0) {
@@ -98,7 +98,7 @@ class Inserter extends Component<InserterProps, InserterState> {
                 label: option.post_title,
                 value: option.ID,
               }))}
-              onChange={(newValue) => this.setState({ value: newValue })}
+              onChange={(newValue): void => this.setState({ value: newValue })}
             />
             <Button isPrimary onClick={this.insertExisting} style={{ marginRight: 5 }}>
               {__('Insert into Content')}
@@ -112,7 +112,7 @@ class Inserter extends Component<InserterProps, InserterState> {
             <Button isPrimary onClick={this.insertNew}>
               {__('Create New A/B Test')}
             </Button>
-            <Button isDefault onClick={() => this.setState({ isPicking: true })}>
+            <Button isDefault onClick={(): void => this.setState({ isPicking: true })}>
               {__('Insert Existing A/B Test')}
             </Button>
           </section>

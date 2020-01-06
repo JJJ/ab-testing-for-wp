@@ -99,7 +99,7 @@ class DeclareWinner extends Component<DeclareWinnerProps, DeclareWinnerState> {
                 isLarge
                 isPrimary
                 style={{ marginRight: 4 }}
-                onClick={() => {
+                onClick={(): void => {
                   onDeclareWinner(selectedValue);
                   this.closeModal();
                 }}
