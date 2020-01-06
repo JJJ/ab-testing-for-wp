@@ -28,7 +28,7 @@ const ABTestInserter = ({
 
   return (
     <Inserter
-      pickTest={(id: number): void => setAttributes({ id: id.toString() })}
+      pickTest={(id: string): void => setAttributes({ id: id.toString() })}
       removeSelf={removeSelf}
       insertNew={insertNew}
     />
