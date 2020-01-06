@@ -1,5 +1,5 @@
 import React from 'react';
-import { registerBlockType } from '@wordpress/blocks';
+import { registerBlockType, TemplateArray } from '@wordpress/blocks';
 import { __, sprintf } from '@wordpress/i18n';
 import { InnerBlocks } from '@wordpress/block-editor';
 
@@ -14,6 +14,41 @@ type ABTestBlockChildProps = {
 function isValidContent(defaultContent: any): boolean {
   return defaultContent && defaultContent.block && defaultContent.block.name;
 }
+
+const edit: any = (props: ABTestBlockChildProps) => {
+  const { attributes } = props;
+
+  const { id, name, defaultContent } = attributes;
+
+  const template: TemplateArray = defaultContent && isValidContent(defaultContent)
+    ? [
+      [defaultContent.block.name, defaultContent.attributes || {}],
+    ]
+    : [
+      ['core/button', {
+        text: sprintf(__('Button for Test Variant "%s"'), name),
+      }],
+      ['core/paragraph', { placeholder: sprintf(__('Enter content or add blocks for test variant "%s"'), name) }],
+    ];
+
+  return (
+    <div className={`ABTestVariant ABTestVariant--${id}`}>
+      <InnerBlocks
+        template={template}
+        templateLock={false}
+        allowedBlocks={allowedBlockTypes()}
+      />
+    </div>
+  );
+};
+
+const save: any = (props: ABTestBlockChildProps) => {
+  const { attributes } = props;
+
+  const { id } = attributes;
+
+  return <div className={`ABTestChild--${id}`}><InnerBlocks.Content /></div>;
+};
 
 registerBlockType('ab-testing-for-wp/ab-test-block-variant', {
   title: __('A/B Test Variant'),
@@ -35,6 +70,10 @@ registerBlockType('ab-testing-for-wp/ab-test-block-variant', {
       type: 'string',
       default: '',
     },
+    distribution: {
+      type: 'number',
+      default: 50,
+    },
     selected: {
       type: 'boolean',
       default: false,
@@ -44,37 +83,6 @@ registerBlockType('ab-testing-for-wp/ab-test-block-variant', {
       default: undefined,
     },
   },
-  edit(props: ABTestBlockChildProps) {
-    const { attributes } = props;
-
-    const { id, name, defaultContent } = attributes;
-
-    const template = defaultContent && isValidContent(defaultContent)
-      ? [
-        [defaultContent.block.name, defaultContent.attributes || {}],
-      ]
-      : [
-        ['core/button', {
-          text: sprintf(__('Button for Test Variant "%s"'), name),
-        }],
-        ['core/paragraph', { placeholder: sprintf(__('Enter content or add blocks for test variant "%s"'), name) }],
-      ];
-
-    return (
-      <div className={`ABTestVariant ABTestVariant--${id}`}>
-        <InnerBlocks
-          template={template}
-          templateLock={false}
-          allowedBlocks={allowedBlockTypes()}
-        />
-      </div>
-    );
-  },
-  save(props: ABTestBlockChildProps) {
-    const { attributes } = props;
-
-    const { id } = attributes;
-
-    return <div className={`ABTestChild--${id}`}><InnerBlocks.Content /></div>;
-  },
+  edit,
+  save,
 });
