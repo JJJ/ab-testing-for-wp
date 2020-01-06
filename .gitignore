@@ -1,6 +1,5 @@
 node_modules/
 dist/
-svn/
 vendor/
 stats.json
 wp-content

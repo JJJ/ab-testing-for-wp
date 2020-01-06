@@ -3,7 +3,6 @@
 /.idea
 /.wordpress-org
 /node_modules
-/svn
 /blog
 /wp-content
 *.DS_Store

@@ -1,7 +1,7 @@
 module.exports = {
-  parser: 'babel-eslint',
-  extends: ['airbnb', 'plugin:flowtype/recommended'],
-  plugins: ['flowtype'],
+  parser: '@typescript-eslint/parser',
+  extends: ['airbnb', 'plugin:@typescript-eslint/recommended'],
+  plugins: ['@typescript-eslint'],
   env: {
     browser: true,
     node: true,
@@ -11,13 +11,30 @@ module.exports = {
     ABTestingForWP: false,
     ABTestingForWP_AdminBar: false,
     ABTestingForWP_Options: false,
+    ABTestingForWP_Data: false,
   },
   rules: {
-    'react/react-in-jsx-scope': 0,
+    '@typescript-eslint/camelcase': 0,
+    'react/jsx-props-no-spreading': 0,
+    'react/prop-types': 0,
     'react/require-default-props': 0,
-    'react/jsx-filename-extension': [1, { extensions: ['.js', '.jsx'] }],
+    'react/jsx-filename-extension': [1, { extensions: ['.jsx', '.tsx'] }],
+    'import/extensions': [
+      'error',
+      'ignorePackages',
+      {
+        js: 'never',
+        jsx: 'never',
+        ts: 'never',
+        tsx: 'never',
+      }
+    ],
   },
   settings: {
-    'import/resolver': 'webpack',
+    'import/resolver': {
+      node: {
+        extensions: ['.js', '.jsx', '.ts', '.tsx'],
+      },
+    },
   },
 };
