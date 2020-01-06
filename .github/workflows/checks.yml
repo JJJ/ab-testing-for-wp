@@ -11,17 +11,9 @@ jobs:
       uses: actions/setup-node@v1
     - name: Install
       run: npm ci
-      env:
-        CI: true
     - name: Lint
       run: npm run lint
-      env:
-        CI: true
     - name: Check TypeScript
       run: npm run tsc
-      env:
-        CI: true
     - name: Build
       run: npm run build
-      env:
-        CI: true
