@@ -43,7 +43,7 @@ jobs:
           asset_name: ab-testing-for-wp.zip
           asset_content_type: application/zip
       - name: WordPress Plugin Deploy
-        uses: 10up/action-wordpress-plugin-deploy@1.4.0
+        uses: Gaya/action-wordpress-plugin-deploy@add/escape-at-signs
         env:
           SVN_PASSWORD: ${{ secrets.SVN_PASSWORD }}
           SVN_USERNAME: ${{ secrets.SVN_USERNAME }}
