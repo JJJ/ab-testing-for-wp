@@ -12,7 +12,7 @@ class TestPreview extends Component<TestPreviewProps> {
 
   tempId: string = shortid.generate();
 
-  componentDidMount() {
+  componentDidMount(): void {
     const { html } = this.props;
 
     window.addEventListener('message', this.listenToHeight);
@@ -24,11 +24,11 @@ class TestPreview extends Component<TestPreviewProps> {
     );
   }
 
-  componentWillUnmount() {
+  componentWillUnmount(): void {
     window.removeEventListener('message', this.listenToHeight);
   }
 
-  listenToHeight = (e: MessageEvent) => {
+  listenToHeight = (e: MessageEvent): void => {
     try {
       if (typeof e.data !== 'string') return;
       const data = JSON.parse(e.data);
@@ -40,7 +40,7 @@ class TestPreview extends Component<TestPreviewProps> {
     }
   };
 
-  render() {
+  render(): React.ReactElement {
     return <iframe title="preview" ref={this.iframeRef} />;
   }
 }
