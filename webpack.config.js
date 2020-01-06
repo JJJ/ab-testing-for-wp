@@ -17,7 +17,7 @@ module.exports = {
     // gutenberg
     'ab-test': './blocks/ab-test.tsx',
     'ab-test-variant': './blocks/ab-test-variant.tsx',
-    'ab-test-inserter': './blocks/ab-test-inserter.js',
+    'ab-test-inserter': './blocks/ab-test-inserter.tsx',
   },
   context: path.resolve(__dirname, 'src/js'),
   output: {
