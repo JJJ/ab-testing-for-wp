@@ -2,21 +2,20 @@ import React, { Component } from 'react';
 import classNames from 'classnames';
 import formatDistanceToNow from 'date-fns/formatDistanceToNow';
 
-import { apiFetch, components, i18n } from '../../wp';
+import { __, sprintf } from '@wordpress/i18n';
+import { PanelBody } from '@wordpress/components';
+import apiFetch from '@wordpress/api-fetch';
 
 import Significance from '../Significance/Significance';
 import DeclareWinner from './DeclareWinner';
 
 import './TestResults.css';
 
-const { __, sprintf } = i18n;
-const { PanelBody } = components;
-
 type TestResultsProps = {
   testId: string;
   control: string;
   isEnabled: boolean;
-  startedAt: Date | string;
+  startedAt: Date | number;
   onDeclareWinner: (id: string) => void;
 };
 
@@ -26,28 +25,32 @@ type TestResultsState = {
 };
 
 class TestResults extends Component<TestResultsProps, TestResultsState> {
-  state = {
-    loading: true,
-    results: [],
-  };
+  constructor(props: TestResultsProps) {
+    super(props);
 
-  componentDidMount() {
+    this.state = {
+      loading: true,
+      results: [],
+    };
+  }
+
+  componentDidMount(): void {
     const { testId } = this.props;
 
-    apiFetch({ path: `/ab-testing-for-wp/v1/stats?test=${testId}` })
+    apiFetch<ABTestResult[]>({ path: `/ab-testing-for-wp/v1/stats?test=${testId}` })
       .then((results) => {
         this.setState({
-          results: results.map(result => ({
+          results: results.map((result) => ({
             ...result,
-            participants: parseInt(result.participants, 10),
-            conversions: parseInt(result.conversions, 10),
+            participants: parseInt(result.participants.toString(), 10),
+            conversions: parseInt(result.conversions.toString(), 10),
           })),
           loading: false,
         });
       });
   }
 
-  render() {
+  render(): React.ReactElement | null {
     const {
       control,
       isEnabled,
@@ -62,7 +65,7 @@ class TestResults extends Component<TestResultsProps, TestResultsState> {
       return null;
     }
 
-    const controlVariant = results.find(result => result.id === control);
+    const controlVariant = results.find((result) => result.id === control);
 
     let crc = 0;
     if (controlVariant && controlVariant.participants > 0) {
@@ -70,17 +73,17 @@ class TestResults extends Component<TestResultsProps, TestResultsState> {
     }
 
     const enrichedResults = results
-      .map(result => ({
+      .map((result) => ({
         ...result,
         control: control === result.id,
         rate: result.participants === 0
           ? 0
           : Math.round((100 / result.participants) * result.conversions),
         uplift: Math.round(
-          crc === 0 ? 0 : (result.conversions / result.participants - crc) / crc * 1000,
+          crc === 0 ? 0 : ((result.conversions / result.participants - crc) / crc) * 1000,
         ) / 10,
         winner: result.participants > 0 && !results
-          .every(variant => result.participants / result.conversions
+          .every((variant) => result.participants / result.conversions
             >= variant.participants / variant.conversions),
       }))
       .sort((a, b) => {
@@ -97,7 +100,7 @@ class TestResults extends Component<TestResultsProps, TestResultsState> {
             <tbody>
               <tr>
                 <td className="TestResultName">{__('Variation')}</td>
-                {enrichedResults.map(result => (
+                {enrichedResults.map((result) => (
                   <td
                     className={classNames(
                       {
@@ -116,7 +119,7 @@ class TestResults extends Component<TestResultsProps, TestResultsState> {
               </tr>
               <tr>
                 <td className="TestResultName">{__('Conversion Rate')}</td>
-                {enrichedResults.map(result => (
+                {enrichedResults.map((result) => (
                   <td
                     className={classNames(
                       {
@@ -141,13 +144,13 @@ class TestResults extends Component<TestResultsProps, TestResultsState> {
               </tr>
               <tr>
                 <td className="TestResultName">{__('Conversions')}</td>
-                {enrichedResults.map(result => (
+                {enrichedResults.map((result) => (
                   <td className="TestResultValue" key={result.id}>{result.conversions}</td>
                 ))}
               </tr>
               <tr>
                 <td className="TestResultName">{__('Participants')}</td>
-                {enrichedResults.map(result => (
+                {enrichedResults.map((result) => (
                   <td className="TestResultValue" key={result.id}>{result.participants}</td>
                 ))}
               </tr>

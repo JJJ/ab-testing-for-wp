@@ -1,17 +1,13 @@
-// @flow
-
 import React, { Component } from 'react';
 
-import { components, i18n } from '../../wp';
-
-const { __, sprintf } = i18n;
-const {
+import { __, sprintf } from '@wordpress/i18n';
+import {
   Modal,
   Button,
   RadioControl,
-} = components;
+} from '@wordpress/components';
 
-type DeclareWinnerProps = {
+interface DeclareWinnerProps {
   variants: {
     id: string;
     name: string;
@@ -23,38 +19,42 @@ type DeclareWinnerProps = {
     uplift: number;
   }[];
   onDeclareWinner: (id: string) => void;
-};
+}
 
-type DeclareWinnerState = {
+interface DeclareWinnerState {
   isOpen: boolean;
   confirm: boolean;
   value: string;
-};
+}
 
 class DeclareWinner extends Component<DeclareWinnerProps, DeclareWinnerState> {
-  state = {
-    isOpen: false,
-    confirm: false,
-    value: '',
-  };
+  constructor(props: DeclareWinnerProps) {
+    super(props);
 
-  openModal = () => this.setState({
+    this.state = {
+      isOpen: false,
+      confirm: false,
+      value: '',
+    };
+  }
+
+  openModal = (): void => this.setState({
     isOpen: true,
     confirm: false,
     value: '',
   });
 
-  closeModal = () => this.setState({ isOpen: false });
+  closeModal = (): void => this.setState({ isOpen: false });
 
-  toConfirm = () => this.setState({ confirm: true });
+  toConfirm = (): void => this.setState({ confirm: true });
 
-  render() {
+  render(): React.ReactElement {
     const { variants, onDeclareWinner } = this.props;
     const { isOpen, confirm, value } = this.state;
 
     const selectedValue = value !== ''
-      ? value : (variants.find(variant => variant.winner) || { id: '' }).id;
-    const selectedVariant = (variants.find(variant => variant.id === selectedValue)
+      ? value : (variants.find((variant) => variant.winner) || { id: '' }).id;
+    const selectedVariant = (variants.find((variant) => variant.id === selectedValue)
       || { name: '' });
 
     return (
@@ -69,11 +69,11 @@ class DeclareWinner extends Component<DeclareWinnerProps, DeclareWinnerState> {
             </p>
             <RadioControl
               selected={selectedValue}
-              options={variants.map(variant => ({
+              options={variants.map((variant) => ({
                 label: sprintf(__('%s — %d%% %s'), variant.name, variant.rate, variant.winner ? __('(winner)') : ''),
                 value: variant.id,
               }))}
-              onChange={newValue => this.setState({ value: newValue })}
+              onChange={(newValue): void => this.setState({ value: newValue || '' })}
             />
             <div style={{ marginTop: '1em' }}>
               <Button isLarge isPrimary onClick={this.toConfirm}>
