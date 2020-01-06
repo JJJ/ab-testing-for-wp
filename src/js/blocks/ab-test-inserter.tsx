@@ -1,5 +1,3 @@
-// @flow
-
 import React from 'react';
 
 import { registerBlockType, createBlock, BlockInstance } from '@wordpress/blocks';
@@ -23,7 +21,7 @@ const ABTestInserter = ({
   insertNew,
   attributes,
   setAttributes,
-}: EditProps) => {
+}: EditProps): React.ReactElement => {
   if (attributes.id) return <EditWrapper id={attributes.id} />;
 
   return (
@@ -42,7 +40,7 @@ const edit: any = withDispatch((dispatch, props: any) => {
   const removeSelf = (): void => removeBlock(clientId);
 
   return {
-    insertNew() {
+    insertNew(): void {
       insertBlocksAfter(createBlock('ab-testing-for-wp/ab-test-block'));
       removeSelf();
     },

@@ -1,5 +1,3 @@
-// @flow
-
 import React from 'react';
 import { __, sprintf } from '@wordpress/i18n';
 import { PanelBody, RangeControl } from '@wordpress/components';

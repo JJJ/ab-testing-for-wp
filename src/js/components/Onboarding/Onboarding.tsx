@@ -1,5 +1,3 @@
-// @flow
-
 import React, { createRef, Component } from 'react';
 import { __ } from '@wordpress/i18n';
 import { Modal, Button } from '@wordpress/components';

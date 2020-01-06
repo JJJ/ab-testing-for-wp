@@ -1,5 +1,3 @@
-// @flow
-
 import React, { Component, createRef } from 'react';
 import shortid from 'shortid';
 

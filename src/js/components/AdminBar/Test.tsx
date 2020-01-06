@@ -1,5 +1,3 @@
-// @flow
-
 import React from 'react';
 import classNames from 'classnames';
 import scrollIntoView from 'scroll-into-view';
@@ -15,19 +13,19 @@ type TestProps = {
   onChangeVariant: (testId: string, variantId: string) => void;
 } & TestData;
 
-function findTestElementById(id: string) {
+function findTestElementById(id: string): HTMLElement | null {
   return document.querySelector(`.ABTestWrapper[data-test=${id}]`);
 }
 
-function Test({
+const Test: React.FC<TestProps> = ({
   id,
   title,
   isEnabled,
   variants,
   pickedVariants,
   onChangeVariant,
-}: TestProps) {
-  const onHover = () => {
+}) => {
+  const onHover = (): void => {
     const element = findTestElementById(id);
     if (!element) return;
 
@@ -49,7 +47,7 @@ function Test({
       </div>
       <div className="ab-sub-wrapper">
         <ul className="ab-submenu">
-          {variants.map(variant => (
+          {variants.map((variant) => (
             <Variant
               {...variant}
               onChangeVariant={(variantId: string) => onChangeVariant(id, variantId)}
@@ -60,6 +58,6 @@ function Test({
       </div>
     </li>
   );
-}
+};
 
 export default Test;
