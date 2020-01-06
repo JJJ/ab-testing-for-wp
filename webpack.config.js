@@ -12,7 +12,7 @@ module.exports = {
     // admin
     'admin-editor': './admin-editor.ts',
     'admin-bar': './admin-bar.tsx',
-    'admin-page': './admin-page.js',
+    'admin-page': './admin-page.tsx',
 
     // gutenberg
     'ab-test': './blocks/ab-test.tsx',

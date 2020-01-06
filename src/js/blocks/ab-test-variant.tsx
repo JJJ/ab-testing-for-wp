@@ -1,5 +1,5 @@
 import React from 'react';
-import { registerBlockType, TemplateArray } from '@wordpress/blocks';
+import { BlockInstance, registerBlockType, TemplateArray } from '@wordpress/blocks';
 import { __, sprintf } from '@wordpress/i18n';
 import { InnerBlocks } from '@wordpress/block-editor';
 
@@ -7,9 +7,7 @@ import SVGIcon from '../components/Logo/Logo';
 
 import allowedBlockTypes from '../core/allowedBlockTypes';
 
-type ABTestBlockChildProps = {
-  attributes: ABTestVariant;
-} & GutenbergProps;
+type ABTestBlockChildProps = BlockInstance<ABTestVariant>;
 
 function isValidContent(defaultContent: any): boolean {
   return defaultContent && defaultContent.block && defaultContent.block.name;

@@ -3,7 +3,7 @@ import shortid from 'shortid';
 import queryString from 'query-string';
 
 import { __, sprintf } from '@wordpress/i18n';
-import { registerBlockType, createBlock } from '@wordpress/blocks';
+import { registerBlockType, createBlock, BlockInstance } from '@wordpress/blocks';
 import { InnerBlocks, InspectorControls } from '@wordpress/block-editor';
 import { withDispatch, select } from '@wordpress/data';
 
@@ -20,11 +20,11 @@ import { getOption, setOption } from '../helpers/options';
 
 import SVGIcon from '../components/Logo/Logo';
 
-type ABTestBlockProps = {
-  attributes: ABTestAttributes;
+type ABTestBlockProps = BlockInstance<ABTestAttributes> & {
+  setAttributes: (attrs: any) => void;
   onDeclareWinner: (id: string) => void;
   selectBlock: () => void;
-} & GutenbergProps;
+};
 
 const ALLOWED_BLOCKS = ['ab-testing-for-wp/ab-test-block-variant'];
 
