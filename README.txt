@@ -78,6 +78,9 @@ You can find the [source and repository over at GitHub](https://github.com/Gaya/
 5. Integration with HTML Forms
 
 == Changelog ==
+= 1.12.0 =
+* Converted code base to TypeScript
+
 = 1.11.0 =
 * Updated npm dependencies
 * Improved code quality
