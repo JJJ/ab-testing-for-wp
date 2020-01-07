@@ -31,7 +31,9 @@ class BlockRenderer {
     }
 
     private function getVariantContent($content, $id) {
-        $doc = new \DOMDocument();
+        $charset = get_bloginfo('charset');
+
+        $doc = new \DOMDocument('1.0', $charset);
         $doc->loadHTML('<html>' . $content . '</html>');
         $xpath = new \DOMXPath($doc);
 
@@ -41,7 +43,13 @@ class BlockRenderer {
             return '';
         }
 
-        return $doc->saveXML($nodes[0]);
+        $content = $doc->saveHTML($nodes[0]);
+
+        if ($charset === 'UTF-8') {
+            return utf8_decode($content);
+        }
+
+        return $content;
     }
 
     private function pickVariant($variants, $testId) {
