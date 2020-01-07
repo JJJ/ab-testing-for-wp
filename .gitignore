@@ -1,6 +1,7 @@
 node_modules/
 dist/
 vendor/
+wp-content/
+wp-content-e2e/
 stats.json
-wp-content
 ab-testing-for-wp.zip
