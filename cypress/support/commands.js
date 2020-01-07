@@ -12,3 +12,7 @@ Cypress.Commands.add('resetInstall', () => {
   cy.exec('npm run e2e:wp-cli -- db reset --yes');
   cy.exec('npm run e2e:wp-install');
 });
+
+Cypress.Commands.add('activatePlugin', (name = 'ab-testing-for-wp', deactivate = false) => {
+  cy.exec(`npm run e2e:wp-cli -- plugin ${deactivate ? 'de' : ''}activate ${name}`);
+});
