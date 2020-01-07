@@ -1,0 +1,10 @@
+{
+    "baseUrl": "http://localhost:8000",
+    "env": {
+        "MYSQL_USER": "root",
+        "MYSQL_PASSWORD": "somewordpress",
+        "MYSQL_DATABASE": "wordpress_e2e",
+        "MYSQL_PORT": "3377",
+        "MYSQL_HOST": "localhost"
+    }
+}
