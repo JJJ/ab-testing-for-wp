@@ -1,7 +1,8 @@
-node_modules/
+cypress/videos/
 dist/
+node_modules/
 vendor/
 wp-content/
 wp-content-e2e/
-stats.json
 ab-testing-for-wp.zip
+stats.json
