@@ -1,10 +1,7 @@
 {
-    "baseUrl": "http://localhost:8000",
+    "baseUrl": "http://localhost:9000",
     "env": {
-        "MYSQL_USER": "root",
-        "MYSQL_PASSWORD": "somewordpress",
-        "MYSQL_DATABASE": "wordpress_e2e",
-        "MYSQL_PORT": "3377",
-        "MYSQL_HOST": "localhost"
+        "WP_USER": "test_user",
+        "WP_PASSWORD": "test_password"
     }
 }
