@@ -78,6 +78,9 @@ You can find the [source and repository over at GitHub](https://github.com/Gaya/
 5. Integration with HTML Forms
 
 == Changelog ==
+= 1.12.2 =
+* Bug fix for displaying unicode UTF-8 charset in XHR results
+
 = 1.12.1 =
 * Updated styles for variant selector
 
