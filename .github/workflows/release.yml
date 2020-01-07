@@ -6,7 +6,7 @@ on:
       - '*'
 
 jobs:
-  build:
+  release:
     name: Release plugin
     runs-on: ubuntu-latest
     steps:
