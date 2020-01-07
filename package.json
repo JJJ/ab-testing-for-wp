@@ -4,7 +4,9 @@
   "description": "A/B Test right from your WordPress posts.",
   "main": "index.js",
   "scripts": {
-    "cypress:open": "cypress open",
+    "e2e:open": "cypress open",
+    "e2e:down": "docker-compose -p ab-testing-for-wp-e2e -f docker-compose-e2e.yml down -v",
+    "e2e:up": "docker-compose -p ab-testing-for-wp-e2e -f docker-compose-e2e.yml up -d",
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "eslint '**/*.ts' '**/*.tsx' '**/*.js'",
     "tsc": "tsc",
