@@ -1,0 +1,35 @@
+version: '3.3'
+
+services:
+  db_e2e:
+    image: mysql:5.7
+    volumes:
+      - db_data_e2e:/var/lib/mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: somewordpress
+      MYSQL_DATABASE: wordpress_e2e
+      MYSQL_USER: wordpress
+      MYSQL_PASSWORD: wordpress
+    ports:
+      - "3377:3306"
+
+  wordpress_e2e:
+    depends_on:
+      - db_e2e
+    image: wordpress:php5.6-apache
+    ports:
+      - "9000:80"
+    restart: always
+    environment:
+      WORDPRESS_DB_HOST: db_e2e:3306
+      WORDPRESS_DB_USER: wordpress
+      WORDPRESS_DB_PASSWORD: wordpress
+      WORDPRESS_DB_NAME: wordpress_e2e
+      WORDPRESS_DEBUG: 1
+    volumes:
+      - ./wp-content-e2e:/var/www/html/wp-content
+      - ./:/var/www/html/wp-content/plugins/ab-testing-for-wp
+
+volumes:
+  db_data_e2e: {}
