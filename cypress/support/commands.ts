@@ -19,7 +19,7 @@ Cypress.Commands.add('logout', () => {
   });
 });
 
-Cypress.Commands.add('gotoAdmin', (page = '') => {
+Cypress.Commands.add('visitAdmin', (page = '') => {
   cy.visit(`/wp-admin/${page}`);
 });
 

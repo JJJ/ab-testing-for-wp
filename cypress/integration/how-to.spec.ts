@@ -8,7 +8,7 @@ describe('How to Use page', () => {
   });
 
   it('Check if how to page loads', () => {
-    cy.gotoAdmin();
+    cy.visitAdmin();
 
     cy.contains('A/B Testing').click();
     cy.contains('How to Use').click();

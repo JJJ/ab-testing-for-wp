@@ -4,11 +4,12 @@ describe('A/B Testing', () => {
   });
 
   afterEach(() => {
+    cy.visitAdmin('edit.php');
     cy.logout();
   });
 
   it('Can add a test in Gutenberg', () => {
-    cy.gotoAdmin('post-new.php?skipOnboarding=1&test=1');
+    cy.visitAdmin('post-new.php?skipOnboarding=1');
 
     // add default test
     cy.addTestInEditor();
@@ -22,7 +23,7 @@ describe('A/B Testing', () => {
   });
 
   it('Can add switch between variants', () => {
-    cy.gotoAdmin('post-new.php?skipOnboarding=1&test=2');
+    cy.visitAdmin('post-new.php?skipOnboarding=1');
 
     // add default test
     cy.addTestInEditor();
@@ -34,7 +35,7 @@ describe('A/B Testing', () => {
 
   it('Can save test and displays control on frontend', () => {
     // create new post
-    cy.gotoAdmin('post-new.php?skipOnboarding=1&test=3');
+    cy.visitAdmin('post-new.php?skipOnboarding=1');
 
     // add default test
     cy.addTestInEditor();
@@ -51,7 +52,7 @@ describe('A/B Testing', () => {
   });
 
   it('Can save test and displays variant "B" as control on frontend', () => {
-    cy.gotoAdmin('post-new.php?skipOnboarding=1&test=4');
+    cy.visitAdmin('post-new.php?skipOnboarding=1');
 
     // add default test
     cy.addTestInEditor();

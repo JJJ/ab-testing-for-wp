@@ -2,7 +2,7 @@ declare namespace Cypress {
   interface Chainable {
     login(): void;
     logout(): void;
-    gotoAdmin(subpage?: string): void;
+    visitAdmin(subpage?: string): void;
     addTestInEditor(): void;
   }
 }

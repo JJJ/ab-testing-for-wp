@@ -11,7 +11,7 @@ describe('Plugin activation', () => {
     cy.login();
 
     // go to plugins page
-    cy.gotoAdmin('plugins.php');
+    cy.visitAdmin('plugins.php');
 
     // has plugin installed
     cy.contains('A/B Testing for WordPress');

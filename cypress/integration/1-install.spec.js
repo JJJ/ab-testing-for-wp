@@ -1,7 +1,7 @@
 describe('WordPress installation', () => {
   it('Should install WordPress', () => {
     // go to install page
-    cy.gotoAdmin('install.php');
+    cy.visitAdmin('install.php');
 
     // select language
     cy.get('input[type=submit]').click();
