@@ -1,8 +1,4 @@
 describe('Plugin activation', () => {
-  before(() => {
-    cy.resetInstall();
-  });
-
   it('Successfully loads with plugin installed', () => {
     // check if activated successfully
     cy.exec('npm run e2e:wp-cli -- plugin list')

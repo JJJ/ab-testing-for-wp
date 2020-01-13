@@ -153,7 +153,7 @@ class RegisterAdminPage {
     public function howto() {
         $assets = plugins_url('/src/assets/', $this->fileRoot);
 
-        require $this->srcRoot . 'pages/howto.php';
+        require $this->srcRoot . 'php/pages/howto.php';
     }
 
 }
