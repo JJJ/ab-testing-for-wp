@@ -22,6 +22,6 @@ jobs:
       - name: Setup environments
         run: npm run e2e:setup-env
       - name: Test
-        run: npm run e2e:run -- --record
+        run: npm run e2e:run -- --record --group "e2e-tests"
         env:
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
