@@ -1,4 +1,5 @@
 cypress/videos/
+cypress/screenshots/
 dist/
 node_modules/
 vendor/
