@@ -24,6 +24,9 @@ module.exports = {
     filename: '[name].js',
     path: path.resolve(__dirname, 'dist'),
   },
+  resolve: {
+    extensions: ['.js', '.jsx', '.tsx', '.ts', '.json'],
+  },
   externals: {
     react: 'window.wp.element',
     'react-dom': 'window.wp.element',
