@@ -178,7 +178,9 @@ class ABTestBlock extends Component<ABTestBlockProps> {
     // side effect...
     this.showVariant(id, selectedVariant);
 
-    const showOnboarding = !completedOnboarding && window.innerWidth > 780;
+    const showOnboarding = !completedOnboarding
+      && window.innerWidth > 780
+      && window.location.search.indexOf('skipOnboarding=1') === -1;
     const isSingle = isSingleTest();
 
     return (
