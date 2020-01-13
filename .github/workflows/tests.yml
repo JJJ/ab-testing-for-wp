@@ -21,7 +21,7 @@ jobs:
         run: npm run build
       - name: Setup environments
         run: npm run e2e:setup-env
-      - name: Record
-        run: npm run e2e:record
       - name: Test
-        run: npm run e2e:run
+        run: npm run e2e:run -- --record
+        env: # Or as an environment variable
+          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}

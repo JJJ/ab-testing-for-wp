@@ -6,7 +6,6 @@
   "scripts": {
     "e2e:open": "cypress open",
     "e2e:run": "cypress run",
-    "e2e:record": "cypress run --record",
     "e2e:down": "docker-compose -p ab-testing-for-wp-e2e -f docker-compose-e2e.yml down -v",
     "e2e:up": "docker-compose -p ab-testing-for-wp-e2e -f docker-compose-e2e.yml up -d",
     "e2e:wp-cli": "docker-compose -p ab-testing-for-wp-e2e -f docker-compose-e2e.yml run wordpress-cli",
