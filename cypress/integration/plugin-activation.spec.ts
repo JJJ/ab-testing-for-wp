@@ -1,7 +1,7 @@
 describe('Plugin activation', () => {
   it('Successfully loads with plugin installed', () => {
     // check if activated successfully
-    cy.exec('npm run e2e:wp-cli -- plugin is-installed ab-testing-for-wp').then((result) => {
+    cy.exec('npm run e2e:wp-cli -- plugin is-active ab-testing-for-wp').then((result) => {
       console.log(result);
     });
 

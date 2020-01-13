@@ -36,14 +36,11 @@ services:
     depends_on:
       - db_e2e
       - wordpress_e2e
-    image: tatemz/wp-cli
+    image: wordpress:cli
     volumes:
       - wp_data:/var/www/html
       - ./wp-content-e2e:/var/www/html/wp-content
       - ./:/var/www/html/wp-content/plugins/ab-testing-for-wp
-    links:
-      - db_e2e
-    entrypoint: wp
     restart: always
 
 volumes:
