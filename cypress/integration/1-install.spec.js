@@ -4,7 +4,8 @@ describe('WordPress installation', () => {
     cy.gotoAdmin('install.php');
 
     // select language
-    cy.get('input[type=submit]');
+    const button = cy.get('input[type=submit]');
+    if (button) button.click();
 
     // fill out form
     cy.get('#weblog_title').type('A/B Testing for WordPress E2E tests');
