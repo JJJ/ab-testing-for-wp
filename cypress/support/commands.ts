@@ -22,3 +22,14 @@ Cypress.Commands.add('logout', () => {
 Cypress.Commands.add('gotoAdmin', (page = '') => {
   cy.visit(`/wp-admin/${page}`);
 });
+
+Cypress.Commands.add('addTestInEditor', () => {
+  // open Gutenberg dialog
+  cy.get('.edit-post-header-toolbar > :nth-child(1) > .editor-inserter > .components-button').click();
+
+  // search for A/B Testing
+  cy.get('.editor-inserter__search').type('A/B Test');
+
+  // insert block
+  cy.get('.editor-block-list-item-ab-testing-for-wp-ab-test-block-inserter').click();
+});
