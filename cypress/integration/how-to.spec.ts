@@ -1,4 +1,4 @@
-describe('How to page', () => {
+describe('How to Use page', () => {
   beforeEach(() => {
     cy.login();
   });
