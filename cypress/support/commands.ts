@@ -1,5 +1,11 @@
 function execWPCLI(command: string, options = { timeout: 60000 }): void {
-  cy.exec(`npm run e2e:wp-cli -- ${command}`, options);
+  cy.exec(`npm run e2e:wp-cli -- ${command}`, options).then((result) => {
+    if (result.code !== 0) {
+      console.log(result);
+    }
+
+    return result;
+  });
 }
 
 function activatePlugin(name = 'ab-testing-for-wp', deactivate = false): void {

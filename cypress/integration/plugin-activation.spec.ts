@@ -1,7 +1,9 @@
 describe('Plugin activation', () => {
   it('Successfully loads with plugin installed', () => {
     // check if activated successfully
-    cy.exec('npm run e2e:wp-cli -- plugin is-installed ab-testing-for-wp');
+    cy.exec('npm run e2e:wp-cli -- plugin is-installed ab-testing-for-wp').then((result) => {
+      console.log(result);
+    });
 
     // see if front page still works
     cy.visit('/');
