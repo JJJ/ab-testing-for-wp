@@ -1,17 +1,10 @@
-function activatePlugin(name = 'ab-testing-for-wp', deactivate = false): void {
-  cy.exec(`npm run e2e:wp-cli -- plugin ${deactivate ? 'de' : ''}activate ${name}`);
+function execWPCLI(command: string, options = { timeout: 60000 }): void {
+  cy.exec(`npm run e2e:wp-cli -- ${command}`, options);
 }
 
-Cypress.Commands.add('resetInstall', () => {
-  // wipe database
-  cy.exec('npm run e2e:wp-cli -- db reset --yes', { failOnNonZeroExit: false });
-
-  // install wordpress
-  cy.exec('npm run e2e:wp-install', { failOnNonZeroExit: false });
-
-  // activate plugin
-  activatePlugin();
-});
+function activatePlugin(name = 'ab-testing-for-wp', deactivate = false): void {
+  execWPCLI(`plugin ${deactivate ? 'de' : ''}activate ${name}`);
+}
 
 Cypress.Commands.add('activatePlugin', (name = 'ab-testing-for-wp') => {
   activatePlugin(name);
