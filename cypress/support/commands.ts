@@ -8,11 +8,19 @@
 // https://on.cypress.io/custom-commands
 // ***********************************************
 
+function activatePlugin(name = 'ab-testing-for-wp', deactivate = false): void {
+  cy.exec(`npm run e2e:wp-cli -- plugin ${deactivate ? 'de' : ''}activate ${name}`);
+}
+
 Cypress.Commands.add('resetInstall', () => {
   cy.exec('npm run e2e:wp-cli -- db reset --yes', { failOnNonZeroExit: false });
   cy.exec('npm run e2e:wp-install', { failOnNonZeroExit: false });
 });
 
-Cypress.Commands.add('activatePlugin', (name = 'ab-testing-for-wp', deactivate = false) => {
-  cy.exec(`npm run e2e:wp-cli -- plugin ${deactivate ? 'de' : ''}activate ${name}`);
+Cypress.Commands.add('activatePlugin', (name = 'ab-testing-for-wp') => {
+  activatePlugin(name);
+});
+
+Cypress.Commands.add('deactivatePlugin', (name = 'ab-testing-for-wp') => {
+  activatePlugin(name, true);
 });

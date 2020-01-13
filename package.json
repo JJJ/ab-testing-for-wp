@@ -10,9 +10,9 @@
     "e2e:up": "docker-compose -p ab-testing-for-wp-e2e -f docker-compose-e2e.yml up -d",
     "e2e:wp-cli": "docker-compose -p ab-testing-for-wp-e2e -f docker-compose-e2e.yml run wordpress-cli",
     "e2e:wp-install": "npm run e2e:wp-cli -- core install --url=localhost:9000 --title=\"A/B Testing for WordPress E2E\" --admin_user=test_user --admin_password=test_password --admin_email=foo@abtestingforwp.com",
-    "e2e:setup": "npm run e2e:down && npm run e2e:up && wait-on http://localhost:9000",
-    "test": "npm run e2e:setup && npm run e2e:run && npm run e2e:down",
-    "test:dev": "npm run e2e:setup && npm run e2e:open",
+    "e2e:setup-env": "npm run e2e:down && npm run e2e:up && wait-on http://localhost:9000",
+    "test": "npm run e2e:setup-env && npm run e2e:run && npm run e2e:down",
+    "test:dev": "npm run e2e:setup-env && npm run e2e:open",
     "lint": "eslint '**/*.ts' '**/*.tsx' '**/*.js'",
     "tsc": "tsc",
     "build": "NODE_ENV=production webpack",
@@ -77,6 +77,7 @@
     "webpack-cli": "^3.3.10"
   },
   "dependencies": {
+    "@cypress/webpack-preprocessor": "^4.1.1",
     "@wordpress/api-fetch": "^3.8.0",
     "@wordpress/block-editor": "^3.4.0",
     "@wordpress/blocks": "^6.9.0",
