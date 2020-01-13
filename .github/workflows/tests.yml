@@ -19,5 +19,7 @@ jobs:
         run: npm ci
       - name: Build
         run: npm run build
+      - name: Record
+        run: npm run e2e:record
       - name: Test
         run: npm test
