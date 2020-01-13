@@ -19,7 +19,9 @@ jobs:
         run: npm ci
       - name: Build
         run: npm run build
+      - name: Setup environments
+        run: npm run e2e:setup-env
       - name: Record
         run: npm run e2e:record
       - name: Test
-        run: npm test
+        run: npm run e2e:run
