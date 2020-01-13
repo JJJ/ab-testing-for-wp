@@ -13,8 +13,14 @@ function activatePlugin(name = 'ab-testing-for-wp', deactivate = false): void {
 }
 
 Cypress.Commands.add('resetInstall', () => {
+  // wipe database
   cy.exec('npm run e2e:wp-cli -- db reset --yes', { failOnNonZeroExit: false });
+
+  // install wordpress
   cy.exec('npm run e2e:wp-install', { failOnNonZeroExit: false });
+
+  // activate plugin
+  activatePlugin();
 });
 
 Cypress.Commands.add('activatePlugin', (name = 'ab-testing-for-wp') => {

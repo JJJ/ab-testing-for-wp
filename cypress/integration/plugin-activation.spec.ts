@@ -3,14 +3,7 @@ describe('Plugin activation', () => {
     cy.resetInstall();
   });
 
-  it('Successfully loads without plugin installed', () => {
-    cy.visit('/');
-  });
-
   it('Successfully loads with plugin installed', () => {
-    // activate the plugin in wp-admin
-    cy.activatePlugin();
-
     // check if activated successfully
     cy.exec('npm run e2e:wp-cli -- plugin list')
       .its('stdout')
@@ -18,5 +11,16 @@ describe('Plugin activation', () => {
 
     // see if front page still works
     cy.visit('/');
+  });
+
+  it('Successfully loads without plugin installed', () => {
+    // deactivate the plugin in wp-admin
+    cy.deactivatePlugin();
+
+    // front page should still work
+    cy.visit('/');
+
+    // activate the plugin in wp-admin
+    cy.activatePlugin();
   });
 });
