@@ -1,1 +1,2 @@
+import './patches';
 import './commands';

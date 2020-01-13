@@ -4,7 +4,6 @@ describe('A/B Testing', () => {
   });
 
   afterEach(() => {
-    cy.visitAdmin('edit.php');
     cy.logout();
   });
 
