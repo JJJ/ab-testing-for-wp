@@ -1,5 +1,5 @@
 describe('WordPress installation', () => {
-  after(() => {
+  before(() => {
     cy.wipeInstall();
   });
 

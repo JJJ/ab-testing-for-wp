@@ -6,5 +6,8 @@ declare namespace Cypress {
     addTestInEditor(): void;
     disableTooltips(): void;
     changeRange(selector: string, value: number): void;
+    installWordPress(): void;
+    activatePlugin(): void;
+    wipeInstall(): void;
   }
 }
