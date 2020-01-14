@@ -16,5 +16,8 @@ describe('WordPress installation', () => {
     cy.get('#pass1').clear({ force: true }).type(Cypress.env('WP_PASSWORD'), { force: true });
     cy.get('#admin_email').type('e2e@abtestingforwp.com');
     cy.get('#submit').click();
+
+    // Check if installed
+    cy.contains('WordPress has been installed.');
   });
 });
