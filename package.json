@@ -11,7 +11,7 @@
     "e2e:setup-env": "npm run e2e:down && npm run e2e:up && wait-on http://localhost:9000",
     "e2e:setup-local": "npm run e2e:setup-env && npm run e2e:run -- --spec cypress/integration/1-install.spec.ts && npm run e2e:run -- --spec cypress/integration/2-plugin-activation.spec.ts",
     "test": "npm run e2e:setup-env && npm run e2e:run && npm run e2e:down",
-    "test:dev": "npm run e2e:setup-env && npm run e2e:open",
+    "test:dev": "npm run e2e:setup-local && npm run e2e:open",
     "lint": "eslint '**/*.ts' '**/*.tsx' '**/*.js'",
     "tsc": "tsc",
     "build": "NODE_ENV=production webpack",
