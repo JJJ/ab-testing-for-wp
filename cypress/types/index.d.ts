@@ -9,5 +9,6 @@ declare namespace Cypress {
     installWordPress(): void;
     activatePlugin(): void;
     wipeInstall(): void;
+    cleanInstall(): void;
   }
 }

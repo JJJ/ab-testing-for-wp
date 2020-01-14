@@ -9,7 +9,7 @@
     "e2e:docker-compose": "docker-compose -p ab-testing-for-wp-e2e -f docker-compose-e2e.yml",
     "e2e:down": "npm run e2e:docker-compose -- down -v",
     "e2e:up": "npm run e2e:docker-compose -- up -d",
-    "e2e:reset-db": "npm run e2e:docker-compose -- exec db_e2e mysql -u root --password=root_wordpress -e \"DROP DATABASE wordpress_e2e; CREATE DATABASE wordpress_e2e;\"",
+    "e2e:reset-db": "npm run e2e:docker-compose -- exec -T db_e2e mysql -u root --password=root_wordpress -e \"DROP DATABASE wordpress_e2e; CREATE DATABASE wordpress_e2e;\"",
     "e2e:setup-env": "npm run e2e:down && npm run e2e:up && wait-on http://localhost:9000",
     "test": "npm run e2e:setup-env && npm run e2e:run && npm run e2e:down",
     "test:dev": "npm run e2e:setup-env && npm run e2e:open",

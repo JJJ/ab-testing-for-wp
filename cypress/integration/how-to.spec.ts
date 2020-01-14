@@ -1,13 +1,11 @@
 describe('How to Use page', () => {
-  beforeEach(() => {
-    cy.login();
-  });
-
-  afterEach(() => {
-    cy.logout();
+  before(() => {
+    cy.cleanInstall();
   });
 
   it('Check if how to page loads', () => {
+    cy.login();
+
     cy.visitAdmin();
 
     cy.contains('A/B Testing').click();

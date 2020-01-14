@@ -1,4 +1,8 @@
 describe('A/B Testing', () => {
+  before(() => {
+    cy.cleanInstall();
+  });
+
   beforeEach(() => {
     cy.login();
     cy.disableTooltips();
