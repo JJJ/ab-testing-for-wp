@@ -55,3 +55,18 @@ Cypress.Commands.add('disableTooltips', () => {
     storage.setItem(dataKey, JSON.stringify(currentData));
   });
 });
+
+const nativeInputValueSetter = (Object.getOwnPropertyDescriptor(
+  window.HTMLInputElement.prototype,
+  'value',
+) || { set: (): void => undefined }).set as any;
+
+Cypress.Commands.add('changeRange', (selector: string, value: number) => {
+  cy.get(selector).eq(0).then((element) => {
+    // natively set
+    nativeInputValueSetter.call(element[0], value);
+
+    // now dispatch the event
+    element[0].dispatchEvent(new Event('change', { bubbles: true }));
+  });
+});
