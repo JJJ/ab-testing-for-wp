@@ -3,8 +3,12 @@ describe('WordPress installation', () => {
     // go to install page
     cy.visitAdmin('install.php');
 
-    // select language
-    cy.get('input[type=submit]').click();
+    cy.get('body').eq(0).then((body) => {
+      // select language if on language page
+      if (body.hasClass('language-chooser')) {
+        cy.get('#language-continue').click();
+      }
+    });
 
     // fill out form
     cy.get('#weblog_title').type('A/B Testing for WordPress E2E tests');
