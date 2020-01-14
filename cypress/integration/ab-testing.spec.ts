@@ -102,8 +102,10 @@ describe('A/B Testing', () => {
     cy.get('.editor-post-publish-panel__toggle').click();
     cy.get('.editor-post-publish-panel__header-publish-button > .components-button').click();
 
-    // reload page
-    cy.reload();
+    // reload and skip onboarding
+    cy.location().then(({ pathname, search }) => {
+      cy.visit(`${pathname}${search}&skipOnboarding=1`);
+    });
 
     // open test options
     cy.get('.components-button-group > :nth-child(3)').click();
@@ -113,5 +115,43 @@ describe('A/B Testing', () => {
       .should('have.value', '75');
     cy.get(':nth-child(3) > .components-base-control__field > .components-range-control__number')
       .should('have.value', '25');
+  });
+
+  it('Can change set a goal for the test', () => {
+    cy.visitAdmin('post-new.php?skipOnboarding=1');
+
+    // add default test
+    cy.addTestInEditor();
+
+    // open test options
+    cy.get('.components-button-group > :nth-child(3)').click();
+
+    // change goal type
+    cy.get('#inspector-select-control-2')
+      .scrollIntoView()
+      .select('Pages');
+
+    // change goal page
+    cy.get('#inspector-select-control-3')
+      .scrollIntoView()
+      .select('Sample Page');
+
+    // save post
+    cy.get('.editor-post-publish-panel__toggle').click();
+    cy.get('.editor-post-publish-panel__header-publish-button > .components-button').click();
+
+    // reload and skip onboarding
+    cy.location().then(({ pathname, search }) => {
+      cy.visit(`${pathname}${search}&skipOnboarding=1`);
+    });
+
+    // open test options
+    cy.get('.components-button-group > :nth-child(3)').click();
+
+    // check saved values
+    cy.get('#inspector-select-control-1')
+      .scrollIntoView()
+      .should('contain', 'Pages');
+    cy.get('#inspector-select-control-2').should('contain', 'Sample Page');
   });
 });
