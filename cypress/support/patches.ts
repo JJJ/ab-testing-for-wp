@@ -1,7 +1,6 @@
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-Cypress.on('window:before:load', (win: any) => {
+function patchLeaveMessage(win: any): void {
   // get rid of the "Stay on page" unsaved changes messages blocking navigation in tests
-
   const original = win.EventTarget.prototype.addEventListener;
 
   // eslint-disable-next-line no-param-reassign,@typescript-eslint/no-explicit-any
@@ -25,4 +24,8 @@ Cypress.on('window:before:load', (win: any) => {
       return undefined;
     },
   });
+}
+
+Cypress.on('window:before:load', (win) => {
+  patchLeaveMessage(win);
 });

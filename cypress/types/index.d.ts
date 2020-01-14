@@ -4,5 +4,6 @@ declare namespace Cypress {
     logout(): void;
     visitAdmin(subpage?: string): void;
     addTestInEditor(): void;
+    disableTooltips(): void;
   }
 }

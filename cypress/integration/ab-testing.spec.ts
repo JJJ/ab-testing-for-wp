@@ -1,6 +1,7 @@
 describe('A/B Testing', () => {
   beforeEach(() => {
     cy.login();
+    cy.disableTooltips();
   });
 
   afterEach(() => {

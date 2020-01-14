@@ -33,3 +33,25 @@ Cypress.Commands.add('addTestInEditor', () => {
   // insert block
   cy.get('.editor-block-list-item-ab-testing-for-wp-ab-test-block-inserter').click();
 });
+
+Cypress.Commands.add('disableTooltips', () => {
+  const dataKey = 'WP_DATA_USER_1';
+
+  cy.clearLocalStorage(dataKey).then((storage) => {
+    const currentData = JSON.parse(storage.getItem(dataKey) || '{}');
+
+    if (!currentData['core/nux']) {
+      currentData['core/nux'] = {};
+    }
+
+    if (!currentData['core/nux'].preferences) {
+      currentData['core/nux'].preferences = {};
+    }
+
+    currentData['core/nux'].preferences = {
+      areTipsEnabled: false,
+    };
+
+    storage.setItem(dataKey, JSON.stringify(currentData));
+  });
+});
