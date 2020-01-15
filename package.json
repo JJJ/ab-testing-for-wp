@@ -93,6 +93,7 @@
     "react": "^16.9.0",
     "react-dom": "^16.9.0",
     "scroll-into-view": "^1.14.1",
+    "shell-exec": "^1.0.2",
     "shortid": "^2.2.15"
   }
 }
