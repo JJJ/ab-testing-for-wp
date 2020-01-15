@@ -110,7 +110,7 @@ Cypress.Commands.add('activatePlugin', () => {
 });
 
 Cypress.Commands.add('wipeInstall', () => {
-  cy.exec('npm run e2e:reset-db');
+  cy.task('npm-run', 'e2e:reset-db');
 });
 
 Cypress.Commands.add('cleanInstall', () => {
