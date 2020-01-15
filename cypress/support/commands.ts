@@ -110,11 +110,9 @@ Cypress.Commands.add('activatePlugin', () => {
 });
 
 Cypress.Commands.add('wipeInstall', () => {
-  cy.exec('npm run e2e:reset-db');
+  cy.exec('npm run e2e:wipe-db');
 });
 
 Cypress.Commands.add('cleanInstall', () => {
-  cy.wipeInstall();
-  cy.installWordPress();
-  cy.activatePlugin();
+  cy.exec('npm run e2e:reset-db');
 });
