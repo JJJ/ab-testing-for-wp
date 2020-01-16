@@ -13,7 +13,7 @@
     "e2e:reset-db": "npm run e2e:docker-compose -- exec -T db_e2e mysql -u root --password=root_wordpress wordpress_e2e < cypress/data/wordpress_e2e_clean.sql",
     "e2e:setup-env": "npm run e2e:down && npm run e2e:up && wait-on http://localhost:9000",
     "test": "npm run e2e:setup-env && npm run e2e:run && npm run e2e:down",
-    "test:dev": "npm run e2e:setup-env && npm run e2e:open",
+    "test:dev": "npm run e2e:setup-env && npm run e2e:reset-db && npm run e2e:open",
     "lint": "eslint '**/*.ts' '**/*.tsx' '**/*.js'",
     "tsc": "tsc",
     "build": "NODE_ENV=production webpack",
