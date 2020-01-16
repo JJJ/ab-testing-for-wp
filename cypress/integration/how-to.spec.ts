@@ -8,8 +8,10 @@ describe('How to Use page', () => {
 
     cy.visitAdmin();
 
-    cy.contains('A/B Testing').click();
-    cy.contains('How to Use').click();
+    cy.contains('A/B Testing')
+      .click();
+    cy.contains('How to Use')
+      .click();
 
     cy.contains('How to Use A/B Testing');
   });
