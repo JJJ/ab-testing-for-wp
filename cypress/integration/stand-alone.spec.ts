@@ -66,7 +66,8 @@ describe('Stand alone A/B tests', () => {
 
     // add to content
     cy.get('.Inserter__picking > .is-primary')
-      .click();
+      .click()
+      .wait(500);
 
     // Click on test to activate
     cy.get('.EditWrapper__Overlay')
