@@ -3,7 +3,8 @@ declare namespace Cypress {
     login(): void;
     logout(): void;
     visitAdmin(subpage?: string): void;
-    addTestInEditor(): void;
+    addBlockInEditor(search: string): void;
+    savePost(): void;
     disableTooltips(): void;
     changeRange(selector: string, value: number): void;
     installWordPress(): void;

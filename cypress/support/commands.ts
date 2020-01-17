@@ -23,15 +23,25 @@ Cypress.Commands.add('visitAdmin', (page = '') => {
   cy.visit(`/wp-admin/${page}`);
 });
 
-Cypress.Commands.add('addTestInEditor', () => {
+Cypress.Commands.add('addBlockInEditor', (search: string) => {
   // open Gutenberg dialog
-  cy.get('.edit-post-header-toolbar > :nth-child(1) > .editor-inserter > .components-button').click();
+  cy.get('.edit-post-header-toolbar > :nth-child(1) > .editor-inserter > .components-button')
+    .click();
 
-  // search for A/B Testing
-  cy.get('.editor-inserter__search').type('A/B Test');
+  // search for block type
+  cy.get('.editor-inserter__search')
+    .type(search);
 
   // insert block
-  cy.get('.editor-block-list-item-ab-testing-for-wp-ab-test-block-inserter').click();
+  cy.get('.editor-block-types-list__item')
+    .click();
+});
+
+Cypress.Commands.add('savePost', () => {
+  cy.get('.editor-post-publish-panel__toggle')
+    .click();
+  cy.get('.editor-post-publish-panel__header-publish-button > .components-button')
+    .click();
 });
 
 Cypress.Commands.add('disableTooltips', () => {

@@ -16,7 +16,7 @@ describe('A/B Testing', () => {
     cy.visitAdmin('post-new.php?skipOnboarding=1');
 
     // add default test
-    cy.addTestInEditor();
+    cy.addBlockInEditor('A/B Test');
 
     // test if succeeded
     cy.contains('Button for Test Variant "A"')
@@ -34,7 +34,7 @@ describe('A/B Testing', () => {
     cy.visitAdmin('post-new.php?skipOnboarding=1');
 
     // add default test
-    cy.addTestInEditor();
+    cy.addBlockInEditor('A/B Test');
 
     // test if succeeded
     cy.get('.components-button-group > button')
@@ -49,13 +49,10 @@ describe('A/B Testing', () => {
     cy.visitAdmin('post-new.php?skipOnboarding=1');
 
     // add default test
-    cy.addTestInEditor();
+    cy.addBlockInEditor('A/B Test');
 
     // save post
-    cy.get('.editor-post-publish-panel__toggle')
-      .click();
-    cy.get('.editor-post-publish-panel__header-publish-button > .components-button')
-      .click();
+    cy.savePost();
 
     // go to post
     cy.get('.post-publish-panel__postpublish-buttons > a.components-button')
@@ -70,7 +67,7 @@ describe('A/B Testing', () => {
     cy.visitAdmin('post-new.php?skipOnboarding=1');
 
     // add default test
-    cy.addTestInEditor();
+    cy.addBlockInEditor('A/B Test');
 
     // open test options
     cy.get('.components-button-group > :nth-child(3)')
@@ -82,10 +79,7 @@ describe('A/B Testing', () => {
       .select('B');
 
     // save post
-    cy.get('.editor-post-publish-panel__toggle')
-      .click();
-    cy.get('.editor-post-publish-panel__header-publish-button > .components-button')
-      .click();
+    cy.savePost();
 
     // go to post
     cy.get('.post-publish-panel__postpublish-buttons > a.components-button')
@@ -100,7 +94,7 @@ describe('A/B Testing', () => {
     cy.visitAdmin('post-new.php?skipOnboarding=1');
 
     // add default test
-    cy.addTestInEditor();
+    cy.addBlockInEditor('A/B Test');
 
     // open test options
     cy.get('.components-button-group > :nth-child(3)')
@@ -116,10 +110,7 @@ describe('A/B Testing', () => {
       .should('have.value', '25');
 
     // save post
-    cy.get('.editor-post-publish-panel__toggle')
-      .click();
-    cy.get('.editor-post-publish-panel__header-publish-button > .components-button')
-      .click();
+    cy.savePost();
 
     // reload and skip onboarding
     cy.location()
@@ -142,7 +133,7 @@ describe('A/B Testing', () => {
     cy.visitAdmin('post-new.php?skipOnboarding=1');
 
     // add default test
-    cy.addTestInEditor();
+    cy.addBlockInEditor('A/B Test');
 
     // open test options
     cy.get('.components-button-group > :nth-child(3)')
@@ -159,10 +150,7 @@ describe('A/B Testing', () => {
       .select('Sample Page');
 
     // save post
-    cy.get('.editor-post-publish-panel__toggle')
-      .click();
-    cy.get('.editor-post-publish-panel__header-publish-button > .components-button')
-      .click();
+    cy.savePost();
 
     // reload and skip onboarding
     cy.location()
@@ -186,7 +174,7 @@ describe('A/B Testing', () => {
     cy.visitAdmin('post-new.php?skipOnboarding=1');
 
     // add default test
-    cy.addTestInEditor();
+    cy.addBlockInEditor('A/B Test');
 
     // open test options
     cy.get('.components-button-group > :nth-child(3)')
@@ -200,10 +188,7 @@ describe('A/B Testing', () => {
     cy.contains('Results so far');
 
     // save post
-    cy.get('.editor-post-publish-panel__toggle')
-      .click();
-    cy.get('.editor-post-publish-panel__header-publish-button > .components-button')
-      .click();
+    cy.savePost();
 
     // reload and skip onboarding
     cy.location()

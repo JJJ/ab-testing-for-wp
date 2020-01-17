@@ -51,7 +51,7 @@ describe('Stand alone A/B tests', () => {
     cy.visitAdmin('post-new.php?skipOnboarding=1');
 
     // add default test
-    cy.addTestInEditor();
+    cy.addBlockInEditor('A/B Test');
 
     // should see popup
     cy.get('.components-modal__content');
@@ -84,7 +84,7 @@ describe('Stand alone A/B tests', () => {
     cy.visitAdmin('post-new.php?skipOnboarding=1');
 
     // add default test
-    cy.addTestInEditor();
+    cy.addBlockInEditor('A/B Test');
 
     // should see popup
     cy.get('.components-modal__content');
@@ -97,8 +97,46 @@ describe('Stand alone A/B tests', () => {
     cy.contains('Button for Test Variant "A"');
   });
 
-  it('Can use short code of stand alone test', () => {
-    expect(1).to.equal(1);
+  it('Can use shortcode of stand alone test', () => {
+    createStandAloneTest('Shortcode test A/B Test');
+
+    // close publish side bar
+    cy.get('.edit-post-sidebar-header > .components-button')
+      .click();
+
+    // open options
+    cy.get('.edit-post-header__settings > :nth-child(3) > .components-button')
+      .click();
+
+    // open test options
+    cy.get('.components-button-group > :nth-child(3)')
+      .click();
+
+    // grab shortcode
+    cy.get('code')
+      .then((code) => {
+        const codeText = code.text();
+
+        // go to new post create page
+        cy.visitAdmin('post-new.php?skipOnboarding=1');
+
+        // add shortcode block
+        cy.addBlockInEditor('Shortcode');
+
+        // input shortcode
+        cy.get('#blocks-shortcode-input-0')
+          .type(codeText);
+      });
+
+    // save content
+    cy.savePost();
+
+    // go to post
+    cy.get('.post-publish-panel__postpublish-buttons > a.components-button')
+      .click();
+
+    // should have added standard test
+    cy.contains('Button for Test Variant “A”');
   });
 
   it('Can convert an inline test to a stand alone test', () => {
