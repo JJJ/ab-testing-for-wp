@@ -140,6 +140,32 @@ describe('Stand alone A/B tests', () => {
   });
 
   it('Can convert an inline test to a stand alone test', () => {
-    expect(1).to.equal(1);
+    cy.visitAdmin('post-new.php?skipOnboarding=1');
+
+    // add button block to editor
+    cy.addBlockInEditor('Button');
+
+    // change button text
+    cy.get('.rich-text')
+      .click({ force: true })
+      .type('Testing button');
+
+    // open block selector
+    cy.get('.edit-post-header-toolbar > :nth-child(5) > .components-button')
+      .click();
+    cy.get('button.editor-block-navigation__item-button')
+      .click();
+
+    // open the options
+    cy.get(':nth-child(4) > .components-dropdown-menu > .components-button')
+      .click();
+
+    // convert to test
+    cy.contains('Convert to A/B test')
+      .click();
+
+    // check if block is now a test
+    cy.get('.components-button-group > :nth-child(1)').should('contain', 'A');
+    cy.get('.components-button-group > :nth-child(2)').should('contain', 'B');
   });
 });
