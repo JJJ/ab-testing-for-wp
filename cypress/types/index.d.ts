@@ -5,6 +5,7 @@ declare namespace Cypress {
     visitAdmin(subpage?: string): void;
     addBlockInEditor(search: string): void;
     savePost(): void;
+    focusBlock(eq: number): void;
     disableTooltips(): void;
     changeRange(selector: string, value: number): void;
     installWordPress(): void;

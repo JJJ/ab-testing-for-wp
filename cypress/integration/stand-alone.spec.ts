@@ -16,17 +16,14 @@ describe('Stand alone A/B tests', () => {
     cy.visitAdmin('post-new.php?post_type=abt4wp-test&skipOnboarding=1');
 
     // wait for test to get focus
-    cy.get('.editor-block-toolbar > :nth-child(1) > .components-button');
+    cy.focusBlock();
 
     // fill in title
     cy.get('#post-title-0')
-      .type(name);
+      .type(name, { force: true });
 
     // save test
-    cy.get('.editor-post-publish-panel__toggle')
-      .click();
-    cy.get('.editor-post-publish-panel__header-publish-button > .components-button')
-      .click();
+    cy.savePost();
 
     // wait for save message
     cy.contains('Post published.');

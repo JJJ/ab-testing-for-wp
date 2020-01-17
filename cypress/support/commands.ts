@@ -41,7 +41,16 @@ Cypress.Commands.add('addBlockInEditor', (search: string) => {
 Cypress.Commands.add('savePost', () => {
   cy.get('.editor-post-publish-panel__toggle')
     .click();
-  cy.get('.editor-post-publish-panel__header-publish-button > .components-button')
+  cy.get('.editor-post-publish-panel__header-publish-button > div > .components-button')
+    .click();
+});
+
+Cypress.Commands.add('focusBlock', (number = 0) => {
+  // open block selector
+  cy.get('.edit-post-header-toolbar > :nth-child(5) > .components-button')
+    .click();
+  cy.get('button.editor-block-navigation__item-button')
+    .eq(number)
     .click();
 });
 
