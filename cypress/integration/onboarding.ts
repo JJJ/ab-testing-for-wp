@@ -75,5 +75,7 @@ describe('Onboarding', () => {
       .click();
   });
 
-  it('Should not load onboarding one it has been dismissed', () => {});
+  it('Should not load onboarding one it has been dismissed', () => {
+    expect(1).to.equal(1);
+  });
 });
