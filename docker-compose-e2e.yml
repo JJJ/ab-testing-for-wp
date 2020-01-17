@@ -17,7 +17,7 @@ services:
   wordpress_e2e:
     depends_on:
       - db_e2e
-    image: wordpress:latest
+    image: wordpress:5.3.2-php7.4-apache
     ports:
       - "9000:80"
     restart: always
