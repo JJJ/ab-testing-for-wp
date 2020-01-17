@@ -3,7 +3,7 @@ Contributors: clevernode, gayakessler
 Tags: "a/b testing", "a/b test", "ab testing", "split test", "measure", "optimise", "marketing"
 Donate link: https://abtestingforwp.com/
 Requires at least: 5.0
-Tested up to: 5.3
+Tested up to: 5.3.2
 Requires PHP: 5.6
 Stable tag: 1.12.4
 License: GPLv3
