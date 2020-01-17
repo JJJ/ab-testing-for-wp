@@ -101,7 +101,7 @@ describe('A/B Testing', () => {
       .click();
 
     // change range input
-    cy.changeRange('#inspector-range-control-2', 75);
+    cy.changeRange('#inspector-range-control-1', 75);
 
     // check if values updated correctly
     cy.get(':nth-child(2) > .components-base-control__field > .components-range-control__number')
@@ -181,8 +181,8 @@ describe('A/B Testing', () => {
       .click();
 
     // start test
-    cy.get('#inspector-toggle-control-1')
-      .click();
+    cy.get('#inspector-toggle-control-2')
+      .click({ force: true });
 
     // gets declare winner tab
     cy.contains('Results so far');
