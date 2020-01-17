@@ -243,13 +243,16 @@ class ABTestBlock extends Component<ABTestBlockProps> {
 }
 
 const edit: any = withDispatch((dispatch, props: any) => {
-  const { removeBlock } = dispatch('core/editor');
-  const { getBlock } = select('core/editor');
+  const { removeBlock } = dispatch('core/block-editor');
+  const { getBlock } = select('core/block-editor');
   const { clientId, insertBlocksAfter } = props;
 
   return {
     onDeclareWinner(variantId: string): void {
-      const rootBlock = getBlock<{ innerBlocks: any[] }>(clientId);
+      const rootBlock = getBlock(clientId);
+
+      if (!rootBlock) return;
+
       const variantBlock = rootBlock.innerBlocks
         .find((block) => block.attributes && block.attributes.id === variantId);
 
@@ -269,7 +272,7 @@ const edit: any = withDispatch((dispatch, props: any) => {
       removeBlock(clientId);
     },
     selectBlock(): void {
-      const { selectBlock } = dispatch('core/editor');
+      const { selectBlock } = dispatch('core/block-editor');
       const { openGeneralSidebar } = dispatch('core/edit-post');
       selectBlock(clientId);
       openGeneralSidebar('edit-post/block');
