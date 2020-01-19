@@ -75,7 +75,24 @@ describe('Onboarding', () => {
       .click();
   });
 
-  it('Should not load onboarding one it has been dismissed', () => {
-    expect(1).to.equal(1);
+  it('Should not load onboarding once it has been dismissed', () => {
+    cy.visitAdmin('post-new.php');
+
+    // add default test
+    cy.addBlockInEditor('A/B Test');
+
+    // cancel tour
+    cy.get('.ButtonContainer > .is-link')
+      .click();
+
+    // open add post page again
+    cy.visitAdmin('post-new.php');
+
+    // add default test
+    cy.addBlockInEditor('A/B Test');
+
+    // open add new test (will not happen if onbaording is opened)
+    cy.get('.wp-block > .editor-inserter')
+      .click();
   });
 });
