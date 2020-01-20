@@ -233,4 +233,51 @@ describe('A/B Testing', () => {
     cy.get('.components-button-group > :nth-child(1)').should('contain', 'A');
     cy.get('.components-button-group > :nth-child(2)').should('contain', 'B');
   });
+
+  it('Can declare a winner', () => {
+    cy.visitAdmin('post-new.php?skipOnboarding=1');
+
+    // add default test
+    cy.addBlockInEditor('A/B Test');
+
+    // open test options
+    cy.get('.components-button-group > :nth-child(3)')
+      .click();
+
+    // start test
+    cy.get('#inspector-toggle-control-2')
+      .click({ force: true });
+
+    // save post
+    cy.savePost();
+
+    // reload and skip onboarding
+    cy.location()
+      .then(({ pathname, search }) => {
+        cy.visit(`${pathname}${search}&skipOnboarding=1`);
+      });
+
+    // open the options
+    cy.get('.components-button-group > :nth-child(3)')
+      .click();
+
+    // click on declare a winner
+    cy.contains('Declare a winner')
+      .click({ force: true });
+
+    // Pick variant B
+    cy.contains('B — 0%')
+      .click();
+
+    // Declare the winner
+    cy.contains('Declare winner')
+      .click();
+
+    // Confirm the winner
+    cy.contains('Yes, "B" is the winner')
+      .click();
+
+    // Converted to variant "B"
+    cy.contains('Button for Test Variant "B"');
+  });
 });
