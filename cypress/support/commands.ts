@@ -40,10 +40,12 @@ Cypress.Commands.add('addBlockInEditor', (search: string, name?: string) => {
   if (name) {
     // open options
     cy.get('.components-button-group > :nth-child(3)')
+      .last()
       .click();
 
     // fill in name
-    cy.get('#inspector-text-control-2')
+    cy.get('.edit-post-settings-sidebar__panel-block > :nth-child(2) > :nth-child(1)')
+      .find('input[type=text]')
       .clear({ force: true })
       .type(name, { force: true });
   }
