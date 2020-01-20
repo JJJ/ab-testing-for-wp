@@ -24,7 +24,7 @@ Cypress.Commands.add('visitAdmin', (page = '') => {
   cy.visit(`/wp-admin/${page}`);
 });
 
-Cypress.Commands.add('addBlockInEditor', (search: string) => {
+Cypress.Commands.add('addBlockInEditor', (search: string, name?: string) => {
   // open Gutenberg dialog
   cy.get('.edit-post-header-toolbar > :nth-child(1) > .editor-inserter > .components-button')
     .click();
@@ -36,6 +36,17 @@ Cypress.Commands.add('addBlockInEditor', (search: string) => {
   // insert block
   cy.get('.editor-block-types-list__item')
     .click();
+
+  if (name) {
+    // open options
+    cy.get('.components-button-group > :nth-child(3)')
+      .click();
+
+    // fill in name
+    cy.get('#inspector-text-control-2')
+      .clear({ force: true })
+      .type(name, { force: true });
+  }
 });
 
 Cypress.Commands.add('savePost', () => {
@@ -43,6 +54,9 @@ Cypress.Commands.add('savePost', () => {
     .click();
   cy.get('.editor-post-publish-panel__header-publish-button > div > .components-button')
     .click();
+
+  // wait for saving
+  cy.contains('Post published.');
 });
 
 Cypress.Commands.add('focusBlock', (number = 0) => {

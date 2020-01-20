@@ -16,12 +16,8 @@ describe('Overview of created tests', () => {
     // create new post
     cy.visitAdmin('post-new.php?skipOnboarding=1');
 
-    // Enter a title
-    cy.get('#post-title-0')
-      .type('Inline test post', { force: true });
-
     // add default test
-    cy.addBlockInEditor('A/B Test');
+    cy.addBlockInEditor('A/B Test', 'Inline A/B Test');
 
     // save post
     cy.savePost();
@@ -31,7 +27,7 @@ describe('Overview of created tests', () => {
       .click();
 
     // shows test in list
-    cy.contains('Inline test post');
+    cy.contains('Inline A/B Test');
   });
 
   it('Lists stand alone tests', () => {
