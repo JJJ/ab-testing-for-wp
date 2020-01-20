@@ -78,6 +78,11 @@ You can find the [source and repository over at GitHub](https://github.com/Gaya/
 5. Integration with HTML Forms
 
 == Changelog ==
+= 1.13.0 =
+* Adds e2e testing for development
+* Bunch of bug fixes discovered through e2e testing
+* Updated dependencies
+
 = 1.12.4 =
 * Fixed bug where how to page disappeared
 
