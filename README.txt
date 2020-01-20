@@ -5,7 +5,7 @@ Donate link: https://abtestingforwp.com/
 Requires at least: 5.0
 Tested up to: 5.3.2
 Requires PHP: 5.6
-Stable tag: 1.13.0
+Stable tag: 1.13.1
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -78,6 +78,9 @@ You can find the [source and repository over at GitHub](https://github.com/Gaya/
 5. Integration with HTML Forms
 
 == Changelog ==
+= 1.13.1 =
+* Removes tests from bundled plugin zip
+
 = 1.13.0 =
 * Adds e2e testing for development
 * Bunch of bug fixes discovered through e2e testing
