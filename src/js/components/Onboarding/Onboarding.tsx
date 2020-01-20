@@ -307,6 +307,7 @@ class Onboarding extends Component<OnboardingProps, OnboardingState> {
       <Modal
         title={__('Welcome to A/B Testing for WordPress!')}
         className="ab-testing-for-wp__OnboardingModal"
+        shouldCloseOnClickOutside={false}
         onRequestClose={this.stopTour}
       >
         <p>

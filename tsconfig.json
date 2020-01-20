@@ -9,8 +9,9 @@
     "strictNullChecks": true,
     "noEmit": true,
     "alwaysStrict": true,
-    "typeRoots" : ["./src/js/types"],
+    "typeRoots" : ["./src/js/types", "./cypress/types"],
     "esModuleInterop": true,
-    "forceConsistentCasingInFileNames": true
+    "forceConsistentCasingInFileNames": true,
+    "types": ["cypress"]
   }
 }

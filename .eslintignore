@@ -1,3 +1,5 @@
 dist/
 node_modules/
 wp-content/
+wp-content-e2e/
+cypress/**/*.js

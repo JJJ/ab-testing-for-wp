@@ -24,11 +24,14 @@ module.exports = {
     filename: '[name].js',
     path: path.resolve(__dirname, 'dist'),
   },
+  resolve: {
+    extensions: ['.js', '.jsx', '.tsx', '.ts', '.json'],
+  },
   externals: {
     react: 'window.wp.element',
     'react-dom': 'window.wp.element',
     '@wordpress/api-fetch': 'window.wp.apiFetch',
-    '@wordpress/block-editor': 'window.wp.blockEditor',
+    '@wordpress/block-editor': 'window.wp.editor',
     '@wordpress/blocks': 'window.wp.blocks',
     '@wordpress/components': 'window.wp.components',
     '@wordpress/compose': 'window.wp.compose',

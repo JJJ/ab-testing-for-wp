@@ -42,7 +42,7 @@ class AdminBar extends Component<{}, AdminBarState> {
     const testIds = sortedTestsOnPage.map((test) => test.getAttribute('data-test'));
 
     const resolveTestData = testIds.length > 0
-      ? apiFetch<TestData[]>({ path: `/ab-testing-for-wp/v1/get-tests-info?${queryString.stringify({ id: testIds })}` })
+      ? apiFetch<TestData[]>({ path: `/ab-testing-for-wp/v1/get-tests-info?${queryString.stringify({ id: testIds }, { arrayFormat: 'bracket' })}` })
       : Promise.resolve([]);
 
     resolveTestData.then((tests) => {

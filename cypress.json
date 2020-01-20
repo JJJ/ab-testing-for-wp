@@ -1,0 +1,10 @@
+{
+  "supportFile": "cypress/support/index.ts",
+  "baseUrl": "http://localhost:9000",
+  "env": {
+    "WP_USER": "test_user",
+    "WP_PASSWORD": "test_password_123"
+  },
+  "fixturesFolder": false,
+  "projectId": "7yzjry"
+}

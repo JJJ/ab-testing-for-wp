@@ -78,16 +78,16 @@ function getCanConvert(
 
 const enhancedConvertButton = compose(
   withSelect((select) => {
-    const editor = select('core/editor');
+    const editor = select('core/block-editor');
 
     const disallowed = [
       'ab-testing-for-wp/ab-test-block',
       'ab-testing-for-wp/ab-test-block-variant',
     ];
 
-    const selectedBlock = editor.getSelectedBlock<{ clientId: string }>();
+    const selectedBlock = editor.getSelectedBlock();
     const id = selectedBlock ? selectedBlock.clientId : '';
-    const root = editor.getBlockHierarchyRootClientId<string>(id);
+    const root = editor.getBlockHierarchyRootClientId(id);
     const blockAttributes = editor.getBlockAttributes(id);
 
     return {

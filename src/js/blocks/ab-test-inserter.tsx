@@ -34,7 +34,7 @@ const ABTestInserter = ({
 };
 
 const edit: any = withDispatch((dispatch, props: any) => {
-  const { removeBlock } = dispatch('core/editor');
+  const { removeBlock } = dispatch('core/block-editor');
   const { clientId, insertBlocksAfter } = props;
 
   const removeSelf = (): void => removeBlock(clientId);

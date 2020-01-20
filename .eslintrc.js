@@ -1,10 +1,11 @@
 module.exports = {
   parser: '@typescript-eslint/parser',
-  extends: ['airbnb', 'plugin:@typescript-eslint/recommended'],
-  plugins: ['@typescript-eslint'],
+  extends: ['airbnb', 'plugin:@typescript-eslint/recommended', 'plugin:cypress/recommended'],
+  plugins: ['@typescript-eslint', 'cypress'],
   env: {
     browser: true,
     node: true,
+    'cypress/globals': true,
   },
   globals: {
     wp: false,

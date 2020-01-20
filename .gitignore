@@ -1,6 +1,9 @@
-node_modules/
+cypress/videos/
+cypress/screenshots/
 dist/
+node_modules/
 vendor/
-stats.json
-wp-content
+wp-content/
+wp-content-e2e/
 ab-testing-for-wp.zip
+stats.json
