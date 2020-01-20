@@ -47,7 +47,8 @@ Cypress.Commands.add('addBlockInEditor', (search: string, name?: string) => {
     cy.get('.edit-post-settings-sidebar__panel-block > :nth-child(2) > :nth-child(1)')
       .find('input[type=text]')
       .clear({ force: true })
-      .type(name, { force: true });
+      .type(name, { force: true })
+      .wait(100);
   }
 });
 
