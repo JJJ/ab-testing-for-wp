@@ -1,4 +1,4 @@
-describe('Test results', () => {
+describe('Test results and tracking goals', () => {
   before(() => {
     cy.cleanInstall();
   });
@@ -8,6 +8,10 @@ describe('Test results', () => {
     cy.disableTooltips();
 
     cy.visitAdmin('post-new.php?skipOnboarding=1');
+
+    // change the title
+    cy.get('#post-title-0')
+      .type('Post with A/B Test');
 
     // add default test
     cy.addBlockInEditor('A/B Test', 'Test results tracking test');
@@ -50,10 +54,10 @@ describe('Test results', () => {
 
   afterEach(() => {
     // logout
-    // cy.logout();
+    cy.logout();
   });
 
-  it.only('Tracks goals and participants', () => {
+  it('Tracks goals and participants', () => {
     // logout
     cy.logout();
 
@@ -68,9 +72,9 @@ describe('Test results', () => {
             .wait(100);
 
           if (i % 2 === 0) {
-            // visit goal half of the time
+            // visit goal 1/2 of the time
             cy.contains('Go to Hello World')
-              .click()
+              .click({ force: true })
               .wait(100);
           }
 
@@ -99,6 +103,19 @@ describe('Test results', () => {
         const BHasTests = $elements[1].innerText.indexOf('0%') !== 0;
 
         expect(AHasTests || BHasTests).to.equal(true);
+      });
+
+    // go to post edit page
+    cy.contains('Post with A/B Test')
+      .click();
+
+    // has winner and loser scores
+    cy.get('tr:nth-child(3) > .TestResultValue')
+      .then(($elements) => {
+        const conversionsA = $elements[0].innerText.indexOf('0') !== 0;
+        const conversionsB = $elements[1].innerText.indexOf('0') !== 0;
+
+        expect(conversionsA || conversionsB).to.equal(true);
       });
   });
 
