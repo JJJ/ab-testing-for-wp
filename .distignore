@@ -2,6 +2,7 @@
 /.github
 /.idea
 /.wordpress-org
+/cypress
 /node_modules
 /blog
 /wp-content
