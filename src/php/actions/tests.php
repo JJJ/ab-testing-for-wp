@@ -17,7 +17,7 @@ class TestsActions {
 
         $ids = $request->get_param('id');
 
-        return rest_ensure_response($this->testManager->getTestsByIds(is_array($ids) ? $ids : [$ids]));
+        return rest_ensure_response($this->testManager->getTestsByIds($ids));
     }
 
     public function getTestPreviewContentByPost($request) {
