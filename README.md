@@ -51,3 +51,42 @@ Development WordPress install now runs at [localhost:8000](http://localhost:8000
 `./wp-content` of the project root is synced with the development install's `wp-content`.
 
 Look at `docker-compose.yml` for database passwords.
+
+## Testing and linting
+
+This project is tested using [Cypress](https://www.cypress.io/) and linted using [eslint](https://eslint.org/). These dependencies get installed with the project automatically.
+
+### ESLint
+
+Linting makes sure the code style is in order. This will also be performed on the main repository when creating a pull request.
+
+In order to run linting on your local environment run the following command from the root of the project:
+
+```
+npm run lint
+```
+
+### Cypress
+
+Running all end-to-end tests makes sure all functionality is still in place after updates to the code have been made.
+
+Run all tests by entering the following command:
+
+```
+npm run test
+```
+
+There are a few extra command to help you test and develop locally:
+
+```
+# run local test environment and open Cypress
+npm run test:dev
+
+# tear down the setup environment and create a new one
+npmr run e2e:setup-env
+
+# reset the database to be a fresh WordPress install
+npm run e2e:reset-db
+```
+
+
