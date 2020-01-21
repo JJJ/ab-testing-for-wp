@@ -31,6 +31,12 @@ interface GoalSelectorState {
   types: GoalPostType[];
 }
 
+function findCurrentType(types: GoalPostType[], type: string): GoalPostType {
+  return types.find((t) => t.name === type) || {
+    itemName: '', help: '', name: '', label: '',
+  };
+}
+
 class GoalSelector extends Component<GoalSelectorProps, GoalSelectorState> {
   constructor(props: GoalSelectorProps) {
     super(props);
@@ -64,14 +70,23 @@ class GoalSelector extends Component<GoalSelectorProps, GoalSelectorState> {
         onTypeChange(selectedType);
       }
 
-      this.setState({ types });
+      const currentType = findCurrentType(types, selectedType);
 
-      this.getPostsOfType(selectedType);
+      this.setState({
+        types,
+        loading: !currentType.text,
+      });
+
+      if (!currentType.text) {
+        this.getPostsOfType(selectedType);
+      }
     });
   }
 
   getPostsOfType(type: string): void {
-    const currentType = this.currentType();
+    const { types } = this.state;
+
+    const currentType = findCurrentType(types, type);
 
     if (currentType.text) return;
 
@@ -87,26 +102,18 @@ class GoalSelector extends Component<GoalSelectorProps, GoalSelectorState> {
   }
 
   changePostType = (selectedType: string): void => {
-    const { onTypeChange } = this.props;
+    const { onChange, onTypeChange } = this.props;
 
+    onChange('');
     onTypeChange(selectedType);
     this.getPostsOfType(selectedType);
   };
 
-  currentType(): GoalPostType {
-    const { types } = this.state;
-    const { type } = this.props;
-
-    return types.find((t) => t.name === type) || {
-      itemName: '', help: '', name: '', label: '',
-    };
-  }
-
   targetInput(): React.ReactElement {
-    const { posts } = this.state;
-    const { onChange, value } = this.props;
+    const { posts, types } = this.state;
+    const { onChange, value, type } = this.props;
 
-    const currentType = this.currentType();
+    const currentType = findCurrentType(types, type);
 
     if (currentType.text) {
       return (
@@ -141,7 +148,7 @@ class GoalSelector extends Component<GoalSelectorProps, GoalSelectorState> {
     } = this.state;
     const { type } = this.props;
 
-    const currentType = this.currentType();
+    const currentType = findCurrentType(types, type);
 
     if (!loading && !currentType) {
       return null;
