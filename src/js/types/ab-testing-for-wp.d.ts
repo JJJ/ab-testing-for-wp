@@ -30,7 +30,7 @@ declare interface ABTestAttributes {
   control: string;
   isEnabled: boolean;
   completedOnboarding: boolean;
-  postGoal: number;
+  postGoal: string;
   postGoalType: string;
   startedAt: Date | string;
   defaultContent?: any;

@@ -164,7 +164,7 @@ class ABTestBlock extends Component<ABTestBlockProps> {
       variants: newVariants,
     });
     const onTitleChange = (newTitle: string): void => setAttributes({ title: newTitle });
-    const onPostGoalChange = (postId: number): void => setAttributes({ postGoal: postId });
+    const onPostGoalChange = (value: string): void => setAttributes({ postGoal: value });
     const onPostGoalTypeChange = (type: string): void => setAttributes({ postGoalType: type });
     const onControlChange = (variantId: string): void => setAttributes({ control: variantId });
     const onEnabledChange = (enabled: boolean): void => setAttributes({
