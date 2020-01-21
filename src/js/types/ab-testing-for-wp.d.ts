@@ -1,5 +1,6 @@
 declare const ABTestingForWP: {
   postId?: string;
+  restUrl?: string;
 };
 
 declare const ABTestingForWP_AdminBar: {
