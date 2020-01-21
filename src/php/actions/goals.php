@@ -40,7 +40,8 @@ class GoalActions {
             'name' => 'outbound',
             'label' => __('Outbound link'),
             'itemName' => __('Visitor goes to'),
-            'help' => __('If visitor goes to this link, it will a point for the tested variant.'),
+            'help' => __('If visitor goes to this link, it will add a point for the tested variant.'),
+            'placeholder' => __('https://'),
             'text' => true,
         ]);
 
