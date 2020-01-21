@@ -31,7 +31,7 @@ module.exports = {
     react: 'window.wp.element',
     'react-dom': 'window.wp.element',
     '@wordpress/api-fetch': 'window.wp.apiFetch',
-    '@wordpress/block-editor': 'window.wp.editor',
+    '@wordpress/block-editor': 'window.wp.blockEditor || window.wp.editor',
     '@wordpress/blocks': 'window.wp.blocks',
     '@wordpress/components': 'window.wp.components',
     '@wordpress/compose': 'window.wp.compose',
