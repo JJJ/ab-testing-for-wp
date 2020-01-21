@@ -52,10 +52,10 @@ class GoalSelector extends Component<GoalSelectorProps, GoalSelectorState> {
     const { value, type, onTypeChange } = this.props;
 
     const resolvePostType = !type && value
-      ? apiFetch<string>({ path: `/ab-testing-for-wp/v1/get-post-type?post_id=${value}` })
+      ? apiFetch<string>({ path: `ab-testing-for-wp/v1/get-post-type?post_id=${value}` })
       : Promise.resolve(type);
 
-    const resolveTypes = apiFetch<GoalPostType[]>({ path: '/ab-testing-for-wp/v1/get-goal-types' });
+    const resolveTypes = apiFetch<GoalPostType[]>({ path: 'ab-testing-for-wp/v1/get-goal-types' });
 
     Promise.all([
       resolvePostType,
@@ -92,7 +92,7 @@ class GoalSelector extends Component<GoalSelectorProps, GoalSelectorState> {
 
     const postId = select('core/editor').getCurrentPostId();
 
-    apiFetch<GoalExternalPost[]>({ path: `/ab-testing-for-wp/v1/get-posts-by-type?type=${type}&&exclude=${postId}` })
+    apiFetch<GoalExternalPost[]>({ path: `ab-testing-for-wp/v1/get-posts-by-type?type=${type}&&exclude=${postId}` })
       .then((posts) => {
         this.setState({
           posts,

@@ -42,7 +42,7 @@ class AdminBar extends Component<{}, AdminBarState> {
     const testIds = sortedTestsOnPage.map((test) => test.getAttribute('data-test'));
 
     const resolveTestData = testIds.length > 0
-      ? apiFetch<TestData[]>({ path: `/ab-testing-for-wp/v1/get-tests-info?${queryString.stringify({ id: testIds }, { arrayFormat: 'bracket' })}` })
+      ? apiFetch<TestData[]>({ path: `ab-testing-for-wp/v1/get-tests-info?${queryString.stringify({ id: testIds }, { arrayFormat: 'bracket' })}` })
       : Promise.resolve([]);
 
     resolveTestData.then((tests) => {
@@ -65,7 +65,7 @@ class AdminBar extends Component<{}, AdminBarState> {
       },
     });
 
-    apiFetch<{ html: string }>({ path: `/ab-testing-for-wp/v1/ab-test?test=${testId}&variant=${variantId}` })
+    apiFetch<{ html: string }>({ path: `ab-testing-for-wp/v1/ab-test?test=${testId}&variant=${variantId}` })
       .then((result) => {
         if (result.html) {
           const target = document.querySelector(`.ABTestWrapper[data-test=${testId}]`);

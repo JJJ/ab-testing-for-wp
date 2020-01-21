@@ -16,7 +16,7 @@ export function setOption(key: string, value: any): void {
 
   // update backend value
   apiFetch({
-    path: '/ab-testing-for-wp/v1/options',
+    path: 'ab-testing-for-wp/v1/options',
     method: 'POST',
     body: JSON.stringify({ key, value }),
   });

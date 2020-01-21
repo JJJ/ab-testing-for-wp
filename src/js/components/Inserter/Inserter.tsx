@@ -39,7 +39,7 @@ class Inserter extends Component<InserterProps, InserterState> {
   }
 
   componentDidMount(): void {
-    apiFetch<WPPost[]>({ path: '/ab-testing-for-wp/v1/get-posts-by-type?type=abt4wp-test' })
+    apiFetch<WPPost[]>({ path: 'ab-testing-for-wp/v1/get-posts-by-type?type=abt4wp-test' })
       .then((options) => {
         if (options.length === 0) {
           this.insertNew();
