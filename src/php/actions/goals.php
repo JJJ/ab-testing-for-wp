@@ -41,6 +41,7 @@ class GoalActions {
             'label' => __('Outbound link'),
             'itemName' => __('Visitor goes to'),
             'help' => __('If visitor goes to this link, it will a point for the tested variant.'),
+            'text' => true,
         ]);
 
         $allowedTypes = apply_filters('ab-testing-for-wp_goal-types', $allowedTypes);
