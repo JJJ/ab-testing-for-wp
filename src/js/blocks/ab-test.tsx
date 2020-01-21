@@ -147,7 +147,7 @@ class ABTestBlock extends Component<ABTestBlockProps> {
       setAttributes({
         id: shortid.generate(),
         variants: defaultVariants,
-        postGoal: 0,
+        postGoal: '',
         postGoalType: '',
         title: isSingleTest() ? '' : sprintf(__('New test on "%s"'), postTitle),
         control: defaultVariants[0].id,
@@ -310,8 +310,8 @@ registerBlockType('ab-testing-for-wp/ab-test-block', {
       default: false,
     },
     postGoal: {
-      type: 'number',
-      default: 0,
+      type: 'string',
+      default: '',
     },
     postGoalType: {
       type: 'string',

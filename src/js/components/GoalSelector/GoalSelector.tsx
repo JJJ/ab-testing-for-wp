@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import apiFetch from '@wordpress/api-fetch';
 import { __ } from '@wordpress/i18n';
-import { PanelBody, SelectControl } from '@wordpress/components';
+import { PanelBody, SelectControl, TextControl } from '@wordpress/components';
 import { select } from '@wordpress/data';
 
 interface GoalSelectorProps {
-  value: number;
+  value: string;
   type: string;
-  onChange: (page: number) => void;
+  onChange: (value: string) => void;
   onTypeChange: (type: string) => void;
 }
 
@@ -16,6 +16,8 @@ interface GoalPostType {
   label: string;
   itemName: string;
   help: string;
+  placeholder?: string;
+  text?: boolean;
 }
 
 interface GoalExternalPost {
@@ -69,6 +71,10 @@ class GoalSelector extends Component<GoalSelectorProps, GoalSelectorState> {
   }
 
   getPostsOfType(type: string): void {
+    const currentType = this.currentType();
+
+    if (currentType.text) return;
+
     const postId = select('core/editor').getCurrentPostId();
 
     apiFetch<GoalExternalPost[]>({ path: `/ab-testing-for-wp/v1/get-posts-by-type?type=${type}&&exclude=${postId}` })
@@ -87,15 +93,55 @@ class GoalSelector extends Component<GoalSelectorProps, GoalSelectorState> {
     this.getPostsOfType(selectedType);
   };
 
+  currentType(): GoalPostType {
+    const { types } = this.state;
+    const { type } = this.props;
+
+    return types.find((t) => t.name === type) || {
+      itemName: '', help: '', name: '', label: '',
+    };
+  }
+
+  targetInput(): React.ReactElement {
+    const { posts } = this.state;
+    const { onChange, value } = this.props;
+
+    const currentType = this.currentType();
+
+    if (currentType.text) {
+      return (
+        <TextControl
+          label={currentType.itemName}
+          value={value}
+          help={currentType.help}
+          placeholder={currentType.placeholder || ''}
+          onChange={onChange}
+        />
+      );
+    }
+
+    return (
+      <SelectControl
+        label={currentType.itemName}
+        value={(value || 0).toString(10)}
+        options={[
+          { label: __('No goal selected'), value: '0' },
+          ...posts.map((post) => ({ label: post.post_title, value: post.ID.toString() })),
+        ]}
+        help={currentType.help}
+        onChange={onChange}
+      />
+    );
+  }
+
   render(): React.ReactNode {
     const {
       loading,
-      posts,
       types,
     } = this.state;
-    const { onChange, value, type } = this.props;
+    const { type } = this.props;
 
-    const currentType = types.find((t) => t.name === type) || { itemName: '', help: '' };
+    const currentType = this.currentType();
 
     if (!loading && !currentType) {
       return null;
@@ -114,16 +160,7 @@ class GoalSelector extends Component<GoalSelectorProps, GoalSelectorState> {
               }))}
               onChange={this.changePostType}
             />
-            <SelectControl
-              label={currentType.itemName}
-              value={(value || 0).toString(10)}
-              options={[
-                { label: __('No goal selected'), value: '0' },
-                ...posts.map((post) => ({ label: post.post_title, value: post.ID.toString() })),
-              ]}
-              help={currentType.help}
-              onChange={(newValue: string): void => onChange(parseInt(newValue, 10))}
-            />
+            {this.targetInput()}
           </div>
         )}
       </PanelBody>
