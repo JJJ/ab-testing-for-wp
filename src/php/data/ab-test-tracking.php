@@ -29,7 +29,21 @@ class ABTestTracking {
             return new \WP_Error('rest_invalid_request', 'Invalid beacon.', ['status' => 400]);
         }
 
-        return rest_ensure_response($data['url']);
+        $url = $data['url'];
+
+        $tracked = $this->trackUrl($url);
+
+        return rest_ensure_response($tracked);
+    }
+
+    public function trackUrl($url) {
+        if (isset($_COOKIE['ab-testing-for-wp'])) {
+            $variants = $this->abTestManager->getEnabledVariantsByGoal($url, "outbound");
+            return $this->trackVariantsInCookie($variants);
+        }
+
+        // if no cookie... can't track page
+        return [];
     }
 
     public function trackPostId($postId, $postGoalType = '') {
