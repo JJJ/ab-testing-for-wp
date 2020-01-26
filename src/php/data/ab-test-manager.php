@@ -182,7 +182,7 @@ class ABTestManager {
         SELECT t.id as testId, v.id as variantId, t.isEnabled
         FROM `{$this->abTestTable}` AS t
         INNER JOIN `{$this->variantTable}` AS v ON v.testid = t.id
-        WHERE t.postGoal = "%d" AND t.isEnabled = 1 $extraQuery
+        WHERE t.postGoal = %s AND t.isEnabled = 1 $extraQuery
         ", $goal);
 
         $variants = $this->wpdb->get_results($query);
