@@ -9,6 +9,7 @@ class Installer {
         'fillInGoalType',
         'addTitleColumn',
         'fillInTitle',
+        'postGoalToVarchar',
     ];
 
     public function __construct($fileRoot) {
@@ -70,6 +71,10 @@ class Installer {
         INNER JOIN `{$tablePrefix}posts` AS p on t.postId = p.ID
         SET t.title = CONCAT('Test \"', p.post_title, '\"')
         WHERE t.name IS NULL";
+    }
+
+    private function postGoalToVarchar($tablePrefix) {
+        return "ALTER TABLE `{$tablePrefix}ab_testing_for_wp_ab_test` CHANGE `postGoal` `postGoal` VARCHAR(32) NULL DEFAULT NULL;";
     }
 
     private function getDBCollate() {
