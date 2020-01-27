@@ -136,8 +136,15 @@ class RegisterAdminPage {
             function ($test) {
                 $test['startedAt'] = strtotime($test['startedAt']) * 1000;
 
-                if ($test['postGoal'] === '0') {
+                // if no goal is set, show placeholders
+                if ($test['postGoal'] === '0' || $test['postGoal'] === '') {
                     $test['goalName'] = '—';
+                }
+
+                // fill in conversion goal for outbound links
+                if ($test['postGoalType'] === 'outbound') {
+                    $test['goalName'] = $test['postGoal'];
+                    $test['goalLink'] = $test['postGoal'];
                 }
 
                 return $test;

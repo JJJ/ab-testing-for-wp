@@ -44,8 +44,8 @@ class ABTestManager {
     public function getAllTests($extraQuery = '') {
         $data = $this->wpdb->get_results("
         SELECT t.id, t.isEnabled, t.startedAt, t.title, t.control, t.postId, t.postGoal,
-        p1.post_type AS postType, p1.post_title AS postName, p2.post_title AS goalName,
-        p2.post_type AS goalType, t.isArchived,
+        t.postGoalType, p1.post_type AS postType, p1.post_title AS postName,
+        p2.post_title AS goalName, p2.post_type AS goalType, t.isArchived,
         (
             SELECT SUM(participants)
             FROM `{$this->variantTable}` AS v
