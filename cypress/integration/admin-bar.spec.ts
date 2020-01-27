@@ -16,7 +16,7 @@ describe('Admin bar', () => {
     // create new post
     cy.visitAdmin('post-new.php?skipOnboarding=1');
 
-    // add two default tests
+    // add default test
     cy.addBlockInEditor('A/B Test', 'Test on page');
 
     // save post
@@ -28,6 +28,7 @@ describe('Admin bar', () => {
 
     // should contain test in admin bar
     cy.contains('A/B Tests (1)')
+      .wait(200)
       .click();
 
     // open test variants
@@ -67,6 +68,7 @@ describe('Admin bar', () => {
 
     // should contain test in admin bar
     cy.contains('A/B Tests (2)')
+      .wait(200)
       .click();
 
     // has both variants
