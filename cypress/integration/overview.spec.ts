@@ -12,7 +12,7 @@ describe('Overview of created tests', () => {
     cy.logout();
   });
 
-  it.only('Lists inline tests created in posts / pages', () => {
+  it('Lists inline tests created in posts / pages', () => {
     // create new post
     cy.visitAdmin('post-new.php?skipOnboarding=1');
 
