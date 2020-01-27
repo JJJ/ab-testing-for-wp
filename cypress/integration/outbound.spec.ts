@@ -111,6 +111,9 @@ describe('Outbound link tracking', () => {
     cy.get('.ABTestWinning > :nth-child(3)')
       .last()
       .should('contain', '1');
+
+    // shows outbound link conversion
+    cy.contains(SITE);
   });
 
   it('Will track form submits to outbound links', () => {

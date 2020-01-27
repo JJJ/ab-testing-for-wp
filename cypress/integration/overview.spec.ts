@@ -19,6 +19,10 @@ describe('Overview of created tests', () => {
     // add default test
     cy.addBlockInEditor('A/B Test', 'Inline A/B Test');
 
+    // Change target post to "Hello World!"
+    cy.get('#inspector-select-control-3')
+      .select('Hello world!');
+
     // save post
     cy.savePost();
 
@@ -28,6 +32,9 @@ describe('Overview of created tests', () => {
 
     // shows test in list
     cy.contains('Inline A/B Test');
+
+    // shows test goal
+    cy.contains('Hello world!');
   });
 
   it('Lists stand alone tests', () => {
