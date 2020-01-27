@@ -16,7 +16,7 @@ class ABTestTracking {
 
         $postId = $request->get_param('post');
 
-        $tracked = $this->trackPostId($postId, get_post_type($postId));
+        $tracked = $this->trackGoal($postId, get_post_type($postId));
 
         return rest_ensure_response($tracked);
     }
@@ -31,24 +31,15 @@ class ABTestTracking {
 
         $url = $data['url'];
 
-        $tracked = $this->trackUrl($url);
+        $tracked = $this->trackGoal($url, 'outbound');
 
         return rest_ensure_response($tracked);
     }
 
-    public function trackUrl($url) {
+    public function trackGoal($goal, $goalType = '') {
         if (isset($_COOKIE['ab-testing-for-wp'])) {
-            $variants = $this->abTestManager->getEnabledVariantsByGoal($url, "outbound");
-            return $this->trackVariantsInCookie($variants);
-        }
+            $variants = $this->abTestManager->getEnabledVariantsByGoal($goal, $goalType);
 
-        // if no cookie... can't track page
-        return [];
-    }
-
-    public function trackPostId($postId, $postGoalType = '') {
-        if (isset($_COOKIE['ab-testing-for-wp'])) {
-            $variants = $this->abTestManager->getEnabledVariantsByGoal($postId, $postGoalType);
             return $this->trackVariantsInCookie($variants);
         }
 
