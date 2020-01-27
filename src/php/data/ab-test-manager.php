@@ -22,6 +22,10 @@ class ABTestManager {
         $this->postsTable = $table_prefix . 'posts';
     }
 
+    private function prepareQuery($query, ...$args) {
+        return $this->wpdb->prepare(preg_replace("/\s+/", " ", $query), ...$args);
+    }
+
     public function getTestDataByPost($postId) {
         $content_post = get_post($postId);
         $content = $content_post->post_content;
@@ -62,14 +66,14 @@ class ABTestManager {
     }
 
     public function getTestById($testId) {
-        $results = $this->getAllTests($this->wpdb->prepare('AND t.id = %s', $testId));
+        $results = $this->getAllTests($this->prepareQuery('AND t.id = %s', $testId));
         return $results[0];
     }
 
     public function getTestsByIds($ids) {
         $ids = array_map(
             function ($id) {
-                return $this->wpdb->prepare("%s", $id);
+                return $this->prepareQuery("%s", $id);
             },
             $ids
         );
@@ -80,7 +84,7 @@ class ABTestManager {
     }
 
     public function getTestPostId($testId) {
-        return $this->wpdb->get_var($this->wpdb->prepare("
+        return $this->wpdb->get_var($this->prepareQuery("
         SELECT t.postId
         FROM `{$this->abTestTable}` AS t
         WHERE t.isArchived = 0 AND t.id = %s
@@ -97,7 +101,7 @@ class ABTestManager {
         $test['postDeleteLink'] = get_delete_post_link($test['postId'], '', true);
         $test['goalLink'] = get_edit_post_link($test['postGoal']);
 
-        $test['variants'] = $this->wpdb->get_results($this->wpdb->prepare("
+        $test['variants'] = $this->wpdb->get_results($this->prepareQuery("
         SELECT id, name, participants, conversions
         FROM `{$this->variantTable}`
         WHERE testId = %s
@@ -156,13 +160,13 @@ class ABTestManager {
     }
 
     public function getStatsByVariation($variantId) {
-        $participants = $this->wpdb->get_var($this->wpdb->prepare("
+        $participants = $this->wpdb->get_var($this->prepareQuery("
         SELECT COUNT(variantId)
         FROM `{$this->logTable}`
         WHERE variantId = %s AND track = 'P';
         ", $variantId));
 
-        $conversions = $this->wpdb->get_var($this->wpdb->prepare("
+        $conversions = $this->wpdb->get_var($this->prepareQuery("
         SELECT COUNT(variantId)
         FROM `{$this->logTable}`
         WHERE variantId = %s AND track = 'C';
@@ -175,14 +179,14 @@ class ABTestManager {
         $extraQuery = "";
 
         if ($goalType !== '') {
-            $extraQuery = $this->wpdb->prepare("AND t.postGoalType = %s", $goalType);
+            $extraQuery = $this->prepareQuery("AND t.postGoalType = %s", $goalType);
         }
 
-        $query = $this->wpdb->prepare("
+        $query = $this->prepareQuery("
         SELECT t.id as testId, v.id as variantId, t.isEnabled
         FROM `{$this->abTestTable}` AS t
         INNER JOIN `{$this->variantTable}` AS v ON v.testid = t.id
-        WHERE t.postGoal = %s AND t.isEnabled = 1 $extraQuery
+        WHERE t.postGoal = %s AND t.isEnabled = 1 {$extraQuery}
         ", $goal);
 
         $variants = $this->wpdb->get_results($query);
@@ -199,7 +203,7 @@ class ABTestManager {
     }
 
     public function addTracking($variantId, $type) {
-        $this->wpdb->query($this->wpdb->prepare("
+        $this->wpdb->query($this->prepareQuery("
         INSERT INTO `{$this->logTable}` (variantId, track) VALUES (%s, %s);
         ", $variantId, $type));
 
@@ -209,7 +213,7 @@ class ABTestManager {
     private function updateVariationStats($variantId) {
         list($participants, $conversions) = $this->getStatsByVariation($variantId);
 
-        $query = $this->wpdb->prepare("
+        $query = $this->prepareQuery("
         UPDATE `{$this->variantTable}` SET participants = %d, conversions = %d
         WHERE id = %s;
         ", $participants, $conversions, $variantId);
@@ -225,12 +229,12 @@ class ABTestManager {
         WHERE `{$this->abTestTable}`.postId = %d;
         ";
 
-        $this->wpdb->query($this->wpdb->prepare($query, $postId));
+        $this->wpdb->query($this->prepareQuery($query, $postId));
     }
 
     public function archiveTestDataFromPost($postId) {
         $query = "UPDATE `{$this->abTestTable}` SET isArchived = 1 WHERE postId = %d";
-        $this->wpdb->query($this->wpdb->prepare($query, $postId));
+        $this->wpdb->query($this->prepareQuery($query, $postId));
     }
 
     public function insertTest($postId, $testData) {
@@ -244,7 +248,7 @@ class ABTestManager {
         VALUES (%s, %s, %d, %s, %s, %s, %s, %s, %d);
         ";
 
-        $this->wpdb->query($this->wpdb->prepare(
+        $this->wpdb->query($this->prepareQuery(
             $query,
             $testData['id'],
             $postId,
@@ -266,7 +270,7 @@ class ABTestManager {
         VALUES (%s, %s, %s, %d, %d);
         ";
 
-        $this->wpdb->query($this->wpdb->prepare(
+        $this->wpdb->query($this->prepareQuery(
             $query,
             $variant['id'],
             $testId,
