@@ -35,7 +35,8 @@ Cypress.Commands.add('addBlockInEditor', (search: string, name?: string) => {
 
   // insert block
   cy.get('.editor-block-types-list__item')
-    .click();
+    .click()
+    .wait(200);
 
   if (name) {
     // open options
