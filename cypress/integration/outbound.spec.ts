@@ -1,6 +1,9 @@
 describe('Outbound link tracking', () => {
-  beforeEach(() => {
+  before(() => {
     cy.cleanInstall();
+  });
+
+  beforeEach(() => {
     cy.login();
     cy.disableTooltips();
   });
@@ -95,7 +98,7 @@ describe('Outbound link tracking', () => {
 
     // click outbound link
     cy.get('.wp-block-button__link')
-      .click();
+      .click({ force: true });
 
     // check results
     cy.visitAdmin();
@@ -106,6 +109,7 @@ describe('Outbound link tracking', () => {
 
     // should contain a winner variant
     cy.get('.ABTestWinning > :nth-child(3)')
+      .last()
       .should('contain', '1');
   });
 
@@ -160,6 +164,7 @@ describe('Outbound link tracking', () => {
 
     // should contain a winner variant
     cy.get('.ABTestWinning > :nth-child(3)')
+      .last()
       .should('contain', '1');
   });
 });
