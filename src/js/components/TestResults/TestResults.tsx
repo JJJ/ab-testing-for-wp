@@ -37,7 +37,7 @@ class TestResults extends Component<TestResultsProps, TestResultsState> {
   componentDidMount(): void {
     const { testId } = this.props;
 
-    apiFetch<ABTestResult[]>({ path: `/ab-testing-for-wp/v1/stats?test=${testId}` })
+    apiFetch<ABTestResult[]>({ path: `ab-testing-for-wp/v1/stats?test=${testId}` })
       .then((results) => {
         this.setState({
           results: results.map((result) => ({

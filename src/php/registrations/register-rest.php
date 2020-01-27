@@ -33,6 +33,15 @@ class RegisterREST {
 
         register_rest_route(
             'ab-testing-for-wp/v1',
+            '/outbound',
+            [
+                'methods' => 'POST',
+                'callback' => [$tracker, 'trackLink'],
+            ]
+        );
+
+        register_rest_route(
+            'ab-testing-for-wp/v1',
             '/stats',
             [
                 'methods' => 'GET',

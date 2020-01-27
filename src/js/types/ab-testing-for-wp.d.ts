@@ -1,5 +1,6 @@
 declare const ABTestingForWP: {
   postId?: string;
+  restUrl?: string;
 };
 
 declare const ABTestingForWP_AdminBar: {
@@ -30,7 +31,7 @@ declare interface ABTestAttributes {
   control: string;
   isEnabled: boolean;
   completedOnboarding: boolean;
-  postGoal: number;
+  postGoal: string;
   postGoalType: string;
   startedAt: Date | string;
   defaultContent?: any;

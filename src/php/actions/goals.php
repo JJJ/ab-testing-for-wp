@@ -4,6 +4,11 @@ namespace ABTestingForWP;
 
 class GoalActions {
 
+    private function addTypeToList($input, $type, $strings) {
+        array_push($input, array_merge(['name' => $type->name, 'label' => $type->label], $strings));
+        return $input;
+    }
+
     public function getGoalTypes() {
         $types = get_post_types(
             [
@@ -30,6 +35,15 @@ class GoalActions {
             if ($key !== 'post' && $key !== 'page') continue;
             array_push($allowedTypes, array_merge(['name' => $type->name, 'label' => $type->label], $strings[$key]));
         }
+
+        array_push($allowedTypes, [
+            'name' => 'outbound',
+            'label' => __('Outbound link'),
+            'itemName' => __('Visitor goes to'),
+            'help' => __('If visitor goes to this link, it will add a point for the tested variant.'),
+            'placeholder' => __('https://'),
+            'text' => true,
+        ]);
 
         $allowedTypes = apply_filters('ab-testing-for-wp_goal-types', $allowedTypes);
 

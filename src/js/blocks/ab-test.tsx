@@ -147,7 +147,7 @@ class ABTestBlock extends Component<ABTestBlockProps> {
       setAttributes({
         id: shortid.generate(),
         variants: defaultVariants,
-        postGoal: 0,
+        postGoal: '',
         postGoalType: '',
         title: isSingleTest() ? '' : sprintf(__('New test on "%s"'), postTitle),
         control: defaultVariants[0].id,
@@ -164,7 +164,7 @@ class ABTestBlock extends Component<ABTestBlockProps> {
       variants: newVariants,
     });
     const onTitleChange = (newTitle: string): void => setAttributes({ title: newTitle });
-    const onPostGoalChange = (postId: number): void => setAttributes({ postGoal: postId });
+    const onPostGoalChange = (value: string): void => setAttributes({ postGoal: value });
     const onPostGoalTypeChange = (type: string): void => setAttributes({ postGoalType: type });
     const onControlChange = (variantId: string): void => setAttributes({ control: variantId });
     const onEnabledChange = (enabled: boolean): void => setAttributes({
@@ -310,8 +310,8 @@ registerBlockType('ab-testing-for-wp/ab-test-block', {
       default: false,
     },
     postGoal: {
-      type: 'number',
-      default: 0,
+      type: 'string',
+      default: '',
     },
     postGoalType: {
       type: 'string',

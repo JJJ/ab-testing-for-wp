@@ -5,7 +5,7 @@ Donate link: https://abtestingforwp.com/
 Requires at least: 5.0
 Tested up to: 5.3.2
 Requires PHP: 5.6
-Stable tag: 1.13.1
+Stable tag: 1.14.0
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -60,7 +60,7 @@ No. Only the control version of your test is shown to search engines and website
 Yes. You can change the amount of visitors should see each variant.
 
 = What does A/B Testing for WordPress count as a goal? =
-You can pick and post or page as a goal to track. Counting outbound links or custom post types as conversion is not possible (yet).
+You can pick and post, page, or outbound links as a goal to track. Counting custom post types as conversion is not possible (yet).
 
 = How Can I Add a Test to my Site? =
 You can enter tests right in the content of your pages and posts through the editor.
@@ -78,6 +78,9 @@ You can find the [source and repository over at GitHub](https://github.com/Gaya/
 5. Integration with HTML Forms
 
 == Changelog ==
+= 1.14.0 =
+* Ability to track outbound links as a goal
+
 = 1.13.1 =
 * Removes tests from bundled plugin zip
 

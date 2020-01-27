@@ -16,50 +16,78 @@ class ABTestTracking {
 
         $postId = $request->get_param('post');
 
-        $tracked = $this->trackPostId($postId, get_post_type($postId));
+        $tracked = $this->trackGoal($postId, get_post_type($postId));
 
         return rest_ensure_response($tracked);
     }
 
-    public function trackPostId($postId, $postGoalType = '') {
+    public function trackLink($request) {
+        $body = $request->get_body();
+        $data = json_decode($body, true);
+
+        if ($data === NULL || !isset($data['url'])) {
+            return new \WP_Error('rest_invalid_request', 'Invalid beacon.', ['status' => 400]);
+        }
+
+        $url = $data['url'];
+
+        $tracked = $this->trackGoal($url, 'outbound');
+
+        return rest_ensure_response($tracked);
+    }
+
+    public function trackGoal($goal, $goalType = '') {
         if (isset($_COOKIE['ab-testing-for-wp'])) {
-            $cookieData = json_decode(stripslashes($_COOKIE['ab-testing-for-wp']), true);
+            $variants = $this->abTestManager->getEnabledVariantsByGoal($goal, $goalType);
 
-            $variants = $this->abTestManager->getEnabledVariantsByGoal($postId, $postGoalType);
-
-            // create tracked array if not present
-            if (!isset($cookieData['tracked'])) {
-                $cookieData['tracked'] = [];
-            }
-
-            $tracked = [];
-
-            foreach ($variants as $variant) {
-                if (!$variant['isEnabled']) continue;
-
-                if (
-                    // not already tracked
-                    !in_array($variant['variantId'], $cookieData['tracked'])
-                    // if in this tests participants
-                    && isset($cookieData[$variant['testId']])
-                    // actually in this variant
-                    && $cookieData[$variant['testId']] === $variant['variantId']
-                ) {
-                    array_push($tracked, $variant['variantId']);
-                    $this->abTestManager->addTracking($variant['variantId'], 'C');
-                }
-            }
-
-            // add tracked variants to cookie
-            $cookieData['tracked'] = array_merge([], $cookieData['tracked'], $tracked);
-
-            setcookie('ab-testing-for-wp', json_encode($cookieData), time() + (60*60*24*30), '/');
-
-            return $tracked;
+            return $this->trackVariantsInCookie($variants);
         }
 
         // if no cookie... can't track page
         return [];
+    }
+
+    private function trackVariantsInCookie($variants) {
+        $mergeResult = $this->addVariantsToCookie($variants, $_COOKIE['ab-testing-for-wp']);
+
+        setcookie('ab-testing-for-wp', json_encode($mergeResult['cookieData']), time() + (60*60*24*30), '/');
+
+        return $mergeResult['tracked'];
+    }
+
+    private function addVariantsToCookie($variants, $cookie) {
+        $cookieData = json_decode(stripslashes($_COOKIE['ab-testing-for-wp']), true);
+
+        // create tracked array if not present
+        if (!isset($cookieData['tracked'])) {
+            $cookieData['tracked'] = [];
+        }
+
+        $tracked = [];
+
+        foreach ($variants as $variant) {
+            if (!$variant['isEnabled']) continue;
+
+            if (
+                // not already tracked
+                !in_array($variant['variantId'], $cookieData['tracked'])
+                // if in this tests participants
+                && isset($cookieData[$variant['testId']])
+                // actually in this variant
+                && $cookieData[$variant['testId']] === $variant['variantId']
+            ) {
+                array_push($tracked, $variant['variantId']);
+                $this->abTestManager->addTracking($variant['variantId'], 'C');
+            }
+        }
+
+        // add tracked variants to cookie
+        $cookieData['tracked'] = array_merge([], $cookieData['tracked'], $tracked);
+
+        return [
+            'tracked' => $tracked,
+            'cookieData' => $cookieData,
+        ];
     }
 
     public function addParticipation($variantId) {

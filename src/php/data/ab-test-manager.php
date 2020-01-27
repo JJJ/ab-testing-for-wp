@@ -171,19 +171,19 @@ class ABTestManager {
         return [$participants, $conversions];
     }
 
-    public function getEnabledVariantsByGoal($postId, $postGoalType = '') {
+    public function getEnabledVariantsByGoal($goal, $goalType = '') {
         $extraQuery = "";
 
-        if ($postGoalType !== '') {
-            $extraQuery = $this->wpdb->prepare("AND t.postGoalType = %s", $postGoalType);
+        if ($goalType !== '') {
+            $extraQuery = $this->wpdb->prepare("AND t.postGoalType = %s", $goalType);
         }
 
         $query = $this->wpdb->prepare("
         SELECT t.id as testId, v.id as variantId, t.isEnabled
         FROM `{$this->abTestTable}` AS t
         INNER JOIN `{$this->variantTable}` AS v ON v.testid = t.id
-        WHERE t.postGoal = %d AND t.isEnabled = 1 $extraQuery
-        ", $postId);
+        WHERE t.postGoal = %s AND t.isEnabled = 1 {$extraQuery}
+        ", $goal);
 
         $variants = $this->wpdb->get_results($query);
 

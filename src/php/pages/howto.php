@@ -38,7 +38,8 @@
       <p><?php echo __('You need to enable a test to start tracking and measuring conversion results.'); ?></p>
 
       <h3><?php echo __('Setting up the Testing Goal'); ?></h3>
-      <p><?php echo __('The testing goal is the page the visitor has to visit in order for the variant to count as a conversion. If you create a button the variants, it is a good idea to set the page where it links to as the testing goal.'); ?></p>
+      <p><?php echo __('The testing goal is the page or URL the visitor has to visit in order for the variant to count as a conversion. If you create a button the variants, it is a good idea to set the page where it links to as the testing goal.'); ?></p>
+      <p><?php echo __('You can pick a post, page, or an URL as a tracking goal. Outbound links are good for tracking traffic to websites which are not yours.'); ?></p>
 
       <h3><?php echo __('Control Variant'); ?></h3>
       <p><?php echo __('The control variant is the variant which is shown by default and will also be seen by search engines. Changing the control variant is only needed if you do not want to serve variation "A" by default.'); ?></p>

@@ -35,7 +35,7 @@ class EditWrapper extends Component<EditWrapperProps, EditWrapperState> {
   componentDidMount(): void {
     const { id } = this.props;
 
-    apiFetch<{ html: string; editLink: string }>({ path: `/ab-testing-for-wp/v1/get-test-content-by-post?id=${id}` })
+    apiFetch<{ html: string; editLink: string }>({ path: `ab-testing-for-wp/v1/get-test-content-by-post?id=${id}` })
       .then((result) => {
         this.setState({
           isLoading: false,
