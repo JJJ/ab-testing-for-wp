@@ -24,17 +24,19 @@ const GeneralSettings: React.FC<GeneralSettingsProps> = ({
   const postId = getCurrentPostId();
 
   return (
-    <PanelBody title={__('General Settings')}>
+    <PanelBody title={__('General Settings', 'ab-testing-for-wp')}>
       {!isSingle && (
         <TextControl
-          label={__('Title of test')}
+          label={__('Title of test', 'ab-testing-for-wp')}
           value={title}
           onChange={onChangeTitle}
         />
       )}
       <ToggleControl
-        label={__('Run this test')}
-        help={__(isEnabled ? 'Test is in progress' : 'Showing control variant to every visitor')}
+        label={__('Run this test', 'ab-testing-for-wp')}
+        help={isEnabled
+          ? __('Test is in progress', 'ab-testing-for-wp')
+          : __('Showing control variant to every visitor', 'ab-testing-for-wp')}
         checked={isEnabled}
         onChange={onChangeEnabled}
       />

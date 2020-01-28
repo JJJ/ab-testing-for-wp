@@ -149,7 +149,7 @@ class ABTestBlock extends Component<ABTestBlockProps> {
         variants: defaultVariants,
         postGoal: '',
         postGoalType: '',
-        title: isSingleTest() ? '' : sprintf(__('New test on "%s"'), postTitle),
+        title: isSingleTest() ? '' : sprintf(__('New test on "%s"', 'ab-testing-for-wp'), postTitle),
         control: defaultVariants[0].id,
         isEnabled: false,
       });
@@ -281,8 +281,8 @@ const edit: any = withDispatch((dispatch, props: any) => {
 })(ABTestBlock as any);
 
 registerBlockType('ab-testing-for-wp/ab-test-block', {
-  title: __('A/B Test Container'),
-  description: __('A/B test container which contains the possible variants.'),
+  title: __('A/B Test Container', 'ab-testing-for-wp'),
+  description: __('A/B test container which contains the possible variants.', 'ab-testing-for-wp'),
   icon: SVGIcon,
   category: 'widgets',
   supports: {

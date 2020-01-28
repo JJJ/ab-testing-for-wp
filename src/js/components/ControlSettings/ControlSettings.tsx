@@ -9,7 +9,7 @@ type ControlSettingsProps = {
 };
 
 const ControlSettings: React.FC<ControlSettingsProps> = ({ value, variants, onChange }) => (
-  <PanelBody title={__('Control Variant')}>
+  <PanelBody title={__('Control Variant', 'ab-testing-for-wp')}>
     <SelectControl
       value={value || '0'}
       options={variants.map((variant) => ({ label: variant.name, value: variant.id }))}

@@ -25,11 +25,11 @@ function postLink(name: string, link?: string, testId?: string): React.ReactNode
     testId,
   ].join('');
 
-  return link ? (<a href={url}>{name !== '' ? name : __('No Name')}</a>) : name;
+  return link ? (<a href={url}>{name !== '' ? name : __('No Name', 'ab-testing-for-wp')}</a>) : name;
 }
 
 function removeLink(link?: string): React.ReactNode | null {
-  return postLink(__('Remove'), link);
+  return postLink(__('Remove', 'ab-testing-for-wp'), link);
 }
 
 const toTestVariantResult = (variant: TestVariant): {
@@ -69,7 +69,7 @@ const Test: React.FC<{ test: TestData }> = ({ test }) => {
           </div>
           <div className="row-actions">
             <span className="edit">
-              {postLink(__('Edit'), test.postLink, test.id)}
+              {postLink(__('Edit', 'ab-testing-for-wp'), test.postLink, test.id)}
               {isSingle && ' | '}
             </span>
             {isSingle && (
@@ -107,9 +107,9 @@ const Test: React.FC<{ test: TestData }> = ({ test }) => {
               <thead>
                 <tr>
                   <th className="check-column">{}</th>
-                  <th className="column-primary">{__('Conversion Rate')}</th>
-                  <th>{__('Conversions')}</th>
-                  <th>{__('Participants')}</th>
+                  <th className="column-primary">{__('Conversion Rate', 'ab-testing-for-wp')}</th>
+                  <th>{__('Conversions', 'ab-testing-for-wp')}</th>
+                  <th>{__('Participants', 'ab-testing-for-wp')}</th>
                 </tr>
               </thead>
               <tbody>
@@ -139,7 +139,7 @@ const Test: React.FC<{ test: TestData }> = ({ test }) => {
               </tbody>
             </Table>
           ) : (
-            <em>{__('No results for this test yet.')}</em>
+            <em>{__('No results for this test yet.', 'ab-testing-for-wp')}</em>
           )}
           {test.totalParticipants > 0 && (
             <Significance
@@ -155,12 +155,12 @@ const Test: React.FC<{ test: TestData }> = ({ test }) => {
 
 const Overview: React.FC<{ data: OverviewData }> = ({ data: { activeTests } }) => (
   <div className="wrap ab-testing-for-wp">
-    <h1 className="wp-heading-inline">{__('A/B Tests')}</h1>
+    <h1 className="wp-heading-inline">{__('A/B Tests', 'ab-testing-for-wp')}</h1>
     <a
       href="post-new.php?post_type=abt4wp-test"
       className="page-title-action"
     >
-      {__('Add New')}
+      {__('Add New', 'ab-testing-for-wp')}
     </a>
     <hr className="wp-header-end" />
 
@@ -169,19 +169,19 @@ const Overview: React.FC<{ data: OverviewData }> = ({ data: { activeTests } }) =
         <thead>
           <tr>
             <th className="check-column">{}</th>
-            <th className="column-primary">{__('Title')}</th>
-            <th>{__('Started at')}</th>
-            <th>{__('Page / Shortcode')}</th>
-            <th>{__('Conversion Goal')}</th>
-            <th className="num">{__('Participants')}</th>
+            <th className="column-primary">{__('Title', 'ab-testing-for-wp')}</th>
+            <th>{__('Started at', 'ab-testing-for-wp')}</th>
+            <th>{__('Page / Shortcode', 'ab-testing-for-wp')}</th>
+            <th>{__('Conversion Goal', 'ab-testing-for-wp')}</th>
+            <th className="num">{__('Participants', 'ab-testing-for-wp')}</th>
           </tr>
         </thead>
         <tbody>{activeTests.map((test) => <Test test={test} />)}</tbody>
       </Table>
     ) : (
       <>
-        <h2>{__('No active tests found in content.')}</h2>
-        <p>{__('Edit a page or post to add an A/B Test to the content.')}</p>
+        <h2>{__('No active tests found in content.', 'ab-testing-for-wp')}</h2>
+        <p>{__('Edit a page or post to add an A/B Test to the content.', 'ab-testing-for-wp')}</p>
       </>
     )}
   </div>

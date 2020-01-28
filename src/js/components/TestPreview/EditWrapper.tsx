@@ -52,7 +52,7 @@ class EditWrapper extends Component<EditWrapperProps, EditWrapperState> {
       <div className="EditWrapper">
         <div className="EditWrapper__Overlay">
           <Button isPrimary onClick={(): void => { window.location.href = editLink; }}>
-            {__('Edit this Test')}
+            {__('Edit this Test', 'ab-testing-for-wp')}
           </Button>
         </div>
         {isLoading && !html ? <Loader /> : <TestPreview html={html} />}

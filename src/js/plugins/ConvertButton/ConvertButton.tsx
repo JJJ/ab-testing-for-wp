@@ -29,11 +29,11 @@ const ConvertButton = ({
     <PluginBlockSettingsMenuItem
       allowedBlocks={allowedBlockTypes()}
       icon={<Logo />}
-      label={__('Convert to A/B test')}
+      label={__('Convert to A/B test', 'ab-testing-for-wp')}
       onClick={(): void => {
         // eslint-disable-next-line no-alert
         const isConfirmed = window.confirm(
-          __('Are you sure you want to convert this block to an A/B test?'),
+          __('Are you sure you want to convert this block to an A/B test?', 'ab-testing-for-wp'),
         );
 
         if (!isConfirmed) return;

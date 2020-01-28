@@ -49,8 +49,11 @@ const edit: any = withDispatch((dispatch, props: any) => {
 })(ABTestInserter as any);
 
 registerBlockType('ab-testing-for-wp/ab-test-block-inserter', {
-  title: __('A/B Test'),
-  description: __('A/B Test inserter allows you to pick an existing test or create a new one.'),
+  title: __('A/B Test', 'ab-testing-for-wp'),
+  description: __(
+    'A/B Test inserter allows you to pick an existing test or create a new one.',
+    'ab-testing-for-wp',
+  ),
   icon: SVGIcon,
   category: 'widgets',
   attributes: {

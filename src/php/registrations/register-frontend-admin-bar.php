@@ -29,6 +29,7 @@ class RegisterFrontendAdminBar {
             plugins_url('/dist/admin-bar.js', $this->fileRoot),
             ['wp-api-fetch', 'wp-i18n', 'wp-element']
         );
+        wp_set_script_translations('ab-testing-for-wp-admin-bar', 'ab-testing-for-wp');
         wp_localize_script(
             'ab-testing-for-wp-admin-bar',
             'ABTestingForWP_AdminBar',
@@ -42,12 +43,12 @@ class RegisterFrontendAdminBar {
     public function addAdminBarMenu($wp_admin_bar) {
         $wp_admin_bar->add_menu([
             'id' => 'ab-testing-for-wp',
-            'title' => __('A/B Tests'),
+            'title' => __('A/B Tests', 'ab-testing-for-wp'),
         ]);
 
         $wp_admin_bar->add_node([
             'id' => 'ab-testing-for-wp_loading',
-            'title' => __('Scanning tests on page'),
+            'title' => __('Scanning tests on page', 'ab-testing-for-wp'),
             'parent' => 'ab-testing-for-wp',
         ]);
     }

@@ -38,7 +38,7 @@ const Significance: React.FC<SignificanceProps> = ({ control, results }) => {
       )}
     >
       {sprintf(
-        __(getTranslationString(control, testResult)),
+        __(getTranslationString(control, testResult), 'ab-testing-for-wp'),
         testResult.winner.name,
       )}
     </div>

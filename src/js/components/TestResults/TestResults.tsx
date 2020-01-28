@@ -93,13 +93,13 @@ class TestResults extends Component<TestResultsProps, TestResultsState> {
       });
 
     return (
-      <PanelBody title={__('Results so far')}>
-        {startedAt && <p>{sprintf(__('Runtime: %s'), formatDistanceToNow(startedAt))}</p>}
+      <PanelBody title={__('Results so far', 'ab-testing-for-wp')}>
+        {startedAt && <p>{sprintf(__('Runtime: %s', 'ab-testing-for-wp'), formatDistanceToNow(startedAt))}</p>}
         {hasParticipants ? (
           <table className="TestResults">
             <tbody>
               <tr>
-                <td className="TestResultName">{__('Variation')}</td>
+                <td className="TestResultName">{__('Variation', 'ab-testing-for-wp')}</td>
                 {enrichedResults.map((result) => (
                   <td
                     className={classNames(
@@ -118,7 +118,7 @@ class TestResults extends Component<TestResultsProps, TestResultsState> {
                 ))}
               </tr>
               <tr>
-                <td className="TestResultName">{__('Conversion Rate')}</td>
+                <td className="TestResultName">{__('Conversion Rate', 'ab-testing-for-wp')}</td>
                 {enrichedResults.map((result) => (
                   <td
                     className={classNames(
@@ -143,13 +143,13 @@ class TestResults extends Component<TestResultsProps, TestResultsState> {
                 ))}
               </tr>
               <tr>
-                <td className="TestResultName">{__('Conversions')}</td>
+                <td className="TestResultName">{__('Conversions', 'ab-testing-for-wp')}</td>
                 {enrichedResults.map((result) => (
                   <td className="TestResultValue" key={result.id}>{result.conversions}</td>
                 ))}
               </tr>
               <tr>
-                <td className="TestResultName">{__('Participants')}</td>
+                <td className="TestResultName">{__('Participants', 'ab-testing-for-wp')}</td>
                 {enrichedResults.map((result) => (
                   <td className="TestResultValue" key={result.id}>{result.participants}</td>
                 ))}
@@ -157,7 +157,7 @@ class TestResults extends Component<TestResultsProps, TestResultsState> {
             </tbody>
           </table>
         ) : (
-          <div className="TestResults"><em>{__('No participants yet.')}</em></div>
+          <div className="TestResults"><em>{__('No participants yet.', 'ab-testing-for-wp')}</em></div>
         )}
         <Significance control={control} results={results} />
         <DeclareWinner variants={enrichedResults} onDeclareWinner={onDeclareWinner} />

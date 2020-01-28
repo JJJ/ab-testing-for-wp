@@ -224,10 +224,10 @@ class Onboarding extends Component<OnboardingProps, OnboardingState> {
             }}
           />
           <div className="content">
-            <p>{__('This is the area where you edit your test variants, works just like the rest of the editor.')}</p>
+            <p>{__('This is the area where you edit your test variants, works just like the rest of the editor.', 'ab-testing-for-wp')}</p>
           </div>
           <div className="buttons">
-            <button className="next" type="button">{__('Next')}</button>
+            <button className="next" type="button">{__('Next', 'ab-testing-for-wp')}</button>
           </div>
         </div>
       );
@@ -245,12 +245,12 @@ class Onboarding extends Component<OnboardingProps, OnboardingState> {
             }}
           />
           <div className="content">
-            {step === 2 && <p>{__('Switch between editing variants here.')}</p>}
-            {step === 3 && <p>{__('Use the cog toggle the test options on the right.')}</p>}
+            {step === 2 && <p>{__('Switch between editing variants here.', 'ab-testing-for-wp')}</p>}
+            {step === 3 && <p>{__('Use the cog toggle the test options on the right.', 'ab-testing-for-wp')}</p>}
           </div>
           <div className="buttons">
-            <button type="button" className="prev">{__('Previous')}</button>
-            <button type="button" className="next">{__('Next')}</button>
+            <button type="button" className="prev">{__('Previous', 'ab-testing-for-wp')}</button>
+            <button type="button" className="next">{__('Next', 'ab-testing-for-wp')}</button>
           </div>
         </div>
       );
@@ -268,15 +268,15 @@ class Onboarding extends Component<OnboardingProps, OnboardingState> {
             }}
           />
           <div className="content">
-            {step === 4 && <p>{__('You can configure the test in this sidebar.')}</p>}
-            {step === 5 && <p>{__('Adjust the distribution weight of the variants. More weight means more chance to land in experiment.')}</p>}
-            {step === 6 && <p>{__('Select the goal which needs to be tracked.')}</p>}
-            {step === 7 && <p>{__('Select the variant which will act like the control version. It will be shown by default when the test is not running, or when the page gets indexed by search engines.')}</p>}
-            {step === 8 && <p>{__('Toggle this to enable and run the test. Without it the test will not show different variants.')}</p>}
+            {step === 4 && <p>{__('You can configure the test in this sidebar.', 'ab-testing-for-wp')}</p>}
+            {step === 5 && <p>{__('Adjust the distribution weight of the variants. More weight means more chance to land in experiment.', 'ab-testing-for-wp')}</p>}
+            {step === 6 && <p>{__('Select the goal which needs to be tracked.', 'ab-testing-for-wp')}</p>}
+            {step === 7 && <p>{__('Select the variant which will act like the control version. It will be shown by default when the test is not running, or when the page gets indexed by search engines.', 'ab-testing-for-wp')}</p>}
+            {step === 8 && <p>{__('Toggle this to enable and run the test. Without it the test will not show different variants.', 'ab-testing-for-wp')}</p>}
           </div>
           <div className="buttons">
-            <button type="button" className="prev">{__('Previous')}</button>
-            <button type="button" className="next">{__('Next')}</button>
+            <button type="button" className="prev">{__('Previous', 'ab-testing-for-wp')}</button>
+            <button type="button" className="next">{__('Next', 'ab-testing-for-wp')}</button>
           </div>
         </div>
       );
@@ -285,19 +285,19 @@ class Onboarding extends Component<OnboardingProps, OnboardingState> {
     if (step === 9) {
       return (
         <Modal
-          title={__('That is it!')}
+          title={__('That is it!', 'ab-testing-for-wp')}
           className="ab-testing-for-wp__OnboardingModal"
           onRequestClose={this.stopTour}
         >
           <p>
-            {__('That is all you need to know to get started.')}
+            {__('That is all you need to know to get started.', 'ab-testing-for-wp')}
           </p>
           <p>
-            {__('Please contact support if you have any questions.')}
+            {__('Please contact support if you have any questions.', 'ab-testing-for-wp')}
           </p>
           <div className="ButtonContainer">
-            <Button isPrimary autoFocus onClick={this.stopTour}>{__('Finish tour')}</Button>
-            <Button isLink onClick={(): void => this.goToStep(1)}>{__('Restart tour')}</Button>
+            <Button isPrimary autoFocus onClick={this.stopTour}>{__('Finish tour', 'ab-testing-for-wp')}</Button>
+            <Button isLink onClick={(): void => this.goToStep(1)}>{__('Restart tour', 'ab-testing-for-wp')}</Button>
           </div>
         </Modal>
       );
@@ -305,20 +305,20 @@ class Onboarding extends Component<OnboardingProps, OnboardingState> {
 
     return (
       <Modal
-        title={__('Welcome to A/B Testing for WordPress!')}
+        title={__('Welcome to A/B Testing for WordPress!', 'ab-testing-for-wp')}
         className="ab-testing-for-wp__OnboardingModal"
         shouldCloseOnClickOutside={false}
         onRequestClose={this.stopTour}
       >
         <p>
-          {__('Looks like this is your first time using A/B Testing for WordPress.')}
+          {__('Looks like this is your first time using A/B Testing for WordPress.', 'ab-testing-for-wp')}
         </p>
         <p>
-          {__('Would you like a quick tour on how to setup a test?')}
+          {__('Would you like a quick tour on how to setup a test?', 'ab-testing-for-wp')}
         </p>
         <div className="ButtonContainer">
-          <Button isPrimary autoFocus onClick={(): void => this.goToStep(1)}>{__('Sure, start the tour!')}</Button>
-          <Button isLink onClick={this.stopTour}>{__('No thanks')}</Button>
+          <Button isPrimary autoFocus onClick={(): void => this.goToStep(1)}>{__('Sure, start the tour!', 'ab-testing-for-wp')}</Button>
+          <Button isLink onClick={this.stopTour}>{__('No thanks', 'ab-testing-for-wp')}</Button>
         </div>
       </Modal>
     );
