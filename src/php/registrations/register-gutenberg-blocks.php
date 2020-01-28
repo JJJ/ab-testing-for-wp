@@ -69,6 +69,7 @@ class RegisterGutenbergBlocks {
                 'wp-date',
             ]
         );
+        wp_set_script_translations($name, 'ab-testing-for-wp');
     }
 
 }

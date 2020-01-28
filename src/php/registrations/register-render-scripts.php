@@ -17,6 +17,7 @@ class RegisterRenderScripts {
             plugins_url('/dist/ab-testing-for-wp.js', $this->fileRoot),
             ['wp-api-fetch']
         );
+        wp_set_script_translations('ab-testing-for-wp-frontend', 'ab-testing-for-wp');
 
         $data = [
             'postId' => get_the_ID(),

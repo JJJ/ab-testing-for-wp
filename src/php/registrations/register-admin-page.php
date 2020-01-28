@@ -43,6 +43,7 @@ class RegisterAdminPage {
             plugins_url('/dist/admin-editor.js', $this->fileRoot),
             ['wp-plugins', 'wp-edit-post', 'wp-data', 'wp-i18n', 'wp-compose', 'wp-blocks']
         );
+        wp_set_script_translations('ab-testing-for-wp-admin-editor', 'ab-testing-for-wp');
 
         wp_enqueue_script('ab-testing-for-wp-admin-editor');
     }
@@ -51,8 +52,9 @@ class RegisterAdminPage {
         wp_register_script(
             'ab-testing-for-wp-admin-page',
             plugins_url('/dist/admin-page.js', $this->fileRoot),
-            ['wp-api-fetch', 'wp-element']
+            ['wp-api-fetch', 'wp-element', 'wp-i18n']
         );
+        wp_set_script_translations('ab-testing-for-wp-admin-page', 'ab-testing-for-wp');
 
         if (isset($data)) {
             wp_localize_script(

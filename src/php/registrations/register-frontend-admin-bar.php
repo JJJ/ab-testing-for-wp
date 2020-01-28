@@ -29,6 +29,7 @@ class RegisterFrontendAdminBar {
             plugins_url('/dist/admin-bar.js', $this->fileRoot),
             ['wp-api-fetch', 'wp-i18n', 'wp-element']
         );
+        wp_set_script_translations('ab-testing-for-wp-admin-bar', 'ab-testing-for-wp');
         wp_localize_script(
             'ab-testing-for-wp-admin-bar',
             'ABTestingForWP_AdminBar',
