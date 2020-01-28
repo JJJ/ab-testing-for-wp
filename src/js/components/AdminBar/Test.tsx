@@ -14,7 +14,7 @@ type TestProps = {
 } & TestData;
 
 function findTestElementById(id: string): HTMLElement | null {
-  return document.querySelector(`.ABTestWrapper[data-test=${id}]`);
+  return document.querySelector(`.ABTestWrapper[data-test="${id}"]`);
 }
 
 const Test: React.FC<TestProps> = ({

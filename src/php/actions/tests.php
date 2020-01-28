@@ -44,12 +44,18 @@ class TestsActions {
         <head>';
         do_action( 'wp_head' );
         echo "</head>
-        <body style='overflow: hidden'><div id='ab-testing-for-wp-wrapper'>
+        <body style='overflow: hidden'>
+            <div class='entry'>
+                <div class='entry-content' style='margin: 0'>
+                    <div id='ab-testing-for-wp-wrapper' style='margin: 0'>
         ";
 
         echo $body;
 
-        echo "</div></body>
+        echo "      <div>
+                </div>
+            </div>
+        </body>
         <script>window.parent.postMessage(JSON.stringify({ from: '%ab-testing-id%', height: document.body.scrollHeight }), '*');</script>
         </html>";
 
