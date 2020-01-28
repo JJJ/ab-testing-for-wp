@@ -53,8 +53,10 @@ class BlockRenderer {
     }
 
     private function pickVariant($variants, $testId) {
-        if (isset($_COOKIE['ab-testing-for-wp'])) {
-            $cookieData = json_decode(stripslashes($_COOKIE['ab-testing-for-wp']), true);
+        $cookieData = [];
+
+        if (CookieManager::isSet()) {
+            $cookieData = CookieManager::getData();
 
             if (isset($cookieData[$testId])) {
                 // make sure variant is still in varients
@@ -71,14 +73,9 @@ class BlockRenderer {
         $abTestTracking = new ABTestTracking();
         $abTestTracking->addParticipation($pickedVariant['id']);
 
-        $cookieData = [];
-        if (isset($_COOKIE['ab-testing-for-wp'])) {
-            $cookieData = json_decode(stripslashes($_COOKIE['ab-testing-for-wp']), true);
-        }
-
         $cookieData[$testId] = $pickedVariant['id'];
 
-        setcookie('ab-testing-for-wp', json_encode($cookieData), time() + (60*60*24*30), '/');
+        CookieManager::setData($cookieData);
 
         return $pickedVariant;
     }
@@ -167,7 +164,17 @@ class BlockRenderer {
             return '';
         }
 
-        return $this->wrapData($testId, $this->getVariantContent($content, $controlVariant['id']));
+        $variantId = $controlVariant['id'];
+
+        if (CookieManager::isSet()) {
+            $cookieData = CookieManager::getData();
+
+            if (isset($cookieData[$testId])) {
+                $variantId = $cookieData[$testId];
+            }
+        }
+
+        return $this->wrapData($testId, $this->getVariantContent($content, $variantId));
     }
 
     public function renderInsertedTest($attributes) {

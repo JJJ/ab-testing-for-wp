@@ -37,7 +37,7 @@ class ABTestTracking {
     }
 
     public function trackGoal($goal, $goalType = '') {
-        if (isset($_COOKIE['ab-testing-for-wp'])) {
+        if (CookieManager::isSet()) {
             $variants = $this->abTestManager->getEnabledVariantsByGoal($goal, $goalType);
 
             return $this->trackVariantsInCookie($variants);
@@ -48,16 +48,13 @@ class ABTestTracking {
     }
 
     private function trackVariantsInCookie($variants) {
-        $mergeResult = $this->addVariantsToCookie($variants, $_COOKIE['ab-testing-for-wp']);
-
-        setcookie('ab-testing-for-wp', json_encode($mergeResult['cookieData']), time() + (60*60*24*30), '/');
+        $mergeResult = $this->addVariantsToCookie($variants, CookieManager::getData());
+        CookieManager::setData($mergeResult['cookieData']);
 
         return $mergeResult['tracked'];
     }
 
-    private function addVariantsToCookie($variants, $cookie) {
-        $cookieData = json_decode(stripslashes($_COOKIE['ab-testing-for-wp']), true);
-
+    private function addVariantsToCookie($variants, $cookieData) {
         // create tracked array if not present
         if (!isset($cookieData['tracked'])) {
             $cookieData['tracked'] = [];
