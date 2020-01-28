@@ -126,6 +126,16 @@ class BlockRenderer {
         $isEnabled = isset($testData['isEnabled']) && $testData['isEnabled'];
         $variants = $testData['variants'];
         $control = $testData['control'];
+        $skipVariation = $testData['control'];
+
+        // find out if already in a variant
+        if (CookieManager::isSet()) {
+            $cookieData = CookieManager::getData();
+
+            if (isset($cookieData[$testId])) {
+                $skipVariation = $cookieData[$testId];
+            }
+        }
 
         // get control variant of the test
         $controlVariant = $this->getControlVariant($variants, $testId, $control);
@@ -138,8 +148,8 @@ class BlockRenderer {
             $variantId = $pickedVariant['id'];
         }
 
-        // skip parsing HTML if control and variant not provided
-        if ($variantId === $control && !$forcedVariant) {
+        // skip parsing HTML if variation already picked or control and variant not provided
+        if ($variantId === $skipVariation && !$forcedVariant) {
             return rest_ensure_response([ 'id' => $variantId ]);
         }
 
