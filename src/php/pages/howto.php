@@ -45,8 +45,8 @@
       <p><?php echo __('The control variant is the variant which is shown by default and will also be seen by search engines. Changing the control variant is only needed if you do not want to serve variation "A" by default.', 'ab-testing-for-wp'); ?></p>
 
       <h3><?php echo __('Weight distribution', 'ab-testing-for-wp'); ?></h3>
-      <p><?php echo __('With test distribution you can control what percentage of your visitors roughly will be served the variants.', 'ab-testing-for-wp'); ?></p>
-      <p><?php echo __('If the test is a bit risky for instance, you can weigh the variant to test the against the control a lot down. It will not affect the measured results.', 'ab-testing-for-wp'); ?></p>
+      <p><?php echo __('With test distribution you can roughly control what percentage of your visitors will be served which variants.', 'ab-testing-for-wp'); ?></p>
+      <p><?php echo __('If a variant of the test is a bit risky for instance, you can weigh the variant to test against the control a lot down. It will not affect the measured results.', 'ab-testing-for-wp'); ?></p>
     </div>
   </div>
 </div>
