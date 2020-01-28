@@ -68,7 +68,7 @@ class AdminBar extends Component<{}, AdminBarState> {
     apiFetch<{ html: string }>({ path: `ab-testing-for-wp/v1/ab-test?test=${testId}&variant=${variantId}` })
       .then((result) => {
         if (result.html) {
-          const target = document.querySelector(`.ABTestWrapper[data-test=${testId}]`);
+          const target = document.querySelector(`.ABTestWrapper[data-test='${testId}']`);
 
           if (target) target.innerHTML = result.html;
         }
