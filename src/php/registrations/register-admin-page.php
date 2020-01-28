@@ -95,8 +95,8 @@ class RegisterAdminPage {
 
         add_submenu_page(
             'ab-testing-for-wp',
-            __('Active A/B Tests Overview'),
-            __('All A/B Tests'),
+            __('Active A/B Tests Overview', 'ab-testing-for-wp'),
+            __('All A/B Tests', 'ab-testing-for-wp'),
             'manage_options',
             'ab-testing-for-wp',
             [$this, 'appContainer']
@@ -104,8 +104,8 @@ class RegisterAdminPage {
 
         add_submenu_page(
             'ab-testing-for-wp',
-            __('Add New A/B Test'),
-            __('Add New A/B Test'),
+            __('Add New A/B Test', 'ab-testing-for-wp'),
+            __('Add New A/B Test', 'ab-testing-for-wp'),
             'manage_options',
             'post-new.php?post_type=abt4wp-test',
             [$this, 'gotoEditor']
@@ -113,8 +113,8 @@ class RegisterAdminPage {
 
         add_submenu_page(
             'ab-testing-for-wp',
-            __('How to Use A/B Testing'),
-            __('How to Use'),
+            __('How to Use A/B Testing', 'ab-testing-for-wp'),
+            __('How to Use', 'ab-testing-for-wp'),
             'manage_options',
             'ab-testing-for-wp_howto',
             [$this, 'howto']

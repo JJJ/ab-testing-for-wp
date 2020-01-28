@@ -132,7 +132,7 @@ class GoalSelector extends Component<GoalSelectorProps, GoalSelectorState> {
         label={currentType.itemName}
         value={(value || 0).toString(10)}
         options={[
-          { label: __('No goal selected'), value: '0' },
+          { label: __('No goal selected', 'ab-testing-for-wp'), value: '0' },
           ...posts.map((post) => ({ label: post.post_title, value: post.ID.toString() })),
         ]}
         help={currentType.help}
@@ -155,11 +155,11 @@ class GoalSelector extends Component<GoalSelectorProps, GoalSelectorState> {
     }
 
     return (
-      <PanelBody title={__('Testing Goal')}>
+      <PanelBody title={__('Testing Goal', 'ab-testing-for-wp')}>
         {!loading && (
           <div>
             <SelectControl
-              label={__('Type')}
+              label={__('Type', 'ab-testing-for-wp')}
               value={type}
               options={types.map((t) => ({
                 label: t.label,

@@ -85,14 +85,14 @@ class Inserter extends Component<InserterProps, InserterState> {
 
     return (
       <Modal
-        title={__('A/B Testing for WordPress')}
+        title={__('A/B Testing for WordPress', 'ab-testing-for-wp')}
         className="Inserter"
         onRequestClose={this.cancelInsert}
       >
         {isPicking ? (
           <section className="Inserter__picking">
             <SelectControl
-              label={__('Pick A/B Test')}
+              label={__('Pick A/B Test', 'ab-testing-for-wp')}
               value={value}
               options={options.map((option) => ({
                 label: option.post_title,
@@ -101,7 +101,7 @@ class Inserter extends Component<InserterProps, InserterState> {
               onChange={(newValue): void => this.setState({ value: newValue })}
             />
             <Button isPrimary onClick={this.insertExisting} style={{ marginRight: 5 }}>
-              {__('Insert into Content')}
+              {__('Insert into Content', 'ab-testing-for-wp')}
             </Button>
             <Button isDefault onClick={(): void => this.setState({ isPicking: false })}>
               {__('Cancel')}
@@ -110,10 +110,10 @@ class Inserter extends Component<InserterProps, InserterState> {
         ) : (
           <section className="Inserter__actions">
             <Button isPrimary onClick={this.insertNew}>
-              {__('Create New A/B Test')}
+              {__('Create New A/B Test', 'ab-testing-for-wp')}
             </Button>
             <Button isDefault onClick={(): void => this.setState({ isPicking: true })}>
-              {__('Insert Existing A/B Test')}
+              {__('Insert Existing A/B Test', 'ab-testing-for-wp')}
             </Button>
           </section>
         )}

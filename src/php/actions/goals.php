@@ -21,12 +21,12 @@ class GoalActions {
 
         $strings = [
             'post' => [
-                'itemName' => __('Post'),
-                'help' => __('Goal post for this test. If the visitor lands on this post it will add a point to the tested variant.'),
+                'itemName' => __('Post', 'ab-testing-for-wp'),
+                'help' => __('Goal post for this test. If the visitor lands on this post it will add a point to the tested variant.', 'ab-testing-for-wp'),
             ],
             'page' => [
-                'itemName' => __('Page'),
-                'help' => __('Goal page for this test. If the visitor lands on this page it will add a point to the tested variant.'),
+                'itemName' => __('Page', 'ab-testing-for-wp'),
+                'help' => __('Goal page for this test. If the visitor lands on this page it will add a point to the tested variant.', 'ab-testing-for-wp'),
             ],
         ];
 
@@ -38,10 +38,10 @@ class GoalActions {
 
         array_push($allowedTypes, [
             'name' => 'outbound',
-            'label' => __('Outbound link'),
-            'itemName' => __('Visitor goes to'),
-            'help' => __('If visitor goes to this link, it will add a point for the tested variant.'),
-            'placeholder' => __('https://'),
+            'label' => __('Outbound link', 'ab-testing-for-wp'),
+            'itemName' => __('Visitor goes to', 'ab-testing-for-wp'),
+            'help' => __('If visitor goes to this link, it will add a point for the tested variant.', 'ab-testing-for-wp'),
+            'placeholder' => __('https://', 'ab-testing-for-wp'),
             'text' => true,
         ]);
 

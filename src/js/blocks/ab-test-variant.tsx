@@ -24,9 +24,11 @@ const edit: any = (props: ABTestBlockChildProps) => {
     ]
     : [
       ['core/button', {
-        text: sprintf(__('Button for Test Variant "%s"'), name),
+        text: sprintf(__('Button for Test Variant "%s"', 'ab-testing-for-wp'), name),
       }],
-      ['core/paragraph', { placeholder: sprintf(__('Enter content or add blocks for test variant "%s"'), name) }],
+      ['core/paragraph', {
+        placeholder: sprintf(__('Enter content or add blocks for test variant "%s"', 'ab-testing-for-wp'), name),
+      }],
     ];
 
   return (
@@ -49,8 +51,8 @@ const save: any = (props: ABTestBlockChildProps) => {
 };
 
 registerBlockType('ab-testing-for-wp/ab-test-block-variant', {
-  title: __('A/B Test Variant'),
-  description: __('Test variant belonging to the parent A/B test container'),
+  title: __('A/B Test Variant', 'ab-testing-for-wp'),
+  description: __('Test variant belonging to the parent A/B test container', 'ab-testing-for-wp'),
   icon: SVGIcon,
   category: 'widgets',
   parent: ['ab-testing-for-wp/ab-test-block'],

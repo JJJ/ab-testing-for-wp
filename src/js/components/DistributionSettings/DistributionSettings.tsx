@@ -36,10 +36,10 @@ const DistributionSettings: React.FC<DistributionSettingsProps> = ({
   };
 
   return (
-    <PanelBody title={__('Variation distribution')}>
+    <PanelBody title={__('Variation distribution', 'ab-testing-for-wp')}>
       {variants.map((variant) => (
         <RangeControl
-          label={sprintf(__('Variation %s'), variant.name)}
+          label={sprintf(__('Variation %s', 'ab-testing-for-wp'), variant.name)}
           value={variant.distribution}
           onChange={(nextDistribution): void => onUpdateDistribution(variant.id, nextDistribution)}
           min={0}

@@ -22,8 +22,8 @@ class ContactForm7 extends Integration {
             [
                 'name' => 'wpcf7_contact_form',
                 'label' => 'Contact Form 7',
-                'itemName' => __('On submit of form'),
-                'help' => __('If the visitor submits this form it will add a point to the tested variant.')
+                'itemName' => __('On submit of form', 'ab-testing-for-wp'),
+                'help' => __('If the visitor submits this form it will add a point to the tested variant.', 'ab-testing-for-wp')
             ]
         );
 

@@ -84,14 +84,14 @@ class AdminBar extends Component<{}, AdminBarState> {
           className="ab-item ab-empty-item"
           aria-haspopup="true"
         >
-          {sprintf(__('A/B Tests %s'), tests.length > 0 ? `(${tests.length})` : '')}
+          {sprintf(__('A/B Tests %s', 'ab-testing-for-wp'), tests.length > 0 ? `(${tests.length})` : '')}
         </div>
         <div className="ab-sub-wrapper">
           <ul id="wp-admin-bar-ab-testing-for-wp-default" className="ab-submenu">
             {isLoading && (
               <li>
                 <div className="ab-item ab-empty-item" aria-haspopup="true">
-                  {__('Scanning for tests on page')}
+                  {__('Scanning for tests on page', 'ab-testing-for-wp')}
                 </div>
               </li>
             )}
@@ -99,7 +99,7 @@ class AdminBar extends Component<{}, AdminBarState> {
               ? (
                 <li>
                   <div className="ab-item ab-empty-item" aria-haspopup="true">
-                    {__('No tests found on page')}
+                    {__('No tests found on page', 'ab-testing-for-wp')}
                   </div>
                 </li>
               )
