@@ -1,6 +1,7 @@
 import React, { Fragment } from 'react';
 import classNames from 'classnames';
 import { __ } from '@wordpress/i18n';
+import apiFetch from '@wordpress/api-fetch';
 
 import format from 'date-fns/format';
 import formatDistance from 'date-fns/formatDistance';
@@ -32,6 +33,24 @@ function removeLink(link?: string): React.ReactNode | null {
   return postLink(__('Remove', 'ab-testing-for-wp'), link);
 }
 
+function startTest(id: string, isEnabled: boolean, cb: () => void): void {
+  apiFetch<TestData>({
+    path: 'ab-testing-for-wp/v1/update-test',
+    method: 'POST',
+    data: { id, isEnabled },
+  })
+    .then((data) => {
+      if (!ABTestingForWP_Data) return;
+
+      ABTestingForWP_Data.activeTests = ABTestingForWP_Data.activeTests.map((t) => {
+        if (t.id === data.id) return data;
+        return t;
+      });
+
+      cb();
+    });
+}
+
 const toTestVariantResult = (variant: TestVariant): {
   id: TestVariant['id'];
   name: TestVariant['name'];
@@ -44,14 +63,22 @@ const toTestVariantResult = (variant: TestVariant): {
   conversions: variant.conversions,
 });
 
-const Test: React.FC<{ test: TestData }> = ({ test }) => {
+interface TestProps {
+  test: TestData;
+  reload: () => void;
+}
+
+const Test: React.FC<TestProps> = ({ test, reload }) => {
   const isSingle = test.postType === 'abt4wp-test';
 
   return (
     <Fragment key={test.id}>
       <tr>
         <td className="check-column check-column-normal">
-          <div
+          {/* eslint-disable-next-line jsx-a11y/control-has-associated-label */}
+          <button
+            type="button"
+            onClick={(): void => startTest(test.id, !test.isEnabled, reload)}
             className={
               classNames(
                 'indicator',
@@ -93,11 +120,17 @@ const Test: React.FC<{ test: TestData }> = ({ test }) => {
           <div className="row-actions">
             {test.isEnabled && test.startedAt > 0 ? (
               <span className="trash">
-                <a href="#">{__('Stop test', 'ab-testing-for-wp')}</a>
+                {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
+                <a href="#" onClick={(): void => startTest(test.id, false, reload)}>
+                  {__('Stop test', 'ab-testing-for-wp')}
+                </a>
               </span>
             ) : (
               <span className="edit">
-                <a href="#">{__('Run test', 'ab-testing-for-wp')}</a>
+                {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
+                <a href="#" onClick={(): void => startTest(test.id, true, reload)}>
+                  {__('Run test', 'ab-testing-for-wp')}
+                </a>
               </span>
             )}
           </div>
@@ -166,7 +199,12 @@ const Test: React.FC<{ test: TestData }> = ({ test }) => {
   );
 };
 
-const Overview: React.FC<{ data: OverviewData }> = ({ data: { activeTests } }) => (
+interface OverviewProps {
+  data: OverviewData;
+  reload: () => void;
+}
+
+const Overview: React.FC<OverviewProps> = ({ data: { activeTests }, reload }) => (
   <div className="wrap ab-testing-for-wp">
     <h1 className="wp-heading-inline">{__('A/B Tests', 'ab-testing-for-wp')}</h1>
     <a
@@ -189,7 +227,7 @@ const Overview: React.FC<{ data: OverviewData }> = ({ data: { activeTests } }) =
             <th className="num">{__('Participants', 'ab-testing-for-wp')}</th>
           </tr>
         </thead>
-        <tbody>{activeTests.map((test) => <Test test={test} />)}</tbody>
+        <tbody>{activeTests.map((test) => <Test test={test} reload={reload} />)}</tbody>
       </Table>
     ) : (
       <>

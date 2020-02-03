@@ -8,7 +8,7 @@ function onLoad(): void {
 
   if (!root) return;
 
-  render(<AdminPage data={ABTestingForWP_Data} />, root);
+  render(<AdminPage data={ABTestingForWP_Data} reload={onLoad} />, root);
 }
 
 document.addEventListener('DOMContentLoaded', onLoad);

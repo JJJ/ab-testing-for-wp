@@ -20,6 +20,16 @@ class TestsActions {
         return rest_ensure_response($this->testManager->getTestsByIds($ids));
     }
 
+    public function updateTestData($request) {
+        $body = json_decode($request->get_body(), true);
+
+        if (!isset($body['id'])) {
+            return new \WP_Error('rest_invalid_request', 'Missing test id in body.', ['status' => 400]);
+        }
+
+        return rest_ensure_response($this->testManager->updateTest($body));
+    }
+
     public function getTestPreviewContentByPost($request) {
         if (!$request->get_param('id')) {
             return new \WP_Error('rest_invalid_request', 'Missing test id parameter.', ['status' => 400]);

@@ -28,6 +28,18 @@ table.running-tests {
   height: 14px;
   border-radius: 100%;
   margin: 3px 0 0 0;
+  padding: 0;
+  border: 0;
+  cursor: pointer;
+  opacity: 1;
+}
+
+.running-tests .indicator:hover {
+  background-color: #46B450;
+}
+
+.running-tests .indicator.indicator--on:hover {
+  opacity: 0.5;
 }
 
 .running-tests .column-primary .row-title a {

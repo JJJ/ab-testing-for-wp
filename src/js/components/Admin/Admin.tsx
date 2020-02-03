@@ -5,7 +5,8 @@ import queryString from 'query-string';
 import Overview from './pages/Overview/Overview';
 
 type AdminPageProps = {
-  data?: any;
+  data?: AbTestingForWpData;
+  reload: () => void;
 }
 
 function getPage(): string {
@@ -18,7 +19,7 @@ function getPage(): string {
   return page.replace('ab-testing-for-wp_', '').replace('ab-testing-for-wp', '');
 }
 
-const AdminPage: React.FC<AdminPageProps> = ({ data }) => {
+const AdminPage: React.FC<AdminPageProps> = ({ data, reload }) => {
   if (!data) return null;
 
   const page = getPage();
@@ -27,7 +28,7 @@ const AdminPage: React.FC<AdminPageProps> = ({ data }) => {
     throw new Error(`Component for ${page} can not be found`);
   }
 
-  return <Overview data={data} />;
+  return <Overview data={data} reload={reload} />;
 };
 
 export default AdminPage;

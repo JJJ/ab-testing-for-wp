@@ -10,9 +10,11 @@ declare const ABTestingForWP_AdminBar: {
   };
 };
 
-declare const ABTestingForWP_Data: {
-  activeTests: ABTestAttributes[];
-};
+interface AbTestingForWpData {
+  activeTests: TestData[];
+}
+
+declare const ABTestingForWP_Data: AbTestingForWpData;
 
 declare const ABTestingForWP_Options: any;
 

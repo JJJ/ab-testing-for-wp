@@ -114,6 +114,18 @@ class RegisterREST {
 
         register_rest_route(
             'ab-testing-for-wp/v1',
+            '/update-test',
+            [
+                'methods' => 'POST',
+                'callback' => [$tests, 'updateTestData'],
+                'permission_callback' => function () {
+                    return current_user_can('edit_posts');
+                }
+            ]
+        );
+
+        register_rest_route(
+            'ab-testing-for-wp/v1',
             '/get-test-content-by-post',
             [
                 'methods' => 'GET',
