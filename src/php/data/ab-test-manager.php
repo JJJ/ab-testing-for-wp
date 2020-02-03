@@ -276,6 +276,14 @@ class ABTestManager {
 
     public function updateTest($testData) {
         $currentData = $this->getTestById($testData['id']);
+
+        if (
+            $testData["isEnabled"]
+            && $currentData["startedAt"] === "0000-00-00 00:00:00"
+        ) {
+            $testData["startedAt"] = date("Y-m-d H:i");
+        }
+
         $mergedData = array_merge($currentData, $testData);
 
         $this->insertTest($mergedData['postId'], $mergedData);
