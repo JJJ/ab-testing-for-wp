@@ -9,7 +9,7 @@ describe('Onboarding', () => {
     cy.logout();
   });
 
-  function checkStep(text: string, gotoNext = true) {
+  function checkStep(text: string, gotoNext = true): void {
     cy.contains(text);
 
     if (!gotoNext) return;
