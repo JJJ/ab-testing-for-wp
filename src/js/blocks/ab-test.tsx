@@ -15,16 +15,21 @@ import ControlSettings from '../components/ControlSettings/ControlSettings';
 import GeneralSettings from '../components/GeneralSettings/GeneralSettings';
 import TestResults from '../components/TestResults/TestResults';
 import Onboarding from '../components/Onboarding/Onboarding';
+import Loader from '../components/Loader/Loader';
 
 import { getOption, setOption } from '../helpers/options';
 
 import SVGIcon from '../components/Logo/Logo';
 
-type ABTestBlockProps = BlockInstance<ABTestAttributes> & {
+interface ABTestBlockProps extends BlockInstance<ABTestAttributes> {
   setAttributes: (attrs: any) => void;
   onDeclareWinner: (id: string) => void;
   selectBlock: () => void;
-};
+}
+
+interface ABTestBlockState {
+  loadedAttributes: boolean;
+}
 
 const ALLOWED_BLOCKS = ['ab-testing-for-wp/ab-test-block-variant'];
 
@@ -35,12 +40,28 @@ function isSingleTest(): boolean {
   return getCurrentPostType() === 'abt4wp-test';
 }
 
-class ABTestBlock extends Component<ABTestBlockProps> {
+class ABTestBlock extends Component<ABTestBlockProps, ABTestBlockState> {
   currentVariant: string | undefined;
+
+  constructor(props: ABTestBlockProps) {
+    super(props);
+
+    this.state = {
+      loadedAttributes: false,
+    };
+
+    this.loadAttributes();
+  }
 
   componentDidMount(): void {
     this.selectOnSingleTest();
     this.focusTestIntoView();
+  }
+
+  loadAttributes(): void {
+    setTimeout(() => {
+      this.setState({ loadedAttributes: true });
+    }, 1000);
   }
 
   selectOnSingleTest(): void {
@@ -103,6 +124,12 @@ class ABTestBlock extends Component<ABTestBlockProps> {
       onDeclareWinner,
       selectBlock,
     } = this.props;
+
+    const { loadedAttributes } = this.state;
+
+    if (!loadedAttributes) {
+      return <div style={{ justifyContent: 'center', display: 'flex', padding: '1em' }}><Loader /></div>;
+    }
 
     const {
       id,
