@@ -63,6 +63,7 @@ declare interface TestData {
   goalLink?: string;
   postId: string;
   postGoal: string;
+  postGoalType: string;
   postType: string;
   postName: string;
   postLink?: string;

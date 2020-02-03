@@ -6,6 +6,7 @@ import { __, sprintf } from '@wordpress/i18n';
 import { registerBlockType, createBlock, BlockInstance } from '@wordpress/blocks';
 import { InnerBlocks, InspectorControls } from '@wordpress/block-editor';
 import { withDispatch, select } from '@wordpress/data';
+import apiFetch from '@wordpress/api-fetch';
 
 import VariantSelector from '../components/VariantSelector/VariantSelector';
 import BoxShadow from '../components/BoxShadow/BoxShadow';
@@ -49,19 +50,36 @@ class ABTestBlock extends Component<ABTestBlockProps, ABTestBlockState> {
     this.state = {
       loadedAttributes: false,
     };
-
-    this.loadAttributes();
   }
 
   componentDidMount(): void {
+    this.loadAttributes();
     this.selectOnSingleTest();
     this.focusTestIntoView();
   }
 
   loadAttributes(): void {
-    setTimeout(() => {
+    const { attributes, setAttributes } = this.props;
+
+    if (!attributes.id) {
       this.setState({ loadedAttributes: true });
-    }, 1000);
+      return;
+    }
+
+    apiFetch<TestData[]>({ path: `ab-testing-for-wp/v1/get-tests-info?id[]=${attributes.id}` })
+      .then(([test]) => {
+        setAttributes({
+          id: test.id,
+          postGoal: test.postGoal,
+          postGoalType: test.postGoalType,
+          title: test.title,
+          control: test.control,
+          isEnabled: test.isEnabled,
+        });
+      })
+      .then(() => {
+        this.setState({ loadedAttributes: true });
+      });
   }
 
   selectOnSingleTest(): void {
