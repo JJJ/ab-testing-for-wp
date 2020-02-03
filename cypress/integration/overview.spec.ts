@@ -57,4 +57,52 @@ describe('Overview of created tests', () => {
     // shows test in list
     cy.contains('Stand alone test');
   });
+
+  it('Can start and stop tests from the overview', () => {
+    cy.visitAdmin('post-new.php?post_type=abt4wp-test&skipOnboarding=1');
+
+    // wait for test to get focus
+    cy.focusBlock();
+
+    // fill in title
+    cy.get('#post-title-0')
+      .type('Start me test', { force: true });
+
+    // save test
+    cy.savePost();
+
+    // open A/B Testing menu
+    cy.contains('A/B Testing')
+      .click();
+
+    // start the test
+    cy.contains('Start me test')
+      .parent()
+      .parent()
+      .parent()
+      .contains('Run test')
+      .click({ force: true });
+
+    // indicator should turn on
+    cy.contains('Start me test')
+      .parent()
+      .parent()
+      .parent()
+      .get('.indicator--on');
+
+    // stop test
+    cy.contains('Start me test')
+      .parent()
+      .parent()
+      .parent()
+      .contains('Stop test')
+      .click({ force: true });
+
+    // indicator should be off
+    cy.contains('Start me test')
+      .parent()
+      .parent()
+      .parent()
+      .get('.indicator--off');
+  });
 });
