@@ -29,7 +29,17 @@ class RegisterAdminPage {
             // an A/B Testing for WordPress admin page
             $this->loadStyles();
             $this->loadPageScripts($this->getPageData($screen->id));
+
+            add_action('admin_footer_text', array($this, 'footerText'));
         }
+    }
+
+    public function footerText() {
+        return sprintf(
+            __('Enjoying <strong>A/B Testing for WordPress</strong>? Please <a href="%s">leave a review</a> on WordPress.org and <a href="%s">write about it</a> on your website.', 'ab-testing-for-wp'),
+            'https://wordpress.org/support/plugin/ab-testing-for-wp/reviews/#new-post',
+            admin_url('post-new.php')
+        );
     }
 
     private function loadStyles() {
@@ -136,20 +146,7 @@ class RegisterAdminPage {
 
         $testsData = array_map(
             function ($test) {
-                $test['startedAt'] = strtotime($test['startedAt']) * 1000;
-
-                // if no goal is set, show placeholders
-                if ($test['postGoal'] === '0' || $test['postGoal'] === '') {
-                    $test['goalName'] = '—';
-                }
-
-                // fill in conversion goal for outbound links
-                if ($test['postGoalType'] === 'outbound') {
-                    $test['goalName'] = $test['postGoal'];
-                    $test['goalLink'] = $test['postGoal'];
-                }
-
-                return $test;
+                return $this->abTestManager->mapToOutput($test);
             },
             $testsData
         );

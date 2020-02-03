@@ -155,6 +155,23 @@ class ABTestManager {
         return $test;
     }
 
+    public function mapToOutput($test) {
+        $test['startedAt'] = strtotime($test['startedAt']) * 1000;
+
+        // if no goal is set, show placeholders
+        if ($test['postGoal'] === '0' || $test['postGoal'] === '') {
+            $test['goalName'] = '—';
+        }
+
+        // fill in conversion goal for outbound links
+        if ($test['postGoalType'] === 'outbound') {
+            $test['goalName'] = $test['postGoal'];
+            $test['goalLink'] = $test['postGoal'];
+        }
+
+        return $test;
+    }
+
     public function getStatsByVariation($variantId) {
         $participants = $this->wpdb->get_var($this->wpdb->prepare("
         SELECT COUNT(variantId)
@@ -238,14 +255,11 @@ class ABTestManager {
         $startedAt = isset($testData['startedAt']) ? $testData['startedAt'] : '';
         $postGoal = isset($testData['postGoal']) ? $testData['postGoal'] : 0;
 
-        $query = "
-        REPLACE INTO `{$this->abTestTable}`
-        (id, postId, isEnabled, startedAt, title, control, postGoal, postGoalType, isArchived)
-        VALUES (%s, %s, %d, %s, %s, %s, %s, %s, %d);
-        ";
-
-        $this->wpdb->query($this->wpdb->prepare(
-            $query,
+        $query = $this->wpdb->prepare("
+            REPLACE INTO `{$this->abTestTable}`
+            (id, postId, isEnabled, startedAt, title, control, postGoal, postGoalType, isArchived)
+            VALUES (%s, %s, %d, %s, %s, %s, %s, %s, %d);
+            ",
             $testData['id'],
             $postId,
             $isEnabled,
@@ -255,7 +269,26 @@ class ABTestManager {
             $postGoal,
             $testData['postGoalType'],
             0
-        ));
+        );
+
+        $this->wpdb->query($query);
+    }
+
+    public function updateTest($testData) {
+        $currentData = $this->getTestById($testData['id']);
+
+        if (
+            $testData["isEnabled"]
+            && $currentData["startedAt"] === "0000-00-00 00:00:00"
+        ) {
+            $testData["startedAt"] = date("Y-m-d H:i");
+        }
+
+        $mergedData = array_merge($currentData, $testData);
+
+        $this->insertTest($mergedData['postId'], $mergedData);
+
+        return $this->mapToOutput($mergedData);
     }
 
     public function insertVariant($testId, $variant) {

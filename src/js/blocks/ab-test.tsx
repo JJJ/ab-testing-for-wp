@@ -6,6 +6,9 @@ import { __, sprintf } from '@wordpress/i18n';
 import { registerBlockType, createBlock, BlockInstance } from '@wordpress/blocks';
 import { InnerBlocks, InspectorControls } from '@wordpress/block-editor';
 import { withDispatch, select } from '@wordpress/data';
+import apiFetch from '@wordpress/api-fetch';
+
+import parseISO from 'date-fns/parseISO';
 
 import VariantSelector from '../components/VariantSelector/VariantSelector';
 import BoxShadow from '../components/BoxShadow/BoxShadow';
@@ -15,16 +18,21 @@ import ControlSettings from '../components/ControlSettings/ControlSettings';
 import GeneralSettings from '../components/GeneralSettings/GeneralSettings';
 import TestResults from '../components/TestResults/TestResults';
 import Onboarding from '../components/Onboarding/Onboarding';
+import Loader from '../components/Loader/Loader';
 
 import { getOption, setOption } from '../helpers/options';
 
 import SVGIcon from '../components/Logo/Logo';
 
-type ABTestBlockProps = BlockInstance<ABTestAttributes> & {
+interface ABTestBlockProps extends BlockInstance<ABTestAttributes> {
   setAttributes: (attrs: any) => void;
   onDeclareWinner: (id: string) => void;
   selectBlock: () => void;
-};
+}
+
+interface ABTestBlockState {
+  loadedAttributes: boolean;
+}
 
 const ALLOWED_BLOCKS = ['ab-testing-for-wp/ab-test-block-variant'];
 
@@ -35,12 +43,45 @@ function isSingleTest(): boolean {
   return getCurrentPostType() === 'abt4wp-test';
 }
 
-class ABTestBlock extends Component<ABTestBlockProps> {
+class ABTestBlock extends Component<ABTestBlockProps, ABTestBlockState> {
   currentVariant: string | undefined;
 
+  constructor(props: ABTestBlockProps) {
+    super(props);
+
+    this.state = {
+      loadedAttributes: false,
+    };
+  }
+
   componentDidMount(): void {
+    this.loadAttributes();
     this.selectOnSingleTest();
     this.focusTestIntoView();
+  }
+
+  loadAttributes(): void {
+    const { attributes, setAttributes } = this.props;
+
+    if (!attributes.id) {
+      this.setState({ loadedAttributes: true });
+      return;
+    }
+
+    apiFetch<TestData[]>({ path: `ab-testing-for-wp/v1/get-tests-info?id[]=${attributes.id}` })
+      .then(([test]) => {
+        setAttributes({
+          id: test.id,
+          postGoal: test.postGoal,
+          postGoalType: test.postGoalType,
+          title: test.title,
+          control: test.control,
+          isEnabled: test.isEnabled,
+        });
+      })
+      .then(() => {
+        this.setState({ loadedAttributes: true });
+      });
   }
 
   selectOnSingleTest(): void {
@@ -103,6 +144,12 @@ class ABTestBlock extends Component<ABTestBlockProps> {
       onDeclareWinner,
       selectBlock,
     } = this.props;
+
+    const { loadedAttributes } = this.state;
+
+    if (!loadedAttributes) {
+      return <div style={{ justifyContent: 'center', display: 'flex', padding: '1em' }}><Loader /></div>;
+    }
 
     const {
       id,
@@ -207,7 +254,7 @@ class ABTestBlock extends Component<ABTestBlockProps> {
             isEnabled={isEnabled}
             testId={id}
             control={control}
-            startedAt={typeof startedAt === 'string' ? parseInt(startedAt, 10) : startedAt}
+            startedAt={typeof startedAt === 'string' ? parseISO(startedAt) : startedAt}
             onDeclareWinner={onDeclareWinner}
           />
           <DistributionSettings
