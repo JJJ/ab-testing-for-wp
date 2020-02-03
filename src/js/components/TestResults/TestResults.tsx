@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import classNames from 'classnames';
+
 import formatDistanceToNow from 'date-fns/formatDistanceToNow';
 
 import { __, sprintf } from '@wordpress/i18n';

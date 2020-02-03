@@ -8,6 +8,8 @@ import { InnerBlocks, InspectorControls } from '@wordpress/block-editor';
 import { withDispatch, select } from '@wordpress/data';
 import apiFetch from '@wordpress/api-fetch';
 
+import parseISO from 'date-fns/parseISO';
+
 import VariantSelector from '../components/VariantSelector/VariantSelector';
 import BoxShadow from '../components/BoxShadow/BoxShadow';
 import DistributionSettings from '../components/DistributionSettings/DistributionSettings';
@@ -252,7 +254,7 @@ class ABTestBlock extends Component<ABTestBlockProps, ABTestBlockState> {
             isEnabled={isEnabled}
             testId={id}
             control={control}
-            startedAt={typeof startedAt === 'string' ? parseInt(startedAt, 10) : startedAt}
+            startedAt={typeof startedAt === 'string' ? parseISO(startedAt) : startedAt}
             onDeclareWinner={onDeclareWinner}
           />
           <DistributionSettings
