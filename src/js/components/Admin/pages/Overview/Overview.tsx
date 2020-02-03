@@ -79,16 +79,29 @@ const Test: React.FC<{ test: TestData }> = ({ test }) => {
             )}
           </div>
         </td>
-        {test.startedAt > 0 ? (
-          <td>
-            <abbr title={`${format(test.startedAt, 'yyyy/MM/dd HH:mm')}`}>
-              {format(test.startedAt, 'yyyy/MM/dd')}
-            </abbr>
-            {` (${formatDistance(new Date(), test.startedAt)})`}
-          </td>
-        ) : (
-          <td>—</td>
-        )}
+        <td>
+          {test.startedAt > 0 ? (
+            <div className="row-title">
+              <abbr title={`${format(test.startedAt, 'yyyy/MM/dd HH:mm')}`}>
+                {format(test.startedAt, 'yyyy/MM/dd')}
+              </abbr>
+              {` (${formatDistance(new Date(), test.startedAt)})`}
+            </div>
+          ) : (
+            <div className="row-title">—</div>
+          )}
+          <div className="row-actions">
+            {test.isEnabled && test.startedAt > 0 ? (
+              <span className="trash">
+                <a href="#">{__('Stop test', 'ab-testing-for-wp')}</a>
+              </span>
+            ) : (
+              <span className="edit">
+                <a href="#">{__('Run test', 'ab-testing-for-wp')}</a>
+              </span>
+            )}
+          </div>
+        </td>
         <td>
           {
             isSingle
