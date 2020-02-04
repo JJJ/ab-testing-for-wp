@@ -14,6 +14,10 @@ class ABTestTracking {
             return new \WP_Error('rest_invalid_request', 'Missing post parameter.', ['status' => 400]);
         }
 
+        if (DoNotTrack::isEnabled($request)) {
+            return rest_ensure_response([]);
+        }
+
         $postId = $request->get_param('post');
 
         $tracked = $this->trackGoal($postId, get_post_type($postId));
@@ -27,6 +31,10 @@ class ABTestTracking {
 
         if ($data === NULL || !isset($data['url'])) {
             return new \WP_Error('rest_invalid_request', 'Invalid beacon.', ['status' => 400]);
+        }
+
+        if (DoNotTrack::isEnabled($request)) {
+            return rest_ensure_response([]);
         }
 
         $url = $data['url'];
