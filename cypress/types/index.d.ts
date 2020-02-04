@@ -2,6 +2,7 @@ declare namespace Cypress {
   interface Chainable {
     login(): void;
     logout(): void;
+    wipeABTestingCookies(): void;
     visitAdmin(subpage?: string): void;
     addBlockInEditor(search: string, name?: string): void;
     savePost(): void;

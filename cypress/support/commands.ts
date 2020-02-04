@@ -20,6 +20,16 @@ Cypress.Commands.add('logout', () => {
     });
 });
 
+Cypress.Commands.add('wipeABTestingCookies', () => {
+  // clear all cookies
+  cy.getCookies()
+    .then((cookies) => {
+      cookies
+        .filter((cookie) => cookie.name.indexOf('ab-testing-for-wp') > -1)
+        .forEach((cookie) => cy.clearCookie(cookie.name));
+    });
+});
+
 Cypress.Commands.add('visitAdmin', (page = '') => {
   cy.visit(`/wp-admin/${page}`);
 });

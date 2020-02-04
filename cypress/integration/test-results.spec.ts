@@ -79,7 +79,7 @@ describe('Test results and tracking goals', () => {
           }
 
           // clear visitor
-          cy.clearCookie('ab-testing-for-wp');
+          cy.wipeABTestingCookies();
         }
       });
 
