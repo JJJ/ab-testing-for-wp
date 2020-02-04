@@ -1,4 +1,5 @@
 import apiFetch from '@wordpress/api-fetch';
+import doNotTrack from './doNotTrack';
 
 function handleTracking(
   getUrl: (target: EventTarget | null) => string | undefined,
@@ -15,7 +16,7 @@ function handleTracking(
 }
 
 function handleTestTracking(): void {
-  if (!ABTestingForWP) return;
+  if (doNotTrack()) return;
 
   // listen to anchor navigation
   window.addEventListener('click', handleTracking((target): string | undefined => {

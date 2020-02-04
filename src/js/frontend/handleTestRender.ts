@@ -1,6 +1,10 @@
 import apiFetch from '@wordpress/api-fetch';
 
+import doNotTrack from './doNotTrack';
+
 function handleTestRender(): void {
+  if (doNotTrack()) return;
+
   const testsOnPage = document.getElementsByClassName('ABTestWrapper');
 
   for (let i = 0; i < testsOnPage.length; i += 1) {
