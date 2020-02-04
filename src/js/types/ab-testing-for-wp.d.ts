@@ -1,11 +1,13 @@
 declare const ABTestingForWP: {
   postId?: string;
   restUrl?: string;
+  // actually a boolean, but WordPress return "" for `false` and "1" for `true`
+  notAdmin?: string;
 };
 
 declare const ABTestingForWP_AdminBar: {
   participating: {
-    // test_id -> variant_id
+    // test_id: variant_id
     [id: string]: string;
   };
 };

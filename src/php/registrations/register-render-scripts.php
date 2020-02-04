@@ -22,6 +22,7 @@ class RegisterRenderScripts {
         $data = [
             'postId' => get_the_ID(),
             'restUrl' => get_rest_url(),
+            'notAdmin' => DoNotTrack::notAdmin(),
         ];
 
         wp_localize_script('ab-testing-for-wp-frontend', 'ABTestingForWP', $data);

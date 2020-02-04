@@ -104,6 +104,10 @@ class BlockRenderer {
         $variantId = $request->get_param('variant');
         $forcedVariant = isset($variantId);
 
+        if (DoNotTrack::isEnabled($request)) {
+            return rest_ensure_response([ 'id' => $variantId ]);
+        }
+
         $testManager = new ABTestManager();
         $postId = $testManager->getTestPostId($testId);
 
