@@ -37,54 +37,49 @@ class ABTestTracking {
     }
 
     public function trackGoal($goal, $goalType = '') {
-        if (CookieManager::isSet()) {
-            $variants = $this->abTestManager->getEnabledVariantsByGoal($goal, $goalType);
+        $variants = $this->abTestManager->getEnabledVariantsByGoal($goal, $goalType);
 
-            return $this->trackVariantsInCookie($variants);
-        }
-
-        // if no cookie... can't track page
-        return [];
+        return $this->trackVariantsInCookie($variants);
     }
 
     private function trackVariantsInCookie($variants) {
-        $mergeResult = $this->addVariantsToCookie($variants, CookieManager::getData());
-        CookieManager::setData($mergeResult['cookieData']);
+        $tracked = $this->addVariantsToCookie($variants);
 
-        return $mergeResult['tracked'];
+        return $tracked;
     }
 
-    private function addVariantsToCookie($variants, $cookieData) {
-        // create tracked array if not present
-        if (!isset($cookieData['tracked'])) {
-            $cookieData['tracked'] = [];
-        }
-
+    private function addVariantsToCookie($variants) {
         $tracked = [];
 
         foreach ($variants as $variant) {
-            if (!$variant['isEnabled']) continue;
+            if (
+                // test not enabled
+                !$variant['isEnabled']
+                // or no cookie data for test
+                || !CookieManager::isSet($variant['testId'])
+            ) {
+                continue;
+            }
+
+            $cookieData = CookieManager::getData($variant['testId']);
 
             if (
-                // not already tracked
-                !in_array($variant['variantId'], $cookieData['tracked'])
-                // if in this tests participants
-                && isset($cookieData[$variant['testId']])
+                // not already tracked and participant
+                $cookieData['tracked'] === 'P'
                 // actually in this variant
-                && $cookieData[$variant['testId']] === $variant['variantId']
+                && $cookieData['variant'] === $variant['variantId']
             ) {
                 array_push($tracked, $variant['variantId']);
+
+                // save in DB
                 $this->abTestManager->addTracking($variant['variantId'], 'C');
+
+                // save in cookie
+                CookieManager::setData($variant['testId'], $variant['variantId'], 'C');
             }
         }
 
-        // add tracked variants to cookie
-        $cookieData['tracked'] = array_merge([], $cookieData['tracked'], $tracked);
-
-        return [
-            'tracked' => $tracked,
-            'cookieData' => $cookieData,
-        ];
+        return $tracked;
     }
 
     public function addParticipation($variantId) {

@@ -55,15 +55,13 @@ class BlockRenderer {
     private function pickVariant($variants, $testId) {
         $cookieData = [];
 
-        if (CookieManager::isSet()) {
-            $cookieData = CookieManager::getData();
+        if (CookieManager::isSet($testId)) {
+            $cookieData = CookieManager::getData($testId);
 
-            if (isset($cookieData[$testId])) {
-                // make sure variant is still in varients
-                foreach ($variants as $variant) {
-                    if ($variant['id'] === $cookieData[$testId]) {
-                        return $variant;
-                    }
+            // make sure variant is still in variants
+            foreach ($variants as $variant) {
+                if ($variant['id'] === $cookieData['variant']) {
+                    return $variant;
                 }
             }
         }
@@ -73,9 +71,7 @@ class BlockRenderer {
         $abTestTracking = new ABTestTracking();
         $abTestTracking->addParticipation($pickedVariant['id']);
 
-        $cookieData[$testId] = $pickedVariant['id'];
-
-        CookieManager::setData($cookieData);
+        CookieManager::setData($testId, $pickedVariant['id'], 'P');
 
         return $pickedVariant;
     }
@@ -129,12 +125,9 @@ class BlockRenderer {
         $skipVariation = $testData['control'];
 
         // find out if already in a variant
-        if (CookieManager::isSet()) {
-            $cookieData = CookieManager::getData();
-
-            if (isset($cookieData[$testId])) {
-                $skipVariation = $cookieData[$testId];
-            }
+        if (CookieManager::isSet($testId)) {
+            $cookieData = CookieManager::getData($testId);
+            $skipVariation = $cookieData['variant'];
         }
 
         // get control variant of the test
@@ -176,12 +169,9 @@ class BlockRenderer {
 
         $variantId = $controlVariant['id'];
 
-        if (CookieManager::isSet()) {
-            $cookieData = CookieManager::getData();
-
-            if (isset($cookieData[$testId])) {
-                $variantId = $cookieData[$testId];
-            }
+        if (CookieManager::isSet($testId)) {
+            $cookieData = CookieManager::getData($testId);
+            $variantId = $cookieData['variant'];
         }
 
         return $this->wrapData($testId, $this->getVariantContent($content, $variantId));
