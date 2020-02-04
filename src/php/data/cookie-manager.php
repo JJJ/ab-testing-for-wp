@@ -21,11 +21,6 @@ class CookieManager {
     }
 
     public static function isSet($testId) {
-        // if cookie is set
-        if (isset($_COOKIE[CookieManager::nameById($testId)])) {
-            return true;
-        }
-
         // check if legacy cookie is set
         if (isset($_COOKIE['ab-testing-for-wp'])) {
             $data = CookieManager::readLegacyCookie();
@@ -36,10 +31,27 @@ class CookieManager {
             }
         }
 
+        // if cookie is set
+        if (isset($_COOKIE[CookieManager::nameById($testId)])) {
+            return true;
+        }
+
         return false;
     }
 
     public static function getData($testId) {
+        // find test in legacy cookie format
+        if (isset($_COOKIE['ab-testing-for-wp'])) {
+            $data = CookieManager::readLegacyCookie();
+
+            if (isset($data[$testId])) {
+                return [
+                    'variant' => $data[$testId],
+                    'tracked' => in_array($data[$testId], $data['tracked']) ? 'P' : 'C'
+                ];
+            }
+        }
+
         // find test in single cookie format
         if (CookieManager::isSet($testId)) {
             list($variant, $tracked) = explode(":", CookieManager::getCookie($testId));
@@ -50,25 +62,13 @@ class CookieManager {
             ];
         }
 
-        // find test in legacy cookie format
-        if (isset($_COOKIE['ab-testing-for-wp'])) {
-            $data = CookieManager::readLegacyCookie();
-
-            if (isset($data[$testId])) {
-                return [
-                    variant => $data[$testId],
-                    tracked => in_array($data[$testId], $data['tracked']) ? 'P' : 'C'
-                ];
-            }
-        }
-
         throw new Error("No data in cookies for '$testId'");
     }
 
     public static function setData($testId, $variant, $tracked) {
         setcookie(
             CookieManager::nameById($testId),
-            json_encode("$variant:$tracked"),
+            "$variant:$tracked",
             time() + (60*60*24*30),
             '/'
         );

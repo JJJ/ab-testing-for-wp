@@ -71,9 +71,7 @@ class BlockRenderer {
         $abTestTracking = new ABTestTracking();
         $abTestTracking->addParticipation($pickedVariant['id']);
 
-        $variant = $pickedVariant['id'];
-
-        CookieManager::setData($testId, $variant, 'P');
+        CookieManager::setData($testId, $pickedVariant['id'], 'P');
 
         return $pickedVariant;
     }
