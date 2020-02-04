@@ -4,7 +4,7 @@ declare const ABTestingForWP: {
 };
 
 declare const ABTestingForWP_AdminBar: {
-  cookieData: {
+  participating: {
     // test_id -> variant_id
     [id: string]: string;
   };

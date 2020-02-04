@@ -34,7 +34,7 @@ class RegisterFrontendAdminBar {
             'ab-testing-for-wp-admin-bar',
             'ABTestingForWP_AdminBar',
             [
-                'cookieData' => CookieManager::getAllData(),
+                'participating' => CookieManager::getAllParticipating(),
             ]
         );
         wp_enqueue_script('ab-testing-for-wp-admin-bar');

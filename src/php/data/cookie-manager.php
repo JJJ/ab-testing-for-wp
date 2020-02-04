@@ -12,8 +12,31 @@ class CookieManager {
         return json_decode(stripslashes($_COOKIE['ab-testing-for-wp']), true);
     }
 
-    public static function getAllData() {
-        return [];
+    public static function getAllParticipating() {
+        $data = [];
+
+        // check if legacy cookie is set
+        if (isset($_COOKIE['ab-testing-for-wp'])) {
+            $cookieData = CookieManager::readLegacyCookie();
+
+            foreach ($cookieData as $testId => $variant) {
+                if ($testId !== 'tracked') {
+                    $data[$testId] = $variant;
+                }
+            }
+        }
+
+        // list all picked variants
+        foreach ($_COOKIE as $key => $value) {
+            if ($key !== 'ab-testing-for-wp' && strpos($key, 'ab-testing-for-wp_') === 0) {
+                list($variant, $tracked) = explode(":", $value);
+                $testId = substr($key, strlen('ab-testing-for-wp_'));
+
+                $data[$testId] = $variant;
+            }
+        }
+
+        return $data;
     }
 
     public static function getCookie($testId) {

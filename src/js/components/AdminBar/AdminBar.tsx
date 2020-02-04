@@ -20,7 +20,7 @@ class AdminBar extends Component<{}, AdminBarState> {
     this.state = {
       isLoading: true,
       tests: [],
-      pickedVariants: ABTestingForWP_AdminBar.cookieData || {},
+      pickedVariants: ABTestingForWP_AdminBar.participating || {},
     };
   }
 
