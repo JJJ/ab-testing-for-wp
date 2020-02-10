@@ -12,9 +12,8 @@ import parseISO from 'date-fns/parseISO';
 
 import VariantSelector from '../components/VariantSelector/VariantSelector';
 import BoxShadow from '../components/BoxShadow/BoxShadow';
-import DistributionSettings from '../components/DistributionSettings/DistributionSettings';
+import VariantSettings from '../components/VariantSettings/VariantSettings';
 import GoalSelector from '../components/GoalSelector/GoalSelector';
-import ControlSettings from '../components/ControlSettings/ControlSettings';
 import GeneralSettings from '../components/GeneralSettings/GeneralSettings';
 import TestResults from '../components/TestResults/TestResults';
 import Onboarding from '../components/Onboarding/Onboarding';
@@ -23,7 +22,6 @@ import Loader from '../components/Loader/Loader';
 import { getOption, setOption } from '../helpers/options';
 
 import SVGIcon from '../components/Logo/Logo';
-import { PanelBody } from '@wordpress/components';
 
 interface ABTestBlockProps extends BlockInstance<ABTestAttributes> {
   setAttributes: (attrs: any) => void;
@@ -264,17 +262,12 @@ class ABTestBlock extends Component<ABTestBlockProps, ABTestBlockState> {
             onChange={onPostGoalChange}
             onTypeChange={onPostGoalTypeChange}
           />
-          <PanelBody title={__('Variantions', 'ab-testing-for-wp')}>
-            <ControlSettings
-              value={control}
-              variants={variants}
-              onChange={onControlChange}
-            />
-            <DistributionSettings
-              variants={variants}
-              onUpdateVariants={onUpdateVariants}
-            />
-          </PanelBody>
+          <VariantSettings
+            control={control}
+            variants={variants}
+            onControlChange={onControlChange}
+            onUpdateVariants={onUpdateVariants}
+          />
         </InspectorControls>
 
         <InnerBlocks
