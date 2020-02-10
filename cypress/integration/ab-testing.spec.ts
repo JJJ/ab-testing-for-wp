@@ -90,7 +90,7 @@ describe('A/B Testing', () => {
       .contains('Button for Test Variant “B”');
   });
 
-  it('Can change distribution of variants', () => {
+  it.only('Can change distribution of variants', () => {
     cy.visitAdmin('post-new.php?skipOnboarding=1');
 
     // add default test
@@ -104,9 +104,9 @@ describe('A/B Testing', () => {
     cy.changeRange('#inspector-range-control-1', 75);
 
     // check if values updated correctly
-    cy.get(':nth-child(2) > .components-base-control__field > .components-range-control__number')
-      .should('have.value', '75');
     cy.get(':nth-child(3) > .components-base-control__field > .components-range-control__number')
+      .should('have.value', '75');
+    cy.get(':nth-child(4) > .components-base-control__field > .components-range-control__number')
       .should('have.value', '25');
 
     // save post
@@ -123,9 +123,9 @@ describe('A/B Testing', () => {
       .click();
 
     // check if values saved correctly
-    cy.get(':nth-child(2) > .components-base-control__field > .components-range-control__number')
-      .should('have.value', '75');
     cy.get(':nth-child(3) > .components-base-control__field > .components-range-control__number')
+      .should('have.value', '75');
+    cy.get(':nth-child(4) > .components-base-control__field > .components-range-control__number')
       .should('have.value', '25');
   });
 
