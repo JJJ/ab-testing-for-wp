@@ -23,6 +23,7 @@ import Loader from '../components/Loader/Loader';
 import { getOption, setOption } from '../helpers/options';
 
 import SVGIcon from '../components/Logo/Logo';
+import { PanelBody } from '@wordpress/components';
 
 interface ABTestBlockProps extends BlockInstance<ABTestAttributes> {
   setAttributes: (attrs: any) => void;
@@ -257,21 +258,23 @@ class ABTestBlock extends Component<ABTestBlockProps, ABTestBlockState> {
             startedAt={typeof startedAt === 'string' ? parseISO(startedAt) : startedAt}
             onDeclareWinner={onDeclareWinner}
           />
-          <DistributionSettings
-            variants={variants}
-            onUpdateVariants={onUpdateVariants}
-          />
           <GoalSelector
             value={postGoal}
             type={postGoalType}
             onChange={onPostGoalChange}
             onTypeChange={onPostGoalTypeChange}
           />
-          <ControlSettings
-            value={control}
-            variants={variants}
-            onChange={onControlChange}
-          />
+          <PanelBody title={__('Variantions', 'ab-testing-for-wp')}>
+            <ControlSettings
+              value={control}
+              variants={variants}
+              onChange={onControlChange}
+            />
+            <DistributionSettings
+              variants={variants}
+              onUpdateVariants={onUpdateVariants}
+            />
+          </PanelBody>
         </InspectorControls>
 
         <InnerBlocks
