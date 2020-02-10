@@ -90,7 +90,7 @@ describe('A/B Testing', () => {
       .contains('Button for Test Variant “B”');
   });
 
-  it.only('Can change distribution of variants', () => {
+  it('Can change distribution of variants', () => {
     cy.visitAdmin('post-new.php?skipOnboarding=1');
 
     // add default test
