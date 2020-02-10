@@ -18,7 +18,12 @@ interface AbTestingForWpData {
 
 declare const ABTestingForWP_Data: AbTestingForWpData;
 
-declare const ABTestingForWP_Options: any;
+interface AbTestingForWpOptions {
+  completeOnboarding: string;
+  lastMigration: string;
+}
+
+declare const ABTestingForWP_Options: AbTestingForWpOptions;
 
 declare interface ABTestVariant {
   id: string;
