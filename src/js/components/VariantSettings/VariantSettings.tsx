@@ -4,6 +4,9 @@ import { PanelBody } from '@wordpress/components';
 
 import ControlSettings from './ControlSettings';
 import DistributionSettings from './DistributionSettings';
+import Conditionals from './Conditionals';
+
+import './VariantSettings.css';
 
 type VariantSettingsProps = {
   control: string;
@@ -40,17 +43,20 @@ const VariantSettings: React.FC<VariantSettingsProps> = ({
   };
 
   return (
-    <PanelBody title={__('Variantions', 'ab-testing-for-wp')}>
+    <PanelBody title={__('Variations', 'ab-testing-for-wp')} className="VariantSettings">
       <ControlSettings
         value={control}
         variants={variants}
         onChange={onControlChange}
       />
       {variants.map((variant) => (
-        <DistributionSettings
-          variant={variant}
-          onUpdateDistribution={onUpdateDistribution}
-        />
+        <>
+          <DistributionSettings
+            variant={variant}
+            onUpdateDistribution={onUpdateDistribution}
+          />
+          <Conditionals variant={variant} />
+        </>
       ))}
     </PanelBody>
   );
