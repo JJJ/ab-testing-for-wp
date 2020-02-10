@@ -177,6 +177,7 @@ class ABTestBlock extends Component<ABTestBlockProps, ABTestBlockState> {
           selected: true,
           distribution: 50,
           defaultContent,
+          conditions: [],
         },
         {
           id: shortid.generate(),
@@ -184,6 +185,7 @@ class ABTestBlock extends Component<ABTestBlockProps, ABTestBlockState> {
           selected: false,
           distribution: 50,
           defaultContent,
+          conditions: [],
         },
       ];
 

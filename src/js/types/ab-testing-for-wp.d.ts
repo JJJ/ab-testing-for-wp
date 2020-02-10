@@ -25,12 +25,18 @@ interface AbTestingForWpOptions {
 
 declare const ABTestingForWP_Options: AbTestingForWpOptions;
 
+interface ABTestVariantCondition {
+  key: string;
+  value: string;
+}
+
 declare interface ABTestVariant {
   id: string;
   name: string;
   selected: boolean;
   distribution: number;
   defaultContent?: any;
+  conditions: ABTestVariantCondition[];
 }
 
 declare interface ABTestAttributes {

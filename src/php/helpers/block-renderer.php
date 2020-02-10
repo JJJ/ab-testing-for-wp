@@ -100,6 +100,10 @@ class BlockRenderer {
             return new \WP_Error('rest_invalid_request', 'Missing test parameter.', ['status' => 400]);
         }
 
+        // parse referer @TODO USE THIS
+        $refererQuery = parse_url($request->get_header('referer'))['query'];
+        parse_str($refererQuery, $parsedQuery);
+
         $testId = $request->get_param('test');
         $variantId = $request->get_param('variant');
         $forcedVariant = isset($variantId);
