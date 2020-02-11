@@ -90,8 +90,4 @@ class ABTestTracking {
         return $tracked;
     }
 
-    public function addParticipation($variantId) {
-        $this->abTestManager->addTracking($variantId, 'P');
-    }
-
 }

@@ -53,7 +53,8 @@ class BlockRenderer {
     }
 
     private function pickVariant($variants, $testId, $variantId) {
-        $cookieData = [];
+        $abTestManager = new ABTestManager();
+        $cookieData = ['variant' => NULL, 'tracked' => 'P'];
         $pickedVariant = false;
 
         if (CookieManager::isSet($testId)) {
@@ -65,6 +66,17 @@ class BlockRenderer {
             foreach ($variants as $variant) {
                 if ($variant['id'] === $variantId) {
                     $pickedVariant = $variant;
+                    $trackingState = $cookieData['tracked'];
+
+                    if ($cookieData['variant'] !== $pickedVariant['id']) {
+                        // @TODO subtract P or C when put in variant
+                        // @TODO do this only if cookie WAS present
+
+                    }
+
+                    // @TODO skip this if cookie already matches
+                    // set cookie data
+                    CookieManager::setData($testId, $pickedVariant['id'], $trackingState);
                 }
             }
         }
@@ -82,12 +94,11 @@ class BlockRenderer {
 
             // pick a random one instead
             $pickedVariant = $this->pickVariantAt($variants, $this->randomTestDistributionPosition($variants));
+
+            // add tracking and cookie
+            $abTestManager->addTracking($pickedVariant['id'], 'P');
+            CookieManager::setData($testId, $pickedVariant['id'], 'P');
         }
-
-        $abTestTracking = new ABTestTracking();
-        $abTestTracking->addParticipation($pickedVariant['id']);
-
-        CookieManager::setData($testId, $pickedVariant['id'], 'P');
 
         return $pickedVariant;
     }
