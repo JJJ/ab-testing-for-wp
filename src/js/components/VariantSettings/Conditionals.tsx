@@ -107,7 +107,7 @@ class Conditionals extends Component<ConditionalsProps, ConditionalsState> {
         {variant.conditions && variant.conditions.length > 0 && (
           <div className="Conditionals__ListContainer">
             <div className="components-base-control__label">
-              {__('...or when present in URL:', 'ab-testing-for-wp')}
+              {sprintf(__('Force variant %s when either', 'ab-testing-for-wp'), variant.name)}
             </div>
             <div className="Conditionals__List">
               {variant.conditions.map((condition) => (
@@ -128,7 +128,7 @@ class Conditionals extends Component<ConditionalsProps, ConditionalsState> {
         {isOpened ? (
           <div className="Conditionals__New">
             <SelectControl
-              label={sprintf(__('Place visitor in variant "%s" based on...', 'ab-testing-for-wp'), variant.name)}
+              label={sprintf(__('Force variant %s when...', 'ab-testing-for-wp'), variant.name)}
               value={(newConditionType || 0).toString(10)}
               options={[
                 { label: __('Query parameter in URL', 'ab-testing-for-wp'), value: '0' },
@@ -182,7 +182,7 @@ class Conditionals extends Component<ConditionalsProps, ConditionalsState> {
             isLink
             onClick={(): void => this.setOpened(true)}
           >
-            {sprintf(__('Add condition for "%s"', 'ab-testing-for-wp'), variant.name)}
+            {sprintf(__('Add condition for %s', 'ab-testing-for-wp'), variant.name)}
           </Button>
         )}
       </div>
