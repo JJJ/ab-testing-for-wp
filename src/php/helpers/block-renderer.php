@@ -52,7 +52,7 @@ class BlockRenderer {
         return $content;
     }
 
-    private function pickVariant($variants, $testId) {
+    private function pickVariant($variants, $testId, $variantId) {
         $cookieData = [];
 
         if (CookieManager::isSet($testId)) {
@@ -66,7 +66,19 @@ class BlockRenderer {
             }
         }
 
-        $pickedVariant = $this->pickVariantAt($variants, $this->randomTestDistributionPosition($variants));
+        // try to find variant based on given id
+        if (isset($variantId)) {
+            foreach ($variants as $variant) {
+                if ($variant['id'] === $variantId) {
+                    $pickedVariant = $variant;
+                }
+            }
+        }
+
+        // pick a random one instead
+        if (!isset($pickedVariant)) {
+            $pickedVariant = $this->pickVariantAt($variants, $this->randomTestDistributionPosition($variants));
+        }
 
         $abTestTracking = new ABTestTracking();
         $abTestTracking->addParticipation($pickedVariant['id']);
@@ -153,7 +165,6 @@ class BlockRenderer {
                         isset($parsedQuery[$condition['key']])
                         && $parsedQuery[$condition['key']] == $condition['value']
                     ) {
-                        $forcedVariant = true;
                         $variantId = $variant['id'];
                         break;
                     }
@@ -164,7 +175,9 @@ class BlockRenderer {
         // skip picking variant if provided in request
         if (!$forcedVariant) {
             // pick a variant of the test
-            $pickedVariant = $isEnabled ? $this->pickVariant($variants, $testId) : $controlVariant;
+            $pickedVariant = $isEnabled
+                ? $this->pickVariant($variants, $testId, $variantId)
+                : $controlVariant;
 
             $variantId = $pickedVariant['id'];
         }
