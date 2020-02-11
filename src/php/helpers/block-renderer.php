@@ -54,10 +54,11 @@ class BlockRenderer {
 
     private function pickVariant($variants, $testId, $variantId) {
         $abTestManager = new ABTestManager();
-        $cookieData = ['variant' => NULL, 'tracked' => 'P'];
+        $cookieData = [];
+        $hasCookieData = CookieManager::isSet($testId);
         $pickedVariant = false;
 
-        if (CookieManager::isSet($testId)) {
+        if ($hasCookieData) {
             $cookieData = CookieManager::getData($testId);
         }
 
@@ -66,17 +67,18 @@ class BlockRenderer {
             foreach ($variants as $variant) {
                 if ($variant['id'] === $variantId) {
                     $pickedVariant = $variant;
-                    $trackingState = $cookieData['tracked'];
 
-                    if ($cookieData['variant'] !== $pickedVariant['id']) {
-                        // @TODO subtract P or C when put in variant
-                        // @TODO do this only if cookie WAS present
+                    if ($hasCookieData && $cookieData['variant'] !== $pickedVariant['id']) {
+                        // if not already tracked as converted
+                        if ($cookieData['tracked'] !== 'C') {
+                            // swap participation
+                            $abTestManager->addTracking($cookieData['variant'], 'S');
+                            $abTestManager->addTracking($pickedVariant['id'], 'P');
+                        }
 
+                        // save to cookie with new variant and old tracked state
+                        CookieManager::setData($testId, $pickedVariant['id'], $cookieData['tracked']);
                     }
-
-                    // @TODO skip this if cookie already matches
-                    // set cookie data
-                    CookieManager::setData($testId, $pickedVariant['id'], $trackingState);
                 }
             }
         }
@@ -94,7 +96,9 @@ class BlockRenderer {
 
             // pick a random one instead
             $pickedVariant = $this->pickVariantAt($variants, $this->randomTestDistributionPosition($variants));
+        }
 
+        if (!$hasCookieData) {
             // add tracking and cookie
             $abTestManager->addTracking($pickedVariant['id'], 'P');
             CookieManager::setData($testId, $pickedVariant['id'], 'P');
