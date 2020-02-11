@@ -34,7 +34,7 @@ class HTMLForms extends Integration {
         $formId = $submission->form_id;
         $abTestTracking = new ABTestTracking();
 
-        $abTestTracking->trackPostId($formId, 'html-form');
+        $abTestTracking->trackGoal($formId, 'html-form');
     }
 
 }

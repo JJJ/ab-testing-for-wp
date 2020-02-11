@@ -45,7 +45,7 @@ class NinjaForms extends Integration {
         $formId = $submission["form_id"];
         $abTestTracking = new ABTestTracking();
 
-        $abTestTracking->trackPostId($formId, 'NinjaForms');
+        $abTestTracking->trackGoal($formId, 'NinjaForms');
     }
 
 }

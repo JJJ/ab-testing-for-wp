@@ -34,7 +34,7 @@ class ContactForm7 extends Integration {
         $formId = $form->id();
         $abTestTracking = new ABTestTracking();
 
-        $abTestTracking->trackPostId($formId, 'wpcf7_contact_form');
+        $abTestTracking->trackGoal($formId, 'wpcf7_contact_form');
     }
 
 }
