@@ -47,9 +47,6 @@ describe('Test results and tracking goals', () => {
     // change link to /?p=1
     cy.get('#wp-block-button__inline-link-1')
       .type('/?p=1', { force: true });
-
-    // save post
-    cy.savePost();
   });
 
   afterEach(() => {
@@ -58,6 +55,9 @@ describe('Test results and tracking goals', () => {
   });
 
   it('Tracks goals and participants', () => {
+    // save post
+    cy.savePost();
+
     // logout
     cy.logout();
 
@@ -120,6 +120,9 @@ describe('Test results and tracking goals', () => {
   });
 
   it('Remembers which test you partake in', () => {
+    // save post
+    cy.savePost();
+
     // logout
     cy.logout();
 
@@ -162,5 +165,33 @@ describe('Test results and tracking goals', () => {
     // loser has none
     cy.get('.ABTestLosing > :nth-child(3)')
       .contains('0');
+  });
+
+  it.only('Converts participant of variant when force by condition', () => {
+    // open block settings
+    cy.get('.components-button-group > :nth-child(3)')
+      .click();
+
+    // open conditions form for A
+    cy.get('.VariantSettings > :nth-child(4) > .components-button')
+      .click();
+
+    cy.get('.Conditionals__New .components-text-control__input')
+      .eq(0)
+      .clear()
+      .type('e2e-test');
+    cy.get('.Conditionals__New .components-text-control__input')
+      .eq(1)
+      .clear()
+      .type('test-value');
+
+    // save condition
+    cy.get('.Conditionals__Buttons > .is-primary')
+      .click();
+
+    return;
+
+    // save post
+    cy.savePost();
   });
 });
