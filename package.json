@@ -23,7 +23,7 @@
     "composer": "composer dump-autoload",
     "bump-version": "sh scripts/bump.sh",
     "release": "sh scripts/release.sh",
-    "package-release": "npm run clean && npm run build && npm run archive",
+    "clean-build": "npm run clean && npm run build",
     "analyze": "webpack --json > stats.json"
   },
   "repository": {
