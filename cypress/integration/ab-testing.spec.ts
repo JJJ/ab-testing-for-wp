@@ -4,13 +4,12 @@ describe('A/B Testing', () => {
   });
 
   beforeEach(() => {
-    cy.wipeABTestingCookies();
     cy.login();
     cy.disableTooltips();
   });
 
   afterEach(() => {
-    // cy.logout();
+    cy.logout();
   });
 
   it('Can add a test in Gutenberg', () => {
@@ -107,7 +106,7 @@ describe('A/B Testing', () => {
     // check if values updated correctly
     cy.get(':nth-child(3) > .components-base-control__field > .components-range-control__number')
       .should('have.value', '75');
-    cy.get(':nth-child(4) > .components-base-control__field > .components-range-control__number')
+    cy.get(':nth-child(5) > .components-base-control__field > .components-range-control__number')
       .should('have.value', '25');
 
     // save post
@@ -126,7 +125,7 @@ describe('A/B Testing', () => {
     // check if values saved correctly
     cy.get(':nth-child(3) > .components-base-control__field > .components-range-control__number')
       .should('have.value', '75');
-    cy.get(':nth-child(4) > .components-base-control__field > .components-range-control__number')
+    cy.get(':nth-child(5) > .components-base-control__field > .components-range-control__number')
       .should('have.value', '25');
   });
 
@@ -143,7 +142,7 @@ describe('A/B Testing', () => {
     // change goal type
     cy.get('#inspector-select-control-2')
       .scrollIntoView()
-      .select('Pages');
+      .select('Pages', { force: true });
 
     // change goal page
     cy.get('#inspector-select-control-3')
@@ -433,6 +432,5 @@ describe('A/B Testing', () => {
         // Should put you in variant B again
         cy.contains('Button for Test Variant “B”');
       });
-
   });
 });
