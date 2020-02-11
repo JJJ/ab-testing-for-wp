@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { __, sprintf } from '@wordpress/i18n';
 
 import './Conditionals.css';
-import { SelectControl, TextControl, Button } from '@wordpress/components';
+import { SelectControl, TextControl, Button, IconButton } from '@wordpress/components';
 
 interface ConditionalsProps {
   variant: ABTestVariant;
@@ -90,11 +90,19 @@ class Conditionals extends Component<ConditionalsProps, ConditionalsState> {
         {variant.conditions && variant.conditions.length > 0 && (
           <div className="Conditionals__ListContainer">
             <div className="components-base-control__label">
-              ...or when present in URL:
+              {__('...or when present in URL:', 'ab-testing-for-wp')}
             </div>
             <div className="Conditionals__List">
               {variant.conditions.map((condition) => (
-                <code>{`${condition.key}=${condition.value}`}</code>
+                <code>
+                  <span>{`${condition.key}=${condition.value}`}</span>
+                  <IconButton
+                    isSmall
+                    isLink
+                    icon="no"
+                    tooltip={__('Remove condition', 'ab-testing-for-wp')}
+                  />
+                </code>
               ))}
             </div>
           </div>

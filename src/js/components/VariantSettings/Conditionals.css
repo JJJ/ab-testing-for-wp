@@ -41,4 +41,10 @@
 
 .Conditionals__List code {
   margin: 0 3px 3px 0;
+  display: inline-flex;
+  align-items: center;
+}
+
+.Conditionals__List .components-button.is-small {
+  padding: 0 0 0 4px;
 }
