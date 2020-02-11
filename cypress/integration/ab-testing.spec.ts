@@ -4,12 +4,13 @@ describe('A/B Testing', () => {
   });
 
   beforeEach(() => {
+    cy.wipeABTestingCookies();
     cy.login();
     cy.disableTooltips();
   });
 
   afterEach(() => {
-    cy.logout();
+    // cy.logout();
   });
 
   it('Can add a test in Gutenberg', () => {
@@ -279,5 +280,159 @@ describe('A/B Testing', () => {
 
     // Converted to variant "B"
     cy.contains('Button for Test Variant "B"');
+  });
+
+  it('Can change conditions of variants', () => {
+    cy.visitAdmin('post-new.php?skipOnboarding=1');
+
+    // add default test
+    cy.addBlockInEditor('A/B Test');
+
+    // open test options
+    cy.get('.components-button-group > :nth-child(3)')
+      .click();
+
+    // open condition form
+    cy.get(':nth-child(6) > .components-button')
+      .scrollIntoView()
+      .click();
+
+    // change utm_source
+    cy.get('.Conditionals__New select')
+      .select('utm_source in URL');
+
+    // input test value
+    cy.get('.Conditionals__New .components-text-control__input')
+      .clear()
+      .type('test-value');
+
+    // renders example
+    cy.contains('utm_source=test-value');
+
+    // clear and try to save
+    cy.get('.Conditionals__New .components-text-control__input')
+      .clear();
+    cy.get('.Conditionals__Buttons > .is-primary')
+      .click();
+    cy.contains('Fill in value');
+
+    // change to query param
+    cy.get('.Conditionals__New select')
+      .select('Query parameter in URL');
+
+    // clear key value
+    cy.get('.Conditionals__New .components-text-control__input')
+      .eq(0)
+      .clear();
+
+    // should revert preview to defaults
+    cy.contains('key=value');
+
+    // should error on no key
+    cy.get('.Conditionals__Buttons > .is-primary')
+      .click();
+    cy.contains('Fill in key');
+
+    // add test params
+    cy.get('.Conditionals__New .components-text-control__input')
+      .eq(0)
+      .type('e2e-test');
+    cy.get('.Conditionals__New .components-text-control__input')
+      .eq(1)
+      .type('test-value');
+
+    // save condition
+    cy.get('.Conditionals__Buttons > .is-primary')
+      .click();
+
+    // add another condition
+    cy.get(':nth-child(6) > .components-button:nth-child(2)')
+      .scrollIntoView()
+      .click();
+
+    cy.get('.Conditionals__New .components-text-control__input')
+      .eq(0)
+      .clear()
+      .type('e2e-test-2');
+    cy.get('.Conditionals__New .components-text-control__input')
+      .eq(1)
+      .clear()
+      .type('test-value');
+
+    // save condition
+    cy.get('.Conditionals__Buttons > .is-primary')
+      .click();
+
+    // open conditions form for A
+    cy.get('.VariantSettings > :nth-child(4) > .components-button')
+      .click();
+
+    cy.get('.Conditionals__New .components-text-control__input')
+      .eq(0)
+      .clear()
+      .type('e2e-test-3');
+    cy.get('.Conditionals__New .components-text-control__input')
+      .eq(1)
+      .clear()
+      .type('another-value');
+
+    // save condition
+    cy.get('.Conditionals__Buttons > .is-primary')
+      .click();
+
+    // shows list of conditions
+    cy.contains('Force variant B when either');
+    cy.contains('e2e-test=test-value');
+
+    // change distribution of A to 100
+    cy.changeRange('#inspector-range-control-1', 100);
+
+    // save post
+    cy.savePost();
+
+    // reload and skip onboarding
+    cy.location()
+      .then(({ pathname, search }) => {
+        cy.visit(`${pathname}${search}&skipOnboarding=1`);
+      });
+
+    // open test options
+    cy.get('.components-button-group > :nth-child(3)')
+      .click();
+
+    // conditions were saved
+    cy.contains('Force variant B when either');
+    cy.contains('e2e-test=test-value');
+
+    // start test
+    cy.get('#inspector-toggle-control-0')
+      .click({ force: true });
+
+    // update post
+    cy.get('.edit-post-header__settings > :nth-child(3) > .components-button')
+      .click();
+
+    // go to post with condition
+    cy.contains('View Post')
+      .then((element: any) => {
+        // go to URL
+        cy.visit(`${element[0].href}&e2e-test=test-value`);
+
+        // Should put you in variant B
+        cy.contains('Button for Test Variant “B”');
+
+        // go to URL
+        cy.visit(`${element[0].href}&e2e-test-3=another-value`);
+
+        // Should put you in variant A
+        cy.contains('Button for Test Variant “A”');
+
+        // go to URL
+        cy.visit(`${element[0].href}&e2e-test-2=test-value`);
+
+        // Should put you in variant B again
+        cy.contains('Button for Test Variant “B”');
+      });
+
   });
 });
