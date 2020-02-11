@@ -16,6 +16,7 @@ class ABTestManager {
 
         $table_prefix = $wpdb->prefix;
 
+        $this->variantConditionTable = $table_prefix . 'ab_testing_for_wp_variant_condition';
         $this->variantTable = $table_prefix . 'ab_testing_for_wp_variant';
         $this->abTestTable = $table_prefix . 'ab_testing_for_wp_ab_test';
         $this->logTable = $table_prefix . 'ab_testing_for_wp_log';
@@ -235,6 +236,18 @@ class ABTestManager {
     }
 
     public function wipeTestDataFromPost($postId) {
+        // remove conditions
+        $query = "
+        DELETE `{$this->variantConditionTable}`
+        FROM `{$this->variantConditionTable}`
+        INNER JOIN `{$this->variantTable}` ON `{$this->variantConditionTable}`.variantId = `{$this->variantTable}`.id
+        INNER JOIN `{$this->abTestTable}` ON `{$this->variantTable}`.testId = `{$this->abTestTable}`.id
+        WHERE `{$this->abTestTable}`.postId = %d;
+        ";
+
+        $this->wpdb->query($this->wpdb->prepare($query, $postId));
+
+        // remove variations and test data
         $query = "
         DELETE `{$this->variantTable}`, `{$this->abTestTable}`
         FROM `{$this->variantTable}`
@@ -307,6 +320,22 @@ class ABTestManager {
             $participants,
             $conversions
         ));
+    }
+
+    public function insertVariantCondition($variant, $condition) {
+        $query = "
+        INSERT INTO `{$this->variantConditionTable}` (`variantId`, `key`, `value`)
+        VALUES (%s, %s, %s);
+        ";
+
+        $prepared = $this->wpdb->prepare(
+            $query,
+            $variant['id'],
+            $condition['key'],
+            $condition['value']
+        );
+
+        $this->wpdb->query($prepared);
     }
 
 }
