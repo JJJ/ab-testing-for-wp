@@ -43,7 +43,7 @@ class Formidable extends Integration {
 
     public function catchFormSubmits($entry_id, $formId) {
         $abTestTracking = new ABTestTracking();
-        $abTestTracking->trackPostId($formId, 'Formidable');
+        $abTestTracking->trackGoal($formId, 'Formidable');
     }
 
 }

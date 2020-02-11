@@ -45,7 +45,7 @@ class GravityForms extends Integration {
         $formId = $entry['form_id'];
         $abTestTracking = new ABTestTracking();
 
-        $abTestTracking->trackPostId($formId, 'GravityForms');
+        $abTestTracking->trackGoal($formId, 'GravityForms');
     }
 
 }

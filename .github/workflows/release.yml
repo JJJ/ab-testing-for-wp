@@ -21,7 +21,15 @@ jobs:
       - name: Build project
         run: |
           npm ci
-          npm run package-release
+          npm run clean-build
+      - name: WordPress Plugin Deploy
+        uses: Gaya/action-wordpress-plugin-deploy@add/escape-at-signs
+        env:
+          SVN_PASSWORD: ${{ secrets.SVN_PASSWORD }}
+          SVN_USERNAME: ${{ secrets.SVN_USERNAME }}
+          SLUG: ab-testing-for-wp
+      - name: Archive project
+        run: npm run archive
       - name: Create Release on GitHub
         id: create_release
         uses: actions/create-release@v1.0.0
@@ -42,9 +50,3 @@ jobs:
           asset_path: ./ab-testing-for-wp.zip
           asset_name: ab-testing-for-wp.zip
           asset_content_type: application/zip
-      - name: WordPress Plugin Deploy
-        uses: Gaya/action-wordpress-plugin-deploy@add/escape-at-signs
-        env:
-          SVN_PASSWORD: ${{ secrets.SVN_PASSWORD }}
-          SVN_USERNAME: ${{ secrets.SVN_USERNAME }}
-          SLUG: ab-testing-for-wp

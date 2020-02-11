@@ -1,6 +1,6 @@
 {
   "name": "ab-test-wordpress",
-  "version": "1.16.0",
+  "version": "1.16.3",
   "description": "A/B Test right from your WordPress posts.",
   "main": "index.js",
   "scripts": {
@@ -23,7 +23,7 @@
     "composer": "composer dump-autoload",
     "bump-version": "sh scripts/bump.sh",
     "release": "sh scripts/release.sh",
-    "package-release": "npm run clean && npm run build && npm run archive",
+    "clean-build": "npm run clean && npm run build",
     "analyze": "webpack --json > stats.json"
   },
   "repository": {

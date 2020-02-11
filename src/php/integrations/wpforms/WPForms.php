@@ -34,7 +34,7 @@ class WPForms extends Integration {
         $formId = $form['id'];
         $abTestTracking = new ABTestTracking();
 
-        $abTestTracking->trackPostId($formId, 'wpforms');
+        $abTestTracking->trackGoal($formId, 'wpforms');
     }
 
 }
