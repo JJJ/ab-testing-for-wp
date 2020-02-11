@@ -204,7 +204,7 @@ describe('A/B Testing', () => {
     cy.contains('Results so far');
   });
 
-  it('Can convert an inline block to a A/B test', () => {
+  it('Can convert an inline block to an A/B test', () => {
     cy.visitAdmin('post-new.php?skipOnboarding=1');
 
     // add button block to editor
@@ -431,6 +431,85 @@ describe('A/B Testing', () => {
 
         // Should put you in variant B again
         cy.contains('Button for Test Variant “B”');
+      });
+  });
+
+  it('Will not clash conditions when visitor is already in variant', () => {
+    cy.visitAdmin('post-new.php?skipOnboarding=1');
+
+    // add default test
+    cy.addBlockInEditor('A/B Test');
+
+    // open test options
+    cy.get('.components-button-group > :nth-child(3)')
+      .click();
+
+    // open condition form
+    cy.get(':nth-child(6) > .components-button')
+      .scrollIntoView()
+      .click();
+
+    // change utm_source
+    cy.get('.Conditionals__New select')
+      .select('utm_source in URL');
+
+    // input test value
+    cy.get('.Conditionals__New .components-text-control__input')
+      .clear()
+      .type('test-value');
+
+    // save condition
+    cy.get('.Conditionals__Buttons > .is-primary')
+      .click();
+
+    // open conditions form for A
+    cy.get('.VariantSettings > :nth-child(4) > .components-button')
+      .click();
+
+    cy.get('.Conditionals__New .components-text-control__input')
+      .eq(0)
+      .clear()
+      .type('e2e-test');
+    cy.get('.Conditionals__New .components-text-control__input')
+      .eq(1)
+      .clear()
+      .type('test-value');
+
+    // save condition
+    cy.get('.Conditionals__Buttons > .is-primary')
+      .click();
+
+    // start test
+    cy.get('#inspector-toggle-control-2')
+      .click({ force: true });
+
+    // save post
+    cy.savePost();
+
+    // go to post with condition
+    cy.contains('View Post')
+      .then((element: any) => {
+        // go to URL
+        cy.visit(`${element[0].href}&utm_source=test-value`);
+
+        // Should put you in variant B
+        cy.contains('Button for Test Variant “B”');
+
+        cy.reload();
+
+        // Should still put you in variant B
+        cy.contains('Button for Test Variant “B”');
+
+        // go to URL
+        cy.visit(`${element[0].href}&e2e-test=test-value`);
+
+        // Should put you in variant A
+        cy.contains('Button for Test Variant “A”');
+
+        cy.reload();
+
+        // Still in A when reloading because of cookie
+        cy.contains('Button for Test Variant “A”');
       });
   });
 });

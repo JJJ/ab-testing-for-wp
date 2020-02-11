@@ -54,16 +54,10 @@ class BlockRenderer {
 
     private function pickVariant($variants, $testId, $variantId) {
         $cookieData = [];
+        $pickedVariant = false;
 
         if (CookieManager::isSet($testId)) {
             $cookieData = CookieManager::getData($testId);
-
-            // make sure variant is still in variants
-            foreach ($variants as $variant) {
-                if ($variant['id'] === $cookieData['variant']) {
-                    return $variant;
-                }
-            }
         }
 
         // try to find variant based on given id
@@ -75,8 +69,18 @@ class BlockRenderer {
             }
         }
 
-        // pick a random one instead
-        if (!isset($pickedVariant)) {
+        if (!$pickedVariant) {
+            // see if variant is in cookies
+            if (CookieManager::isSet($testId)) {
+                // make sure variant is still in variants
+                foreach ($variants as $variant) {
+                    if ($variant['id'] === $cookieData['variant']) {
+                        return $variant;
+                    }
+                }
+            }
+
+            // pick a random one instead
             $pickedVariant = $this->pickVariantAt($variants, $this->randomTestDistributionPosition($variants));
         }
 
