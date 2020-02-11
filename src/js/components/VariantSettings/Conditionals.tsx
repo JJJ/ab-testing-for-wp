@@ -6,6 +6,7 @@ import { SelectControl, TextControl, Button } from '@wordpress/components';
 
 interface ConditionalsProps {
   variant: ABTestVariant;
+  onAddCondition: (id: string, key: string, value: string) => void;
 }
 
 interface ConditionalsState {
@@ -66,6 +67,15 @@ class Conditionals extends Component<ConditionalsProps, ConditionalsState> {
     this.setState(defaultState);
   }
 
+  addCondition(): void {
+    const { variant, onAddCondition } = this.props;
+    const { newConditionKey, newConditionValue } = this.state;
+
+    onAddCondition(variant.id, newConditionKey, newConditionValue);
+
+    this.setState(defaultState);
+  }
+
   render(): React.ReactElement {
     const { variant } = this.props;
     const {
@@ -77,6 +87,18 @@ class Conditionals extends Component<ConditionalsProps, ConditionalsState> {
 
     return (
       <div className="Conditionals">
+        {variant.conditions && variant.conditions.length > 0 && (
+          <div className="Conditionals__ListContainer">
+            <div className="components-base-control__label">
+              ...or when present in URL:
+            </div>
+            <div className="Conditionals__List">
+              {variant.conditions.map((condition) => (
+                <code>{`${condition.key}=${condition.value}`}</code>
+              ))}
+            </div>
+          </div>
+        )}
         {isOpened ? (
           <div className="Conditionals__New">
             <SelectControl
@@ -115,6 +137,7 @@ class Conditionals extends Component<ConditionalsProps, ConditionalsState> {
               <Button
                 isLarge
                 isPrimary
+                onClick={(): void => this.addCondition()}
               >
                 {__('Add condition', 'ab-testing-for-wp')}
               </Button>

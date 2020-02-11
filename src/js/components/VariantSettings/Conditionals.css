@@ -32,3 +32,13 @@
 .Conditionals__Buttons .components-button {
   margin-right: 8px;
 }
+
+.Conditionals__List {
+  flex-wrap: wrap;
+  display: flex;
+  margin: 8px 0;
+}
+
+.Conditionals__List code {
+  margin: 0 3px 3px 0;
+}

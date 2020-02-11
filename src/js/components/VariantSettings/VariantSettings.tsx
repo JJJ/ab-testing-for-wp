@@ -42,6 +42,19 @@ const VariantSettings: React.FC<VariantSettingsProps> = ({
     }));
   };
 
+  const onAddCondition = (id: string, key: string, value: string): void => {
+    onUpdateVariants(variants.map((variant) => {
+      if (variant.id === id) {
+        return {
+          ...variant,
+          conditions: [...(variant.conditions || []), { key, value }],
+        };
+      }
+
+      return variant;
+    }));
+  };
+
   return (
     <PanelBody title={__('Variations', 'ab-testing-for-wp')} className="VariantSettings">
       <ControlSettings
@@ -55,7 +68,10 @@ const VariantSettings: React.FC<VariantSettingsProps> = ({
             variant={variant}
             onUpdateDistribution={onUpdateDistribution}
           />
-          <Conditionals variant={variant} />
+          <Conditionals
+            variant={variant}
+            onAddCondition={onAddCondition}
+          />
         </>
       ))}
     </PanelBody>
