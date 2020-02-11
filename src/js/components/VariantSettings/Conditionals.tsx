@@ -2,7 +2,9 @@ import React, { Component } from 'react';
 import { __, sprintf } from '@wordpress/i18n';
 
 import './Conditionals.css';
-import { SelectControl, TextControl, Button, IconButton } from '@wordpress/components';
+import {
+  SelectControl, TextControl, Button, IconButton,
+} from '@wordpress/components';
 
 interface ConditionalsProps {
   variant: ABTestVariant;

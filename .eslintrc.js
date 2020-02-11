@@ -16,6 +16,7 @@ module.exports = {
   },
   rules: {
     '@typescript-eslint/camelcase': 0,
+    'cypress/no-unnecessary-waiting': 0,
     'react/jsx-props-no-spreading': 0,
     'react/prop-types': 0,
     'react/require-default-props': 0,
