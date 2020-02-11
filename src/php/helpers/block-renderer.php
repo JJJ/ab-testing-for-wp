@@ -100,9 +100,6 @@ class BlockRenderer {
             return new \WP_Error('rest_invalid_request', 'Missing test parameter.', ['status' => 400]);
         }
 
-        $refererQuery = parse_url($request->get_header('referer'))['query'];
-        parse_str($refererQuery, $parsedQuery);
-
         $testId = $request->get_param('test');
         $variantId = $request->get_param('variant');
         $forcedVariant = isset($variantId);
@@ -139,6 +136,10 @@ class BlockRenderer {
 
         // get control variant of the test
         $controlVariant = $this->getControlVariant($variants, $testId, $control);
+
+        // parse referer
+        $refererQuery = parse_url($request->get_header('referer'))['query'];
+        parse_str($refererQuery, $parsedQuery);
 
         // check if conditions are in query string
         foreach ($variants as $variant) {

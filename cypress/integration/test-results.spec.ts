@@ -75,7 +75,7 @@ describe('Test results and tracking goals', () => {
             // visit goal 1/2 of the time
             cy.contains('Go to Hello World')
               .click({ force: true })
-              .wait(100);
+              .wait(400);
           }
 
           // clear visitor
