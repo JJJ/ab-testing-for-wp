@@ -44,10 +44,29 @@ const VariantSettings: React.FC<VariantSettingsProps> = ({
 
   const onAddCondition = (id: string, key: string, value: string): void => {
     onUpdateVariants(variants.map((variant) => {
-      if (variant.id === id) {
+      const conditions = variant.conditions || [];
+      if (
+        variant.id === id
+        && !conditions.some((v): boolean => v.key === key && v.value === value)
+      ) {
         return {
           ...variant,
-          conditions: [...(variant.conditions || []), { key, value }],
+          conditions: [...conditions, { key, value }],
+        };
+      }
+
+      return variant;
+    }));
+  };
+
+  const onRemoveCondition = (id: string, key: string, value: string): void => {
+    onUpdateVariants(variants.map((variant) => {
+      if (variant.id === id) {
+        const conditions = variant.conditions || [];
+
+        return {
+          ...variant,
+          conditions: conditions.filter((c) => !(c.key === key && c.value === value)),
         };
       }
 
@@ -71,6 +90,7 @@ const VariantSettings: React.FC<VariantSettingsProps> = ({
           <Conditionals
             variant={variant}
             onAddCondition={onAddCondition}
+            onRemoveCondition={onRemoveCondition}
           />
         </>
       ))}

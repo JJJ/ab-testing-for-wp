@@ -7,10 +7,12 @@ import { SelectControl, TextControl, Button, IconButton } from '@wordpress/compo
 interface ConditionalsProps {
   variant: ABTestVariant;
   onAddCondition: (id: string, key: string, value: string) => void;
+  onRemoveCondition: (id: string, key: string, value: string) => void;
 }
 
 interface ConditionalsState {
   isOpened: boolean;
+  showErrors: boolean;
   newConditionType: number;
   newConditionKey: string;
   newConditionValue: string;
@@ -18,6 +20,7 @@ interface ConditionalsState {
 
 const defaultState: ConditionalsState = {
   isOpened: false,
+  showErrors: false,
   newConditionType: 0,
   newConditionKey: __('key', 'ab-testing-for-wp'),
   newConditionValue: __('value', 'ab-testing-for-wp'),
@@ -71,9 +74,22 @@ class Conditionals extends Component<ConditionalsProps, ConditionalsState> {
     const { variant, onAddCondition } = this.props;
     const { newConditionKey, newConditionValue } = this.state;
 
+    if (newConditionKey.trim() === '' || newConditionValue.trim() === '') {
+      this.setState({
+        showErrors: true,
+      });
+      return;
+    }
+
     onAddCondition(variant.id, newConditionKey, newConditionValue);
 
     this.setState(defaultState);
+  }
+
+  removeCondition(condition: { key: string; value: string }): void {
+    const { variant, onRemoveCondition } = this.props;
+
+    onRemoveCondition(variant.id, condition.key, condition.value);
   }
 
   render(): React.ReactElement {
@@ -83,6 +99,7 @@ class Conditionals extends Component<ConditionalsProps, ConditionalsState> {
       newConditionKey,
       newConditionValue,
       isOpened,
+      showErrors,
     } = this.state;
 
     return (
@@ -94,13 +111,14 @@ class Conditionals extends Component<ConditionalsProps, ConditionalsState> {
             </div>
             <div className="Conditionals__List">
               {variant.conditions.map((condition) => (
-                <code>
+                <code key={[condition.key, condition.value].join('=')}>
                   <span>{`${condition.key}=${condition.value}`}</span>
                   <IconButton
                     isSmall
                     isLink
                     icon="no"
                     tooltip={__('Remove condition', 'ab-testing-for-wp')}
+                    onClick={(): void => this.removeCondition(condition)}
                   />
                 </code>
               ))}
@@ -126,6 +144,7 @@ class Conditionals extends Component<ConditionalsProps, ConditionalsState> {
                   <TextControl
                     label="Key"
                     value={newConditionKey}
+                    help={showErrors && newConditionKey.trim() === '' ? __('Fill in key', 'ab-testing-for-wp') : undefined}
                     onChange={(value): void => this.setNewConditionKey(value)}
                   />
                   <div className="Conditionals__ValuePairSeparator">=</div>
@@ -134,6 +153,7 @@ class Conditionals extends Component<ConditionalsProps, ConditionalsState> {
               <TextControl
                 label="Value"
                 value={newConditionValue}
+                help={showErrors && newConditionValue.trim() === '' ? __('Fill in value', 'ab-testing-for-wp') : undefined}
                 onChange={(value): void => this.setNewConditionValue(value)}
               />
             </div>
