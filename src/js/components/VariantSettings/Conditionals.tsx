@@ -128,7 +128,7 @@ class Conditionals extends Component<ConditionalsProps, ConditionalsState> {
         {isOpened ? (
           <div className="Conditionals__New">
             <SelectControl
-              label={sprintf(__('Force variant "%s" based on...', 'ab-testing-for-wp'), variant.name)}
+              label={sprintf(__('Place visitor in variant "%s" based on...', 'ab-testing-for-wp'), variant.name)}
               value={(newConditionType || 0).toString(10)}
               options={[
                 { label: __('Query parameter in URL', 'ab-testing-for-wp'), value: '0' },
