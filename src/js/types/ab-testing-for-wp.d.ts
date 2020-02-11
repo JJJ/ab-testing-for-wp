@@ -67,6 +67,7 @@ declare interface TestVariant {
   name: string;
   rate: number;
   uplift: number;
+  conditions: ABTestVariantCondition[];
 }
 
 declare interface TestData {

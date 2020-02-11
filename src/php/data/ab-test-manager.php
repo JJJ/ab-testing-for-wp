@@ -113,6 +113,36 @@ class ABTestManager {
             }
         }
 
+        $test['variants'] = array_map(
+            function ($variant) {
+                $variant = (array) $variant;
+
+                $variant['conditions'] = [];
+
+                $prepared = $this->wpdb->prepare("
+                SELECT `key`, `value`
+                FROM `{$this->variantConditionTable}`
+                WHERE variantId = %s
+                ORDER BY `key` ASC
+                ", $variant['id']);
+
+                $conditions = $this->wpdb->get_results($prepared);
+
+                foreach ($conditions as $condition) {
+                    array_push(
+                        $variant['conditions'],
+                        [
+                            'key' => $condition->key,
+                            'value' => $condition->value,
+                        ]
+                    );
+                }
+
+                return $variant;
+            },
+            $test['variants']
+        );
+
         $crc = $controlVariant['participants'] > 0
             ? $controlVariant['conversions'] / $controlVariant['participants']
             : 0;
