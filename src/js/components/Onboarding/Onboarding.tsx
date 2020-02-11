@@ -273,7 +273,7 @@ class Onboarding extends Component<OnboardingProps, OnboardingState> {
             {step === 4 && <p>{__('You can configure the test in this sidebar.', 'ab-testing-for-wp')}</p>}
             {step === 5 && <p>{__('Select the goal of the test which needs to be tracked.', 'ab-testing-for-wp')}</p>}
             {step === 6 && <p>{__('Select the variant which will act like the control version. It will be shown by default when the test is not running, or when the page gets indexed by search engines.', 'ab-testing-for-wp')}</p>}
-            {step === 7 && <p>{__('Also, adjust the distribution weight of the variants. More weight means more chance to land in experiment.', 'ab-testing-for-wp')}</p>}
+            {step === 7 && <p>{__('Also, adjust the distribution weight and conditions of the variants. More weight means more chance to land in experiment.', 'ab-testing-for-wp')}</p>}
             {step === 8 && <p>{__('Toggle this to enable and run the test. Without it the test will not show different variants.', 'ab-testing-for-wp')}</p>}
           </div>
           <div className="buttons">
