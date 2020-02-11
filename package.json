@@ -1,6 +1,6 @@
 {
   "name": "ab-test-wordpress",
-  "version": "1.16.0",
+  "version": "1.16.1",
   "description": "A/B Test right from your WordPress posts.",
   "main": "index.js",
   "scripts": {
