@@ -210,13 +210,19 @@ class ABTestManager {
         WHERE variantId = %s AND track = 'P';
         ", $variantId));
 
+        $switchers = $this->wpdb->get_var($this->wpdb->prepare("
+        SELECT COUNT(variantId)
+        FROM `{$this->logTable}`
+        WHERE variantId = %s AND track = 'S';
+        ", $variantId));
+
         $conversions = $this->wpdb->get_var($this->wpdb->prepare("
         SELECT COUNT(variantId)
         FROM `{$this->logTable}`
         WHERE variantId = %s AND track = 'C';
         ", $variantId));
 
-        return [$participants, $conversions];
+        return [$participants - $switchers, $conversions];
     }
 
     public function getEnabledVariantsByGoal($goal, $goalType = '') {
