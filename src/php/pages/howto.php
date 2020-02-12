@@ -37,16 +37,22 @@
       <p><?php echo __('When the test is not enabled, it will not run. Meaning that only the control variant will be shown to visitors. The test result measurement will stop during this time.', 'ab-testing-for-wp'); ?></p>
       <p><?php echo __('You need to enable a test to start tracking and measuring conversion results.', 'ab-testing-for-wp'); ?></p>
 
+      <img style="width: 33%; max-width: 250px; float: right; margin-left: 30px;" src="<?php echo $assets; ?>how-to-3.png" />
       <h3><?php echo __('Setting up the Testing Goal', 'ab-testing-for-wp'); ?></h3>
       <p><?php echo __('The testing goal is the page or URL the visitor has to visit in order for the variant to count as a conversion. If you create a button the variants, it is a good idea to set the page where it links to as the testing goal.', 'ab-testing-for-wp'); ?></p>
       <p><?php echo __('You can pick a post, page, or an URL as a tracking goal. Outbound links are good for tracking traffic to websites which are not yours.', 'ab-testing-for-wp'); ?></p>
 
+      <div style="clear: both;" />
+      <img style="width: 33%; max-width: 250px; float: left; margin-right: 30px;" src="<?php echo $assets; ?>how-to-4.png" />
       <h3><?php echo __('Control Variant', 'ab-testing-for-wp'); ?></h3>
       <p><?php echo __('The control variant is the variant which is shown by default and will also be seen by search engines. Changing the control variant is only needed if you do not want to serve variation "A" by default.', 'ab-testing-for-wp'); ?></p>
 
       <h3><?php echo __('Weight distribution', 'ab-testing-for-wp'); ?></h3>
       <p><?php echo __('With test distribution you can roughly control what percentage of your visitors will be served which variants.', 'ab-testing-for-wp'); ?></p>
       <p><?php echo __('If a variant of the test is a bit risky for instance, you can weigh the variant to test against the control a lot down. It will not affect the measured results.', 'ab-testing-for-wp'); ?></p>
+
+      <h3><?php echo __('Force place visitors in test variant', 'ab-testing-for-wp'); ?></h3>
+      <p><?php echo __('You can force place visitors in variants with conditionals. ', 'ab-testing-for-wp'); ?></p>
     </div>
   </div>
 </div>
