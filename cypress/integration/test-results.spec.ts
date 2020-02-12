@@ -167,7 +167,7 @@ describe('Test results and tracking goals', () => {
       .contains('0');
   });
 
-  it.only('Converts participant of variant when force by condition', () => {
+  it('Converts participant of variant when force by condition', () => {
     // open block settings
     cy.get('.components-button-group > :nth-child(3)')
       .click();
@@ -189,9 +189,119 @@ describe('Test results and tracking goals', () => {
     cy.get('.Conditionals__Buttons > .is-primary')
       .click();
 
-    return;
+    // open condition form for B
+    cy.get(':nth-child(6) > .components-button')
+      .scrollIntoView()
+      .click();
+
+    cy.get('.Conditionals__New .components-text-control__input')
+      .eq(0)
+      .clear()
+      .type('e2e-test');
+    cy.get('.Conditionals__New .components-text-control__input')
+      .eq(1)
+      .clear()
+      .type('test-value-2');
+
+    // save condition
+    cy.get('.Conditionals__Buttons > .is-primary')
+      .click();
 
     // save post
     cy.savePost();
+
+    // go to post with condition
+    cy.contains('View Post')
+      .then((element: any) => {
+        const baseUrl = element[0].href;
+        const conditionA = 'e2e-test=test-value';
+        const conditionB = 'e2e-test=test-value-2';
+
+        // go to A
+        cy.visit([baseUrl, conditionA].join('&'));
+
+        // place yourself in A and track
+        cy.contains('Go to Hello World (A)')
+          .click();
+
+        cy.visitAdmin();
+
+        // go to overview
+        cy.contains('A/B Testing')
+          .click();
+
+        // check conversions
+        cy.get('.running-tests > tbody > tr:last-child .variations tr:nth-child(1) > :nth-child(3)')
+          .should('contain', '1');
+        cy.get('.running-tests > tbody > tr:last-child .variations tr:nth-child(2) > :nth-child(3)')
+          .should('contain', '0');
+
+        // go to B
+        cy.visit([baseUrl, conditionB].join('&'));
+
+        // place yourself in B and track
+        cy.contains('Go to Hello World (B)')
+          .click();
+
+        cy.visitAdmin();
+
+        // go to overview
+        cy.contains('A/B Testing')
+          .click();
+
+        // variation B should not get a point
+        cy.get('.running-tests > tbody > tr:last-child .variations tr:nth-child(1) > :nth-child(3)')
+          .should('contain', '1');
+        cy.get('.running-tests > tbody > tr:last-child .variations tr:nth-child(2) > :nth-child(3)')
+          .should('contain', '0');
+
+        cy.logout();
+
+        cy.login();
+
+        // place yourself in A
+        cy.visit([baseUrl, conditionA].join('&'));
+
+        cy.visitAdmin();
+
+        // go to overview
+        cy.contains('A/B Testing')
+          .click();
+
+        // check participants in A
+        cy.get('.running-tests > tbody > tr:last-child .variations tr:nth-child(1) > :nth-child(4)')
+          .should('contain', '2');
+
+        // go to B before conversion
+        cy.visit([baseUrl, conditionB].join('&'));
+
+        cy.visitAdmin();
+
+        // go to overview
+        cy.contains('A/B Testing')
+          .click();
+
+        // check participants in A and B (and see if participant switched to B
+        cy.get('.running-tests > tbody > tr:last-child .variations tr:nth-child(1) > :nth-child(4)')
+          .should('contain', '1');
+        cy.get('.running-tests > tbody > tr:last-child .variations tr:nth-child(2) > :nth-child(4)')
+          .should('contain', '1');
+
+        cy.visit(baseUrl);
+
+        // convert
+        cy.contains('Go to Hello World (B)')
+          .click();
+
+        cy.visitAdmin();
+
+        // go to overview
+        cy.contains('A/B Testing')
+          .click();
+
+        // B should have conversion
+        cy.get('.running-tests > tbody > tr:last-child .variations tr:nth-child(2) > :nth-child(3)')
+          .should('contain', '1');
+      });
   });
 });

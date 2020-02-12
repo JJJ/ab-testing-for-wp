@@ -495,7 +495,7 @@ describe('A/B Testing', () => {
         // Should put you in variant B
         cy.contains('Button for Test Variant “B”');
 
-        cy.reload();
+        cy.visit(element[0].href);
 
         // Should still put you in variant B
         cy.contains('Button for Test Variant “B”');
@@ -506,7 +506,7 @@ describe('A/B Testing', () => {
         // Should put you in variant A
         cy.contains('Button for Test Variant “A”');
 
-        cy.reload();
+        cy.visit(element[0].href);
 
         // Still in A when reloading because of cookie
         cy.contains('Button for Test Variant “A”');
