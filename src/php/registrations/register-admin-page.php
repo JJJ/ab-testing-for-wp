@@ -125,7 +125,7 @@ class RegisterAdminPage {
 
         add_submenu_page(
             'ab-testing-for-wp',
-            __('How to Use A/B Testing', 'ab-testing-for-wp'),
+            __('How to Use A/B Testing for WordPress', 'ab-testing-for-wp'),
             __('How to Use', 'ab-testing-for-wp'),
             'manage_options',
             'ab-testing-for-wp_howto',

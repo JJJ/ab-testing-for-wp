@@ -1,6 +1,6 @@
 <?php defined('ABSPATH') or exit; ?>
 <div class="wrap">
-  <h1><?php echo __('How to Use A/B Testing', 'ab-testing-for-wp'); ?></h1>
+  <h1><?php echo __('How to Use A/B Testing for WordPress', 'ab-testing-for-wp'); ?></h1>
   <div class="welcome-panel how-to">
     <div class="how-to-panel-content">
       <div style="display: flex; align-items: center">
