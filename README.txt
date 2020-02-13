@@ -51,21 +51,33 @@ Start measuring what works best on your site without all the hassle!
 Yes, totally. And also no sign up for 3th-party services needed.
 
 = How does A/B Testing for WordPress measure tests? =
-When a visitor sees a test variant the visitor will be logged as a participant of that variant. When the visitor visits the goal page of the test, the visitor will also be logged as a conversion of the variant.
+When a visitor sees a test variant the visitor will be remembered as a participant of that variant. When the visitor visits the goal page of the test, the visitor will also be logged as a conversion of the variant.
 
 A/B Testing for WordPress will calculate the percentage of the participants who became conversions and determines a winning variant through these numbers.
 
+You can setup pages, posts and outbound links as goals. A/B Testing for WordPress also integrates with popular plugins.
+
 = Does A/B Testing for WordPress affect SEO? =
-No. Only the control version of your test is shown to search engines and website caches. The variant which the visitor will see is replaced using JavaScript.
+No. Only the control version of your test is shown to search engines and website caches. The variant which the visitor will see is replaced on the fly using JavaScript.
+
+A/B Testing for WordPress does not treat a search engine any different from a human visitor.
 
 = Does A/B Testing for WordPress allow weight distribution? =
 Yes. You can change the amount of visitors should see each variant.
 
+= Can I convert existing content into an A/B test? =
+Yes. Existing content blocks can be converted into A/B tests in the editor. You can find this options under "more options" of your blocks. It will take your block and wrap it in an A/B test and put a copy of the block in both variants.
+
+= Does A/B Testing for WordPress allow weight distribution? =
+Yes. You can change the amount of visitors which should see each variant.
+
 = How can I force a visitor to be placed in a variant of a test? =
-You can add conditions for variants. Visitors with your determined conditions in the URL will be placed in the test variant of your choice. Next time they visit the URL without the parameters, they will still be in the same variation of the test.
+You can add conditions for variants. Visitors with your determined conditions in the URL will be placed in the test variant of your choice. Next time they visit the URL without the parameters, they will still be in the same variation of the test you placed them in.
 
 = What does A/B Testing for WordPress count as a goal? =
 You can pick and post, page, or outbound links as a goal to track. Counting custom post types as conversion is not possible (yet).
+
+A/B Testing for WordPress also integrates with popular plugins which can be setup as goals.
 
 = How Can I Add a Test to my Site? =
 You can enter tests right in the content of your pages and posts through the editor.
