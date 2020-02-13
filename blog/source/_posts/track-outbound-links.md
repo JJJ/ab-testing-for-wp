@@ -18,5 +18,4 @@ Find this addition in the latest version of [A/B Testing for WordPress](https://
 3. Scroll down in the sidebar and select "Outbound link" under _Testing Goal_.
 4. Enter the URL of the outbound link you want to track.
 
-Whenever a user click a link on your website which directs the user to this URL, they will be added
-as a successful conversion of said test.
+Whenever a user click a link on your website which directs the user to this URL, they will be added as a successful conversion of said test.
