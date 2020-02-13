@@ -52,26 +52,57 @@ class BlockRenderer {
         return $content;
     }
 
-    private function pickVariant($variants, $testId) {
+    private function pickVariant($variants, $testId, $variantId) {
+        $abTestManager = new ABTestManager();
         $cookieData = [];
+        $hasCookieData = CookieManager::isSet($testId);
+        $pickedVariant = false;
 
-        if (CookieManager::isSet($testId)) {
+        if ($hasCookieData) {
             $cookieData = CookieManager::getData($testId);
+        }
 
-            // make sure variant is still in variants
+        // try to find variant based on given id
+        if (isset($variantId)) {
             foreach ($variants as $variant) {
-                if ($variant['id'] === $cookieData['variant']) {
-                    return $variant;
+                if ($variant['id'] === $variantId) {
+                    $pickedVariant = $variant;
+
+                    if ($hasCookieData && $cookieData['variant'] !== $pickedVariant['id']) {
+                        // if not already tracked as converted
+                        if ($cookieData['tracked'] !== 'C') {
+                            // swap participation
+                            $abTestManager->addTracking($cookieData['variant'], 'S');
+                            $abTestManager->addTracking($pickedVariant['id'], 'P');
+                        }
+
+                        // save to cookie with new variant and old tracked state
+                        CookieManager::setData($testId, $pickedVariant['id'], $cookieData['tracked']);
+                    }
                 }
             }
         }
 
-        $pickedVariant = $this->pickVariantAt($variants, $this->randomTestDistributionPosition($variants));
+        if (!$pickedVariant) {
+            // see if variant is in cookies
+            if (CookieManager::isSet($testId)) {
+                // make sure variant is still in variants
+                foreach ($variants as $variant) {
+                    if ($variant['id'] === $cookieData['variant']) {
+                        return $variant;
+                    }
+                }
+            }
 
-        $abTestTracking = new ABTestTracking();
-        $abTestTracking->addParticipation($pickedVariant['id']);
+            // pick a random one instead
+            $pickedVariant = $this->pickVariantAt($variants, $this->randomTestDistributionPosition($variants));
+        }
 
-        CookieManager::setData($testId, $pickedVariant['id'], 'P');
+        if (!$hasCookieData) {
+            // add tracking and cookie
+            $abTestManager->addTracking($pickedVariant['id'], 'P');
+            CookieManager::setData($testId, $pickedVariant['id'], 'P');
+        }
 
         return $pickedVariant;
     }
@@ -137,10 +168,35 @@ class BlockRenderer {
         // get control variant of the test
         $controlVariant = $this->getControlVariant($variants, $testId, $control);
 
+        // parse referer
+        $refererQuery = parse_url($request->get_header('referer'))['query'];
+        parse_str($refererQuery, $parsedQuery);
+
+        // check if conditions are in query string
+        foreach ($variants as $variant) {
+            if (
+                !$forcedVariant
+                && isset($variant['conditions'])
+                && count($variant['conditions']) > 0
+            ) {
+                foreach ($variant['conditions'] as $condition) {
+                    if (
+                        isset($parsedQuery[$condition['key']])
+                        && $parsedQuery[$condition['key']] == $condition['value']
+                    ) {
+                        $variantId = $variant['id'];
+                        break;
+                    }
+                }
+            }
+        }
+
         // skip picking variant if provided in request
         if (!$forcedVariant) {
             // pick a variant of the test
-            $pickedVariant = $isEnabled ? $this->pickVariant($variants, $testId) : $controlVariant;
+            $pickedVariant = $isEnabled
+                ? $this->pickVariant($variants, $testId, $variantId)
+                : $controlVariant;
 
             $variantId = $pickedVariant['id'];
         }

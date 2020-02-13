@@ -16,8 +16,7 @@ Because the plugin is in a very early stage, the feature set might look a bit ba
 
 ### Create A/B (split) Tests in the Content Editor
 
-The main feature of A/B Testing for WordPress right now is the ability to create tests right in the
-content editor of WordPress.
+The main feature of A/B Testing for WordPress right now is the ability to create tests right in the content editor of WordPress.
 
 You can add a test, define the content of the variants in the test (A and B), and adjust the options, all in one place.
 

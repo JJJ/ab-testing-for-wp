@@ -45,13 +45,13 @@ describe('Onboarding', () => {
     checkStep('configure the test in this sidebar');
 
     // check if step 5 loads
-    checkStep('Adjust the distribution weight');
-
-    // check if step 6 loads
     checkStep('Select the goal');
 
-    // check if step 7 loads
+    // check if step 6 loads
     checkStep('the control version');
+
+    // check if step 7 loads
+    checkStep('adjust the distribution weight');
 
     // check if step 8 loads
     checkStep('enable and run the test');

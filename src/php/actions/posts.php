@@ -31,6 +31,12 @@ class PostsActions {
 
             foreach ($testData['variants'] as $variant) {
                 $this->abTestManager->insertVariant($testData['id'], $variant);
+
+                if (isset($variant['conditions'])) {
+                    foreach ($variant['conditions'] as $condition) {
+                        $this->abTestManager->insertVariantCondition($variant, $condition);
+                    }
+                }
             }
         }
     }

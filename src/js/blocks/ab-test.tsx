@@ -12,9 +12,8 @@ import parseISO from 'date-fns/parseISO';
 
 import VariantSelector from '../components/VariantSelector/VariantSelector';
 import BoxShadow from '../components/BoxShadow/BoxShadow';
-import DistributionSettings from '../components/DistributionSettings/DistributionSettings';
+import VariantSettings from '../components/VariantSettings/VariantSettings';
 import GoalSelector from '../components/GoalSelector/GoalSelector';
-import ControlSettings from '../components/ControlSettings/ControlSettings';
 import GeneralSettings from '../components/GeneralSettings/GeneralSettings';
 import TestResults from '../components/TestResults/TestResults';
 import Onboarding from '../components/Onboarding/Onboarding';
@@ -178,6 +177,7 @@ class ABTestBlock extends Component<ABTestBlockProps, ABTestBlockState> {
           selected: true,
           distribution: 50,
           defaultContent,
+          conditions: [],
         },
         {
           id: shortid.generate(),
@@ -185,6 +185,7 @@ class ABTestBlock extends Component<ABTestBlockProps, ABTestBlockState> {
           selected: false,
           distribution: 50,
           defaultContent,
+          conditions: [],
         },
       ];
 
@@ -257,20 +258,17 @@ class ABTestBlock extends Component<ABTestBlockProps, ABTestBlockState> {
             startedAt={typeof startedAt === 'string' ? parseISO(startedAt) : startedAt}
             onDeclareWinner={onDeclareWinner}
           />
-          <DistributionSettings
-            variants={variants}
-            onUpdateVariants={onUpdateVariants}
-          />
           <GoalSelector
             value={postGoal}
             type={postGoalType}
             onChange={onPostGoalChange}
             onTypeChange={onPostGoalTypeChange}
           />
-          <ControlSettings
-            value={control}
+          <VariantSettings
+            control={control}
             variants={variants}
-            onChange={onControlChange}
+            onControlChange={onControlChange}
+            onUpdateVariants={onUpdateVariants}
           />
         </InspectorControls>
 

@@ -13,6 +13,6 @@ describe('How to Use page', () => {
     cy.contains('How to Use')
       .click();
 
-    cy.contains('How to Use A/B Testing');
+    cy.contains('How to Use A/B Testing for WordPress');
   });
 });

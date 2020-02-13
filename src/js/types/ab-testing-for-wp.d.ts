@@ -18,7 +18,17 @@ interface AbTestingForWpData {
 
 declare const ABTestingForWP_Data: AbTestingForWpData;
 
-declare const ABTestingForWP_Options: any;
+interface AbTestingForWpOptions {
+  completeOnboarding: string;
+  lastMigration: string;
+}
+
+declare const ABTestingForWP_Options: AbTestingForWpOptions;
+
+interface ABTestVariantCondition {
+  key: string;
+  value: string;
+}
 
 declare interface ABTestVariant {
   id: string;
@@ -26,6 +36,7 @@ declare interface ABTestVariant {
   selected: boolean;
   distribution: number;
   defaultContent?: any;
+  conditions: ABTestVariantCondition[];
 }
 
 declare interface ABTestAttributes {
@@ -56,6 +67,7 @@ declare interface TestVariant {
   name: string;
   rate: number;
   uplift: number;
+  conditions: ABTestVariantCondition[];
 }
 
 declare interface TestData {

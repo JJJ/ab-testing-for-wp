@@ -16,6 +16,7 @@ class ABTestManager {
 
         $table_prefix = $wpdb->prefix;
 
+        $this->variantConditionTable = $table_prefix . 'ab_testing_for_wp_variant_condition';
         $this->variantTable = $table_prefix . 'ab_testing_for_wp_variant';
         $this->abTestTable = $table_prefix . 'ab_testing_for_wp_ab_test';
         $this->logTable = $table_prefix . 'ab_testing_for_wp_log';
@@ -112,6 +113,36 @@ class ABTestManager {
             }
         }
 
+        $test['variants'] = array_map(
+            function ($variant) {
+                $variant = (array) $variant;
+
+                $variant['conditions'] = [];
+
+                $prepared = $this->wpdb->prepare("
+                SELECT `key`, `value`
+                FROM `{$this->variantConditionTable}`
+                WHERE variantId = %s
+                ORDER BY `key` ASC
+                ", $variant['id']);
+
+                $conditions = $this->wpdb->get_results($prepared);
+
+                foreach ($conditions as $condition) {
+                    array_push(
+                        $variant['conditions'],
+                        [
+                            'key' => $condition->key,
+                            'value' => $condition->value,
+                        ]
+                    );
+                }
+
+                return $variant;
+            },
+            $test['variants']
+        );
+
         $crc = $controlVariant['participants'] > 0
             ? $controlVariant['conversions'] / $controlVariant['participants']
             : 0;
@@ -179,13 +210,19 @@ class ABTestManager {
         WHERE variantId = %s AND track = 'P';
         ", $variantId));
 
+        $switchers = $this->wpdb->get_var($this->wpdb->prepare("
+        SELECT COUNT(variantId)
+        FROM `{$this->logTable}`
+        WHERE variantId = %s AND track = 'S';
+        ", $variantId));
+
         $conversions = $this->wpdb->get_var($this->wpdb->prepare("
         SELECT COUNT(variantId)
         FROM `{$this->logTable}`
         WHERE variantId = %s AND track = 'C';
         ", $variantId));
 
-        return [$participants, $conversions];
+        return [$participants - $switchers, $conversions];
     }
 
     public function getEnabledVariantsByGoal($goal, $goalType = '') {
@@ -235,6 +272,18 @@ class ABTestManager {
     }
 
     public function wipeTestDataFromPost($postId) {
+        // remove conditions
+        $query = "
+        DELETE `{$this->variantConditionTable}`
+        FROM `{$this->variantConditionTable}`
+        INNER JOIN `{$this->variantTable}` ON `{$this->variantConditionTable}`.variantId = `{$this->variantTable}`.id
+        INNER JOIN `{$this->abTestTable}` ON `{$this->variantTable}`.testId = `{$this->abTestTable}`.id
+        WHERE `{$this->abTestTable}`.postId = %d;
+        ";
+
+        $this->wpdb->query($this->wpdb->prepare($query, $postId));
+
+        // remove variations and test data
         $query = "
         DELETE `{$this->variantTable}`, `{$this->abTestTable}`
         FROM `{$this->variantTable}`
@@ -307,6 +356,22 @@ class ABTestManager {
             $participants,
             $conversions
         ));
+    }
+
+    public function insertVariantCondition($variant, $condition) {
+        $query = "
+        INSERT INTO `{$this->variantConditionTable}` (`variantId`, `key`, `value`)
+        VALUES (%s, %s, %s);
+        ";
+
+        $prepared = $this->wpdb->prepare(
+            $query,
+            $variant['id'],
+            $condition['key'],
+            $condition['value']
+        );
+
+        $this->wpdb->query($prepared);
     }
 
 }

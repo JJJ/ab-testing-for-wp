@@ -97,4 +97,10 @@ class CookieManager {
         );
     }
 
+    public static function removeData($testId) {
+        $name = CookieManager::nameById($testId);
+        unset($_COOKIE[$name]);
+        setcookie($name, null, -1, '/');
+    }
+
 }

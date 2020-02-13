@@ -10,6 +10,7 @@ class Installer {
         'addTitleColumn',
         'fillInTitle',
         'postGoalToVarchar',
+        'addVariantConditions',
     ];
 
     public function __construct($fileRoot) {
@@ -75,6 +76,17 @@ class Installer {
 
     private function postGoalToVarchar($tablePrefix) {
         return "ALTER TABLE `{$tablePrefix}ab_testing_for_wp_ab_test` CHANGE `postGoal` `postGoal` VARCHAR(32) NULL DEFAULT NULL;";
+    }
+
+    private function addVariantConditions($tablePrefix) {
+        $collate = $this->getDBCollate();
+
+        return "CREATE TABLE IF NOT EXISTS `{$tablePrefix}ab_testing_for_wp_variant_condition` (
+            `variantId` varchar(32) NOT NULL DEFAULT '',
+            `key` varchar(255) NOT NULL DEFAULT '',
+            `value` varchar(255) NOT NULL DEFAULT '',
+            PRIMARY KEY (`variantId`, `key`, `value`)
+        ) ENGINE = InnoDB {$collate};";
     }
 
     private function getDBCollate() {

@@ -1,0 +1,50 @@
+.Conditionals {
+  margin-bottom: 32px;
+}
+
+.Conditionals:last-child {
+  margin-bottom: 1em;
+}
+
+.Conditionals__New {
+  padding: 1em;
+  background: rgba(0, 0, 0, 0.03);
+  border: 1px solid #e2e4e7;
+}
+
+.Conditionals__ValuePair {
+  display: flex;
+}
+
+.Conditionals__ValuePairSeparator {
+  padding: 2em 4px 4px 4px;
+  text-align: center;
+}
+
+.edit-post-settings-sidebar__panel-block .components-panel__body .Conditionals__New .components-base-control {
+  margin-bottom: 8px;
+}
+
+.Conditionals__Buttons {
+  margin-top: 1.5em;
+}
+
+.Conditionals__Buttons .components-button {
+  margin-right: 8px;
+}
+
+.Conditionals__List {
+  flex-wrap: wrap;
+  display: flex;
+  margin: 8px 0;
+}
+
+.Conditionals__List code {
+  margin: 0 3px 3px 0;
+  display: inline-flex;
+  align-items: center;
+}
+
+.Conditionals__List .components-button.is-small {
+  padding: 0 0 0 4px;
+}

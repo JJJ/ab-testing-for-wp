@@ -27,7 +27,7 @@ describe('Outbound link tracking', () => {
     // change goal type
     cy.get('#inspector-select-control-2')
       .scrollIntoView()
-      .select('Outbound link');
+      .select('Outbound link', { force: true });
 
     // Enter an URL
     cy.get('#inspector-text-control-3')
@@ -68,7 +68,7 @@ describe('Outbound link tracking', () => {
     // change goal type
     cy.get('#inspector-select-control-2')
       .scrollIntoView()
-      .select('Outbound link');
+      .select('Outbound link', { force: true });
 
     // Enter an URL
     cy.get('#inspector-text-control-3')
@@ -129,7 +129,7 @@ describe('Outbound link tracking', () => {
     // change goal type
     cy.get('#inspector-select-control-2')
       .scrollIntoView()
-      .select('Outbound link');
+      .select('Outbound link', { force: true });
 
     // Enter an URL
     cy.get('#inspector-text-control-3')

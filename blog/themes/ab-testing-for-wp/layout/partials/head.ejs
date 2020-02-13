@@ -23,12 +23,12 @@ var description = page.description ? page.description : config.description;
 
   <meta property="og:title" content="<%= title %>"/>
   <meta property="og:description" content="<%= description %>"/>
-  <meta property="og:url" content="<%= page.link %>"/>
+  <meta property="og:url" content="<%= url %>"/>
   <meta property="og:site_name" content="<%= config.title %>"/>
 
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:site" content="@gayakessler" />
-  <meta name="twitter:url" content="<%= page.link %>"/>
+  <meta name="twitter:url" content="<%= url %>"/>
   <meta name="twitter:title" content="<%= title %>"/>
   <meta name="twitter:description" content="<%= description %>"/>
   <meta name="twitter:image" content="<%- url_for('/images/og_abtestingforwp_poster.jpg') %>">
