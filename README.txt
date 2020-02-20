@@ -5,7 +5,7 @@ Donate link: https://abtestingforwp.com/
 Requires at least: 5.0
 Tested up to: 5.3.2
 Requires PHP: 5.6
-Stable tag: 1.17.0
+Stable tag: 1.17.1
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -95,6 +95,9 @@ You can find the [source and repository over at GitHub](https://github.com/Gaya/
 5. Integration with HTML Forms
 
 == Changelog ==
+= 1.17.1 =
+* Minor bug fixes
+
 = 1.17.0 =
 * Allow forced variation placement through query parameters
 

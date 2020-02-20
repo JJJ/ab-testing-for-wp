@@ -43,7 +43,7 @@ class CookieManager {
         return $_COOKIE[CookieManager::nameById($testId)];
     }
 
-    public static function isSet($testId) {
+    public static function isAvailable($testId) {
         // check if legacy cookie is set
         if (isset($_COOKIE['ab-testing-for-wp'])) {
             $data = CookieManager::readLegacyCookie();
@@ -76,7 +76,7 @@ class CookieManager {
         }
 
         // find test in single cookie format
-        if (CookieManager::isSet($testId)) {
+        if (CookieManager::isAvailable($testId)) {
             list($variant, $tracked) = explode(":", CookieManager::getCookie($testId));
 
             return [

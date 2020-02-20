@@ -64,7 +64,7 @@ class ABTestTracking {
                 // test not enabled
                 !$variant['isEnabled']
                 // or no cookie data for test
-                || !CookieManager::isSet($variant['testId'])
+                || !CookieManager::isAvailable($variant['testId'])
             ) {
                 continue;
             }
