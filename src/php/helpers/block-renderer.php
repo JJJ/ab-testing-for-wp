@@ -55,7 +55,7 @@ class BlockRenderer {
     private function pickVariant($variants, $testId, $variantId) {
         $abTestManager = new ABTestManager();
         $cookieData = [];
-        $hasCookieData = CookieManager::isSet($testId);
+        $hasCookieData = CookieManager::isAvailable($testId);
         $pickedVariant = false;
 
         if ($hasCookieData) {
@@ -85,7 +85,7 @@ class BlockRenderer {
 
         if (!$pickedVariant) {
             // see if variant is in cookies
-            if (CookieManager::isSet($testId)) {
+            if (CookieManager::isAvailable($testId)) {
                 // make sure variant is still in variants
                 foreach ($variants as $variant) {
                     if ($variant['id'] === $cookieData['variant']) {
@@ -160,7 +160,7 @@ class BlockRenderer {
         $skipVariation = $testData['control'];
 
         // find out if already in a variant
-        if (CookieManager::isSet($testId)) {
+        if (CookieManager::isAvailable($testId)) {
             $cookieData = CookieManager::getData($testId);
             $skipVariation = $cookieData['variant'];
         }
@@ -229,7 +229,7 @@ class BlockRenderer {
 
         $variantId = $controlVariant['id'];
 
-        if (CookieManager::isSet($testId)) {
+        if (CookieManager::isAvailable($testId)) {
             $cookieData = CookieManager::getData($testId);
             $variantId = $cookieData['variant'];
         }
