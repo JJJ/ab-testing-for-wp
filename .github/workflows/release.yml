@@ -16,8 +16,6 @@ jobs:
         uses: actions/setup-node@v1
       - name: Use Composer
         uses: MilesChou/composer-action/5.6/install@master
-        with:
-          args: dumpautoload
       - name: Build project
         run: |
           npm ci
