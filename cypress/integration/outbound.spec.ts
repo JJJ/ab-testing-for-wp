@@ -55,7 +55,7 @@ describe('Outbound link tracking', () => {
       .should('contain', 'https://abtestingforwp.com');
   });
 
-  it.only('Will track visits to outbound links', () => {
+  it('Will track visits to outbound links', () => {
     cy.visitAdmin('post-new.php?skipOnboarding=1');
 
     // add default test
@@ -87,7 +87,7 @@ describe('Outbound link tracking', () => {
       .click();
     cy.get('.block-editor-link-control__search-input input')
       .type(SITE, { force: true })
-      .wait(200);
+      .wait(1000);
     cy.contains('Press ENTER to add this link')
       .click();
 
@@ -103,7 +103,7 @@ describe('Outbound link tracking', () => {
       .click();
     cy.get('.block-editor-link-control__search-input input')
       .type(SITE, { force: true })
-      .wait(200);
+      .wait(1000);
     cy.contains('Press ENTER to add this link')
       .click();
 
