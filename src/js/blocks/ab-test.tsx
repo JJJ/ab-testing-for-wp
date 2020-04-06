@@ -3,7 +3,7 @@ import shortid from 'shortid';
 import queryString from 'query-string';
 
 import { __, sprintf } from '@wordpress/i18n';
-import { registerBlockType, createBlock, BlockInstance } from '@wordpress/blocks';
+import { registerBlockType, BlockInstance } from '@wordpress/blocks';
 import { InnerBlocks, InspectorControls } from '@wordpress/block-editor';
 import { withDispatch, select } from '@wordpress/data';
 import apiFetch from '@wordpress/api-fetch';
@@ -303,15 +303,8 @@ const edit: any = withDispatch((dispatch, props: any) => {
 
       if (!variantBlock) return;
 
-      // copy inner blocks of variant
-      const blockCopies = variantBlock.innerBlocks.map((block: any) => createBlock(
-        block.name,
-        block.attributes,
-        block.innerBlocks,
-      ));
-
       // insert blocks after test
-      insertBlocksAfter(blockCopies);
+      insertBlocksAfter(variantBlock.innerBlocks);
 
       // remove test
       removeBlock(clientId);
