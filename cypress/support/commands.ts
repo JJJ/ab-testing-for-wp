@@ -64,9 +64,9 @@ Cypress.Commands.add('addBlockInEditor', (search: string, name?: string) => {
 });
 
 Cypress.Commands.add('savePost', () => {
-  cy.get('.block-editor-post-publish-panel__toggle')
+  cy.get('.editor-post-publish-panel__toggle')
     .click();
-  cy.get('.block-editor-post-publish-panel__header-publish-button > div > .components-button')
+  cy.get('.editor-post-publish-panel__header-publish-button > .components-button')
     .click();
 
   // wait for saving
