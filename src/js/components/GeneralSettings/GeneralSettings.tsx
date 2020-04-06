@@ -24,7 +24,7 @@ const GeneralSettings: React.FC<GeneralSettingsProps> = ({
   const postId = getCurrentPostId();
 
   return (
-    <PanelBody title={__('General Settings', 'ab-testing-for-wp')}>
+    <PanelBody className="ABTest__General" title={__('General Settings', 'ab-testing-for-wp')}>
       {!isSingle && (
         <TextControl
           label={__('Title of test', 'ab-testing-for-wp')}

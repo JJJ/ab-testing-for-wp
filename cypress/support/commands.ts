@@ -55,8 +55,7 @@ Cypress.Commands.add('addBlockInEditor', (search: string, name?: string) => {
       .click();
 
     // fill in name
-    cy.get('.edit-post-settings-sidebar__panel-block > :nth-child(2) > :nth-child(1)')
-      .find('input[type=text]')
+    cy.get('.ABTest__General input[type=text]')
       .clear({ force: true })
       .type(name, { force: true })
       .wait(100);
