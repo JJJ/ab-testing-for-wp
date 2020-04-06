@@ -54,7 +54,7 @@ describe('Stand alone A/B tests', () => {
     cy.get('.components-modal__content');
 
     // choose to insert existing
-    cy.get('.Inserter__actions > .is-default')
+    cy.get('.Inserter__actions > .is-secondary')
       .click();
 
     // select correct test
@@ -102,7 +102,7 @@ describe('Stand alone A/B tests', () => {
       .click();
 
     // open options
-    cy.get('.edit-post-header__settings > :nth-child(3) > .components-button')
+    cy.get('.components-button[aria-label=Settings]')
       .click();
 
     // open test options
