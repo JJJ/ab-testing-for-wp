@@ -1,6 +1,6 @@
 {
   "name": "ab-test-wordpress",
-  "version": "1.17.1",
+  "version": "1.18.0",
   "description": "A/B Test right from your WordPress posts.",
   "main": "index.js",
   "scripts": {
@@ -93,7 +93,7 @@
     "@wordpress/plugins": "^2.13.0",
     "classnames": "^2.2.6",
     "date-fns": "^2.11.1",
-    "query-string": "^6.11.1",
+    "query-string": "^6.12.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "scroll-into-view": "^1.14.2",
