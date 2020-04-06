@@ -26,27 +26,41 @@ describe('Test results and tracking goals', () => {
       .click({ force: true });
 
     // change button
-    cy.get('.wp-block-button > .editor-rich-text > .rich-text')
+    cy.get('.wp-block-button > .rich-text')
       .eq(0)
       .clear({ force: true })
       .type('Go to Hello World (A)', { force: true });
 
     // change link to /?p=1
-    cy.get('#wp-block-button__inline-link-0')
+    cy.get('.wp-block-button')
+      .eq(0)
+      .click();
+    cy.get(':nth-child(3) > :nth-child(2) > div > .components-button')
+      .click();
+    cy.get('.block-editor-link-control__search-input input')
       .type('/?p=1', { force: true });
-
-    // go to variant B
-    cy.get('.components-button-group > :nth-child(2)')
+    cy.contains('Press ENTER to add this link')
       .click();
 
-    cy.get('.wp-block-button > .editor-rich-text > .rich-text')
+    // go to variant B
+    cy.get('.ab-test-for-wp__VariantSelector > .components-button-group > :nth-child(2)')
+      .click();
+
+    cy.get('.wp-block-button > .rich-text')
       .eq(1)
       .clear({ force: true })
       .type('Go to Hello World (B)', { force: true });
 
     // change link to /?p=1
-    cy.get('#wp-block-button__inline-link-1')
+    cy.get('.wp-block-button')
+      .eq(1)
+      .click();
+    cy.get(':nth-child(3) > :nth-child(2) > div > .components-button')
+      .click();
+    cy.get('.block-editor-link-control__search-input input')
       .type('/?p=1', { force: true });
+    cy.contains('Press ENTER to add this link')
+      .click();
   });
 
   afterEach(() => {
@@ -190,7 +204,7 @@ describe('Test results and tracking goals', () => {
       .click();
 
     // open condition form for B
-    cy.get(':nth-child(6) > .components-button')
+    cy.get('.VariantSettings > :nth-child(6) > .components-button')
       .scrollIntoView()
       .click();
 

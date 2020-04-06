@@ -101,7 +101,7 @@ describe('A/B Testing', () => {
       .click();
 
     // change range input
-    cy.changeRange('#inspector-range-control-1', 75);
+    cy.changeRange('#inspector-range-control-3', 75);
 
     // check if values updated correctly
     cy.get(':nth-child(3) > .components-base-control__field > .components-range-control__number')
@@ -218,11 +218,12 @@ describe('A/B Testing', () => {
     // open block selector
     cy.get('.edit-post-header-toolbar > :nth-child(5) > .components-button')
       .click();
-    cy.get('button.editor-block-navigation__item-button')
+    cy.get('button.block-editor-block-navigation__item-button')
+      .eq(0)
       .click();
 
     // open the options
-    cy.get(':nth-child(4) > .components-dropdown-menu > .components-button')
+    cy.get(':nth-child(4) > .components-dropdown > .components-button')
       .click();
 
     // convert to test
@@ -247,6 +248,15 @@ describe('A/B Testing', () => {
     // start test
     cy.get('#inspector-toggle-control-2')
       .click({ force: true });
+
+    // switch to variant B
+    cy.get('.components-button-group > :nth-child(2)')
+      .click();
+
+    cy.get('.ABTestVariant .wp-block-paragraph.rich-text')
+      .eq(1)
+      .click()
+      .type('Variant B text');
 
     // save post
     cy.savePost();
@@ -278,7 +288,7 @@ describe('A/B Testing', () => {
       .click();
 
     // Converted to variant "B"
-    cy.contains('Button for Test Variant "B"');
+    cy.contains('Variant B text');
   });
 
   it('Can change conditions of variants', () => {
@@ -291,8 +301,8 @@ describe('A/B Testing', () => {
     cy.get('.components-button-group > :nth-child(3)')
       .click();
 
-    // open condition form
-    cy.get(':nth-child(6) > .components-button')
+    // open condition form B
+    cy.get('.VariantSettings > :nth-child(6) > .components-button')
       .scrollIntoView()
       .click();
 
@@ -344,8 +354,8 @@ describe('A/B Testing', () => {
     cy.get('.Conditionals__Buttons > .is-primary')
       .click();
 
-    // add another condition
-    cy.get(':nth-child(6) > .components-button:nth-child(2)')
+    // add another condition to B
+    cy.get(':nth-child(6) > :nth-child(2)')
       .scrollIntoView()
       .click();
 
@@ -384,7 +394,7 @@ describe('A/B Testing', () => {
     cy.contains('e2e-test=test-value');
 
     // change distribution of A to 100
-    cy.changeRange('#inspector-range-control-1', 100);
+    cy.changeRange('#inspector-range-control-3', 100);
 
     // save post
     cy.savePost();
@@ -408,7 +418,7 @@ describe('A/B Testing', () => {
       .click({ force: true });
 
     // update post
-    cy.get('.edit-post-header__settings > :nth-child(3) > .components-button')
+    cy.get('.editor-post-publish-button')
       .click();
 
     // go to post with condition
@@ -445,7 +455,7 @@ describe('A/B Testing', () => {
       .click();
 
     // open condition form
-    cy.get(':nth-child(6) > .components-button')
+    cy.get('.VariantSettings > :nth-child(6) > .components-button')
       .scrollIntoView()
       .click();
 

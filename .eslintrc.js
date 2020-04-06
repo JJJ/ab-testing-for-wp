@@ -1,7 +1,12 @@
 module.exports = {
   parser: '@typescript-eslint/parser',
-  extends: ['airbnb', 'plugin:@typescript-eslint/recommended', 'plugin:cypress/recommended'],
-  plugins: ['@typescript-eslint', 'cypress'],
+  extends: [
+    'airbnb',
+    'plugin:@typescript-eslint/recommended',
+    'plugin:cypress/recommended',
+    'plugin:react-hooks/recommended',
+  ],
+  plugins: ['@typescript-eslint', 'cypress', 'react-hooks'],
   env: {
     browser: true,
     node: true,

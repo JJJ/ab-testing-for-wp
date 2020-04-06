@@ -304,7 +304,7 @@ const edit: any = withDispatch((dispatch, props: any) => {
       if (!variantBlock) return;
 
       // copy inner blocks of variant
-      const blockCopies = variantBlock.innerBlocks.map((block: any) => createBlock(
+      const blockCopies = variantBlock.innerBlocks.map((block: BlockInstance) => createBlock(
         block.name,
         block.attributes,
         block.innerBlocks,

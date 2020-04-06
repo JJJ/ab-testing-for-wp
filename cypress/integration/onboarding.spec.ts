@@ -29,7 +29,7 @@ describe('Onboarding', () => {
     cy.contains('Welcome to A/B Testing for WordPress!');
 
     // start tour
-    cy.get('.ButtonContainer > .is-button')
+    cy.get('.ButtonContainer > .is-primary')
       .click();
 
     // check if step 1 loads
@@ -60,7 +60,7 @@ describe('Onboarding', () => {
     cy.contains('That is it!');
 
     // Finish tour
-    cy.get('.ButtonContainer > .is-button')
+    cy.get('.ButtonContainer > .is-primary')
       .click();
   });
 
@@ -92,7 +92,7 @@ describe('Onboarding', () => {
     cy.addBlockInEditor('A/B Test');
 
     // open add new test (will not happen if onbaording is opened)
-    cy.get('.wp-block > .editor-inserter')
+    cy.get('.edit-post-header-toolbar > .block-editor-inserter > .components-button')
       .click();
   });
 });

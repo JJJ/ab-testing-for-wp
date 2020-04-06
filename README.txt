@@ -3,9 +3,9 @@ Contributors: clevernode, gayakessler
 Tags: "a/b testing", "a/b test", "ab testing", "split test", "measure", "optimise", "marketing"
 Donate link: https://abtestingforwp.com/
 Requires at least: 5.0
-Tested up to: 5.3.2
+Tested up to: 5.4
 Requires PHP: 5.6
-Stable tag: 1.17.1
+Stable tag: 1.18.0
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -95,6 +95,9 @@ You can find the [source and repository over at GitHub](https://github.com/Gaya/
 5. Integration with HTML Forms
 
 == Changelog ==
+= 1.18.0 =
+* Made the plugin compatible with WordPress 5.4
+
 = 1.17.1 =
 * Minor bug fixes
 

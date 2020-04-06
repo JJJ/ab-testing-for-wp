@@ -80,14 +80,32 @@ describe('Outbound link tracking', () => {
       .click({ force: true });
 
     // edit button A
-    cy.get('#wp-block-button__inline-link-0')
-      .type(SITE, { force: true });
+    cy.get('.wp-block-button')
+      .eq(0)
+      .click();
+    cy.get(':nth-child(3) > :nth-child(2) > div > .components-button')
+      .click();
+    cy.get('.block-editor-link-control__search-input input')
+      .type(SITE, { force: true })
+      .wait(1000);
+    cy.contains('Press ENTER to add this link')
+      .click();
+
+    // switch to tab B
+    cy.get('.ab-test-for-wp__VariantSelector > .components-button-group > :nth-child(2)')
+      .click();
 
     // edit button B
-    cy.get('.components-button-group > :nth-child(2)')
+    cy.get('.wp-block-button')
+      .eq(1)
       .click();
-    cy.get('#wp-block-button__inline-link-1')
-      .type(SITE, { force: true });
+    cy.get(':nth-child(3) > :nth-child(2) > div > .components-button')
+      .click();
+    cy.get('.block-editor-link-control__search-input input')
+      .type(SITE, { force: true })
+      .wait(1000);
+    cy.contains('Press ENTER to add this link')
+      .click();
 
     // save post
     cy.savePost();
@@ -144,7 +162,7 @@ describe('Outbound link tracking', () => {
     cy.addBlockInEditor('HTML');
 
     // enter HTML
-    cy.get('.editor-plain-text')
+    cy.get('.block-editor-plain-text')
       .type(`<form action="${SITE}" method="get"><button type="submit">GO!</button></form>`);
 
     // save post

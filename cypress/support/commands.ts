@@ -36,15 +36,15 @@ Cypress.Commands.add('visitAdmin', (page = '') => {
 
 Cypress.Commands.add('addBlockInEditor', (search: string, name?: string) => {
   // open Gutenberg dialog
-  cy.get('.edit-post-header-toolbar > :nth-child(1) > .editor-inserter > .components-button')
+  cy.get('.edit-post-header-toolbar > .block-editor-inserter > .components-button')
     .click();
 
   // search for block type
-  cy.get('.editor-inserter__search')
+  cy.get('.block-editor-inserter__search')
     .type(search);
 
   // insert block
-  cy.get('.editor-block-types-list__item')
+  cy.get('.block-editor-block-types-list__item')
     .click()
     .wait(200);
 
@@ -55,8 +55,7 @@ Cypress.Commands.add('addBlockInEditor', (search: string, name?: string) => {
       .click();
 
     // fill in name
-    cy.get('.edit-post-settings-sidebar__panel-block > :nth-child(2) > :nth-child(1)')
-      .find('input[type=text]')
+    cy.get('.ABTest__General input[type=text]')
       .clear({ force: true })
       .type(name, { force: true })
       .wait(100);
@@ -66,7 +65,7 @@ Cypress.Commands.add('addBlockInEditor', (search: string, name?: string) => {
 Cypress.Commands.add('savePost', () => {
   cy.get('.editor-post-publish-panel__toggle')
     .click();
-  cy.get('.editor-post-publish-panel__header-publish-button > div > .components-button')
+  cy.get('.editor-post-publish-panel__header-publish-button > .components-button')
     .click();
 
   // wait for saving
@@ -75,9 +74,9 @@ Cypress.Commands.add('savePost', () => {
 
 Cypress.Commands.add('focusBlock', (number = 0) => {
   // open block selector
-  cy.get('.edit-post-header-toolbar > :nth-child(5) > .components-button')
+  cy.get('.edit-post-header-toolbar > :nth-child(4) > .components-button')
     .click();
-  cy.get('button.editor-block-navigation__item-button')
+  cy.get('button.block-editor-block-navigation__item-button')
     .eq(number)
     .click();
 });
