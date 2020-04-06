@@ -12,7 +12,7 @@ describe('Outbound link tracking', () => {
     cy.logout();
   });
 
-  const SITE = 'http://localhost:9000/?p=2';
+  const SITE = 'http://localhost:9000?p=2';
 
   it('Can setup test for outbound tracking', () => {
     cy.visitAdmin('post-new.php?skipOnboarding=1');
@@ -80,14 +80,34 @@ describe('Outbound link tracking', () => {
       .click({ force: true });
 
     // edit button A
-    cy.get('#wp-block-button__inline-link-0')
+    cy.get('.wp-block-button')
+      .eq(0)
+      .click();
+    cy.get(':nth-child(3) > :nth-child(2) > div > .components-button')
+      .click();
+
+    cy.get('.block-editor-link-control__search-input input')
       .type(SITE, { force: true });
 
-    // edit button B
-    cy.get('.components-button-group > :nth-child(2)')
+    cy.contains('Press ENTER to add this link')
       .click();
-    cy.get('#wp-block-button__inline-link-1')
+
+    // edit button B
+    cy.get('.ab-test-for-wp__VariantSelector > .components-button-group > :nth-child(2)')
+      .click();
+
+    cy.get('.wp-block-button')
+      .eq(1)
+      .click();
+
+    cy.get(':nth-child(3) > :nth-child(2) > div > .components-button')
+      .click();
+
+    cy.get('.block-editor-link-control__search-input input')
       .type(SITE, { force: true });
+
+    cy.contains('Press ENTER to add this link')
+      .click();
 
     // save post
     cy.savePost();
@@ -116,7 +136,7 @@ describe('Outbound link tracking', () => {
     cy.contains(SITE);
   });
 
-  it('Will track form submits to outbound links', () => {
+  it.only('Will track form submits to outbound links', () => {
     cy.visitAdmin('post-new.php?skipOnboarding=1');
 
     // add default test
@@ -144,7 +164,7 @@ describe('Outbound link tracking', () => {
     cy.addBlockInEditor('HTML');
 
     // enter HTML
-    cy.get('.editor-plain-text')
+    cy.get('.block-editor-plain-text')
       .type(`<form action="${SITE}" method="get"><button type="submit">GO!</button></form>`);
 
     // save post
