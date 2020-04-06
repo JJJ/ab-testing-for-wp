@@ -74,7 +74,7 @@ Cypress.Commands.add('savePost', () => {
 
 Cypress.Commands.add('focusBlock', (number = 0) => {
   // open block selector
-  cy.get('.edit-post-header-toolbar > :nth-child(5) > .components-button')
+  cy.get('.edit-post-header-toolbar > :nth-child(4) > .components-button')
     .click();
   cy.get('button.block-editor-block-navigation__item-button')
     .eq(number)
