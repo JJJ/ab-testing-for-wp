@@ -286,16 +286,39 @@ class ABTestManager {
         );
     }
 
-    public function addTracking($variantId, $type) {
+    public function addTracking($variantId, $type, $date = false) {
         $this->wpdb->hide_errors();
 
-        $this->wpdb->query($this->wpdb->prepare("
-        INSERT INTO `{$this->logTable}` (variantId, track) VALUES (%s, %s);
-        ", $variantId, $type));
+        if ($date) {
+            $query = $this->wpdb->prepare(
+                "INSERT INTO `{$this->logTable}` (variantId, track, date) VALUES (%s, %s, %s);",
+                $variantId,
+                $type,
+                $date
+            );
+        } else {
+            $query = $this->wpdb->prepare(
+                "INSERT INTO `{$this->logTable}` (variantId, track) VALUES (%s, %s);",
+                $variantId,
+                $type
+            );
+        }
+
+        $this->wpdb->query($query);
 
         $this->wpdb->show_errors();
 
         $this->updateVariationStats($variantId);
+    }
+
+    public function getAllTracking() {
+        $this->wpdb->hide_errors();
+
+        $results = $this->wpdb->get_results("SELECT variantId, track, `date` FROM `{$this->logTable}`;");
+
+        $this->wpdb->show_errors();
+
+        return $results;
     }
 
     private function updateVariationStats($variantId) {

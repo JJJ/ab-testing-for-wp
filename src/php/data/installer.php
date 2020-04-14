@@ -60,6 +60,10 @@ class Installer {
     }
 
     public function repair() {
+        // cache current tracking
+        $abTestManager = new ABTestManager();
+        $tracking = $abTestManager->getAllTracking();
+
         // wipe everything
         $this->uninstall();
 
@@ -75,6 +79,11 @@ class Installer {
 
         // look for tests and repopulate the database
         $this->repopulate();
+
+        // restore tracking
+        foreach ($tracking as $track) {
+            $abTestManager->addTracking($track->variantId, $track->track, $track->date);
+        }
     }
 
     private function repopulate() {
