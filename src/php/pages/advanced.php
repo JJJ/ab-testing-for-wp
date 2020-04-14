@@ -9,17 +9,7 @@ $didRepair = false;
 if (isset($_GET['repair-db']) && $_GET['repair-db'] === 'true') {
     $installer = new Installer(false);
 
-    // wipe everything
-    $installer->uninstall();
-
-    // install tables
-    $installer->install();
-
-    // run the migrations
-    $installer->runMigrations();
-
-    // look for tests and repopulate the database
-    $installer->repopulate();
+    $installer->repair();
 
     $didRepair = true;
 }
@@ -36,7 +26,7 @@ if (isset($_GET['repair-db']) && $_GET['repair-db'] === 'true') {
         <p><?php echo __('Performed database repair. Please check A/B Testing for WordPress pages.', 'ab-testing-for-wp'); ?></p>
     <?php else: ?>
         <p><?php echo __('Getting database errors when going to A/B Testing for WordPress pages? It could be that your database is corrupt / incorrect.', 'ab-testing-for-wp'); ?></p>
-        <p><?php echo __('This will reset your database and wipe all test tracking data. It will not delete the tests themselves.', 'ab-testing-for-wp'); ?></p>
+        <p><?php echo __('This will reset your database and wipe all measurement data. It will not delete the tests themselves.', 'ab-testing-for-wp'); ?></p>
         <p>
             <form id="repairForm">
                 <input type="hidden" name="page" value="ab-testing-for-wp_advanced" />

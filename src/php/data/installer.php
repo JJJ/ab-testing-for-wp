@@ -25,10 +25,6 @@ class Installer {
     }
 
     public function uninstall() {
-        // remove migration option
-        $optionsManager = new OptionsManager();
-        $optionsManager->setOption('lastMigration', '');
-
         // drop tables
         $this->removeTables();
     }
@@ -63,7 +59,26 @@ class Installer {
         }
     }
 
-    public function repopulate() {
+    public function repair() {
+        // wipe everything
+        $this->uninstall();
+
+        // install tables
+        $this->install();
+
+        // remove migration option
+        $optionsManager = new OptionsManager();
+        $optionsManager->setOption('lastMigration', '');
+
+        // run the migrations
+        $this->runMigrations();
+
+        // look for tests and repopulate the database
+        $this->repopulate();
+    }
+
+    private function repopulate() {
+        $postActions = new PostsActions();
         $postTypes = get_post_types();
 
         $the_query = new \WP_Query([
@@ -75,7 +90,8 @@ class Installer {
         if ($the_query->have_posts()) {
             while ($the_query->have_posts()) {
                 $the_query->the_post();
-                wp_save_post_revision(get_the_ID());
+
+                $postActions->updateBlockData(get_the_ID());
             }
         }
     }
