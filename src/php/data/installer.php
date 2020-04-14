@@ -25,7 +25,6 @@ class Installer {
     }
 
     public function uninstall() {
-        // drop tables
         $this->removeTables();
     }
 
@@ -46,7 +45,7 @@ class Installer {
 
             global $wpdb;
 
-            $wpdb->hide_errors();
+            $wpdb->show_errors();
 
             $tablePrefix = $wpdb->prefix;
 
@@ -162,30 +161,26 @@ class Installer {
     private function removeTables() {
         global $wpdb;
 
-        $wpdb->hide_errors();
-
-        $collate = $this->getDBCollate();
+        $wpdb->show_errors();
 
         $tablePrefix = $wpdb->prefix;
 
-        $tablesSql = [];
-
-        $tablesSql[] = "DROP TABLE {$tablePrefix}ab_testing_for_wp_ab_test;";
-        $tablesSql[] = "DROP TABLE {$tablePrefix}ab_testing_for_wp_log;";
-        $tablesSql[] = "DROP TABLE {$tablePrefix}ab_testing_for_wp_variant;";
-        $tablesSql[] = "DROP TABLE {$tablePrefix}ab_testing_for_wp_variant_condition;";
+        $tablesSql = [
+            "DROP TABLE {$tablePrefix}ab_testing_for_wp_ab_test;",
+            "DROP TABLE {$tablePrefix}ab_testing_for_wp_log;",
+            "DROP TABLE {$tablePrefix}ab_testing_for_wp_variant;",
+            "DROP TABLE {$tablePrefix}ab_testing_for_wp_variant_condition;"
+        ];
 
         foreach($tablesSql as $sql) {
             $wpdb->query($sql);
         }
-
-        $wpdb->show_errors();
     }
 
     private function createTables() {
         global $wpdb;
 
-        $wpdb->hide_errors();
+        $wpdb->show_errors();
 
         $collate = $this->getDBCollate();
 
@@ -230,8 +225,6 @@ class Installer {
         foreach($tablesSql as $sql) {
 			$wpdb->query($sql);
         }
-
-        $wpdb->show_errors();
     }
 
 }
