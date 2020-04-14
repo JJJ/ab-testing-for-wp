@@ -14,12 +14,23 @@ class Installer {
     ];
 
     public function __construct($fileRoot) {
-        register_activation_hook($fileRoot, [$this, 'install']);
-        add_action('init', [$this, 'runMigrations'], 1);
+        if ($fileRoot) {
+            register_activation_hook($fileRoot, [$this, 'install']);
+            add_action('init', [$this, 'runMigrations'], 1);
+        }
     }
 
     public function install() {
         $this->createTables();
+    }
+
+    public function uninstall() {
+        // remove migration option
+        $optionsManager = new OptionsManager();
+        $optionsManager->setOption('lastMigration', '');
+
+        // drop tables
+        $this->removeTables();
     }
 
     public function runMigrations() {
@@ -49,6 +60,23 @@ class Installer {
 
             // update last run migration to last in line
             $optionsManager->setOption('lastMigration', $lastMigrationToBeAt);
+        }
+    }
+
+    public function repopulate() {
+        $postTypes = get_post_types();
+
+        $the_query = new \WP_Query([
+            'nopaging' => true,
+            's' => 'wp:ab-testing-for-wp/ab-test-block',
+            'post_type' => $postTypes
+        ]);
+
+        if ($the_query->have_posts()) {
+            while ($the_query->have_posts()) {
+                $the_query->the_post();
+                wp_save_post_revision(get_the_ID());
+            }
         }
     }
 
@@ -104,6 +132,29 @@ class Installer {
         }
 
 		return $collate;
+    }
+
+    private function removeTables() {
+        global $wpdb;
+
+        $wpdb->hide_errors();
+
+        $collate = $this->getDBCollate();
+
+        $tablePrefix = $wpdb->prefix;
+
+        $tablesSql = [];
+
+        $tablesSql[] = "DROP TABLE {$tablePrefix}ab_testing_for_wp_ab_test;";
+        $tablesSql[] = "DROP TABLE {$tablePrefix}ab_testing_for_wp_log;";
+        $tablesSql[] = "DROP TABLE {$tablePrefix}ab_testing_for_wp_variant;";
+        $tablesSql[] = "DROP TABLE {$tablePrefix}ab_testing_for_wp_variant_condition;";
+
+        foreach($tablesSql as $sql) {
+            $wpdb->query($sql);
+        }
+
+        $wpdb->show_errors();
     }
 
     private function createTables() {
