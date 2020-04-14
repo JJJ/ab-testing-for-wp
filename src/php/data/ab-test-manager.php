@@ -31,18 +31,32 @@ class ABTestManager {
     }
 
     public function getStatsByTest($testId) {
-        return $this->wpdb->get_results($this->wpdb->prepare("
+        $this->wpdb->hide_errors();
+
+        $results =  $this->wpdb->get_results($this->wpdb->prepare("
         SELECT id, name, participants, conversions
         FROM `{$this->variantTable}`
         WHERE testId = %s;
         ", $testId));
+
+        $this->wpdb->show_errors();
+
+        return $results;
     }
 
     public function hasTests() {
-        return sizeof($this->wpdb->get_results("SELECT id FROM `{$this->abTestTable}`")) > 0;
+        $this->wpdb->hide_errors();
+
+        $result = sizeof($this->wpdb->get_results("SELECT id FROM `{$this->abTestTable}`")) > 0;
+
+        $this->wpdb->show_errors();
+
+        return $result;
     }
 
     public function getAllTests($extraQuery = '') {
+        $this->wpdb->hide_errors();
+
         $data = $this->wpdb->get_results("
         SELECT t.id, t.isEnabled, t.startedAt, t.title, t.control, t.postId, t.postGoal,
         t.postGoalType, p1.post_type AS postType, p1.post_title AS postName,
@@ -58,6 +72,8 @@ class ABTestManager {
         WHERE t.isArchived = 0 {$extraQuery}
         ORDER BY t.postId ASC
         ");
+
+        $this->wpdb->show_errors();
 
         return array_map([$this, 'mapTest'], $data);
     }
@@ -81,12 +97,18 @@ class ABTestManager {
     }
 
     public function getTestPostId($testId) {
-        return $this->wpdb->get_var($this->wpdb->prepare("
+        $this->wpdb->hide_errors();
+
+        $result = $this->wpdb->get_var($this->wpdb->prepare("
         SELECT t.postId
         FROM `{$this->abTestTable}` AS t
         WHERE t.isArchived = 0 AND t.id = %s
         ORDER BY t.postId ASC
         ", $testId));
+
+        $this->wpdb->show_errors();
+
+        return $result;
     }
 
     private function mapTest($test) {
@@ -97,6 +119,8 @@ class ABTestManager {
         $test['postLink'] = get_edit_post_link($test['postId']);
         $test['postDeleteLink'] = get_delete_post_link($test['postId'], '', true);
         $test['goalLink'] = get_edit_post_link($test['postGoal']);
+
+        $this->wpdb->hide_errors();
 
         $test['variants'] = $this->wpdb->get_results($this->wpdb->prepare("
         SELECT id, name, participants, conversions
@@ -142,6 +166,8 @@ class ABTestManager {
             },
             $test['variants']
         );
+
+        $this->wpdb->show_errors();
 
         $crc = $controlVariant['participants'] > 0
             ? $controlVariant['conversions'] / $controlVariant['participants']
@@ -204,6 +230,8 @@ class ABTestManager {
     }
 
     public function getStatsByVariation($variantId) {
+        $this->wpdb->hide_errors();
+
         $participants = $this->wpdb->get_var($this->wpdb->prepare("
         SELECT COUNT(variantId)
         FROM `{$this->logTable}`
@@ -222,6 +250,8 @@ class ABTestManager {
         WHERE variantId = %s AND track = 'C';
         ", $variantId));
 
+        $this->wpdb->show_errors();
+
         return [$participants - $switchers, $conversions];
     }
 
@@ -239,7 +269,11 @@ class ABTestManager {
         WHERE t.postGoal = %s AND t.isEnabled = 1 {$extraQuery}
         ", $goal);
 
+        $this->wpdb->hide_errors();
+
         $variants = $this->wpdb->get_results($query);
+
+        $this->wpdb->show_errors();
 
         return array_map(
             function ($variant) {
@@ -252,12 +286,39 @@ class ABTestManager {
         );
     }
 
-    public function addTracking($variantId, $type) {
-        $this->wpdb->query($this->wpdb->prepare("
-        INSERT INTO `{$this->logTable}` (variantId, track) VALUES (%s, %s);
-        ", $variantId, $type));
+    public function addTracking($variantId, $type, $date = false) {
+        $this->wpdb->hide_errors();
+
+        if ($date) {
+            $query = $this->wpdb->prepare(
+                "INSERT INTO `{$this->logTable}` (variantId, track, date) VALUES (%s, %s, %s);",
+                $variantId,
+                $type,
+                $date
+            );
+        } else {
+            $query = $this->wpdb->prepare(
+                "INSERT INTO `{$this->logTable}` (variantId, track) VALUES (%s, %s);",
+                $variantId,
+                $type
+            );
+        }
+
+        $this->wpdb->query($query);
+
+        $this->wpdb->show_errors();
 
         $this->updateVariationStats($variantId);
+    }
+
+    public function getAllTracking() {
+        $this->wpdb->hide_errors();
+
+        $results = $this->wpdb->get_results("SELECT variantId, track, `date` FROM `{$this->logTable}`;");
+
+        $this->wpdb->show_errors();
+
+        return $results;
     }
 
     private function updateVariationStats($variantId) {
@@ -268,10 +329,16 @@ class ABTestManager {
         WHERE id = %s;
         ", $participants, $conversions, $variantId);
 
+        $this->wpdb->hide_errors();
+
         $this->wpdb->query($query);
+
+        $this->wpdb->show_errors();
     }
 
     public function wipeTestDataFromPost($postId) {
+        $this->wpdb->hide_errors();
+
         // remove conditions
         $query = "
         DELETE `{$this->variantConditionTable}`
@@ -292,11 +359,17 @@ class ABTestManager {
         ";
 
         $this->wpdb->query($this->wpdb->prepare($query, $postId));
+
+        $this->wpdb->show_errors();
     }
 
     public function archiveTestDataFromPost($postId) {
+        $this->wpdb->hide_errors();
+
         $query = "UPDATE `{$this->abTestTable}` SET isArchived = 1 WHERE postId = %d";
         $this->wpdb->query($this->wpdb->prepare($query, $postId));
+
+        $this->wpdb->show_errors();
     }
 
     public function insertTest($postId, $testData) {
@@ -320,7 +393,11 @@ class ABTestManager {
             0
         );
 
+        $this->wpdb->hide_errors();
+
         $this->wpdb->query($query);
+
+        $this->wpdb->show_errors();
     }
 
     public function updateTest($testData) {
@@ -348,6 +425,8 @@ class ABTestManager {
         VALUES (%s, %s, %s, %d, %d);
         ";
 
+        $this->wpdb->hide_errors();
+
         $this->wpdb->query($this->wpdb->prepare(
             $query,
             $variant['id'],
@@ -356,6 +435,8 @@ class ABTestManager {
             $participants,
             $conversions
         ));
+
+        $this->wpdb->show_errors();
     }
 
     public function insertVariantCondition($variant, $condition) {
@@ -371,7 +452,11 @@ class ABTestManager {
             $condition['value']
         );
 
+        $this->wpdb->hide_errors();
+
         $this->wpdb->query($prepared);
+
+        $this->wpdb->show_errors();
     }
 
 }

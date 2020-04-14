@@ -46,11 +46,13 @@ class PostsActions {
     }
 
     public function getPostType($request) {
-        if (!$request->get_param('post_id')) {
+        $id = $request->get_param('post_id');
+
+        if (!$id && $id !== '0') {
             return new \WP_Error('rest_invalid_request', 'Missing post_id parameter.', ['status' => 400]);
         }
 
-        return rest_ensure_response(get_post_type($request->get_param('post_id')));
+        return rest_ensure_response(get_post_type($id));
     }
 
     public function getPostsByType($request) {

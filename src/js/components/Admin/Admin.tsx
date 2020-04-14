@@ -24,11 +24,12 @@ const AdminPage: React.FC<AdminPageProps> = ({ data, reload }) => {
 
   const page = getPage();
 
-  if (page) {
-    throw new Error(`Component for ${page} can not be found`);
+  switch (page) {
+    case '':
+      return <Overview data={data} reload={reload} />;
+    default:
+      throw new Error(`Component for ${page} can not be found`);
   }
-
-  return <Overview data={data} reload={reload} />;
 };
 
 export default AdminPage;

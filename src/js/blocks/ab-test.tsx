@@ -69,6 +69,11 @@ class ABTestBlock extends Component<ABTestBlockProps, ABTestBlockState> {
 
     apiFetch<TestData[]>({ path: `ab-testing-for-wp/v1/get-tests-info?id[]=${attributes.id}` })
       .then(([test]) => {
+        if (!test) {
+          // for some reason the test didn't load... gracefully fail
+          return true;
+        }
+
         setAttributes({
           id: test.id,
           postGoal: test.postGoal,
@@ -77,6 +82,8 @@ class ABTestBlock extends Component<ABTestBlockProps, ABTestBlockState> {
           control: test.control,
           isEnabled: test.isEnabled,
         });
+
+        return true;
       })
       .then(() => {
         this.setState({ loadedAttributes: true });

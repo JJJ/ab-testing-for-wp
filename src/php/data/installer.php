@@ -14,12 +14,18 @@ class Installer {
     ];
 
     public function __construct($fileRoot) {
-        register_activation_hook($fileRoot, [$this, 'install']);
-        add_action('init', [$this, 'runMigrations'], 1);
+        if ($fileRoot) {
+            register_activation_hook($fileRoot, [$this, 'install']);
+            add_action('init', [$this, 'runMigrations'], 1);
+        }
     }
 
     public function install() {
         $this->createTables();
+    }
+
+    public function uninstall() {
+        $this->removeTables();
     }
 
     public function runMigrations() {
@@ -39,7 +45,7 @@ class Installer {
 
             global $wpdb;
 
-            $wpdb->hide_errors();
+            $wpdb->show_errors();
 
             $tablePrefix = $wpdb->prefix;
 
@@ -49,6 +55,52 @@ class Installer {
 
             // update last run migration to last in line
             $optionsManager->setOption('lastMigration', $lastMigrationToBeAt);
+        }
+    }
+
+    public function repair() {
+        // cache current tracking
+        $abTestManager = new ABTestManager();
+        $tracking = $abTestManager->getAllTracking();
+
+        // wipe everything
+        $this->uninstall();
+
+        // install tables
+        $this->install();
+
+        // remove migration option
+        $optionsManager = new OptionsManager();
+        $optionsManager->setOption('lastMigration', '');
+
+        // run the migrations
+        $this->runMigrations();
+
+        // look for tests and repopulate the database
+        $this->repopulate();
+
+        // restore tracking
+        foreach ($tracking as $track) {
+            $abTestManager->addTracking($track->variantId, $track->track, $track->date);
+        }
+    }
+
+    private function repopulate() {
+        $postActions = new PostsActions();
+        $postTypes = get_post_types();
+
+        $the_query = new \WP_Query([
+            'nopaging' => true,
+            's' => 'wp:ab-testing-for-wp/ab-test-block',
+            'post_type' => $postTypes
+        ]);
+
+        if ($the_query->have_posts()) {
+            while ($the_query->have_posts()) {
+                $the_query->the_post();
+
+                $postActions->updateBlockData(get_the_ID());
+            }
         }
     }
 
@@ -106,10 +158,29 @@ class Installer {
 		return $collate;
     }
 
+    private function removeTables() {
+        global $wpdb;
+
+        $wpdb->show_errors();
+
+        $tablePrefix = $wpdb->prefix;
+
+        $tablesSql = [
+            "DROP TABLE {$tablePrefix}ab_testing_for_wp_ab_test;",
+            "DROP TABLE {$tablePrefix}ab_testing_for_wp_log;",
+            "DROP TABLE {$tablePrefix}ab_testing_for_wp_variant;",
+            "DROP TABLE {$tablePrefix}ab_testing_for_wp_variant_condition;"
+        ];
+
+        foreach($tablesSql as $sql) {
+            $wpdb->query($sql);
+        }
+    }
+
     private function createTables() {
         global $wpdb;
 
-        $wpdb->hide_errors();
+        $wpdb->show_errors();
 
         $collate = $this->getDBCollate();
 
