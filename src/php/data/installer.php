@@ -154,6 +154,8 @@ class Installer {
         foreach($tablesSql as $sql) {
 			$wpdb->query($sql);
         }
+
+        $wpdb->show_errors();
     }
 
 }
