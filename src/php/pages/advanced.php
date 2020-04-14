@@ -32,7 +32,7 @@ if (isset($_GET['repair-db']) && $_GET['repair-db'] === 'true') {
             <form id="repairForm">
                 <input type="hidden" name="page" value="ab-testing-for-wp_advanced" />
                 <input type="hidden" name="repair-db" value="true" />
-                <?php submit_button(__('Repair A/B testing tables', 'ab-testing-for-wp'), 'primary', 'submit', false); ?>
+                <?php submit_button(__('Repair A/B Testing for WordPress tables', 'ab-testing-for-wp'), 'primary', 'submit', false); ?>
             </form>
         </p>
     <?php endif; ?>
