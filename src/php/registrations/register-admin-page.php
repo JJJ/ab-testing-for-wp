@@ -131,6 +131,15 @@ class RegisterAdminPage {
             'ab-testing-for-wp_howto',
             [$this, 'howto']
         );
+
+        add_submenu_page(
+            'ab-testing-for-wp',
+            __('Advanced Options', 'ab-testing-for-wp'),
+            __('Advanced Options', 'ab-testing-for-wp'),
+            'manage_options',
+            'ab-testing-for-wp_advanced',
+            [$this, 'advanced']
+        );
     }
 
     public function appContainer() {
@@ -160,6 +169,10 @@ class RegisterAdminPage {
         $assets = plugins_url('/src/assets/', $this->fileRoot);
 
         require $this->srcRoot . 'php/pages/howto.php';
+    }
+
+    public function advanced() {
+        require $this->srcRoot . 'php/pages/advanced.php';
     }
 
 }
