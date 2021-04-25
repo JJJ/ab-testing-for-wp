@@ -2,11 +2,9 @@
 
 namespace ABTestingForWP;
 
-class RegisterREST
-{
+class RegisterREST {
 
-    private function registerRestRoutes()
-    {
+    private function registerRestRoutes() {
         $renderer = new BlockRenderer();
         $tracker = new ABTestTracking();
         $stats = new ABTestStats();
