@@ -2,7 +2,7 @@ version: '3.3'
 
 services:
   db_e2e:
-    image: mysql:5.7
+    image: mysql:5
     volumes:
       - db_data_e2e:/var/lib/mysql
     restart: always
