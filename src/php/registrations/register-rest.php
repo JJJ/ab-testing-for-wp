@@ -19,7 +19,10 @@ class RegisterREST {
             [
                 'methods' => 'GET',
                 'callback' => [$renderer, 'resolveVariant'],
-            ]
+                'permission_callback' => function () {
+                    return current_user_can('edit_posts');
+                }
+            ],
         );
 
         register_rest_route(
@@ -28,7 +31,10 @@ class RegisterREST {
             [
                 'methods' => 'GET',
                 'callback' => [$tracker, 'trackPage'],
-            ]
+                'permission_callback' => function () {
+                    return current_user_can('edit_posts');
+                }
+            ],
         );
 
         register_rest_route(
@@ -37,6 +43,9 @@ class RegisterREST {
             [
                 'methods' => 'POST',
                 'callback' => [$tracker, 'trackLink'],
+                'permission_callback' => function () {
+                    return current_user_can('edit_posts');
+                }
             ]
         );
 
